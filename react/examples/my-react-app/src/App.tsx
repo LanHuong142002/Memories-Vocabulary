@@ -46,6 +46,8 @@ import PageContext from 'advanced/context/PageContext';
 import AlbumArtist from 'advanced/suspense/AlbumArtist';
 import BoxSearch from 'advanced/suspenseSearch/BoxSearch';
 import BoxApp from 'advanced/suspenseHidingContents/SuspenseHidingContent';
+import User from 'swr/Users';
+import { TestSWR } from 'swr/Test';
 
 function App() {
   const messages = ['React', 'Re: React', 'Re:Re: React'];
@@ -75,6 +77,15 @@ function App() {
 
   return (
     <div className='App'>
+      <User />
+      <User />
+      <br />
+      <br />
+      <br />
+      <br />
+      <TestSWR />
+      <br />
+      <br />
       <ErrorBoundary fallback={<h1>Something wrong!</h1>}>
         <ComponentsTest />
       </ErrorBoundary>
