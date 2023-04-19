@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from './ThemeProvider';
 
-const Test = () => {
+const Testss = () => {
   const value = ['123', '2323'];
   const context = useContext(ThemeContext);
   const { data, setData } = context;
@@ -12,14 +12,12 @@ const Test = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {data.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {data.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
   );
 };
 
-export { Test };
+export { Testss };
