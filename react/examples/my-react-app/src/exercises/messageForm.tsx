@@ -1,7 +1,7 @@
 import React from 'react';
 
 // The textarea Tag
-class EssageForm extends React.Component<{}, { value: string }> {
+class MessageForm extends React.Component<{}, { value: string }> {
   state = { value: 'Please write an essay about your favorite DOM element.' };
 
   handleChange(e: React.FormEvent<HTMLElement>) {
@@ -26,4 +26,4 @@ class EssageForm extends React.Component<{}, { value: string }> {
   }
 }
 
-export default EssageForm;
+export default MessageForm;
