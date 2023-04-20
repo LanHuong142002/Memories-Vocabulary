@@ -10,12 +10,20 @@ const config: Config.InitialOptions = {
     '.+\\.(css|png|webp|)$': 'jest-transform-stub',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'], // config to using methods of jest-dom library
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1',
-    '^uuid$': require.resolve('uuid'),
+    '^@constants$': '<rootDir>/constants/$1',
+    '^@components$': '<rootDir>/components/$1',
+    '^@helpers$': '<rootDir>/helpers/$1',
+    '^@contexts$': '<rootDir>/contexts/$1',
+    '^@services$': '<rootDir>/services/$1',
+    '^@pages$': '<rootDir>/pages/$1',
+    '^@hooks$': '<rootDir>/hooks/$1',
+    '^@layouts$': '<rootDir>/layouts/$1',
   },
   collectCoverageFrom: [
-    '**/*.{ts,tsx}',
+    '**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
     '!**/*.stories.tsx',
     '!**/*.config.ts',
     '!**/node_modules/**',
