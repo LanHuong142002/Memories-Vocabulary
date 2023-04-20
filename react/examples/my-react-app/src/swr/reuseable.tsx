@@ -1,19 +1,15 @@
 import useSWR from 'swr';
+import { customErrors } from './handleErrors';
 
-/**
- * @description function get all statuses
- *
- * @returns {Array} list statuses
- */
-const getStatuses = async <T,>(): Promise<T[] | unknown> => {
-  try {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users`);
-    const status: T[] = await response.json();
+const getStatuses = async <T,>(url: string): Promise<T[] | unknown> => {
+  const response = await fetch(url);
+  const data: T[] = await response.json();
 
-    return status;
-  } catch (error) {
-    return error;
+  if (!response.ok) {
+    customErrors(response);
   }
+
+  return data;
 };
 
 const useUser = () => {

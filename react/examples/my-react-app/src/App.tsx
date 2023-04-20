@@ -49,6 +49,7 @@ import BoxApp from 'advanced/suspenseHidingContents/SuspenseHidingContent';
 import User from 'swr/Users';
 import { TestSWR } from 'swr/Test';
 import { PageInfinite, PaginationButton, PaginationLoadMore } from 'swr/pagination';
+import BoxExample from 'swr/example/BoxExample';
 
 function App() {
   const messages = ['React', 'Re: React', 'Re:Re: React'];
@@ -79,6 +80,7 @@ function App() {
   return (
     <div className='App'>
       <br />
+      <BoxExample />
       <PaginationButton />
       {/* <br />
       <br />

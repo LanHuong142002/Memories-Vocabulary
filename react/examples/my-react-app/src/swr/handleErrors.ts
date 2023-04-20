@@ -12,7 +12,7 @@ type CustomErrors = {
  *
  * @returns {Object}
  */
-const customErrors = <T>(response: Response, items: T): T => {
+const customErrors = <T>(response: Response): T => {
   switch (response.status) {
     case 400:
       throw { message: `${response.status} Bad Request`, status: response.status };
