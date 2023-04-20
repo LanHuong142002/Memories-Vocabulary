@@ -1,11 +1,11 @@
 import { FunctionAndClassComponents, Welcome } from 'exercises/componentsAndProps';
 import { SignUpDialog } from 'exercises/compositionVSInheritance';
 import { Greeting, LoginControl, Mailbox } from 'exercises/conditionalRendering';
-import NameForm from 'exercises/form1';
-import EssageForm from 'exercises/form2';
-import FlavorForm from 'exercises/form3';
-import FileInput from 'exercises/form4';
-import Reservation from 'exercises/form5';
+import NameForm from 'exercises/nameForm';
+import MessageForm from 'exercises/MessageForm';
+import FlavorForm from 'exercises/flavorForm';
+import FileInput from 'exercises/fileInput';
+import Reservation from 'exercises/Reservation';
 import { Form, FormElement, Toggle } from 'exercises/handlingEvents';
 import {
   EmbeddingExpressionJSX,
@@ -132,7 +132,7 @@ function App() {
       <NumberList numbers={numbers} />
       <Blog posts={posts} />
       <NameForm />
-      <EssageForm />
+      <MessageForm />
       <br />
       <FlavorForm flavor={flavors} />
       <br />
