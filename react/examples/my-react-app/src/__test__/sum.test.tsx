@@ -1,4 +1,4 @@
-const sum = require('./sum');
+import { sum } from './sum';
 const objAssignment = require('./objAssignment');
 
 test('adds 1 + 2 to equal 3', () => {
@@ -6,8 +6,7 @@ test('adds 1 + 2 to equal 3', () => {
 });
 
 test('object assignment', () => {
-  const data = { one: 1 };
-  data['two'] = 2;
+  const data = { one: 1, two: 2 };
   expect(objAssignment(data)).toEqual({ one: 1, two: 2 });
 });
 
