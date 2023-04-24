@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from './ThemeProvider';
 
-const Testss = () => {
+const Example = () => {
   const value = ['123', '2323'];
   const context = useContext(ThemeContext);
   const { data, setData } = context;
@@ -20,4 +20,4 @@ const Testss = () => {
   );
 };
 
-export { Testss };
+export { Example };
