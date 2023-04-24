@@ -23,9 +23,9 @@ describe('Testing User', () => {
       age: '32',
       address: '123, Charming Avenue',
     };
-    (window.fetch as jest.Mock) = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(fakeUser),
-    });
+    jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(() => Promise.resolve(new Response(JSON.stringify(fakeUser))));
 
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {
