@@ -1,4 +1,4 @@
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult, fireEvent, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import Card from '../Card';
 
@@ -63,9 +63,10 @@ describe('Testing Card', () => {
 
     act(() => {
       const detailsElement = container?.container.querySelector("[data-testid='2']");
-      expect(detailsElement).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      fireEvent.click(detailsElement!);
     });
 
+    expect(onSelect).toBeCalled();
     expect(onSelect).toHaveBeenCalledWith(2);
   });
 });
