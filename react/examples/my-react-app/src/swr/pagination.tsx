@@ -13,7 +13,7 @@ const getCommments = async (url: string): Promise<Comments[]> => {
   const data: Comments[] = await response.json();
 
   if (!response.ok) {
-    customErrors(response, data);
+    customErrors(response);
   }
 
   return data;
