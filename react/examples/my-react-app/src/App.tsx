@@ -82,7 +82,7 @@ function App() {
       <br />
       <BoxExample />
       <PaginationButton />
-      {/* <br />
+      <br />
       <br />
       <br />
       <br />
@@ -92,8 +92,8 @@ function App() {
       <PageInfinite />
       <br />
       <br />
-      <br /> */}
-      {/* <User />
+      <br />
+      <User />
       <User />
       <br />
       <br />
@@ -130,7 +130,7 @@ function App() {
       <br />
       <br />
       <hr />
-      <p>Calculator</p>
+      {/* <p>Calculator</p>
       <Calculator />
       <br />
       <TemperatureInput scale='p' />
