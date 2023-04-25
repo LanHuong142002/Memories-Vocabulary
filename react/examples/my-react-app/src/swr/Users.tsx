@@ -5,6 +5,7 @@ const User = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <p>Oops, something wrong!</p>;
+
   return users.map((item) => {
     return <p>{item.name}</p>;
   });

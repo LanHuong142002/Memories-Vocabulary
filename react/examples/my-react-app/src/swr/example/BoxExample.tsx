@@ -1,8 +1,7 @@
-import useStatus from './useStatus';
+import { useStatus } from './useStatus';
 
 const BoxExample = () => {
-  const { get } = useStatus();
-  const { data, error, isLoading } = get();
+  const { data, error, isLoading } = useStatus();
 
   console.log('data', data);
   console.log('error', error);
