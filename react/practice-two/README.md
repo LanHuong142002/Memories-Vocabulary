@@ -73,11 +73,6 @@
   - http://127.0.0.1:5173/ to see the website
   - http://localhost:6006 to see Storybook
 
-### Note
-
-- If you get errors about using pnpm to run Storybook
-- Try to add `node-linker=hoisted` to `.npmrc` file. After that remove all the storybook in project or clone and run project again
-
 ### Secrets
 
 - Create file .env has the same level as .env.example. After that, please contact me to get the key
