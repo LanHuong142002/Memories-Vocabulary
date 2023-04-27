@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import './index.css';
 
 // Images
-import Cancel from 'assets/icons/cancel.svg';
+import Cancel from '@assets/icons/cancel.svg';
 
 // Components
 import { Image } from '@components';

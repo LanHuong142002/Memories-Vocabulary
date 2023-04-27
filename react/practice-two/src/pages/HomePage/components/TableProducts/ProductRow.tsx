@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 // Images
-import More from 'assets/icons/more.svg';
+import More from '@assets/icons/more.svg';
 
 // Component
 import {
@@ -13,7 +13,7 @@ import {
   Typography,
   SelectItemProps,
 } from '@components';
-import { formatPrice } from 'helpers/convert';
+import { formatPrice } from '@helpers';
 
 // Components of pages
 import { ActionMenu } from '@pages';
