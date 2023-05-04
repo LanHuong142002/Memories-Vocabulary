@@ -2,10 +2,10 @@ import { FunctionAndClassComponents, Welcome } from 'exercises/componentsAndProp
 import { SignUpDialog } from 'exercises/compositionVSInheritance';
 import { Greeting, LoginControl, Mailbox } from 'exercises/conditionalRendering';
 import NameForm from 'exercises/nameForm';
-import MessageForm from 'exercises/MessageForm';
+import MessageForm from 'exercises/messageForm';
 import FlavorForm from 'exercises/flavorForm';
 import FileInput from 'exercises/fileInput';
-import Reservation from 'exercises/Reservation';
+import Reservation from 'exercises/reservation';
 import { Form, FormElement, Toggle } from 'exercises/handlingEvents';
 import {
   EmbeddingExpressionJSX,
