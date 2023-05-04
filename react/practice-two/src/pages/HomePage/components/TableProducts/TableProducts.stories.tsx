@@ -2,8 +2,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ChangeEvent, useState } from 'react';
 
 // Images
-import Product from 'assets/images/product.jpg';
-import Avatar from 'assets/images/avatar.jpg';
+import Product from '@assets/images/product.jpg';
+import Avatar from '@assets/images/avatar.jpg';
 
 // Components
 import ProductsTable, { Filters } from '.';
