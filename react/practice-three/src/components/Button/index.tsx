@@ -5,33 +5,31 @@ import './index.css';
 
 interface ButtonProps {
   text: string;
-  variant: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   type?: 'button' | 'submit' | 'reset';
   color?: 'success' | 'warning' | 'default';
-  isDisable?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
   text,
-  variant,
+  variant = 'primary',
+  size = 'sm',
   color = 'default',
   type = 'button',
   onClick,
-  isDisable,
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={`btn ${variant ? `btn-${variant}` : ''} btn-color-${color} ${
-        isDisable ? 'btn-disable' : ''
-      }`}
+      className={`btn btn-${variant} btn-color-${color} btn-${size}`}
       onClick={onClick}
-      disabled={isDisable}
     >
       {text}
     </button>
   );
 };
 
-export default Button;
+export { Button };
+export type { ButtonProps };

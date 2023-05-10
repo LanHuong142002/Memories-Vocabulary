@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Components
-import Button from '.';
+import { Button } from '@components';
 
 export default {
   title: 'PracticeTwo/Button',
@@ -13,6 +13,7 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   text: 'Edit',
+  size: 'md',
   variant: 'primary',
   type: 'button',
 };
@@ -26,9 +27,10 @@ Primary.decorators = [
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  text: 'Edit',
+  text: 'Add New Product',
+  size: 'sm',
   variant: 'secondary',
-  color: 'warning',
+  color: 'success',
   type: 'button',
 };
 Secondary.decorators = [
@@ -39,15 +41,15 @@ Secondary.decorators = [
   ),
 ];
 
-export const Disable = Template.bind({});
-Disable.args = {
-  text: 'Edit',
-  variant: 'secondary',
-  color: 'warning',
+export const Tertiary = Template.bind({});
+Tertiary.args = {
+  text: 'Cancel',
+  size: 'lg',
+  variant: 'tertiary',
+  color: 'default',
   type: 'button',
-  isDisable: true,
 };
-Disable.decorators = [
+Tertiary.decorators = [
   (Story) => (
     <div style={{ padding: '3em' }}>
       <Story />

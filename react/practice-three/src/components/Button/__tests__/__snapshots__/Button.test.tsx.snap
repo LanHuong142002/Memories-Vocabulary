@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing button component Should render Button 1`] = `
+<div>
+  <button
+    class="btn btn-primary btn-color-default btn-lg"
+    type="button"
+  >
+    Cancel
+  </button>
+</div>
+`;
