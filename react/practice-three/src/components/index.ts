@@ -1,7 +1,7 @@
 export * from './Image';
 export * from './SelectItem';
+export * from './Identity';
 export { default as Button } from './Button';
-export { default as Identity } from './Identity';
 export { default as Input } from './Input';
 export { default as InputFile } from './InputFile';
 export { default as Label } from './Label';
