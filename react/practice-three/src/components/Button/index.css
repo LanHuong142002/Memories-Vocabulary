@@ -1,5 +1,4 @@
 .btn {
-  cursor: pointer;
   outline: none;
   font-family: var(--font-regular), var(--font-default);
 }
@@ -21,6 +20,12 @@
 }
 
 .btn.btn-tertiary,
+.btn.btn-primary,
+.btn.btn-secondary {
+  cursor: pointer;
+}
+
+.btn.btn-tertiary,
 .btn.btn-primary {
   font-family: var(--font-semiBold), var(--font-default);
 }
@@ -31,7 +36,7 @@
   border: none;
 }
 
-.btn.btn-primary:hover {
+.btn.btn-primary:hover:enabled {
   background-color: var(--color-hover);
 }
 
@@ -45,8 +50,8 @@
   border: 1px solid var(--color-muted);
 }
 
-.btn.btn-secondary:hover.btn-color-warning,
-.btn.btn-secondary:hover.btn-color-success {
+.btn.btn-secondary:hover:enabled.btn-color-warning,
+.btn.btn-secondary:hover:enabled.btn-color-success {
   border: none;
 }
 
@@ -55,7 +60,7 @@
   border-color: var(--color-warning);
 }
 
-.btn.btn-secondary:hover.btn-color-warning {
+.btn.btn-secondary:hover:enabled.btn-color-warning {
   background-color: var(--color-warning);
 }
 
@@ -64,7 +69,7 @@
   border-color: var(--color-success);
 }
 
-.btn.btn-secondary:hover.btn-color-success {
+.btn.btn-secondary:hover:enabled.btn-color-success {
   background-color: var(--color-success);
 }
 
@@ -73,7 +78,7 @@
   border-color: var(--color-muted);
 }
 
-.btn.btn-secondary:hover.btn-color-default {
+.btn.btn-secondary:hover:enabled.btn-color-default {
   color: var(--color-primary);
   background-color: var(--color-light);
   border: 1px solid var(--color-muted);
@@ -84,14 +89,14 @@
   border-radius: 4px;
 }
 
-.btn.btn-secondary:hover,
+.btn.btn-secondary:hover:enabled,
 .btn.btn-tertiary {
   color: var(--color-white);
   border: none;
   background-color: var(--color-success);
 }
 
-.btn.btn-tertiary:hover {
+.btn.btn-tertiary:hover:enabled {
   opacity: 0.8;
 }
 
@@ -112,4 +117,34 @@
 
 .btn.btn-tertiary.btn-color-success {
   background-color: var(--color-success);
+}
+
+.btn.btn-disabled,
+.btn.btn-disabled:hover:enabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn .loader {
+  width: 10px;
+  height: 10px;
+  display: block;
+  cursor: default;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--color-white);
+  animation: identifier 1s ease infinite;
+}
+
+.btn:hover .loader {
+  cursor: default;
+}
+
+@keyframes identifier {
+  0% {
+    transform: rotate(0turn);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
 }

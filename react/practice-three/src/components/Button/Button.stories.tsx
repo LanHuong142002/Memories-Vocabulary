@@ -12,8 +12,7 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  text: 'Edit',
-  size: 'md',
+  label: 'Edit',
   variant: 'primary',
   type: 'button',
 };
@@ -27,10 +26,9 @@ Primary.decorators = [
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  text: 'Add New Product',
-  size: 'sm',
+  label: 'Edit',
   variant: 'secondary',
-  color: 'success',
+  color: 'warning',
   type: 'button',
 };
 Secondary.decorators = [
@@ -41,15 +39,28 @@ Secondary.decorators = [
   ),
 ];
 
-export const Tertiary = Template.bind({});
-Tertiary.args = {
-  text: 'Cancel',
-  size: 'lg',
-  variant: 'tertiary',
-  color: 'default',
-  type: 'button',
+export const Disable = Template.bind({});
+Disable.args = {
+  label: 'Edit',
+  variant: 'secondary',
+  color: 'warning',
+  isDisabled: true,
 };
-Tertiary.decorators = [
+Disable.decorators = [
+  (Story) => (
+    <div style={{ padding: '3em' }}>
+      <Story />
+    </div>
+  ),
+];
+
+export const Loading = Template.bind({});
+Loading.args = {
+  variant: 'secondary',
+  color: 'warning',
+  isLoading: true,
+};
+Loading.decorators = [
   (Story) => (
     <div style={{ padding: '3em' }}>
       <Story />

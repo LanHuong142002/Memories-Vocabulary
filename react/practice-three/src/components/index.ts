@@ -1,6 +1,6 @@
 export * from './Image';
 export * from './SelectItem';
-export { default as Button } from './Button';
+export * from './Button';
 export { default as Identity } from './Identity';
 export { default as Input } from './Input';
 export { default as InputFile } from './InputFile';

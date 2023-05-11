@@ -4,29 +4,37 @@ import { MouseEvent } from 'react';
 import './index.css';
 
 interface ButtonProps {
-  text: string;
+  label: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   type?: 'button' | 'submit' | 'reset';
   color?: 'success' | 'warning' | 'default';
+  isDisabled?: boolean;
+  isLoading?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
-  text,
+  label,
   variant = 'primary',
   size = 'sm',
   color = 'default',
   type = 'button',
+  isDisabled,
+  isLoading,
   onClick,
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={`btn btn-${variant} btn-color-${color} btn-${size}`}
+      className={`btn btn-${variant} btn-color-${color} btn-${size} ${
+        isDisabled ? 'btn-disabled' : ''
+      }`}
       onClick={onClick}
+      disabled={isDisabled}
     >
-      {text}
+      {isLoading && <span className='loader'></span>}
+      {label}
     </button>
   );
 };

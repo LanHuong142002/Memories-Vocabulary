@@ -9,7 +9,7 @@ describe('Testing button component', () => {
   });
 
   const defaultProps = {
-    text: 'Cancel',
+    label: 'Cancel',
     variant: 'primary',
     size: 'lg',
     onClick: handleClick,
@@ -33,7 +33,7 @@ describe('Testing button component', () => {
   });
 
   it('Props optional', () => {
-    render(<Button text={'Cancel'} />);
+    render(<Button label={'Cancel'} />);
 
     const button = screen.getByRole('button');
 
