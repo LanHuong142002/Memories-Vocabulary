@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Label component Should render Label component 1`] = `
+<div>
+  <div
+    class="label-wrapper label-primary"
+  >
+    <span>
+      200
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Testing Label component Should render Label component without variant 1`] = `
+<div>
+  <div
+    class="label-wrapper "
+  >
+    <span>
+      200
+    </span>
+  </div>
+</div>
+`;
