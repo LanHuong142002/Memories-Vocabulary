@@ -3,6 +3,9 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 // Components
 import InputFile from '.';
 
+import UploadIcon from '@assets/icons/upload-icon.svg';
+import UploadCloud from '@assets/icons/upload-cloud.svg';
+
 export default {
   title: 'PracticeTwo/InputFile',
   component: InputFile,
@@ -21,11 +24,16 @@ const Template: ComponentStory<typeof InputFile> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  text: 'Choose File ...',
+  variant: 'primary',
+  text: 'Click to upload',
+  size: 'md',
+  image: UploadIcon,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
-  text: 'Choose File ...',
+  text: 'Upload photo',
+  size: 'xxs',
+  image: UploadCloud,
 };
