@@ -27,7 +27,7 @@ describe('Testing Image component', () => {
     expect(handleClick).toBeCalledTimes(1);
   });
 
-  it('If have isCircle and isCursorPointer', () => {
+  it('Testing component have isCircle and isCursorPointer', () => {
     render(<Image {...defaultProps} isCircle={true} isClickable={true} />);
 
     const figure = screen.getByRole('figure');
