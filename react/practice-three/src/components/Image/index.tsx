@@ -4,27 +4,25 @@ import { forwardRef, MouseEvent } from 'react';
 import './index.css';
 
 interface ImageProps {
-  image: string;
+  url: string;
   alt?: string;
-  size: 'sm' | 'md' | 'lg';
+  size?: 'xxs' | 'xs' | 's' | 'md' | 'lg' | 'xl' | 'xxl';
   isCircle?: boolean;
-  isCursorPointer?: boolean;
+  isClickable?: boolean;
   onClick?: (e: MouseEvent) => void;
 }
 
 const Image = forwardRef<HTMLElement, ImageProps>(function Image(
-  { image, isCircle, alt = 'image', size, isCursorPointer, onClick },
+  { url, isCircle, alt = 'image', size = 'xs', isClickable, onClick },
   ref,
 ) {
   return (
     <figure
-      className={`image-wrapper ${size ? `image-size-${size}` : ''} ${
-        isCursorPointer ? 'image-cursor-pointer' : ''
-      }`}
+      className={`image-wrapper image-size-${size} ${isClickable ? 'image-cursor-pointer' : ''}`}
       onClick={onClick}
       ref={ref}
     >
-      <img className={`image ${isCircle ? 'image-circle' : ''}`} src={image} alt={alt} />
+      <img className={`image ${isCircle ? 'image-circle' : ''}`} src={url} alt={alt} />
     </figure>
   );
 });
