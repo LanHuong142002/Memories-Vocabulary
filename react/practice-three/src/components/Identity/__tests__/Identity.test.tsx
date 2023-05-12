@@ -21,7 +21,7 @@ describe('Testing identity component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should call onClick on Identity', () => {
+  it('Should call onClick event when click to image and text', () => {
     render(<Identity {...defaultProps} />);
 
     const image = screen.getByRole('img', {
@@ -36,7 +36,7 @@ describe('Testing identity component', () => {
     expect(handleClick).toBeCalledTimes(2);
   });
 
-  it('If have isCircle', () => {
+  it('Should render Identity in the circle shape correctly', () => {
     render(<Identity {...defaultProps} isCircle={true} />);
 
     const image = screen.getByRole('img', {
