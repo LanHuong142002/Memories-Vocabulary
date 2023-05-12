@@ -16,7 +16,7 @@ describe('Testing Image component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should call onClick event when click to image', () => {
+  it('Should call onClick event when click on image', () => {
     const handleClick = jest.fn();
     render(<Image {...defaultProps} onClick={handleClick} />);
 

@@ -16,6 +16,7 @@
 ### Targets
 
 - Apply ReactJS knowledge to practice (extends from practice #1 and practice #2)
+- Code splitting
 - Apply error boundaries to catch errors
 - Apply useContext and useReducer for state management
 - Apply SWR for fetching data - from a simple JSON-server
@@ -34,8 +35,8 @@
 ### Information
 
 - Timeline
-  - Estimate day: 8 days
-  - Actual day: 16 days
+  - Estimate day: 9 days
+  - Actual day:
 - Techniques Stack:
   - [HTML5](https://developer.mozilla.org/en-US/docs/Glossary/HTML5)/[CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
   - [JavaScript](https://www.w3schools.com/js/)

@@ -14,4 +14,5 @@ const Label = ({ text, variant }: LabelProps) => {
   );
 };
 
-export default Label;
+export { Label };
+export type { LabelProps };
