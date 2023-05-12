@@ -32,3 +32,10 @@
   background: transparent url('../../../src/assets/icons/arrow-Icon.svg') no-repeat right;
   background-origin: content-box;
 }
+
+.select-item {
+  font-family: var(--font-regular), var(--font-default);
+  font-size: var(--font-small);
+  color: var(--color-primary);
+  cursor: pointer;
+}
