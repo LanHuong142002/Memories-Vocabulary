@@ -56,6 +56,7 @@ Disable.decorators = [
 
 export const Loading = Template.bind({});
 Loading.args = {
+  label: 'Cancel',
   variant: 'secondary',
   color: 'warning',
   isLoading: true,

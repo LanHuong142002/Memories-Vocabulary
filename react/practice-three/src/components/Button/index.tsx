@@ -29,12 +29,12 @@ const Button = ({
       type={type}
       className={`btn btn-${variant} btn-color-${color} btn-${size} ${
         isDisabled ? 'btn-disabled' : ''
-      }`}
+      } ${isLoading ? 'btn-loading' : ''}`}
       onClick={onClick}
       disabled={isDisabled}
     >
       {isLoading && <span className='loader'></span>}
-      {!isLoading && label}
+      <span>{label}</span>
     </button>
   );
 };

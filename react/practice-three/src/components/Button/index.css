@@ -96,10 +96,6 @@
   background-color: var(--color-success);
 }
 
-.btn.btn-tertiary:hover:enabled {
-  opacity: 0.8;
-}
-
 .btn.btn-tertiary.btn-color-warning,
 .btn.btn-tertiary.btn-color-success {
   color: var(--color-white);
@@ -111,33 +107,50 @@
   background-color: var(--color-muted);
 }
 
-.btn.btn-tertiary.btn-color-warning {
+.btn.btn-tertiary.btn-color-warning,
+.btn.btn-loading.btn-color-warning {
   background-color: var(--color-warning);
 }
 
-.btn.btn-tertiary.btn-color-success {
+.btn.btn-tertiary.btn-color-success,
+.btn.btn-loading.btn-color-success {
   background-color: var(--color-success);
 }
 
 .btn.btn-disabled,
-.btn.btn-disabled:hover:enabled {
+.btn.btn-disabled:hover:enabled,
+.btn.btn-tertiary:hover:enabled {
   opacity: 0.6;
+}
+
+.btn.btn-loading {
+  display: flex;
+  justify-content: center;
+  border: none;
+}
+
+.btn.btn-disabled,
+.btn.btn-disabled:hover:enabled,
+.btn.btn-loading:hover {
   cursor: default;
 }
 
-.btn .loader {
+.btn.btn-loading .loader {
+  position: absolute;
   width: 10px;
   height: 10px;
   display: block;
   cursor: default;
+  margin: auto 0;
   border-radius: 50%;
   border: 3px solid transparent;
   border-top-color: var(--color-white);
   animation: identifier 1s ease infinite;
 }
 
-.btn:hover .loader {
-  cursor: default;
+.btn.btn-loading span:nth-child(2) {
+  position: relative;
+  visibility: hidden;
 }
 
 @keyframes identifier {
