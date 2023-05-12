@@ -2,9 +2,11 @@ import { ChangeEvent } from 'react';
 
 // Styles
 import './index.css';
+
+// components
 import { Image, ImageProps } from '@components';
 
-interface InputFileProps extends Pick<ImageProps, 'image' | 'size'> {
+interface InputFileProps extends Pick<ImageProps, 'url' | 'size'> {
   name: string;
   id: string;
   text: string;
@@ -15,15 +17,19 @@ interface InputFileProps extends Pick<ImageProps, 'image' | 'size'> {
 const InputFile = ({
   name,
   id,
-  image,
+  url,
   size,
   variant = 'primary',
   text,
   onChange,
 }: InputFileProps) => {
   return (
-    <label htmlFor={id} className={`input-file-wrapper input-file-${variant}`}>
-      <Image image={image} size={size} />
+    <label
+      htmlFor={id}
+      className={`input-file-wrapper input-file-${variant}`}
+      data-testid='input-file-label'
+    >
+      <Image url={url} size={size} alt='icon upload' />
       <div>
         {text}
         <input type='file' name={name} id={id} accept='image/png, image/jpeg' onChange={onChange} />

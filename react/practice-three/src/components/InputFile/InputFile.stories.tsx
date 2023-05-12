@@ -1,8 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Components
-import InputFile from '.';
+import { InputFile } from '@components';
 
+// Images
 import UploadIcon from '@assets/icons/upload-icon.svg';
 import UploadCloud from '@assets/icons/upload-cloud.svg';
 
@@ -27,7 +28,7 @@ Primary.args = {
   variant: 'primary',
   text: 'Click to upload',
   size: 'md',
-  image: UploadIcon,
+  url: UploadIcon,
 };
 
 export const Secondary = Template.bind({});
@@ -35,5 +36,5 @@ Secondary.args = {
   variant: 'secondary',
   text: 'Upload photo',
   size: 'xxs',
-  image: UploadCloud,
+  url: UploadCloud,
 };
