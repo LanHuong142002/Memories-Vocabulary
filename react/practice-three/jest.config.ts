@@ -16,6 +16,7 @@ const config: Config.InitialOptions = {
   coverageDirectory: 'coverage', // Custom folder name contain reports
   moduleNameMapper: {
     '^@constants(.*)$': '<rootDir>src/constants/$1',
+    '^@assets(.*)$': '<rootDir>src/assets/$1',
     '^@components(.*)$': '<rootDir>src/components/$1',
     '^@helpers(.*)$': '<rootDir>src/helpers/$1',
     '^@contexts(.*)$': '<rootDir>src/contexts/$1',
