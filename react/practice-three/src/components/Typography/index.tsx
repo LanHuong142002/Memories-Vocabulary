@@ -4,9 +4,9 @@ import './index.css';
 interface TypographyProps {
   tagName?: 'h1' | 'h2' | 'h3' | 'p';
   text: string;
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'tertiary';
-  weight: 'regular' | 'bold' | 'semiBold';
+  size?: 'xs' | 's' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'quaternary';
+  weight?: 'regular' | 'bold' | 'semiBold';
 }
 
 const Typography = ({
@@ -29,4 +29,5 @@ const Typography = ({
   );
 };
 
-export default Typography;
+export { Typography };
+export type { TypographyProps };
