@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Input component Should render Input component 1`] = `
+<div>
+  <input
+    class="text-input text-input-default"
+    name="name"
+    placeholder="Enter name..."
+    type="text"
+    value=""
+  />
+</div>
+`;

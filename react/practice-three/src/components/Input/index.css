@@ -11,7 +11,8 @@
   background-color: transparent;
 }
 
-.text-input-default .text-input-primary {
+.text-input-default,
+.text-input-primary {
   outline: none;
   font-family: var(--font-regular), var(--font-default);
 }
