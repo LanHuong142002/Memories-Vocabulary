@@ -7,7 +7,7 @@ describe('Testing Image component', () => {
   });
 
   const defaultProps = {
-    url: '',
+    url: 'image.jpg',
   } as ImageProps;
 
   it('Should render Image', () => {
@@ -16,7 +16,7 @@ describe('Testing Image component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should call onClick event', () => {
+  it('Should call onClick event when click to image', () => {
     const handleClick = jest.fn();
     render(<Image {...defaultProps} onClick={handleClick} />);
 
@@ -27,7 +27,7 @@ describe('Testing Image component', () => {
     expect(handleClick).toBeCalledTimes(1);
   });
 
-  it('If have isCircle and isCursorPointer', () => {
+  it('Should render image in circle and clickable correctly', () => {
     render(<Image {...defaultProps} isCircle={true} isClickable={true} />);
 
     const figure = screen.getByRole('figure');
