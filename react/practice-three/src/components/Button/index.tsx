@@ -31,7 +31,7 @@ const Button = ({
         isDisabled ? 'btn-disabled' : ''
       } ${isLoading ? 'btn-loading' : ''}`}
       onClick={onClick}
-      disabled={isDisabled}
+      disabled={isDisabled || isLoading}
     >
       {isLoading && <span className='loader'></span>}
       <span>{label}</span>

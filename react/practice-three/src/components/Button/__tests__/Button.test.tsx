@@ -42,4 +42,20 @@ describe('Testing button component', () => {
     expect(button).toHaveClass('btn-color-default');
     expect(button).toHaveTextContent('Cancel');
   });
+
+  it('Testing button is disabled', () => {
+    render(<Button label={'Cancel'} isDisabled={true} />);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('disabled');
+    expect(button).toHaveClass('btn-disabled');
+  });
+
+  it('Testing button is loading', () => {
+    render(<Button label={'Cancel'} isLoading={true} />);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('disabled');
+    expect(button).toHaveClass('btn-loading');
+  });
 });
