@@ -34,7 +34,7 @@ const Button = ({
       disabled={isDisabled}
     >
       {isLoading && <span className='loader'></span>}
-      {label}
+      {!isLoading && label}
     </button>
   );
 };
