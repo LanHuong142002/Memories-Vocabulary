@@ -21,7 +21,7 @@ describe('Testing button component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should call click event', () => {
+  it('Should call click event when click button', () => {
     render(<Button {...defaultProps} />);
 
     const button = screen.getByRole('button');
@@ -32,8 +32,8 @@ describe('Testing button component', () => {
     expect(handleClick).toBeCalledTimes(1);
   });
 
-  it('Props optional', () => {
-    render(<Button label={'Cancel'} />);
+  it('Should render default button correctly', () => {
+    render(<Button label='Cancel' />);
 
     const button = screen.getByRole('button');
 
@@ -43,7 +43,7 @@ describe('Testing button component', () => {
     expect(button).toHaveTextContent('Cancel');
   });
 
-  it('Testing button is disabled', () => {
+  it('Should render button with disabled correctly', () => {
     render(<Button label={'Cancel'} isDisabled={true} />);
 
     const button = screen.getByRole('button');
@@ -51,7 +51,7 @@ describe('Testing button component', () => {
     expect(button).toHaveClass('btn-disabled');
   });
 
-  it('Testing button is loading', () => {
+  it('Should render button with loading correctly', () => {
     render(<Button label={'Cancel'} isLoading={true} />);
 
     const button = screen.getByRole('button');
