@@ -8,7 +8,11 @@ interface TableHeaderProps {
 }
 
 const TableHeader = ({ children }: TableHeaderProps) => {
-  return <thead className='table-header'>{children}</thead>;
+  return (
+    <thead className='table-header' data-testid='table-header'>
+      {children}
+    </thead>
+  );
 };
 
 export default TableHeader;
