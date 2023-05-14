@@ -21,13 +21,6 @@ const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMe
   const { showHideNotificationModal } = useContext(ModalContext);
 
   /**
-   * @description function handle action edit button
-   */
-  const handleEdit = useCallback(() => {
-    onEdit();
-  }, [onEdit]);
-
-  /**
    * @description function handle action delete button
    */
   const handleDelete = useCallback(() => {
@@ -37,9 +30,9 @@ const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMe
 
   return (
     <div className='action-menu-wrapper' ref={ref}>
-      <Button text='Edit' color='default' type='button' onClick={handleEdit} variant='primary' />
+      <Button label='Edit' color='default' type='button' onClick={onEdit} variant='primary' />
       <Button
-        text='Delete'
+        label='Delete'
         color='warning'
         type='button'
         onClick={handleDelete}
