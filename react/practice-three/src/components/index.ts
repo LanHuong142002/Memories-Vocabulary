@@ -1,12 +1,11 @@
 export * from './Image';
-export * from './SelectItem';
 export * from './Label';
 export * from './Input';
 export * from './Button';
+export * from './Select';
 export { default as Identity } from './Identity';
 export { default as InputFile } from './InputFile';
 export { default as Modal } from './Modal';
-export { default as Select } from './Select';
 export { default as Table } from './Table';
 export { default as TableBody } from './Table/TableBody';
 export { default as TableCell } from './Table/TableCell';
