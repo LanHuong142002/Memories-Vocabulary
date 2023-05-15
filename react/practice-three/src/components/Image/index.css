@@ -36,6 +36,11 @@
   height: 20px;
 }
 
+.image-wrapper.image-size-xxxs {
+  width: 12px;
+  height: 12px;
+}
+
 .image-wrapper .image {
   width: 100%;
   height: 100%;

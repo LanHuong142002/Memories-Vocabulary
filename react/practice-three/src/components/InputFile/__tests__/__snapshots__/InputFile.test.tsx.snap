@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing input file component Should render Input File component 1`] = `
+<div>
+  <label
+    class="input-file-wrapper input-file-primary"
+    data-testid="input-file-label"
+    for="productImage"
+  >
+    <figure
+      class="image-wrapper image-size-xs "
+    >
+      <img
+        alt="icon upload"
+        class="image "
+        src="image.jpg"
+      />
+    </figure>
+    <div>
+      Upload Image
+      <input
+        accept="image/png, image/jpeg"
+        id="productImage"
+        name="productImage"
+        type="file"
+      />
+    </div>
+  </label>
+</div>
+`;
