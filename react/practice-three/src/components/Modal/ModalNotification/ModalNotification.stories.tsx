@@ -1,5 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import ModalNotification from '.';
+
+// Components
+import { Button, ModalNotification } from '@components';
 
 export default {
   title: 'PracticeTwo/Modal/ModalNotification',
@@ -12,7 +14,14 @@ const Template: ComponentStory<typeof ModalNotification> = (args) => {
 
 export const Notification = Template.bind({});
 Notification.args = {
-  description: '404 Page Not Found',
+  children: (
+    <>
+      <Button label='Close' variant='tertiary' color='warning' size='lg' />
+    </>
+  ),
+  url: '/icons/error-icon.svg',
+  title: 'Ooops!',
+  description: 'Something went wrong',
   onCancel: () => {
     console.log('close');
   },
@@ -20,13 +29,15 @@ Notification.args = {
 
 export const Confirm = Template.bind({});
 Confirm.args = {
-  id: '1',
-  isConfirm: true,
-  textButtonConfirm: 'Delete',
-  description: 'Do you want to delete this ?',
-  onConfirm: async (id: string) => {
-    console.log('confirm', id);
-  },
+  children: (
+    <>
+      <Button label='Cancel' variant='secondary' color='default' size='lg' />
+      <Button label='Delete' variant='tertiary' color='warning' size='lg' />
+    </>
+  ),
+  url: '/icons/trash-icon.svg',
+  title: 'Delete product',
+  description: 'Are you sure you want to delete this product? This action cannot be undone.',
   onCancel: () => {
     console.log('close');
   },

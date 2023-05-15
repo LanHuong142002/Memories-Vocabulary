@@ -1,12 +1,27 @@
-.confirm-modal-description {
-  font-family: var(--font-semiBold), var(--font-default);
-  font-size: var(--font-normal);
+.confirm-modal-text {
+  width: 350px;
   color: var(--color-primary);
-  padding: 20px 0 40px 0;
+  font-size: var(--font-normal);
 }
 
-.confirm-modal-cta {
+.confirm-modal-text .title {
+  font-family: var(--font-bold), var(--font-default);
+  font-size: var(--font-medium);
+}
+
+.confirm-modal-text .description {
+  color: var(--color-secondary);
+  font-family: var(--font-regular), var(--font-default);
+  font-size: var(--font-small);
+  line-height: 20px;
+  padding: 10px 0 32px 0;
+}
+
+.modal-notification .confirm-modal-cta {
   display: flex;
-  justify-content: flex-end;
-  gap: 20px;
+  gap: 12px;
+}
+
+.modal-notification .confirm-modal-cta button {
+  width: 100%;
 }
