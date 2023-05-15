@@ -21,22 +21,11 @@ const Input = ({
   title,
   type = 'text',
   onChange,
-}: InputProps) => {
-  return (
-    <>
-      {title ? (
-        <div className='text-wrapper'>
-          <label>{title}</label>
-          <input
-            className={`text-input text-input-${variant}`}
-            type={type}
-            name={name}
-            value={value}
-            placeholder={placeholder}
-            onChange={onChange}
-          />
-        </div>
-      ) : (
+}: InputProps) => (
+  <>
+    {title ? (
+      <div className='text-wrapper'>
+        <label>{title}</label>
         <input
           className={`text-input text-input-${variant}`}
           type={type}
@@ -45,9 +34,19 @@ const Input = ({
           placeholder={placeholder}
           onChange={onChange}
         />
-      )}
-    </>
-  );
-};
+      </div>
+    ) : (
+      <input
+        className={`text-input text-input-${variant}`}
+        type={type}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
+    )}
+  </>
+);
 
-export default Input;
+export { Input };
+export type { InputProps };
