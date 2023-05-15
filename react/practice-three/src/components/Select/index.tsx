@@ -3,8 +3,11 @@ import { ChangeEvent } from 'react';
 // Styles
 import './index.css';
 
-// Components
-import { SelectItem, SelectItemProps } from '@components';
+interface SelectItemProps {
+  value?: string;
+  id?: string;
+  name: string;
+}
 
 interface SelectProps {
   valueSelected: string;
@@ -15,17 +18,24 @@ interface SelectProps {
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => {
-  return (
-    <div className={title && 'select-box'}>
-      {title ?? <label>{title}</label>}
-      <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
-        {optionAll && <SelectItem value='' name='All' />}
-        {options.length > 0 &&
-          options.map((item) => <SelectItem value={item.id} name={item.name} key={item.id} />)}
-      </select>
-    </div>
-  );
-};
+const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => (
+  <div className={title && 'select-box'} data-testid='select-box'>
+    {title && <label className='title-select'>{title}</label>}
+    <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
+      {optionAll && (
+        <option className='select-item' value=''>
+          All
+        </option>
+      )}
+      {options.length &&
+        options.map(({ id, name }) => (
+          <option className='select-item' value={id} key={id}>
+            {name}
+          </option>
+        ))}
+    </select>
+  </div>
+);
 
-export default Select;
+export { Select };
+export type { SelectProps, SelectItemProps };

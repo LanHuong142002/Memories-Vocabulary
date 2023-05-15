@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ChangeEvent, useState } from 'react';
 
 // Components
-import Select from '.';
+import { Select } from '@components';
 
 export default {
   title: 'PracticeTwo/Select',
@@ -27,7 +27,13 @@ const Template: ComponentStory<typeof Select> = () => {
   };
 
   return (
-    <Select name='status' options={listOption} valueSelected={data} onChange={handleSetData} />
+    <Select
+      name='status'
+      title='Full'
+      options={listOption}
+      valueSelected={data}
+      onChange={handleSetData}
+    />
   );
 };
 
