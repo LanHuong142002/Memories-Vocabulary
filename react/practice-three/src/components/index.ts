@@ -1,9 +1,9 @@
 export * from './Image';
 export * from './SelectItem';
+export * from './Identity';
 export * from './Label';
 export * from './Input';
-export { default as Button } from './Button';
-export { default as Identity } from './Identity';
+export * from './Button';
 export { default as InputFile } from './InputFile';
 export { default as Modal } from './Modal';
 export { default as Select } from './Select';

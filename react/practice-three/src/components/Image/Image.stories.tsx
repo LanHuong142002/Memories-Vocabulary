@@ -6,7 +6,7 @@ import Product from '@assets/images/product.jpg';
 import More from '@assets/icons/more.svg';
 
 // Components
-import { Image } from '.';
+import { Image } from '@components';
 
 export default {
   title: 'PracticeTwo/Image',
@@ -24,23 +24,23 @@ const Template: ComponentStory<typeof Image> = (args) => <Image {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  image: Product,
+  url: Product,
   alt: 'product',
   size: 'md',
 };
 
 export const Circle = Template.bind({});
 Circle.args = {
-  image: Avatar,
+  url: Avatar,
   isCircle: true,
   alt: 'avatar',
-  size: 'sm',
+  size: 'md',
 };
 
 export const Icon = Template.bind({});
 Icon.args = {
-  image: More,
+  url: More,
   alt: 'icon more',
-  size: 'sm',
-  isCursorPointer: true,
+  size: 'xl',
+  isClickable: true,
 };

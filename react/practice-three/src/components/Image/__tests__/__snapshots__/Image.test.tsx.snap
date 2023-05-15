@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Image component Should render Image 1`] = `
+<div>
+  <figure
+    class="image-wrapper image-size-xs "
+  >
+    <img
+      alt="image"
+      class="image "
+      src=""
+    />
+  </figure>
+</div>
+`;
