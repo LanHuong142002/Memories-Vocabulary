@@ -17,16 +17,11 @@ const Typography = ({
   weight,
 }: TypographyProps) => {
   const TagName = tagName;
+  const classes = `typography typography-color-${color} typography-size-${size} ${
+    weight ? `typography-weight-${weight}` : ''
+  }`;
 
-  return (
-    <TagName
-      className={`typography typography-color-${color} typography-size-${size} ${
-        weight ? `typography-weight-${weight}` : ''
-      }`}
-    >
-      {text}
-    </TagName>
-  );
+  return <TagName className={classes}>{text}</TagName>;
 };
 
 export { Typography };
