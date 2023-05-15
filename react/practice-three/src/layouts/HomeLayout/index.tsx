@@ -4,24 +4,29 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, ModalNotification } from '@components';
+import { SelectItemProps, ModalNotification, Button } from '@components';
 
 // Components of page
-import { ProductsTable, ModalProduct, DataProduct } from '@pages';
+import { ProductsTable, ModalProduct } from '@pages';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
 // Contexts
 import { ModalContext } from '@contexts';
+
+// Hooks
 import { useDebounce } from '@hooks';
 
+// Interfaces
+import { DataProduct } from '@interfaces';
+
 interface Filter {
-  productName: string;
+  name: string;
   statusesId: string;
   typesId: string;
   quantity: string;
-  brandName: string;
+  brand: string;
   price: string;
 }
 
@@ -39,20 +44,20 @@ const HomeLayout = () => {
   const [products, setProducts] = useState<DataProduct[]>([]);
   const [flagProductUpdate, setFlagProductUpdate] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
-    productName: '',
+    name: '',
     statusesId: '',
     typesId: '',
     quantity: '',
-    brandName: '',
+    brand: '',
     price: '',
   });
   const [productItem, setProductItem] = useState<DataProduct>({
     id: '',
-    productImage: '',
-    productName: '',
+    image: '',
+    name: '',
     quantity: 0,
     brandImage: '',
-    brandName: '',
+    brand: '',
     statusesId: '',
     typesId: '',
     price: 0,
@@ -196,16 +201,24 @@ const HomeLayout = () => {
       )}
       {notificationModal && (
         <ModalNotification
-          id={productItem.id || ''}
-          description='Do you want to delete this ?'
-          textButtonConfirm='Delete'
-          isConfirm={true}
-          onConfirm={handleConfirm}
+          url='/icons/trash-icon.svg'
+          title='Delete product'
+          description='Are you sure you want to delete this product? This action cannot be undone.'
           onCancel={showHideNotificationModal}
-        />
+        >
+          <Button label='Cancel' variant='secondary' color='default' size='lg' />
+          <Button label='Delete' variant='tertiary' color='warning' size='lg' />
+        </ModalNotification>
       )}
       {errorsModal.status && (
-        <ModalNotification description={errorsModal.message} onCancel={handleCancel} />
+        <ModalNotification
+          url='/icons/trash-icon.svg'
+          title='Ooops!'
+          description={`Something went wrong. ${errorsModal.message}`}
+          onCancel={handleCancel}
+        >
+          <Button label='Close' variant='tertiary' color='warning' size='lg' />
+        </ModalNotification>
       )}
     </main>
   );
