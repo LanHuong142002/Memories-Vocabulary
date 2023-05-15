@@ -3,11 +3,11 @@ import { ReactNode } from 'react';
 // Styles
 import './index.css';
 
-// Images
-import Cancel from '@assets/icons/cancel-icon.svg';
-
 // Components
 import { Image } from '@components';
+
+// Helpers
+import { loaderImage } from '@helpers';
 
 interface ModalProps {
   children: ReactNode;
@@ -26,7 +26,7 @@ const Modal = ({ title, icon, children, toggleModal }: ModalProps) => {
             {title && <p>{title}</p>}
           </div>
           <Image
-            url={Cancel}
+            url={loaderImage('/icons/cancel-icon.svg')}
             size='xxxs'
             onClick={toggleModal}
             isClickable={true}
