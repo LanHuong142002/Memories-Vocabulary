@@ -39,13 +39,13 @@ describe('Testing Modal component', () => {
 
   it('Should render modal with icon correctly', () => {
     const { getByAltText } = render(
-      <Modal icon='icon-url' toggleModal={toggleModal}>
+      <Modal url='/icons/cancel-icon.svg' toggleModal={toggleModal}>
         Modal content
       </Modal>,
     );
     const icon = getByAltText('icon');
 
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveAttribute('src', 'icon-url');
+    expect(icon).toHaveAttribute('src', `${process.env.VITE_ASSETS_URL}/icons/cancel-icon.svg`);
   });
 });

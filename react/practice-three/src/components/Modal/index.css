@@ -22,7 +22,7 @@
 .modal-wrapper .modal-header {
   display: flex;
   justify-content: space-between;
-  padding: 25px;
+  padding: 25px 25px 20px 25px;
 }
 
 .modal-wrapper .modal-header .modal-icon {

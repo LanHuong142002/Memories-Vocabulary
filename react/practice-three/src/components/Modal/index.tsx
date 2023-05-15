@@ -6,6 +6,9 @@ import './index.css';
 // Components
 import { Image } from '@components';
 
+// Helpers
+import { loaderImage } from '@helpers';
+
 interface ModalProps {
   children: ReactNode;
   title?: string;
@@ -19,11 +22,11 @@ const Modal = ({ title, url, children, toggleModal }: ModalProps) => {
       <div className='modal-wrapper'>
         <div className='modal-header'>
           <div className='modal-icon'>
-            {url && <Image size='lg' alt='icon' url={url} />}
+            {url && <Image size='lg' alt='icon' url={loaderImage(url)} />}
             {title && <p>{title}</p>}
           </div>
           <Image
-            url={'/icons/cancel-icon.svg'}
+            url={loaderImage('/icons/cancel-icon.svg')}
             size='xxxs'
             onClick={toggleModal}
             isClickable={true}
