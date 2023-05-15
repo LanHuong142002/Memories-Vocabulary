@@ -34,14 +34,7 @@ Default.args = {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  placeholder: 'Full Name',
-  variant: 'default',
-  title: 'Full Name',
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  placeholder: 'Full Name',
+  placeholder: 'Enter name...',
   variant: 'primary',
-  title: 'Full Name',
+  title: 'Name',
 };
