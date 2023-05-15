@@ -7,8 +7,8 @@ interface TableBodyProps {
   children: ReactNode;
 }
 
-const TableBody = ({ children }: TableBodyProps) => {
-  return <tbody className='table-body'>{children}</tbody>;
-};
+const TableBody = ({ children }: TableBodyProps) => (
+  <tbody className='table-body'>{children}</tbody>
+);
 
 export default TableBody;
