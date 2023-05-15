@@ -14,14 +14,17 @@ import {
 } from '@components';
 
 // Components of pages
-import { ProductRow, DataProduct, ProductRowProps } from '@pages';
+import { ProductRow, ProductRowProps } from '@pages';
+
+// Interfaces
+import { DataProduct } from '@interfaces';
 
 interface Filters {
-  productName: string;
+  name: string;
   statusesId: string;
   typesId: string;
   quantity: string;
-  brandName: string;
+  brand: string;
   price: string;
 }
 
@@ -47,12 +50,7 @@ const ProductsTable = ({
       <TableHeader>
         <TableRow classTableRow='header'>
           <TableCell title='Product' tagName='th'>
-            <Input
-              name='productName'
-              value={filters.productName}
-              placeholder='Search'
-              onChange={onSearch}
-            />
+            <Input name='name' value={filters.name} placeholder='Search' onChange={onSearch} />
           </TableCell>
           <TableCell title='Status' tagName='th'>
             <Select
@@ -82,12 +80,7 @@ const ProductsTable = ({
             />
           </TableCell>
           <TableCell title='Brand' tagName='th'>
-            <Input
-              name='brandName'
-              value={filters.brandName}
-              placeholder='Search'
-              onChange={onSearch}
-            />
+            <Input name='brand' value={filters.brand} placeholder='Search' onChange={onSearch} />
           </TableCell>
           <TableCell title='Price' tagName='th'>
             <Input
@@ -107,15 +100,15 @@ const ProductsTable = ({
             <ProductRow
               key={item.id}
               id={item.id}
-              productImage={item.productImage}
-              productName={item.productName}
+              image={item.image}
+              name={item.name}
               status={item.statuses ? item.statuses.name : ''}
               type={item.types ? item.types.name : ''}
               statusesId={item.statuses ? item.statuses.id : ''}
               typesId={item.types ? item.types.id : ''}
               quantity={item.quantity}
               brandImage={item.brandImage}
-              brandName={item.brandName}
+              brand={item.brand}
               price={item.price}
               onEdit={onEdit}
               handleSetProductItem={handleSetProductItem}
