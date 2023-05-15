@@ -25,7 +25,11 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
+}
+
+.select-box .title-select {
   font-family: var(--font-bold), var(--font-default);
+  font-size: var(--font-small);
 }
 
 .select-box .select-wrapper {

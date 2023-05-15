@@ -18,26 +18,24 @@ interface SelectProps {
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => {
-  return (
-    <div className={title && 'select-box'} data-testid='select-box'>
-      {title ?? <label className='title-select'>{title}</label>}
-      <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
-        {optionAll && (
-          <option className='select-item' value=''>
-            All
+const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => (
+  <div className={title && 'select-box'} data-testid='select-box'>
+    {title ?? <label className='title-select'>{title}</label>}
+    <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
+      {optionAll && (
+        <option className='select-item' value=''>
+          All
+        </option>
+      )}
+      {options.length > 0 &&
+        options.map(({ id, name }) => (
+          <option className='select-item' value={id} key={id}>
+            {name}
           </option>
-        )}
-        {options.length > 0 &&
-          options.map((item) => (
-            <option className='select-item' value={item.id} key={item.id}>
-              {item.name}
-            </option>
-          ))}
-      </select>
-    </div>
-  );
-};
+        ))}
+    </select>
+  </div>
+);
 
 export { Select };
 export type { SelectProps, SelectItemProps };
