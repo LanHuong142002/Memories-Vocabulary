@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Components
-import Typography from '.';
+import { Typography } from '@components';
 
 export default {
   title: 'PracticeTwo/Typography',
@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof Typography> = (args) => <Typography {...ar
 
 export const Primary = Template.bind({});
 Primary.args = {
-  color: 'tertiary',
+  color: 'quaternary',
   tagName: 'h1',
   text: 'Management',
   size: 'lg',
