@@ -10,6 +10,7 @@ export default defineConfig({
     react(),
     environmentPlugin({
       VITE_BASE_URL: process.env.VITE_BASE_URL,
+      VITE_ASSETS_URL: process.env.VITE_ASSETS_URL,
     }),
     viteImagemin({
       gifsicle: {
@@ -57,6 +58,7 @@ export default defineConfig({
       '@components': path.resolve(__dirname, 'src/components'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
       '@contexts': path.resolve(__dirname, 'src/contexts'),
+      '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@services': path.resolve(__dirname, 'src/services'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),

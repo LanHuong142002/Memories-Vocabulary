@@ -29,6 +29,7 @@
       "@helpers": ["./helpers"],
       "@contexts": ["./contexts"],
       "@services": ["./services"],
+      "@interfaces": ["./interfaces"],
       "@pages": ["./pages"],
       "@hooks": ["./hooks"],
       "@layouts": ["./layouts"]
