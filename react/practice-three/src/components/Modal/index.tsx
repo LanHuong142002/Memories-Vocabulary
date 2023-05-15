@@ -3,23 +3,35 @@ import { ReactNode } from 'react';
 // Styles
 import './index.css';
 
-// Images
-import Cancel from '@assets/icons/cancel.svg';
-
 // Components
 import { Image } from '@components';
 
+// Helpers
+import { loaderImage } from '@helpers';
+
 interface ModalProps {
   children: ReactNode;
+  title?: string;
+  url?: string;
   toggleModal: () => void;
 }
 
-const Modal = ({ children, toggleModal }: ModalProps) => {
+const Modal = ({ title, url, children, toggleModal }: ModalProps) => {
   return (
     <div className='overlay'>
       <div className='modal-wrapper'>
         <div className='modal-header'>
-          <Image image={Cancel} size='sm' onClick={toggleModal} isCursorPointer={true} />
+          <div className='modal-icon'>
+            {url && <Image size='lg' alt='icon' url={loaderImage(url)} />}
+            {title && <p>{title}</p>}
+          </div>
+          <Image
+            url={loaderImage('/icons/cancel-icon.svg')}
+            size='xxxs'
+            onClick={toggleModal}
+            isClickable={true}
+            alt='icon cancel'
+          />
         </div>
         <div className='modal-body'>{children}</div>
       </div>
