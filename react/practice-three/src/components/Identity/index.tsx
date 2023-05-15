@@ -4,17 +4,23 @@ import './index.css';
 // Components
 import { Image, ImageProps } from '@components';
 
-interface IdentityProps extends Pick<ImageProps, 'image' | 'isCircle' | 'alt'> {
+interface IdentityProps extends Pick<ImageProps, 'url' | 'isCircle' | 'alt' | 'onClick'> {
   text: string;
 }
 
-const Identity = ({ text, image, isCircle, alt }: IdentityProps) => {
+const Identity = ({ text, url, isCircle, alt, onClick }: IdentityProps) => {
   return (
     <div className='identity-wrapper'>
-      <Image image={image} size={isCircle ? 'sm' : 'md'} isCircle={isCircle} alt={alt} />
-      <span>{text}</span>
+      <Image
+        url={url}
+        size={isCircle ? 'xs' : 'lg'}
+        isCircle={isCircle}
+        alt={alt}
+        onClick={onClick}
+      />
+      <span onClick={onClick}>{text}</span>
     </div>
   );
 };
 
-export default Identity;
+export { Identity };
