@@ -5,7 +5,7 @@ import Product from '@assets/images/product.jpg';
 import Avatar from '@assets/images/avatar.jpg';
 
 // Components
-import Identity from '.';
+import { Identity } from '.';
 
 export default {
   title: 'PracticeTwo/Identity',
@@ -24,12 +24,12 @@ const Template: ComponentStory<typeof Identity> = (args) => <Identity {...args} 
 export const Primary = Template.bind({});
 Primary.args = {
   text: 'Louis Vuitton',
-  image: Product,
+  url: Product,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   text: 'Evan Flores',
-  image: Avatar,
+  url: Avatar,
   isCircle: true,
 };
