@@ -29,9 +29,9 @@ const Select = ({ valueSelected, optionAll, onChange, title, name, options }: Se
           </option>
         )}
         {options.length > 0 &&
-          options.map((item) => (
-            <option className='select-item' value={item.id} key={item.id}>
-              {item.name}
+          options.map(({ id, name }) => (
+            <option className='select-item' value={id} key={id}>
+              {name}
             </option>
           ))}
       </select>
