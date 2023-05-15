@@ -4,34 +4,37 @@ import { MouseEvent } from 'react';
 import './index.css';
 
 interface ButtonProps {
-  text: string;
-  variant: 'primary' | 'secondary';
+  label: string;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   type?: 'button' | 'submit' | 'reset';
   color?: 'success' | 'warning' | 'default';
-  isDisable?: boolean;
+  isDisabled?: boolean;
+  isLoading?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
-  text,
-  variant,
+  label,
+  variant = 'primary',
+  size = 'sm',
   color = 'default',
   type = 'button',
+  isDisabled,
+  isLoading,
   onClick,
-  isDisable,
 }: ButtonProps) => {
+  const classes = `btn btn-${variant} btn-color-${color} btn-${size} ${
+    isDisabled ? 'btn-disabled' : ''
+  } ${isLoading ? 'btn-loading' : ''}`;
+
   return (
-    <button
-      type={type}
-      className={`btn ${variant ? `btn-${variant}` : ''} btn-color-${color} ${
-        isDisable ? 'btn-disable' : ''
-      }`}
-      onClick={onClick}
-      disabled={isDisable}
-    >
-      {text}
+    <button type={type} className={classes} onClick={onClick} disabled={isDisabled || isLoading}>
+      {isLoading && <span className='loader'></span>}
+      <span>{label}</span>
     </button>
   );
 };
 
-export default Button;
+export { Button };
+export type { ButtonProps };

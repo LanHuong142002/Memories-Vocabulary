@@ -16,11 +16,13 @@ const config: Config.InitialOptions = {
   coverageDirectory: 'coverage', // Custom folder name contain reports
   moduleNameMapper: {
     '^@constants(.*)$': '<rootDir>src/constants/$1',
+    '^@assets(.*)$': '<rootDir>src/assets/$1',
     '^@components(.*)$': '<rootDir>src/components/$1',
     '^@helpers(.*)$': '<rootDir>src/helpers/$1',
     '^@contexts(.*)$': '<rootDir>src/contexts/$1',
-    '^@service(.*)$': '<rootDir>src/services/$1',
+    '^@services(.*)$': '<rootDir>src/services/$1',
     '^@pages(.*)$': '<rootDir>src/pages/$1',
+    '^@interfaces(.*)$': '<rootDir>src/interfaces/$1',
     '^@hooks(.*)$': '<rootDir>src/hooks/$1',
     '^@layouts(.*)$': '<rootDir>src/layouts/$1',
     '.*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
@@ -38,7 +40,7 @@ const config: Config.InitialOptions = {
   ],
   globals: {
     'ts-jest': {
-      tsconfig: `tsconfig.jest.json`,
+      tsconfig: 'tsconfig.jest.json',
     },
   },
 };

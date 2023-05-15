@@ -1,74 +1,167 @@
 .btn {
-  cursor: pointer;
-  font-family: var(--font-bold), var(--font-default);
+  outline: none;
+  font-family: var(--font-regular), var(--font-default);
 }
 
-.btn.btn-primary:hover {
-  background-color: var(--color-hover-fade);
+.btn.btn-xl {
+  padding: 10px 85px;
+}
+
+.btn.btn-lg {
+  padding: 10px 63px;
+}
+
+.btn.btn-md {
+  padding: 10px 35px;
+}
+
+.btn.btn-sm {
+  padding: 10px 18px;
+}
+
+.btn.btn-tertiary,
+.btn.btn-primary,
+.btn.btn-secondary {
+  cursor: pointer;
+}
+
+.btn.btn-tertiary,
+.btn.btn-primary {
+  font-family: var(--font-semiBold), var(--font-default);
+}
+
+.btn.btn-primary {
+  color: var(--color-primary);
+  font-size: var(--font-small);
+  border: none;
+}
+
+.btn.btn-primary.btn-color-warning {
+  color: var(--color-warning);
+}
+
+.btn.btn-primary:hover:enabled {
+  background-color: var(--color-hover);
 }
 
 .btn.btn-primary,
 .btn.btn-secondary {
-  outline: none;
-  font-size: var(--font-normal);
-  padding: 10px 35px;
   background-color: transparent;
 }
 
-.btn.btn-primary {
-  border: none;
-}
-
 .btn.btn-secondary {
-  border: 1px solid var(--color-success);
-  color: var(--color-white);
-  border-radius: 38px;
+  color: var(--color-primary);
+  border: 1px solid var(--color-muted);
 }
 
-.btn.btn-secondary.btn-color-success {
-  border: 1px solid var(--color-success);
-}
-
-.btn.btn-secondary.btn-color-success:hover {
-  background-color: var(--color-success);
-  color: var(--color-white);
+.btn.btn-secondary:hover:enabled.btn-color-warning,
+.btn.btn-secondary:hover:enabled.btn-color-success {
+  border: none;
 }
 
 .btn.btn-secondary.btn-color-warning {
-  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
-.btn.btn-secondary.btn-color-warning:hover {
+.btn.btn-secondary:hover:enabled.btn-color-warning {
   background-color: var(--color-warning);
-  color: var(--color-white);
+}
+
+.btn.btn-secondary.btn-color-success {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.btn.btn-secondary:hover:enabled.btn-color-success {
+  background-color: var(--color-success);
 }
 
 .btn.btn-secondary.btn-color-default {
-  border: 1px solid var(--color-secondary);
+  font-family: var(--font-semiBold), var(--font-default);
+  border-color: var(--color-muted);
 }
 
-.btn.btn-secondary.btn-color-default:hover {
-  background-color: var(--color-secondary);
+.btn.btn-secondary:hover:enabled.btn-color-default {
+  color: var(--color-primary);
+  background-color: var(--color-light);
+  border: 1px solid var(--color-muted);
+}
+
+.btn.btn-secondary,
+.btn.btn-tertiary {
+  border-radius: 8px;
+}
+
+.btn.btn-secondary:hover:enabled,
+.btn.btn-tertiary {
+  color: var(--color-white);
+  border: none;
+  background-color: var(--color-success);
+}
+
+.btn.btn-tertiary.btn-color-warning,
+.btn.btn-tertiary.btn-color-success {
   color: var(--color-white);
 }
 
-.btn.btn-secondary.btn-disable,
-.btn.btn-secondary.btn-disable:hover {
-  background-color: var(--color-hover-fade);
+.btn.btn-tertiary.btn-color-default {
   color: var(--color-primary);
+  border: 1px solid var(--color-muted);
+  background-color: var(--color-muted);
+}
+
+.btn.btn-tertiary.btn-color-warning,
+.btn.btn-loading.btn-color-warning {
+  background-color: var(--color-warning);
+}
+
+.btn.btn-tertiary.btn-color-success,
+.btn.btn-loading.btn-color-success {
+  background-color: var(--color-success);
+}
+
+.btn.btn-disabled,
+.btn.btn-disabled:hover:enabled,
+.btn.btn-tertiary:hover:enabled {
+  opacity: 0.6;
+}
+
+.btn.btn-loading {
+  display: flex;
+  justify-content: center;
   border: none;
+}
+
+.btn.btn-disabled,
+.btn.btn-disabled:hover:enabled,
+.btn.btn-loading:hover {
   cursor: default;
-  opacity: 0.8;
 }
 
-.btn.btn-color-success {
-  color: var(--color-success);
+.btn.btn-loading .loader {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  display: block;
+  cursor: default;
+  margin: auto 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--color-white);
+  animation: identifier 1s ease infinite;
 }
 
-.btn.btn-color-warning {
-  color: var(--color-warning);
+.btn.btn-loading span:nth-child(2) {
+  position: relative;
+  visibility: hidden;
 }
 
-.btn.btn-color-default {
-  color: var(--color-primary);
+@keyframes identifier {
+  0% {
+    transform: rotate(0turn);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
 }
