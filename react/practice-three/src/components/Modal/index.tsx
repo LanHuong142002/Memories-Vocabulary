@@ -6,27 +6,24 @@ import './index.css';
 // Components
 import { Image } from '@components';
 
-// Helpers
-import { loaderImage } from '@helpers';
-
 interface ModalProps {
   children: ReactNode;
   title?: string;
-  icon?: string;
+  url?: string;
   toggleModal: () => void;
 }
 
-const Modal = ({ title, icon, children, toggleModal }: ModalProps) => {
+const Modal = ({ title, url, children, toggleModal }: ModalProps) => {
   return (
     <div className='overlay'>
       <div className='modal-wrapper'>
         <div className='modal-header'>
           <div className='modal-icon'>
-            {icon && <Image size='lg' alt='icon' url={icon} />}
+            {url && <Image size='lg' alt='icon' url={url} />}
             {title && <p>{title}</p>}
           </div>
           <Image
-            url={loaderImage('/icons/cancel-icon.svg')}
+            url={'/icons/cancel-icon.svg'}
             size='xxxs'
             onClick={toggleModal}
             isClickable={true}
