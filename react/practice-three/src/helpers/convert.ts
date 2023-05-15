@@ -42,4 +42,15 @@ const formatPrice = (value: number): string => {
   }
 };
 
-export { convertBase64, formatPrice };
+/**
+ * @description This function takes in a string parameter representing the source of an image returns
+ * the complete URL of the image by concatenating the source with the assets URL from the environment variables.
+ * @param {string} src A string representing the source of an image.
+ *
+ * @returns {string} A string representing the complete URL of the image.
+ */
+const loaderImage = (src: string) => {
+  return `${process.env.VITE_ASSETS_URL}${src}`;
+};
+
+export { convertBase64, formatPrice, loaderImage };
