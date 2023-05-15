@@ -3,9 +3,6 @@ import { forwardRef, MouseEvent } from 'react';
 // Styles
 import './index.css';
 
-// helpers
-import { loaderImage } from '@helpers';
-
 interface ImageProps {
   url: string;
   alt?: string;
@@ -25,7 +22,7 @@ const Image = forwardRef<HTMLElement, ImageProps>(function Image(
       onClick={onClick}
       ref={ref}
     >
-      <img className={`image ${isCircle ? 'image-circle' : ''}`} src={loaderImage(url)} alt={alt} />
+      <img className={`image ${isCircle ? 'image-circle' : ''}`} src={url} alt={alt} />
     </figure>
   );
 });

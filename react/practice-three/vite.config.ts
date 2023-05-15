@@ -10,6 +10,7 @@ export default defineConfig({
     react(),
     environmentPlugin({
       VITE_BASE_URL: process.env.VITE_BASE_URL,
+      VITE_ASSETS_URL: process.env.VITE_ASSETS_URL,
     }),
     viteImagemin({
       gifsicle: {
