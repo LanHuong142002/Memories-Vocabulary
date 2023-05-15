@@ -14,17 +14,17 @@ import './index.css';
 // Components
 import { Modal, Button, Image, Input, Select, SelectItemProps, InputFile } from '@components';
 
-// Components of pages
-import { DataProduct } from '@pages';
-
 // Services
 import { updateProduct } from '@services';
 
 // Helpers
-import { validation, convertBase64 } from '@helpers';
+import { validation, convertBase64, loaderImage } from '@helpers';
 
 // Contexts
 import { ModalContext } from '@contexts';
+
+// Interfaces
+import { DataProduct } from '@interfaces';
 
 interface ModalProps {
   status: SelectItemProps[];
@@ -33,16 +33,16 @@ interface ModalProps {
   flagProductUpdate: () => void;
 }
 
-type ErrorMessage = Pick<DataProduct, 'productName' | 'quantity' | 'brandName' | 'price'>;
+type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
 
 const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
   const [product, setProduct] = useState(productItem);
   const [isErrors, setIsErrors] = useState<boolean>(true);
   const [errorsMessage, setErrorsMessage] = useState<ErrorMessage>({
-    productName: '',
+    name: '',
     quantity: '',
-    brandName: '',
+    brand: '',
     price: '',
   });
 
@@ -139,112 +139,123 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
   return useMemo(() => {
     return (
-      <Modal toggleModal={showHideItemModal}>
+      <Modal title='Products information' toggleModal={showHideItemModal}>
         <form className='form-wrapper' onSubmit={handleOnSave}>
           <div className='form-body'>
-            <div className='form-aside'>
-              <Image image={product.productImage} size='lg' />
+            <div className='form-image'>
+              <Image url={product.image} alt='image' size='xl' isCircle={true} />
               <InputFile
-                id='productImage'
-                name='productImage'
-                text='Choose File ... '
+                url={loaderImage('/icons/upload-icon.svg')}
+                size='md'
+                variant='primary'
+                id='image'
+                name='image'
+                text='Click to upload'
                 onChange={handleChangeInputFile}
               />
             </div>
-            <div className='form-content'>
-              <div className='form-group'>
-                <div className='form-control'>
-                  <Input
-                    title="Product's Name"
-                    name='productName'
-                    variant='primary'
-                    value={product.productName}
-                    onChange={handleOnChange}
-                  />
-                  <span className='error-message'>{errorsMessage.productName}</span>
-                </div>
-              </div>
-              <div className='form-group'>
-                <div className='form-control'>
-                  <Input
-                    title='Quantity'
-                    name='quantity'
-                    variant='primary'
-                    type='number'
-                    value={String(product.quantity)}
-                    onChange={handleOnChange}
-                  />
-                  <span className='error-message'>{errorsMessage.quantity}</span>
-                </div>
-              </div>
-              <div className='form-group form-group-split'>
-                <div className='form-control'>
-                  <Input
-                    title="Brand's Name"
-                    name='brandName'
-                    variant='primary'
-                    value={product.brandName}
-                    onChange={handleOnChange}
-                  />
-                  <span className='error-message'>{errorsMessage.brandName}</span>
-                </div>
 
-                <div className='group-image'>
-                  <Image size='sm' isCircle={true} image={product.brandImage} />
+            <div className='form-group'>
+              <div className='form-control'>
+                <Input
+                  title='Name'
+                  name='name'
+                  variant='primary'
+                  value={product.name}
+                  onChange={handleOnChange}
+                />
+                <span className='error-message'>{errorsMessage.name}</span>
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <div className='form-control'>
+                <Input
+                  title='Quantity'
+                  name='quantity'
+                  variant='primary'
+                  type='number'
+                  value={String(product.quantity)}
+                  onChange={handleOnChange}
+                />
+                <span className='error-message'>{errorsMessage.quantity}</span>
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <div className='form-control'>
+                <Input
+                  title='Price'
+                  name='price'
+                  variant='primary'
+                  type='number'
+                  value={String(product.price)}
+                  onChange={handleOnChange}
+                />
+                <span className='error-message'>{errorsMessage.price}</span>
+              </div>
+            </div>
+            <div className='form-group form-group-split'>
+              <Select
+                title='Status'
+                options={status}
+                name='statusesId'
+                valueSelected={product.statusesId || ''}
+                onChange={handleOnChange}
+              />
+
+              <Select
+                title='Types'
+                options={types}
+                name='typesId'
+                valueSelected={product.typesId || ''}
+                onChange={handleOnChange}
+              />
+            </div>
+
+            <div className='form-group form-group-split'>
+              <div className='form-control'>
+                <Input
+                  title='Brand'
+                  name='brand'
+                  variant='primary'
+                  value={product.brand}
+                  onChange={handleOnChange}
+                />
+                <span className='error-message'>{errorsMessage.brand}</span>
+              </div>
+
+              <div className='group-image'>
+                <p>Brand Image</p>
+                <div className='image-wrapper'>
+                  <Image size='s' isCircle={true} url={product.brandImage} />
                   <InputFile
+                    url={loaderImage('/icons/upload-cloud.svg')}
                     id='brandImage'
                     name='brandImage'
-                    text='Choose File ...'
+                    text='Upload photo'
                     variant='secondary'
+                    size='xxs'
                     onChange={handleChangeInputFile}
                   />
                 </div>
-              </div>
-              <div className='form-group form-group-split'>
-                <div className='form-control'>
-                  <Input
-                    title='Price'
-                    name='price'
-                    variant='primary'
-                    type='number'
-                    value={String(product.price)}
-                    onChange={handleOnChange}
-                  />
-                  <span className='error-message'>{errorsMessage.price}</span>
-                </div>
-
-                <Select
-                  title='Status'
-                  options={status}
-                  name='statusesId'
-                  valueSelected={product.statusesId || ''}
-                  onChange={handleOnChange}
-                />
-
-                <Select
-                  title='Types'
-                  options={types}
-                  name='typesId'
-                  valueSelected={product.typesId || ''}
-                  onChange={handleOnChange}
-                />
               </div>
             </div>
           </div>
           <div className='form-cta'>
             <Button
               variant='secondary'
-              color='success'
-              text='Save'
-              type='submit'
-              isDisable={isErrors}
-            />
-            <Button
-              variant='secondary'
               color='default'
-              text='Cancel'
+              label='Cancel'
               type='button'
               onClick={showHideItemModal}
+            />
+            <Button
+              variant='tertiary'
+              color='success'
+              label='Confirm'
+              type='submit'
+              isDisabled={isErrors}
             />
           </div>
         </form>
