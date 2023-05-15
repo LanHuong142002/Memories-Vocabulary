@@ -50,4 +50,5 @@ const Input = ({
   );
 };
 
-export default Input;
+export { Input };
+export type { InputProps };
