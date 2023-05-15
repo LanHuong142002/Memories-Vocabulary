@@ -20,7 +20,7 @@ interface SelectProps {
 
 const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => (
   <div className={title && 'select-box'} data-testid='select-box'>
-    {title ?? <label className='title-select'>{title}</label>}
+    {title && <label className='title-select'>{title}</label>}
     <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
       {optionAll && (
         <option className='select-item' value=''>
