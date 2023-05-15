@@ -16,12 +16,10 @@ const Image = forwardRef<HTMLElement, ImageProps>(function Image(
   { url, isCircle, alt = 'image', size = 'xs', isClickable, onClick },
   ref,
 ) {
+  const classes = `image-wrapper image-size-${size} ${isClickable ? 'image-cursor-pointer' : ''}`;
+
   return (
-    <figure
-      className={`image-wrapper image-size-${size} ${isClickable ? 'image-cursor-pointer' : ''}`}
-      onClick={onClick}
-      ref={ref}
-    >
+    <figure className={classes} onClick={onClick} ref={ref}>
       <img className={`image ${isCircle ? 'image-circle' : ''}`} src={url} alt={alt} />
     </figure>
   );
