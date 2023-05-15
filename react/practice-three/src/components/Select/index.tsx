@@ -27,7 +27,7 @@ const Select = ({ valueSelected, optionAll, onChange, title, name, options }: Se
           All
         </option>
       )}
-      {options.length > 0 &&
+      {options.length &&
         options.map(({ id, name }) => (
           <option className='select-item' value={id} key={id}>
             {name}
