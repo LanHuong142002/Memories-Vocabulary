@@ -6,7 +6,7 @@ import './index.css';
 interface ImageProps {
   url: string;
   alt?: string;
-  size?: 'xxs' | 'xs' | 's' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'xxxs' | 'xxs' | 'xs' | 's' | 'md' | 'lg' | 'xl' | 'xxl';
   isCircle?: boolean;
   isClickable?: boolean;
   onClick?: (e: MouseEvent) => void;
