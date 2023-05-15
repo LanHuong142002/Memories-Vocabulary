@@ -1,51 +1,35 @@
+import { ReactNode } from 'react';
 // Styles
+
 import './index.css';
 
 // Components
-import { Button, Modal } from '@components';
-import { useCallback } from 'react';
+import { Modal } from '@components';
 
 interface ModalNotificationProps {
   id?: string;
-  textButtonConfirm?: string;
+  title: string;
   description: string;
-  isConfirm?: boolean;
-  onConfirm?: (id: string) => Promise<void>;
+  url: string;
+  children: ReactNode;
   onCancel: () => void;
 }
 
 const ModalNotification = ({
+  url,
   description,
-  id,
-  textButtonConfirm,
-  isConfirm,
-  onConfirm,
+  children,
+  title,
   onCancel,
 }: ModalNotificationProps) => {
-  /**
-   * @description function handle action confirm of modal
-   */
-  const handleActionConfirm = useCallback(() => {
-    if (id) {
-      onConfirm!(id);
-    }
-  }, [onConfirm, id]);
-
   return (
-    <Modal toggleModal={onCancel}>
-      <p className='confirm-modal-description'>{description}</p>
-      <div className='confirm-modal-cta'>
-        {isConfirm && (
-          <>
-            <Button
-              variant='secondary'
-              color='warning'
-              text={textButtonConfirm || 'Delete'}
-              onClick={handleActionConfirm}
-            />
-            <Button variant='secondary' color='default' text='Cancel' onClick={onCancel} />
-          </>
-        )}
+    <Modal url={url} toggleModal={onCancel}>
+      <div className='modal-notification'>
+        <div className='confirm-modal-text'>
+          <p className='title'>{title}</p>
+          <p className='description'>{description}</p>
+        </div>
+        <div className='confirm-modal-cta'>{children}</div>
       </div>
     </Modal>
   );
