@@ -1,9 +1,8 @@
 // Styles
-import { DetailsPage } from '@pages';
 import './styles/main.css';
 
 // Pages
-import { HomePage } from '@pages';
+import { DetailsPage, HomePage } from '@pages';
 
 const App = () => {
   return (
