@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 // Component
@@ -101,13 +103,15 @@ const ProductRow = ({
   return (
     <TableRow>
       <TableCell tagName='td'>
-        <Identity url={image} text={name} alt={name} />
+        <Link to={`/details/${id}`}>
+          <Identity url={image} text={name} alt={name} />
+        </Link>
       </TableCell>
       <TableCell tagName='td'>
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={type || ''} weight='regular' size='sm' />
+        <Typography text={type || ''} weight='regular' size='s' />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={String(quantity)} variant='primary' />
@@ -116,7 +120,7 @@ const ProductRow = ({
         <Identity url={brandImage} text={brand} isCircle={true} alt={brand} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='sm' />
+        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='s' />
       </TableCell>
       <TableCell tagName='td'>
         <Image

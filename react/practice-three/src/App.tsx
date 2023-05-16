@@ -1,3 +1,5 @@
+import { Route, Routes } from 'react-router-dom';
+
 // Styles
 import './styles/main.css';
 
@@ -7,8 +9,10 @@ import { DetailsPage, HomePage } from '@pages';
 const App = () => {
   return (
     <div className='container'>
-      {/* <HomePage /> */}
-      <DetailsPage />
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/details/:id' element={<DetailsPage />} />
+      </Routes>
     </div>
   );
 };
