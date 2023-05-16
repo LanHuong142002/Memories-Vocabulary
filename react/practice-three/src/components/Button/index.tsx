@@ -24,15 +24,12 @@ const Button = ({
   isLoading,
   onClick,
 }: ButtonProps) => {
+  const classes = `btn btn-${variant} btn-color-${color} btn-${size} ${
+    isDisabled ? 'btn-disabled' : ''
+  } ${isLoading ? 'btn-loading' : ''}`;
+
   return (
-    <button
-      type={type}
-      className={`btn btn-${variant} btn-color-${color} btn-${size} ${
-        isDisabled ? 'btn-disabled' : ''
-      } ${isLoading ? 'btn-loading' : ''}`}
-      onClick={onClick}
-      disabled={isDisabled || isLoading}
-    >
+    <button type={type} className={classes} onClick={onClick} disabled={isDisabled || isLoading}>
       {isLoading && <span className='loader'></span>}
       <span>{label}</span>
     </button>
