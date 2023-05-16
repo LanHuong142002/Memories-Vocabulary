@@ -1,44 +1,49 @@
 import { MESSAGE_ERRORS, REGEX } from '@constants';
 
 /**
- * @description function check empty or not
+ * @description function check the value is empty or not
  *
- * @param {string} value of input
+ * @param {string} value is value of input
  *
- * @returns {string} a message error or empty string
+ * @returns {boolean}
  */
-const checkEmpty = (value: string): string => {
-  console.log(value);
-
-  switch (true) {
-    // case empty
-    case !value.trim():
-      return MESSAGE_ERRORS.EMPTY_FIELD;
-    default:
-      return '';
+const isEmpty = (value: string) => {
+  if (!String(value).trim()) {
+    return false;
   }
+
+  return true;
 };
 
 /**
- * @description function check value is number or not
+ * @description This function checks whether a given value matches a given regular expression or not.
  *
- * @param {String} value of input
+ * @param {string} value The value to be checked.
+ * @param {RegExp} regex The regular expression to be matched against the value.
  *
- * @returns {string} a message error or empty string
+ * @returns {boolean}
  */
-const checkNumber = (key: string, value: string): string => {
-  switch (true) {
-    // case empty
-    case !value.trim():
-      return MESSAGE_ERRORS.EMPTY_FIELD;
-    // case if value is not positive number
-    case Number(value) < 0:
-      return MESSAGE_ERRORS.POSITIVE_NUMBER;
-    case !REGEX.DECIMAL_NUMBER.test(value) && key === 'quantity':
-      return MESSAGE_ERRORS.INTEGER_NUMBER;
-    default:
-      return '';
+const isRegex = (regex: RegExp, value: string) => {
+  if (regex.test(String(value))) {
+    return false;
   }
+
+  return true;
+};
+
+/**
+ * @description function check the number is a positive number or note
+ *
+ * @param {string} value is value of input
+ *
+ * @returns {boolean}
+ */
+const isPositiveNumber = (value: number) => {
+  if (Number(value) < 0) {
+    return false;
+  }
+
+  return true;
 };
 
 /**
@@ -54,15 +59,27 @@ const validation = <T extends object, X>(data: T, fieldsNumber = ['']): X => {
   for (const [key, value] of Object.entries(data)) {
     // Check which fields want to check as number
     if (fieldsNumber.includes(key)) {
-      errorsMessage = { ...errorsMessage, [key]: checkNumber(key, String(value)) };
+      if (!isEmpty(value)) {
+        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
+      } else if (isRegex(REGEX.DECIMAL_NUMBER, value) && key === 'quantity') {
+        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.INTEGER_NUMBER };
+      } else if (!isPositiveNumber(value)) {
+        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.POSITIVE_NUMBER };
+      } else {
+        errorsMessage = { ...errorsMessage, [key]: '' };
+      }
     }
     // Check value is empty or not
     else {
-      errorsMessage = { ...errorsMessage, [key]: checkEmpty(value) };
+      if (!isEmpty(value)) {
+        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
+      } else {
+        errorsMessage = { ...errorsMessage, [key]: '' };
+      }
     }
   }
 
   return errorsMessage as X;
 };
 
-export { validation, checkEmpty, checkNumber };
+export { validation, isEmpty, isPositiveNumber, isRegex };
