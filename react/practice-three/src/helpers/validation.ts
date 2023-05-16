@@ -1,4 +1,4 @@
-import { MESSAGE_ERRORS } from '@constants';
+import { MESSAGE_ERRORS, REGEX } from '@constants';
 
 /**
  * @description function check empty or not
@@ -8,6 +8,8 @@ import { MESSAGE_ERRORS } from '@constants';
  * @returns {string} a message error or empty string
  */
 const checkEmpty = (value: string): string => {
+  console.log(value);
+
   switch (true) {
     // case empty
     case !value.trim():
@@ -24,7 +26,7 @@ const checkEmpty = (value: string): string => {
  *
  * @returns {string} a message error or empty string
  */
-const checkNumber = (value: string): string => {
+const checkNumber = (key: string, value: string): string => {
   switch (true) {
     // case empty
     case !value.trim():
@@ -32,6 +34,8 @@ const checkNumber = (value: string): string => {
     // case if value is not positive number
     case Number(value) < 0:
       return MESSAGE_ERRORS.POSITIVE_NUMBER;
+    case !REGEX.DECIMAL_NUMBER.test(value) && key === 'quantity':
+      return MESSAGE_ERRORS.INTEGER_NUMBER;
     default:
       return '';
   }
@@ -45,12 +49,12 @@ const checkNumber = (value: string): string => {
  *
  * @returns {Object} return object with message error
  */
-const validation = <T extends object>(data: T, fieldsNumber = ['']): T => {
+const validation = <T extends object, X>(data: T, fieldsNumber = ['']): X => {
   let errorsMessage = {};
   for (const [key, value] of Object.entries(data)) {
     // Check which fields want to check as number
     if (fieldsNumber.includes(key)) {
-      errorsMessage = { ...errorsMessage, [key]: checkNumber(String(value)) };
+      errorsMessage = { ...errorsMessage, [key]: checkNumber(key, String(value)) };
     }
     // Check value is empty or not
     else {
@@ -58,7 +62,7 @@ const validation = <T extends object>(data: T, fieldsNumber = ['']): T => {
     }
   }
 
-  return errorsMessage as T;
+  return errorsMessage as X;
 };
 
 export { validation, checkEmpty, checkNumber };

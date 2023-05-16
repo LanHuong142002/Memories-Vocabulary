@@ -20,21 +20,27 @@ describe('Testing checkEmpty', () => {
 
 describe('Testing checkNumber', () => {
   it('Should return an error message if the input empty', () => {
-    const value = checkNumber('');
+    const value = checkNumber('name', '');
 
     expect(value).toEqual(MESSAGE_ERRORS.EMPTY_FIELD);
   });
 
   it('Should return an error message if the value is not positive number', () => {
-    const value = checkNumber('-2');
+    const value = checkNumber('name', '-2');
 
     expect(value).toEqual(MESSAGE_ERRORS.POSITIVE_NUMBER);
   });
 
   it('Should return an empty string if the input is not empty', () => {
-    const value = checkNumber('123');
+    const value = checkNumber('name', '123');
 
     expect(value).toEqual('');
+  });
+
+  it('Should return an error if the input is a decimal and the key is the quantity', () => {
+    const value = checkNumber('quantity', '123.2');
+
+    expect(value).toEqual(MESSAGE_ERRORS.INTEGER_NUMBER);
   });
 });
 
