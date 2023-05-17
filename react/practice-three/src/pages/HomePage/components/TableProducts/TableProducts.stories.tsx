@@ -22,11 +22,11 @@ export default {
 
 const Template: ComponentStory<typeof ProductsTable> = () => {
   const [filter, setFilter] = useState<Filters>({
-    productName: '',
+    name: '',
     statusesId: '',
     typesId: '',
     quantity: '',
-    brandName: '',
+    brand: '',
     price: '',
   });
 
@@ -43,8 +43,8 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
   const products = [
     {
       id: '1',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -55,13 +55,13 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
     {
       id: '2',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -72,13 +72,13 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
     {
       id: '3',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -89,7 +89,7 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
   ];

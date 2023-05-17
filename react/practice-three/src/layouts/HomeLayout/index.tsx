@@ -4,10 +4,10 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, ModalNotification } from '@components';
+import { SelectItemProps, NotificationModal } from '@components';
 
 // Components of page
-import { ProductsTable, ModalProduct, DataProduct } from '@pages';
+import { ProductsTable, ProductModal, DataProduct } from '@pages';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
@@ -36,7 +36,7 @@ const HomeLayout = () => {
   } = useContext(ModalContext);
   const [status, setStatus] = useState<SelectItemProps[]>([]);
   const [types, setTypes] = useState<SelectItemProps[]>([]);
-  const [products, setProducts] = useState<DataProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [flagProductUpdate, setFlagProductUpdate] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
     productName: '',
@@ -46,7 +46,7 @@ const HomeLayout = () => {
     brandName: '',
     price: '',
   });
-  const [productItem, setProductItem] = useState<DataProduct>({
+  const [productItem, setProductItem] = useState<Product>({
     id: '',
     productImage: '',
     productName: '',
@@ -72,7 +72,7 @@ const HomeLayout = () => {
    *
    * @param {Object} item is product item
    */
-  const handleSetProductItem = useCallback((item: DataProduct) => {
+  const handleSetProductItem = useCallback((item: Product) => {
     setProductItem(item);
   }, []);
 
@@ -100,7 +100,7 @@ const HomeLayout = () => {
    *
    * @param {Object} item is data item after call api
    */
-  const handleDataModal = useCallback((item: DataProduct) => {
+  const handleDataModal = useCallback((item: Product) => {
     showHideItemModal();
     handleSetProductItem(item);
   }, []);
@@ -112,7 +112,7 @@ const HomeLayout = () => {
    */
   const handleConfirm = useCallback(
     async (id: string) => {
-      const product = await deleteProduct<DataProduct>(id);
+      const product = await deleteProduct<Product>(id);
 
       if ('messageError' in product) {
         showHideErrorsModal(product.messageError);
@@ -163,7 +163,7 @@ const HomeLayout = () => {
     }
 
     const fetchData = async () => {
-      const listProduct = await getProductsByParam<DataProduct>(param);
+      const listProduct = await getProductsByParam<Product>(param);
 
       if ('messageError' in listProduct) {
         showHideErrorsModal(listProduct.messageError);
@@ -187,7 +187,7 @@ const HomeLayout = () => {
         handleSetProductItem={handleSetProductItem}
       />
       {itemModal && (
-        <ModalProduct
+        <ProductModal
           productItem={productItem}
           status={status}
           types={types}
@@ -195,7 +195,7 @@ const HomeLayout = () => {
         />
       )}
       {notificationModal && (
-        <ModalNotification
+        <NotificationModal
           id={productItem.id || ''}
           description='Do you want to delete this ?'
           textButtonConfirm='Delete'
@@ -205,7 +205,7 @@ const HomeLayout = () => {
         />
       )}
       {errorsModal.status && (
-        <ModalNotification description={errorsModal.message} onCancel={handleCancel} />
+        <NotificationModal description={errorsModal.message} onCancel={handleCancel} />
       )}
     </main>
   );

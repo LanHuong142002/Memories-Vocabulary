@@ -1,25 +1,25 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Images
-import Product from 'assets/images/product.jpg';
-import Avatar from 'assets/images/avatar.jpg';
+import Product from '@assets/images/product.jpg';
+import Avatar from '@assets/images/avatar.jpg';
 
 // Components
-import ModalProduct from '.';
+import { ProductModal } from '@pages';
 
 export default {
-  title: 'PracticeTwo/HomePage/ModalProduct',
-  component: ModalProduct,
-} as ComponentMeta<typeof ModalProduct>;
+  title: 'PracticeTwo/HomePage/ProductModal',
+  component: ProductModal,
+} as ComponentMeta<typeof ProductModal>;
 
-const Template: ComponentStory<typeof ModalProduct> = () => {
+const Template: ComponentStory<typeof ProductModal> = () => {
   const product = {
     id: '1',
-    productImage: Product,
-    productName: 'Louis Vuitton',
+    image: Product,
+    name: 'Louis Vuitton',
     quantity: 123,
     brandImage: Avatar,
-    brandName: 'Evan Flores',
+    brand: 'Evan Flores',
     status: '2',
     type: '3',
     price: 200,
@@ -40,7 +40,7 @@ const Template: ComponentStory<typeof ModalProduct> = () => {
   };
 
   return (
-    <ModalProduct
+    <ProductModal
       productItem={product}
       status={status}
       types={types}
