@@ -1,24 +1,20 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Components
-import { Button, ModalNotification } from '@components';
+import { Button, NotificationModal } from '@components';
 
 export default {
-  title: 'PracticeTwo/Modal/ModalNotification',
-  component: ModalNotification,
-} as ComponentMeta<typeof ModalNotification>;
+  title: 'PracticeTwo/Modal/NotificationModal',
+  component: NotificationModal,
+} as ComponentMeta<typeof NotificationModal>;
 
-const Template: ComponentStory<typeof ModalNotification> = (args) => {
-  return <ModalNotification {...args} />;
+const Template: ComponentStory<typeof NotificationModal> = (args) => {
+  return <NotificationModal {...args} />;
 };
 
 export const Notification = Template.bind({});
 Notification.args = {
-  children: (
-    <>
-      <Button label='Close' variant='tertiary' color='warning' size='lg' />
-    </>
-  ),
+  children: <Button label='Close' variant='tertiary' color='warning' size='lg' />,
   url: '/icons/error-icon.svg',
   title: 'Ooops!',
   description: 'Something went wrong',

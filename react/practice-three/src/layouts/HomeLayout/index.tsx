@@ -4,7 +4,7 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, ModalNotification, Button } from '@components';
+import { SelectItemProps, NotificationModal } from '@components';
 
 // Components of page
 import { ProductsTable, ProductModal, DataProduct } from '@pages';
@@ -200,7 +200,7 @@ const HomeLayout = () => {
         />
       )}
       {notificationModal && (
-        <ModalNotification
+        <NotificationModal
           url='/icons/trash-icon.svg'
           title='Delete product'
           description='Are you sure you want to delete this product? This action cannot be undone.'
@@ -208,17 +208,17 @@ const HomeLayout = () => {
         >
           <Button label='Cancel' variant='secondary' color='default' size='lg' />
           <Button label='Delete' variant='tertiary' color='warning' size='lg' />
-        </ModalNotification>
+        </NotificationModal>
       )}
       {errorsModal.status && (
-        <ModalNotification
+        <NotificationModal
           url='/icons/trash-icon.svg'
           title='Ooops!'
           description={`Something went wrong. ${errorsModal.message}`}
           onCancel={handleCancel}
         >
           <Button label='Close' variant='tertiary' color='warning' size='lg' />
-        </ModalNotification>
+        </NotificationModal>
       )}
     </main>
   );
