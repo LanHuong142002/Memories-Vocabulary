@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Images
 import Avatar from '@assets/images/avatar.jpg';
-import Product from '@assets/images/product.jpg';
+import ProductImage from '@assets/images/product.jpg';
 import More from '@assets/icons/more-icon.svg';
 
 // Components
@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof Image> = (args) => <Image {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  url: Product,
+  url: ProductImage,
   alt: 'product',
   size: 'md',
 };

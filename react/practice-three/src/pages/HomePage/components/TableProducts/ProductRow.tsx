@@ -3,55 +3,34 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 // Helpers
 import { formatPrice, loadImage } from '@helpers';
 
+// Interfaces
+import { Product } from '@interfaces';
+
+// Component
+import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
+
 // Components of pages
 import { ActionMenu } from '@pages';
 
-// Component
-import {
-  TableCell,
-  TableRow,
-  Identity,
-  Image,
-  Label,
-  Typography,
-  SelectItemProps,
-} from '@components';
-
-interface DataProduct {
-  id?: string;
-  productImage: string;
-  productName: string;
-  status?: string;
-  type?: string;
-  quantity: number | string;
-  brandImage: string;
-  brandName: string;
-  price: number | string;
-  statusesId?: string;
-  typesId?: string;
-  statuses?: SelectItemProps;
-  types?: SelectItemProps;
-}
-
-interface ProductRowProps extends DataProduct {
-  onEdit: (item: DataProduct) => void;
-  handleSetProductItem: (item: DataProduct) => void;
+interface ProductRowProps extends Product {
+  onEdit: (item: Product) => void;
+  onSetProductItem: (item: Product) => void;
 }
 
 const ProductRow = ({
   id,
-  productImage,
-  productName,
+  image,
+  name,
   type,
   typesId,
   quantity,
   status,
   statusesId,
   brandImage,
-  brandName,
+  brand,
   price,
   onEdit,
-  handleSetProductItem,
+  onSetProductItem,
 }: ProductRowProps) => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
@@ -77,47 +56,35 @@ const ProductRow = ({
   const handleModalEdit = useCallback(async () => {
     onEdit({
       id,
-      productImage,
-      productName,
+      image,
+      name,
       type,
       typesId,
       quantity,
       status,
       statusesId,
       brandImage,
-      brandName,
+      brand,
       price,
     });
     setMenuPopup(false);
-  }, [
-    id,
-    productImage,
-    productName,
-    type,
-    typesId,
-    quantity,
-    status,
-    statusesId,
-    brandImage,
-    brandName,
-    price,
-  ]);
+  }, [id, image, name, type, typesId, quantity, status, statusesId, brandImage, brand, price]);
 
   /**
    * @description function show confirm and set id for confirm popup
    */
   const handleDelete = useCallback(() => {
-    handleSetProductItem({
+    onSetProductItem({
       id,
-      productImage,
-      productName,
+      image,
+      name,
       type,
       typesId,
       quantity,
       status,
       statusesId,
       brandImage,
-      brandName,
+      brand,
       price,
     });
     setMenuPopup(false);
@@ -131,33 +98,39 @@ const ProductRow = ({
     };
   }, []);
 
-  return (
-    <TableRow>
+  const TableCellProduct = memo(() => (
+    <>
       <TableCell tagName='td'>
-        <Identity url={productImage} text={productName} alt={productName} />
+        <Identity url={image} text={name} alt={name} />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={type || ''} weight='regular' />
+        <Typography text={type || ''} weight='regular' size='s' />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={String(quantity)} variant='primary' />
       </TableCell>
       <TableCell tagName='td'>
-        <Identity url={brandImage} text={brandName} isCircle={true} alt={brandName} />
+        <Identity url={brandImage} text={brand} isCircle={true} alt={brand} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' />
+        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='s' />
       </TableCell>
+    </>
+  ));
+
+  return (
+    <TableRow>
+      <TableCellProduct />
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
-          url={loadImage('/icons/more-icon.svg')}
-          size='s'
+          url={loadImage('/icons/more.svg')}
+          size='xs'
           alt='icon more'
-          isClickable={true}
+          isClickable
         />
         {menuPopup && <ActionMenu ref={popup} onDelete={handleDelete} onEdit={handleModalEdit} />}
       </TableCell>
@@ -166,4 +139,4 @@ const ProductRow = ({
 };
 
 export default memo(ProductRow);
-export type { DataProduct, ProductRowProps };
+export type { ProductRowProps };
