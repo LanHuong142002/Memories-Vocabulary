@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 // Images
 import Avatar from '@assets/images/avatar.jpg';
 import Product from '@assets/images/product.jpg';
-import More from '@assets/icons/more.svg';
+import More from '@assets/icons/more-icon.svg';
 
 // Components
 import { Image } from '@components';
