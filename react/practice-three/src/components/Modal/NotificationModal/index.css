@@ -1,15 +1,15 @@
-.confirm-modal-text {
+.notification-modal-text {
   width: 350px;
   color: var(--color-primary);
   font-size: var(--font-normal);
 }
 
-.confirm-modal-text .title {
+.notification-modal-text .title {
   font-family: var(--font-bold), var(--font-default);
   font-size: var(--font-medium);
 }
 
-.confirm-modal-text .description {
+.notification-modal-text .description {
   color: var(--color-secondary);
   font-family: var(--font-regular), var(--font-default);
   font-size: var(--font-small);
@@ -17,11 +17,11 @@
   padding: 10px 0 32px 0;
 }
 
-.modal-notification .confirm-modal-cta {
+.notification-modal .notification-modal-cta {
   display: flex;
   gap: 12px;
 }
 
-.modal-notification .confirm-modal-cta button {
+.notification-modal .notification-modal-cta button {
   width: 100%;
 }

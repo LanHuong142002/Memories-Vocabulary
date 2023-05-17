@@ -6,7 +6,7 @@ import './index.css';
 // Components
 import { Modal } from '@components';
 
-interface ModalNotificationProps {
+interface NotificationModalProps {
   id?: string;
   title: string;
   description: string;
@@ -15,24 +15,24 @@ interface ModalNotificationProps {
   onCancel: () => void;
 }
 
-const ModalNotification = ({
+const NotificationModal = ({
   url,
   description,
   children,
   title,
   onCancel,
-}: ModalNotificationProps) => {
+}: NotificationModalProps) => {
   return (
     <Modal url={url} toggleModal={onCancel}>
-      <div className='modal-notification'>
-        <div className='confirm-modal-text'>
+      <div className='notification-modal'>
+        <div className='notification-modal-text'>
           <p className='title'>{title}</p>
           <p className='description'>{description}</p>
         </div>
-        <div className='confirm-modal-cta'>{children}</div>
+        <div className='notification-modal-cta'>{children}</div>
       </div>
     </Modal>
   );
 };
 
-export default ModalNotification;
+export default NotificationModal;
