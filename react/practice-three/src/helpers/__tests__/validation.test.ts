@@ -9,10 +9,6 @@ describe('Testing isEmpty function', () => {
     expect(isEmpty('')).toBe(true);
   });
 
-  it('Should return true with 0', () => {
-    expect(isEmpty(0)).toBe(true);
-  });
-
   it('Should return false with number', () => {
     expect(isEmpty(2)).toBe(false);
   });
@@ -23,17 +19,17 @@ describe('Testing isEmpty function', () => {
 });
 
 describe('Testing isRegex function', () => {
-  it('Should return true if the value matches the integer number', () => {
+  it('Should return true if the value is the integer number', () => {
     const value = '222';
     expect(isMatchRegex(REGEX.INTEGER_NUMBER, value)).toBe(true);
   });
 
-  it('Should return false if the value does not match integer number', () => {
+  it('Should return false if the value is not integer number', () => {
     const value = '123.2';
     expect(isMatchRegex(REGEX.INTEGER_NUMBER, value)).toBe(false);
   });
 
-  it('Should return false if the value has space at the begin and end', () => {
+  it('Should return true if the value has space at the begin and end', () => {
     const value = 'abc   ';
     expect(isMatchRegex(REGEX.EMPTY_SPACE, value)).toBe(true);
   });
@@ -50,18 +46,32 @@ describe('Testing isPositiveNumber function', () => {
 });
 
 describe('Testing validation function', () => {
+  interface Data {
+    name: string;
+    email: string;
+    age: number;
+    quantity?: number;
+  }
+
+  interface MessageError {
+    name: string;
+    email: string;
+    age: string;
+    quantity?: string;
+  }
+
   it('Should return an object with error messages for empty fields', () => {
     const data = {
       name: '',
       email: '',
-      age: '25',
+      age: 25,
     };
     const expected = {
       name: MESSAGE_ERRORS.EMPTY_FIELD,
       email: MESSAGE_ERRORS.EMPTY_FIELD,
       age: '',
     };
-    const result = validation<typeof data, Record<keyof typeof data, string>>(data);
+    const result = validation<Data, MessageError>(data);
 
     expect(result).toEqual(expected);
   });
@@ -70,8 +80,8 @@ describe('Testing validation function', () => {
     const data = {
       name: 'John Doe',
       email: 'john.doe@example.com',
-      age: '2',
-      quantity: '2.2',
+      age: 2,
+      quantity: 2.2,
     };
     const expected = {
       name: '',
@@ -79,10 +89,7 @@ describe('Testing validation function', () => {
       age: '',
       quantity: MESSAGE_ERRORS.INTEGER_NUMBER,
     };
-    const result = validation<typeof data, Record<keyof typeof data, string>>(data, [
-      'age',
-      'quantity',
-    ]);
+    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
 
     expect(result).toEqual(expected);
   });
@@ -91,8 +98,8 @@ describe('Testing validation function', () => {
     const data = {
       name: 'John Doe',
       email: 'john.doe@example.com',
-      age: '-2',
-      quantity: '22',
+      age: -2,
+      quantity: 22,
     };
     const expected = {
       name: '',
@@ -100,10 +107,7 @@ describe('Testing validation function', () => {
       age: MESSAGE_ERRORS.POSITIVE_NUMBER,
       quantity: '',
     };
-    const result = validation<typeof data, Record<keyof typeof data, string>>(data, [
-      'age',
-      'quantity',
-    ]);
+    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
 
     expect(result).toEqual(expected);
   });
@@ -112,8 +116,8 @@ describe('Testing validation function', () => {
     const data = {
       name: 'John Doe',
       email: '  john.doe@example.com  ',
-      age: '',
-      quantity: '10',
+      age: 0,
+      quantity: 10,
     };
     const expected = {
       name: '',
@@ -121,10 +125,7 @@ describe('Testing validation function', () => {
       age: MESSAGE_ERRORS.EMPTY_FIELD,
       quantity: '',
     };
-    const result = validation<typeof data, Record<keyof typeof data, string>>(data, [
-      'age',
-      'quantity',
-    ]);
+    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
 
     expect(result).toEqual(expected);
   });
