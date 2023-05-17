@@ -3,48 +3,30 @@ import { MESSAGE_ERRORS, REGEX } from '@constants';
 /**
  * @description function check the value is empty or not
  *
- * @param {string} value is value of input
+ * @param {string | number} value is value of input
  *
  * @returns {boolean}
  */
-const isEmpty = (value: string) => {
-  if (!String(value).trim()) {
-    return false;
-  }
-
-  return true;
-};
+const isEmpty = (value: string | number) => !value;
 
 /**
- * @description This function checks whether a given value matches a given regular expression or not.
+ * @description function check the value match with regex or not
  *
  * @param {string} value The value to be checked.
- * @param {RegExp} regex The regular expression to be matched against the value.
+ * @param {RegExp} regex The regular expression to be matched the value.
  *
  * @returns {boolean}
  */
-const isRegex = (regex: RegExp, value: string) => {
-  if (regex.test(String(value))) {
-    return false;
-  }
-
-  return true;
-};
+const isMatchRegex = (regex: RegExp, value: string) => regex.test(value);
 
 /**
- * @description function check the number is a positive number or note
+ * @description function check the number is a positive number or not
  *
- * @param {string} value is value of input
+ * @param {number} value is value of input
  *
  * @returns {boolean}
  */
-const isPositiveNumber = (value: number) => {
-  if (Number(value) < 0) {
-    return false;
-  }
-
-  return true;
-};
+const isPositiveNumber = (value: number) => value > 0;
 
 /**
  * @description function validation with data of all input
@@ -59,27 +41,39 @@ const validation = <T extends object, X>(data: T, fieldsNumber = ['']): X => {
   for (const [key, value] of Object.entries(data)) {
     // Check which fields want to check as number
     if (fieldsNumber.includes(key)) {
-      if (!isEmpty(value)) {
-        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
-      } else if (isRegex(REGEX.DECIMAL_NUMBER, value) && key === 'quantity') {
-        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.INTEGER_NUMBER };
-      } else if (!isPositiveNumber(value)) {
-        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.POSITIVE_NUMBER };
-      } else {
-        errorsMessage = { ...errorsMessage, [key]: '' };
+      switch (true) {
+        case isEmpty(value):
+          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
+          break;
+        // case check if the value is not an integer number
+        case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
+          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.INTEGER_NUMBER };
+          break;
+        // case check if the value is not a positive number
+        case !isPositiveNumber(value):
+          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.POSITIVE_NUMBER };
+          break;
+        default:
+          errorsMessage = { ...errorsMessage, [key]: '' };
+          break;
       }
-    }
-    // Check value is empty or not
-    else {
-      if (!isEmpty(value)) {
-        errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
-      } else {
-        errorsMessage = { ...errorsMessage, [key]: '' };
+    } else {
+      switch (true) {
+        // case check if value is empty
+        case isEmpty(value):
+          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
+          break;
+        // case check if the value has an empty string at the beginning or end
+        case isMatchRegex(REGEX.EMPTY_SPACE, value):
+          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_SPACE };
+          break;
+        default:
+          errorsMessage = { ...errorsMessage, [key]: '' };
+          break;
       }
     }
   }
-
   return errorsMessage as X;
 };
 
-export { validation, isEmpty, isPositiveNumber, isRegex };
+export { validation, isEmpty, isPositiveNumber, isMatchRegex };
