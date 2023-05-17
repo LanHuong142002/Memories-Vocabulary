@@ -1,16 +1,16 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-// CSS
-import './index.css';
-
-// Components
-import { Button, Image, Input, InputFile, Select, SelectItemProps, Typography } from '@components';
-
 // Helpers
 import { convertBase64, loaderImage, validation } from '@helpers';
 
 // Interfaces
 import { DataProduct } from '@interfaces';
+
+// Components
+import { Button, Image, Input, InputFile, Select, SelectItemProps, Typography } from '@components';
+
+// CSS
+import './index.css';
 
 type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
 
