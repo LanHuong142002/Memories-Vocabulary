@@ -7,7 +7,7 @@ import './index.css';
 import { SelectItemProps, ModalNotification } from '@components';
 
 // Components of page
-import { ProductsTable, ModalProduct, DataProduct } from '@pages';
+import { ProductsTable, ProductModal, DataProduct } from '@pages';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
@@ -187,7 +187,7 @@ const HomeLayout = () => {
         handleSetProductItem={handleSetProductItem}
       />
       {itemModal && (
-        <ModalProduct
+        <ProductModal
           productItem={productItem}
           status={status}
           types={types}

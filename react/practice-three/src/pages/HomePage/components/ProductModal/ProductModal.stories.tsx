@@ -5,14 +5,14 @@ import Product from '@assets/images/product.jpg';
 import Avatar from '@assets/images/avatar.jpg';
 
 // Components
-import ModalProduct from '.';
+import ProductModal from '.';
 
 export default {
-  title: 'PracticeTwo/HomePage/ModalProduct',
-  component: ModalProduct,
-} as ComponentMeta<typeof ModalProduct>;
+  title: 'PracticeTwo/HomePage/ProductModal',
+  component: ProductModal,
+} as ComponentMeta<typeof ProductModal>;
 
-const Template: ComponentStory<typeof ModalProduct> = () => {
+const Template: ComponentStory<typeof ProductModal> = () => {
   const product = {
     id: '1',
     image: Product,
@@ -40,7 +40,7 @@ const Template: ComponentStory<typeof ModalProduct> = () => {
   };
 
   return (
-    <ModalProduct
+    <ProductModal
       productItem={product}
       status={status}
       types={types}
