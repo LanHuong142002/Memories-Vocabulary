@@ -22,20 +22,18 @@ const InputFile = ({
   variant = 'primary',
   text,
   onChange,
-}: InputFileProps) => {
-  return (
-    <label
-      htmlFor={id}
-      className={`input-file-wrapper input-file-${variant}`}
-      data-testid='input-file-label'
-    >
-      <Image url={url} size={size} alt='icon upload' />
-      <div>
-        {text}
-        <input type='file' name={name} id={id} accept='image/png, image/jpeg' onChange={onChange} />
-      </div>
-    </label>
-  );
-};
+}: InputFileProps) => (
+  <label
+    htmlFor={id}
+    className={`input-file-wrapper input-file-${variant}`}
+    data-testid='input-file-label'
+  >
+    <Image url={url} size={size} alt='icon upload' />
+    <div>
+      {text}
+      <input type='file' name={name} id={id} accept='image/png, image/jpeg' onChange={onChange} />
+    </div>
+  </label>
+);
 
 export default InputFile;
