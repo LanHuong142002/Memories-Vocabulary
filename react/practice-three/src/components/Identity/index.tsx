@@ -9,19 +9,17 @@ interface IdentityProps extends Pick<ImageProps, 'url' | 'isCircle' | 'alt' | 'o
   text: string;
 }
 
-const Identity = ({ text, url, isCircle, alt, onClick }: IdentityProps) => {
-  return (
-    <div className='identity-wrapper'>
-      <Image
-        url={url}
-        size={isCircle ? 'xs' : 'lg'}
-        isCircle={isCircle}
-        alt={alt}
-        onClick={onClick}
-      />
-      <span onClick={onClick}>{text}</span>
-    </div>
-  );
-};
+const Identity = ({ text, url, isCircle, alt, onClick }: IdentityProps) => (
+  <div className='identity-wrapper'>
+    <Image
+      url={url}
+      size={isCircle ? 'xs' : 'lg'}
+      isCircle={isCircle}
+      alt={alt}
+      onClick={onClick}
+    />
+    <span onClick={onClick}>{text}</span>
+  </div>
+);
 
 export { Identity };

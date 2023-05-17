@@ -1,5 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
+// Helpers
+import { formatPrice, loadImage } from '@helpers';
+
+// Components of pages
+import { ActionMenu } from '@pages';
+
 // Component
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
 
@@ -113,7 +119,7 @@ const ProductRow = ({
         <Label text={String(quantity)} variant='primary' />
       </TableCell>
       <TableCell tagName='td'>
-        <Identity url={brandImage} text={brand} isCircle={true} alt={brand} />
+        <Identity url={brandImage} text={brandName} isCircle={true} alt={brandName} />
       </TableCell>
       <TableCell tagName='td'>
         <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='sm' />
@@ -121,7 +127,7 @@ const ProductRow = ({
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
-          url={loaderImage('/icons/more.svg')}
+          url={loadImage('/icons/more-icon.svg')}
           size='xs'
           alt='icon more'
           isClickable={true}
