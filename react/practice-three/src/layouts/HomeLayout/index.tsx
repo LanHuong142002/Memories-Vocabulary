@@ -4,10 +4,10 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, NotificationModal } from '@components';
+import { SelectItemProps, NotificationModal, Button } from '@components';
 
 // Components of page
-import { ProductsTable, ProductModal, DataProduct } from '@pages';
+import { ProductsTable, ProductModal } from '@pages';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
