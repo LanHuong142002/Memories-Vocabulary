@@ -4,7 +4,7 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, ModalNotification } from '@components';
+import { SelectItemProps, NotificationModal } from '@components';
 
 // Components of page
 import { ProductsTable, ModalProduct, DataProduct } from '@pages';
@@ -195,7 +195,7 @@ const HomeLayout = () => {
         />
       )}
       {notificationModal && (
-        <ModalNotification
+        <NotificationModal
           id={productItem.id || ''}
           description='Do you want to delete this ?'
           textButtonConfirm='Delete'
@@ -205,7 +205,7 @@ const HomeLayout = () => {
         />
       )}
       {errorsModal.status && (
-        <ModalNotification description={errorsModal.message} onCancel={handleCancel} />
+        <NotificationModal description={errorsModal.message} onCancel={handleCancel} />
       )}
     </main>
   );
