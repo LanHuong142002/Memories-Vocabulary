@@ -1,3 +1,3 @@
-export * from './productsService';
-export * from './statusService';
-export * from './typeService';
+export * from './productServices';
+export * from './statusServices';
+export * from './typeServices';
