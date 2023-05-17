@@ -17,7 +17,7 @@ import {
 import { ProductRow, ProductRowProps } from '@pages';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
 
 interface Filters {
   name: string;
@@ -28,11 +28,11 @@ interface Filters {
   price: string;
 }
 
-interface ProductsTableProps extends Pick<ProductRowProps, 'onEdit' | 'handleSetProductItem'> {
+interface ProductsTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem'> {
   filters: Filters;
   status: SelectItemProps[];
   types: SelectItemProps[];
-  products: DataProduct[];
+  products: Product[];
   onSearch: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
@@ -43,7 +43,7 @@ const ProductsTable = ({
   products,
   onSearch,
   onEdit,
-  handleSetProductItem,
+  onSetProductItem,
 }: ProductsTableProps) => {
   return (
     <Table>
@@ -111,7 +111,7 @@ const ProductsTable = ({
               brand={item.brand}
               price={item.price}
               onEdit={onEdit}
-              handleSetProductItem={handleSetProductItem}
+              onSetProductItem={onSetProductItem}
             />
           ))
         ) : (

@@ -15,7 +15,7 @@ import './index.css';
 import { Modal, Button, Image, Input, Select, SelectItemProps, InputFile } from '@components';
 
 // Components of pages
-import { DataProduct } from '@pages';
+import { Product } from '@pages';
 
 // Services
 import { updateProduct } from '@services';
@@ -29,11 +29,11 @@ import { ModalContext } from '@contexts';
 interface ModalProps {
   status: SelectItemProps[];
   types: SelectItemProps[];
-  productItem: DataProduct;
+  productItem: Product;
   flagProductUpdate: () => void;
 }
 
-type ErrorMessage = Pick<DataProduct, 'productName' | 'quantity' | 'brandName' | 'price'>;
+type ErrorMessage = Pick<Product, 'productName' | 'quantity' | 'brandName' | 'price'>;
 
 const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
@@ -100,7 +100,7 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
       // if have product's id and product has any change, we will call API to update product
       if (product.id && product !== productItem) {
-        const item = await updateProduct<DataProduct>(product.id, product);
+        const item = await updateProduct<Product>(product.id, product);
 
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed

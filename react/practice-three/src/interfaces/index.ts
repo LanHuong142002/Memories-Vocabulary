@@ -1,1 +1,1 @@
-export type { default as DataProduct } from './product';
+export type { default as Product } from './product';

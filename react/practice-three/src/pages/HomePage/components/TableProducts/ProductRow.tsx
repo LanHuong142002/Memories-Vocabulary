@@ -4,7 +4,7 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { formatPrice, loadImage } from '@helpers';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
 
 // Component
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
@@ -12,9 +12,9 @@ import { TableCell, TableRow, Identity, Image, Label, Typography } from '@compon
 // Components of pages
 import { ActionMenu } from '@pages';
 
-interface ProductRowProps extends DataProduct {
-  onEdit: (item: DataProduct) => void;
-  handleSetProductItem: (item: DataProduct) => void;
+interface ProductRowProps extends Product {
+  onEdit: (item: Product) => void;
+  onSetProductItem: (item: Product) => void;
 }
 
 const ProductRow = ({
@@ -30,7 +30,7 @@ const ProductRow = ({
   brand,
   price,
   onEdit,
-  handleSetProductItem,
+  onSetProductItem,
 }: ProductRowProps) => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
@@ -74,7 +74,7 @@ const ProductRow = ({
    * @description function show confirm and set id for confirm popup
    */
   const handleDelete = useCallback(() => {
-    handleSetProductItem({
+    onSetProductItem({
       id,
       image,
       name,
