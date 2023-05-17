@@ -3,20 +3,14 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 // Helpers
 import { formatPrice, loadImage } from '@helpers';
 
-// Components of pages
-import { ActionMenu } from '@pages';
+// Interfaces
+import { DataProduct } from '@interfaces';
 
 // Component
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
 
-// Helpers
-import { formatPrice, loadImage } from '@helpers';
-
 // Components of pages
 import { ActionMenu } from '@pages';
-
-// Interfaces
-import { DataProduct } from '@interfaces';
 
 interface ProductRowProps extends DataProduct {
   onEdit: (item: DataProduct) => void;
