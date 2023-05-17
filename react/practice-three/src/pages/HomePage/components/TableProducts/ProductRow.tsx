@@ -1,7 +1,10 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-// Images
-import More from '@assets/icons/more.svg';
+// Helpers
+import { formatPrice, loadImage } from '@helpers';
+
+// Components of pages
+import { ActionMenu } from '@pages';
 
 // Component
 import {
@@ -13,10 +16,6 @@ import {
   Typography,
   SelectItemProps,
 } from '@components';
-import { formatPrice } from '@helpers';
-
-// Components of pages
-import { ActionMenu } from '@pages';
 
 interface DataProduct {
   id?: string;
@@ -135,7 +134,7 @@ const ProductRow = ({
   return (
     <TableRow>
       <TableCell tagName='td'>
-        <Identity image={productImage} text={productName} alt={productName} />
+        <Identity url={productImage} text={productName} alt={productName} />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
@@ -147,13 +146,19 @@ const ProductRow = ({
         <Label text={String(quantity)} variant='primary' />
       </TableCell>
       <TableCell tagName='td'>
-        <Identity image={brandImage} text={brandName} isCircle={true} alt={brandName} />
+        <Identity url={brandImage} text={brandName} isCircle={true} alt={brandName} />
       </TableCell>
       <TableCell tagName='td'>
         <Typography text={`$${formatPrice(Number(price))}`} weight='regular' />
       </TableCell>
       <TableCell tagName='td'>
-        <Image ref={iconImage} image={More} size='sm' alt='icon more' isCursorPointer={true} />
+        <Image
+          ref={iconImage}
+          url={loadImage('/icons/more-icon.svg')}
+          size='s'
+          alt='icon more'
+          isClickable={true}
+        />
         {menuPopup && <ActionMenu ref={popup} onDelete={handleDelete} onEdit={handleModalEdit} />}
       </TableCell>
     </TableRow>
