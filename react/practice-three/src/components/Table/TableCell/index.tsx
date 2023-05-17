@@ -13,7 +13,7 @@ const TableCell = ({ children, title, tagName = 'td' }: TableCellProps) => {
   const TagName = tagName;
 
   return (
-    <TagName className='table-cell'>
+    <TagName className='table-cell' data-testid='table-cell'>
       {title && <p className='title'>{title}</p>}
       {children}
     </TagName>
