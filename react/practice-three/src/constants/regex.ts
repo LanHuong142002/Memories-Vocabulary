@@ -1,5 +1,6 @@
 const REGEX = {
-  DECIMAL_NUMBER: /^-?\d+$/,
+  INTEGER_NUMBER: /^-?\d+$/,
+  EMPTY_SPACE: /^\s+|\s+$/,
 };
 
 export default REGEX;
