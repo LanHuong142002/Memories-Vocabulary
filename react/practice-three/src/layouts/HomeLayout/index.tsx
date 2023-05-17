@@ -1,14 +1,5 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
-// Styles
-import './index.css';
-
-// Components
-import { SelectItemProps, NotificationModal, Button } from '@components';
-
-// Components of page
-import { ProductsTable, ProductModal } from '@pages';
-
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
@@ -19,7 +10,16 @@ import { ModalContext } from '@contexts';
 import { useDebounce } from '@hooks';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
+
+// Components
+import { SelectItemProps, NotificationModal, Button } from '@components';
+
+// Components of page
+import { ProductsTable, ProductModal } from '@pages';
+
+// Styles
+import './index.css';
 
 interface Filter {
   name: string;
@@ -189,7 +189,7 @@ const HomeLayout = () => {
         types={types}
         onSearch={handleSearch}
         onEdit={handleDataModal}
-        handleSetProductItem={handleSetProductItem}
+        onSetProductItem={handleSetProductItem}
       />
       {itemModal && (
         <ProductModal
