@@ -17,9 +17,7 @@ import { Product } from '@interfaces';
 const getProductsByParam = async (param: string): Promise<Product[] | string> => {
   try {
     const response = await fetch(
-      `${URL_API.BASE_URL}${
-        URL_API.PRODUCTS + 123
-      }?_expand=y89y7y8y statuses&_expand=types${param}`,
+      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
     );
     const products: Product[] = await response.json();
     const productList = customMessageErrors<Product[]>(response, products);
