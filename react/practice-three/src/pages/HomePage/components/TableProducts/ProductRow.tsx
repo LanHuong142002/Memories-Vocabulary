@@ -3,24 +3,18 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 // Helpers
 import { formatPrice, loadImage } from '@helpers';
 
-// Components of pages
-import { ActionMenu } from '@pages';
+// Interfaces
+import { Product } from '@interfaces';
 
 // Component
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
 
-// Helpers
-import { formatPrice, loaderImage } from '@helpers';
-
 // Components of pages
 import { ActionMenu } from '@pages';
 
-// Interfaces
-import { DataProduct } from '@interfaces';
-
-interface ProductRowProps extends DataProduct {
-  onEdit: (item: DataProduct) => void;
-  handleSetProductItem: (item: DataProduct) => void;
+interface ProductRowProps extends Product {
+  onEdit: (item: Product) => void;
+  onSetProductItem: (item: Product) => void;
 }
 
 const ProductRow = ({
@@ -36,7 +30,7 @@ const ProductRow = ({
   brand,
   price,
   onEdit,
-  handleSetProductItem,
+  onSetProductItem,
 }: ProductRowProps) => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
@@ -80,7 +74,7 @@ const ProductRow = ({
    * @description function show confirm and set id for confirm popup
    */
   const handleDelete = useCallback(() => {
-    handleSetProductItem({
+    onSetProductItem({
       id,
       image,
       name,
@@ -104,8 +98,8 @@ const ProductRow = ({
     };
   }, []);
 
-  return (
-    <TableRow>
+  const TableCellProduct = memo(() => (
+    <>
       <TableCell tagName='td'>
         <Identity url={image} text={name} alt={name} />
       </TableCell>
@@ -113,17 +107,23 @@ const ProductRow = ({
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={type || ''} weight='regular' size='sm' />
+        <Typography text={type || ''} weight='regular' size='s' />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={String(quantity)} variant='primary' />
       </TableCell>
       <TableCell tagName='td'>
-        <Identity url={brandImage} text={brandName} isCircle={true} alt={brandName} />
+        <Identity url={brandImage} text={brand} isCircle={true} alt={brand} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='sm' />
+        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='s' />
       </TableCell>
+    </>
+  ));
+
+  return (
+    <TableRow>
+      <TableCellProduct />
       <TableCell tagName='td'>
         <Image
           ref={iconImage}

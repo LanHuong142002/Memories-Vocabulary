@@ -18,7 +18,7 @@ import { Modal, Button, Image, Input, Select, SelectItemProps, InputFile } from 
 import { updateProduct } from '@services';
 
 // Helpers
-import { validation, convertBase64, loaderImage } from '@helpers';
+import { validation, convertBase64, loadImage } from '@helpers';
 
 // Contexts
 import { ModalContext } from '@contexts';
@@ -145,7 +145,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
             <div className='form-image'>
               <Image url={product.image} alt='image' size='xl' isCircle={true} />
               <InputFile
-                url={loaderImage('/icons/upload-icon.svg')}
+                url={loadImage('/icons/upload-icon.svg')}
                 size='md'
                 variant='primary'
                 id='image'
@@ -230,7 +230,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
                 <div className='image-wrapper'>
                   <Image size='s' isCircle={true} url={product.brandImage} />
                   <InputFile
-                    url={loaderImage('/icons/upload-cloud.svg')}
+                    url={loadImage('/icons/upload-cloud.svg')}
                     id='brandImage'
                     name='brandImage'
                     text='Upload photo'

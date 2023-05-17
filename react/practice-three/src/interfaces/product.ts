@@ -1,6 +1,6 @@
 import { SelectItemProps } from '@components';
 
-interface DataProduct {
+interface Product {
   id?: string;
   image: string;
   name: string;
@@ -16,4 +16,4 @@ interface DataProduct {
   types?: SelectItemProps;
 }
 
-export default DataProduct;
+export default Product;
