@@ -98,8 +98,8 @@ const ProductRow = ({
     };
   }, []);
 
-  return (
-    <TableRow>
+  const TableCellProduct = memo(() => (
+    <>
       <TableCell tagName='td'>
         <Identity url={image} text={name} alt={name} />
       </TableCell>
@@ -107,7 +107,7 @@ const ProductRow = ({
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={type || ''} weight='regular' size='sm' />
+        <Typography text={type || ''} weight='regular' size='s' />
       </TableCell>
       <TableCell tagName='td'>
         <Label text={String(quantity)} variant='primary' />
@@ -116,8 +116,14 @@ const ProductRow = ({
         <Identity url={brandImage} text={brand} isCircle={true} alt={brand} />
       </TableCell>
       <TableCell tagName='td'>
-        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='sm' />
+        <Typography text={`$${formatPrice(Number(price))}`} weight='regular' size='s' />
       </TableCell>
+    </>
+  ));
+
+  return (
+    <TableRow>
+      <TableCellProduct />
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
