@@ -35,7 +35,7 @@ interface ModalProps {
 
 type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
 
-const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
+const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
   const [product, setProduct] = useState(productItem);
   const [isErrors, setIsErrors] = useState<boolean>(true);
@@ -139,7 +139,7 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
   return useMemo(() => {
     return (
-      <Modal title='Products information' toggleModal={showHideItemModal}>
+      <Modal title='Product information' toggleModal={showHideItemModal}>
         <form className='form-wrapper' onSubmit={handleOnSave}>
           <div className='form-body'>
             <div className='form-image'>
@@ -264,4 +264,4 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
   }, [product, errorsMessage, status, types]);
 };
 
-export default ModalProduct;
+export default ProductModal;
