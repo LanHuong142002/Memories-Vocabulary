@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Images
-import Product from '@assets/images/product.jpg';
+import ProductImage from '@assets/images/product.jpg';
 import Avatar from '@assets/images/avatar.jpg';
 
 // Components
@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof Identity> = (args) => <Identity {...args} 
 export const Primary = Template.bind({});
 Primary.args = {
   text: 'Louis Vuitton',
-  url: Product,
+  url: ProductImage,
 };
 
 export const Secondary = Template.bind({});
