@@ -5,7 +5,7 @@ import { InputFile } from '@components';
 
 // Images
 import UploadIcon from '@assets/icons/upload-icon.svg';
-import UploadCloud from '@assets/icons/upload-cloud.svg';
+import CloudIcon from '@assets/icons/cloud-icon.svg';
 
 export default {
   title: 'PracticeTwo/InputFile',
@@ -36,5 +36,5 @@ Secondary.args = {
   variant: 'secondary',
   text: 'Upload photo',
   size: 'xxs',
-  url: UploadCloud,
+  url: CloudIcon,
 };
