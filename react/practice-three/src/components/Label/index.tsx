@@ -6,13 +6,11 @@ interface LabelProps {
   variant?: 'primary' | 'success' | 'warning';
 }
 
-const Label = ({ text, variant }: LabelProps) => {
-  return (
-    <div className={`label-wrapper ${variant ? `label-${variant}` : ''}`}>
-      <span>{text}</span>
-    </div>
-  );
-};
+const Label = ({ text, variant }: LabelProps) => (
+  <div className={`label-wrapper ${variant ? `label-${variant}` : ''}`}>
+    <span>{text}</span>
+  </div>
+);
 
 export { Label };
 export type { LabelProps };

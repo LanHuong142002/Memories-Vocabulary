@@ -6,8 +6,12 @@
   color: var(--color-primary);
 }
 
-.typography.typography-color-tertiary {
-  color: var(--color-tertiary);
+.typography.typography-color-quaternary {
+  color: var(--color-quaternary);
+}
+
+.typography.typography-size-xl {
+  font-size: var(--font-huge);
 }
 
 .typography.typography-size-lg {
@@ -15,11 +19,14 @@
 }
 
 .typography.typography-size-md {
-  font-size: var(--font-normal);
+  font-size: var(--font-medium);
 }
 
-.typography.typography-size-sm {
+.typography.typography-size-s {
   font-size: var(--font-small);
+}
+.typography.typography-size-xs {
+  font-size: var(--font-normal);
 }
 
 .typography.typography-weight-regular {
