@@ -2,7 +2,10 @@
 import { URL_API } from '@constants';
 
 // Helpers
-import { CustomErrors, customErrors } from '@helpers';
+import { customMessageErrors, ResponseError } from '@helpers';
+
+// Interfaces
+import { Product } from '@interfaces';
 
 /**
  * @description function get all products
@@ -11,17 +14,23 @@ import { CustomErrors, customErrors } from '@helpers';
  *
  * @returns {Array} list products
  */
-const getProductsByParam = async <T>(param: string): Promise<T[] | CustomErrors> => {
+const getProductsByParam = async (param: string): Promise<Product[] | string> => {
   try {
     const response = await fetch(
-      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
+      `${URL_API.BASE_URL}${
+        URL_API.PRODUCTS + 123
+      }?_expand=y89y7y8y statuses&_expand=types${param}`,
     );
-    const products: T[] = await response.json();
-    const listProducts = customErrors(response, products);
+    const products: Product[] = await response.json();
+    const productList = customMessageErrors<Product[]>(response, products);
 
-    return listProducts;
+    if (typeof productList === 'string') {
+      throw new ResponseError(productList);
+    }
+
+    return productList;
   } catch (error) {
-    return error as CustomErrors;
+    return (error as ResponseError).message;
   }
 };
 
@@ -30,7 +39,7 @@ const getProductsByParam = async <T>(param: string): Promise<T[] | CustomErrors>
  *
  * @param {String} id is id of product
  */
-const deleteProduct = async <T>(id: string): Promise<T | CustomErrors> => {
+const deleteProduct = async (id: string): Promise<Product | string> => {
   try {
     const options = {
       method: 'DELETE',
@@ -39,12 +48,16 @@ const deleteProduct = async <T>(id: string): Promise<T | CustomErrors> => {
       },
     };
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`, options);
-    const product: T = await response.json();
-    const productItem = customErrors(response, product);
+    const product: Product = await response.json();
+    const productItem = customMessageErrors<Product>(response, product);
+
+    if (typeof productItem === 'string') {
+      throw new ResponseError(productItem);
+    }
 
     return productItem;
   } catch (error) {
-    return error as CustomErrors;
+    return (error as ResponseError).message;
   }
 };
 
@@ -56,7 +69,7 @@ const deleteProduct = async <T>(id: string): Promise<T | CustomErrors> => {
  *
  * @return {Object} product
  */
-const updateProduct = async <T>(id: string, productUpdate: T): Promise<T | CustomErrors> => {
+const updateProduct = async (id: string, productUpdate: Product): Promise<Product | string> => {
   try {
     const options = {
       method: 'PATCH',
@@ -66,12 +79,16 @@ const updateProduct = async <T>(id: string, productUpdate: T): Promise<T | Custo
       },
     };
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`, options);
-    const product: T = await response.json();
-    const productItem = customErrors(response, product);
+    const product: Product = await response.json();
+    const productItem = customMessageErrors<Product>(response, product);
+
+    if (typeof productItem === 'string') {
+      throw new ResponseError(productItem);
+    }
 
     return productItem;
   } catch (error) {
-    return error as CustomErrors;
+    return (error as ResponseError).message;
   }
 };
 
