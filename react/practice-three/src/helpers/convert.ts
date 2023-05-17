@@ -49,8 +49,8 @@ const formatPrice = (value: number): string => {
  *
  * @returns {string} A string representing the complete URL of the image.
  */
-const loaderImage = (src: string) => {
+const loadImage = (src: string) => {
   return `${process.env.VITE_ASSETS_URL}${src}`;
 };
 
-export { convertBase64, formatPrice, loaderImage };
+export { convertBase64, formatPrice, loadImage };
