@@ -1,10 +1,16 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
+// Helpers
+import { formatPrice, loadImage } from '@helpers';
+
+// Components of pages
+import { ActionMenu } from '@pages';
+
 // Component
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
 
 // Helpers
-import { formatPrice, loaderImage } from '@helpers';
+import { formatPrice, loadImage } from '@helpers';
 
 // Components of pages
 import { ActionMenu } from '@pages';
@@ -127,7 +133,7 @@ const ProductRow = ({
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
-          url={loaderImage('/icons/more.svg')}
+          url={loadImage('/icons/more.svg')}
           size='xs'
           alt='icon more'
           isClickable={true}
