@@ -21,7 +21,7 @@ const Input = ({
   title,
   type = 'text',
   onChange,
-}: InputProps) => (
+}: InputProps): React.ReactElement => (
   <>
     {title ? (
       <div className='text-wrapper'>
