@@ -13,13 +13,12 @@ const getStatuses = async <T>(): Promise<T[] | string> => {
   try {
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.STATUSES}`);
     const status: T[] = await response.json();
-    const statusList = customMessageErrors(response, status);
 
-    if (typeof statusList === 'string') {
-      throw new ResponseError(statusList);
+    if (!response.ok) {
+      const message = customMessageErrors(response);
+      throw new ResponseError(message);
     }
-
-    return statusList;
+    return status;
   } catch (error) {
     return (error as ResponseError).message;
   }

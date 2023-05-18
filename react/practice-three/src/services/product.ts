@@ -17,16 +17,16 @@ import { Product } from '@interfaces';
 const getProductsByParam = async (param: string): Promise<Product[] | string> => {
   try {
     const response = await fetch(
-      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
+      `${URL_API.BASE_URL}${URL_API.PRODUCTS + 12398129038}?_expand=statuses&_expand=types${param}`,
     );
     const products: Product[] = await response.json();
-    const productList = customMessageErrors<Product[]>(response, products);
 
-    if (typeof productList === 'string') {
-      throw new ResponseError(productList);
+    if (!response.ok) {
+      const message = customMessageErrors(response);
+      throw new ResponseError(message);
     }
 
-    return productList;
+    return products;
   } catch (error) {
     return (error as ResponseError).message;
   }
@@ -47,13 +47,13 @@ const deleteProduct = async (id: string): Promise<Product | string> => {
     };
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`, options);
     const product: Product = await response.json();
-    const productItem = customMessageErrors<Product>(response, product);
 
-    if (typeof productItem === 'string') {
-      throw new ResponseError(productItem);
+    if (!response.ok) {
+      const message = customMessageErrors(response);
+      throw new ResponseError(message);
     }
 
-    return productItem;
+    return product;
   } catch (error) {
     return (error as ResponseError).message;
   }
@@ -78,13 +78,13 @@ const updateProduct = async (id: string, productUpdate: Product): Promise<Produc
     };
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`, options);
     const product: Product = await response.json();
-    const productItem = customMessageErrors<Product>(response, product);
 
-    if (typeof productItem === 'string') {
-      throw new ResponseError(productItem);
+    if (!response.ok) {
+      const message = customMessageErrors(response);
+      throw new ResponseError(message);
     }
 
-    return productItem;
+    return product;
   } catch (error) {
     return (error as ResponseError).message;
   }
