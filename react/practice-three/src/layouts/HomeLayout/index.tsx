@@ -16,7 +16,7 @@ import { Product } from '@interfaces';
 import { SelectItemProps, NotificationModal, Button } from '@components';
 
 // Components of page
-import { ProductsTable, ProductModal } from '@pages';
+import { ProductTable, ProductModal } from '@pages';
 
 // Styles
 import './index.css';
@@ -182,7 +182,7 @@ const HomeLayout = () => {
 
   return (
     <main className='main-wrapper'>
-      <ProductsTable
+      <ProductTable
         filters={filter}
         products={products}
         status={status}
@@ -194,7 +194,7 @@ const HomeLayout = () => {
       {itemModal && (
         <ProductModal
           productItem={productItem}
-          status={status}
+          statuses={status}
           types={types}
           flagProductUpdate={handleProductUpdate}
         />
