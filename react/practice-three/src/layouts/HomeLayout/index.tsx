@@ -1,14 +1,5 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
-// Styles
-import './index.css';
-
-// Components
-import { SelectItemProps, ModalNotification, Button } from '@components';
-
-// Components of page
-import { ProductsTable, ProductModal, DataProduct } from '@pages';
-
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
@@ -19,7 +10,16 @@ import { ModalContext } from '@contexts';
 import { useDebounce } from '@hooks';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
+
+// Components
+import { SelectItemProps, Button, NotificationModal } from '@components';
+
+// Components of page
+import { ProductTable, ProductModal } from '@pages';
+
+// Styles
+import './index.css';
 
 interface Filter {
   name: string;
@@ -182,25 +182,25 @@ const HomeLayout = () => {
 
   return (
     <main className='main-wrapper'>
-      <ProductsTable
+      <ProductTable
         filters={filter}
         products={products}
         status={status}
         types={types}
         onSearch={handleSearch}
         onEdit={handleDataModal}
-        handleSetProductItem={handleSetProductItem}
+        onSetProductItem={handleSetProductItem}
       />
       {itemModal && (
         <ProductModal
           productItem={productItem}
-          status={status}
+          statuses={status}
           types={types}
           flagProductUpdate={handleProductUpdate}
         />
       )}
       {notificationModal && (
-        <ModalNotification
+        <NotificationModal
           url='/icons/trash-icon.svg'
           title='Delete product'
           description='Are you sure you want to delete this product? This action cannot be undone.'
@@ -208,17 +208,17 @@ const HomeLayout = () => {
         >
           <Button label='Cancel' variant='secondary' color='default' size='lg' />
           <Button label='Delete' variant='tertiary' color='warning' size='lg' />
-        </ModalNotification>
+        </NotificationModal>
       )}
       {errorsModal.status && (
-        <ModalNotification
+        <NotificationModal
           url='/icons/trash-icon.svg'
           title='Ooops!'
           description={`Something went wrong. ${errorsModal.message}`}
           onCancel={handleCancel}
         >
           <Button label='Close' variant='tertiary' color='warning' size='lg' />
-        </ModalNotification>
+        </NotificationModal>
       )}
     </main>
   );
