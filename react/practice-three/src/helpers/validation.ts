@@ -7,7 +7,7 @@ import { MESSAGE_ERRORS, REGEX } from '@constants';
  *
  * @returns {boolean}
  */
-const isEmpty = (value: string | number) => !value;
+const isEmpty = (value: string | number): boolean => !value;
 
 /**
  * @description function check the value match with regex or not
@@ -17,7 +17,7 @@ const isEmpty = (value: string | number) => !value;
  *
  * @returns {boolean}
  */
-const isMatchRegex = (regex: RegExp, value: string) => regex.test(value);
+const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value);
 
 /**
  * @description function check the number is a positive number or not
@@ -26,7 +26,7 @@ const isMatchRegex = (regex: RegExp, value: string) => regex.test(value);
  *
  * @returns {boolean}
  */
-const isPositiveNumber = (value: number) => value > 0;
+const isPositiveNumber = (value: number): boolean => value > 0;
 
 /**
  * @description function validation with data of all input

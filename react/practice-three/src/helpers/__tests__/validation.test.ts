@@ -18,7 +18,7 @@ describe('Testing isEmpty function', () => {
   });
 });
 
-describe('Testing isRegex function', () => {
+describe('Testing isMatchRegex function', () => {
   it('Should return true if the value is the integer number', () => {
     const value = '222';
     expect(isMatchRegex(REGEX.INTEGER_NUMBER, value)).toBe(true);
