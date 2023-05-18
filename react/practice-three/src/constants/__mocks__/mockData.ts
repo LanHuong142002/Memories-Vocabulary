@@ -1,3 +1,29 @@
+export const MOCK_PRODUCT_API = [
+  {
+    id: '08637ccd-729e-4349-82fd-b47933f8d455',
+    image: 'image test',
+    name: 'VENDÔME LOUIS',
+    quantity: '100',
+    brandImage: 'image test',
+    brand: 'Cartier',
+    statusesId: 'a9cd291b-7408-43d4-a339-7c2ad4fa54e0',
+    typesId: 'e76918cc-89fe-4329-99e5-63b939df3306',
+    price: '1000',
+  },
+];
+
+export const MOCK_PRODUCT_DATA = {
+  id: '08637ccd-729e-4349-82fd-b47933f8d455',
+  image: 'image test',
+  name: 'VENDÔME LOUIS',
+  quantity: '100',
+  brandImage: 'image test',
+  brand: 'Cartier',
+  statusesId: 'a9cd291b-7408-43d4-a339-7c2ad4fa54e0',
+  typesId: 'e76918cc-89fe-4329-99e5-63b939df3306',
+  price: '1000',
+};
+
 export const MOCK_TYPE_API = [
   {
     id: 'f678be1f-ce92-4483-82b9-9fb06e88b196',
