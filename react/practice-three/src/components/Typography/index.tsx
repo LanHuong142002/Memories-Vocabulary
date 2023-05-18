@@ -15,7 +15,7 @@ const Typography = ({
   size = 'md',
   color = 'primary',
   weight,
-}: TypographyProps) => {
+}: TypographyProps): React.ReactElement => {
   const TagName = tagName;
   const classes = `typography typography-color-${color} typography-size-${size} ${
     weight ? `typography-weight-${weight}` : ''

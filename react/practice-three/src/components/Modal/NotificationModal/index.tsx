@@ -21,18 +21,16 @@ const NotificationModal = ({
   children,
   title,
   onCancel,
-}: NotificationModalProps) => {
-  return (
-    <Modal url={url} toggleModal={onCancel}>
-      <div className='notification-modal'>
-        <div className='notification-modal-text'>
-          <p className='title'>{title}</p>
-          <p className='description'>{description}</p>
-        </div>
-        <div className='notification-modal-cta'>{children}</div>
+}: NotificationModalProps): React.ReactElement => (
+  <Modal url={url} toggleModal={onCancel}>
+    <div className='notification-modal'>
+      <div className='notification-modal-text'>
+        <p className='title'>{title}</p>
+        <p className='description'>{description}</p>
       </div>
-    </Modal>
-  );
-};
+      <div className='notification-modal-cta'>{children}</div>
+    </div>
+  </Modal>
+);
 
 export default NotificationModal;

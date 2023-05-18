@@ -31,7 +31,7 @@ const ProductRow = ({
   price,
   onEdit,
   onSetProductItem,
-}: ProductRowProps) => {
+}: ProductRowProps): React.ReactElement => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
   const iconImage = useRef<HTMLDivElement>(null);
@@ -127,7 +127,7 @@ const ProductRow = ({
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
-          url={loadImage('/icons/more.svg')}
+          url={loadImage('/icons/more-icon.svg')}
           size='xs'
           alt='icon more'
           isClickable

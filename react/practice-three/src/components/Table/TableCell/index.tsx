@@ -9,7 +9,7 @@ interface TableCellProps {
   children?: ReactNode;
 }
 
-const TableCell = ({ children, title, tagName = 'td' }: TableCellProps) => {
+const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): React.ReactElement => {
   const TagName = tagName;
 
   return (
