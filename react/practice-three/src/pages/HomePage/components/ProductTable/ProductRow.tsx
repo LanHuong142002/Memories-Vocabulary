@@ -127,7 +127,7 @@ const ProductRow = ({
       <TableCell tagName='td'>
         <Image
           ref={iconImage}
-          url={loadImage('/icons/more.svg')}
+          url={loadImage('/icons/more-icon.svg')}
           size='xs'
           alt='icon more'
           isClickable
