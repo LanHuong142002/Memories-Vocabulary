@@ -13,13 +13,13 @@ const getTypes = async <T>(): Promise<T[] | string> => {
   try {
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.TYPES}`);
     const types: T[] = await response.json();
-    const typeList = customMessageErrors(response, types);
 
-    if (typeof typeList === 'string') {
-      throw new ResponseError(typeList);
+    if (!response.ok) {
+      const message = customMessageErrors(response);
+      throw new ResponseError(message);
     }
 
-    return typeList;
+    return types;
   } catch (error) {
     return (error as ResponseError).message;
   }

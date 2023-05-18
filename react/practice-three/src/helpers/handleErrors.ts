@@ -9,11 +9,8 @@ import { STATUS_CODE } from '@constants';
  *
  * @returns {Object}
  */
-const customMessageErrors = <T>(response: Response, items: T): string | T => {
+const customMessageErrors = (response: Response): string => {
   switch (response.status) {
-    case STATUS_CODE.OK:
-    case STATUS_CODE.CREATED:
-      return items;
     case STATUS_CODE.BAD_REQUEST:
       return `${response.status} Bad Request`;
     case STATUS_CODE.UNAUTHORIZED:
