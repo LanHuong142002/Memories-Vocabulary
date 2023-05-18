@@ -1,13 +1,10 @@
-import { forwardRef, useCallback, useContext } from 'react';
+import { forwardRef } from 'react';
 
 // Styles
 import './index.css';
 
 // Components
 import { Button } from '@components';
-
-// Context
-import { ModalContext } from '@contexts';
 
 interface ActionMenuProps {
   onEdit: () => void;
@@ -17,34 +14,11 @@ interface ActionMenuProps {
 const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMenu(
   { onDelete, onEdit },
   ref,
-) {
-  const { showHideNotificationModal } = useContext(ModalContext);
-
-  /**
-   * @description function handle action edit button
-   */
-  const handleEdit = useCallback(() => {
-    onEdit();
-  }, [onEdit]);
-
-  /**
-   * @description function handle action delete button
-   */
-  const handleDelete = useCallback(() => {
-    showHideNotificationModal();
-    onDelete();
-  }, [onDelete]);
-
+): React.ReactElement {
   return (
     <div className='action-menu-wrapper' ref={ref}>
-      <Button text='Edit' color='default' type='button' onClick={handleEdit} variant='primary' />
-      <Button
-        text='Delete'
-        color='warning'
-        type='button'
-        onClick={handleDelete}
-        variant='primary'
-      />
+      <Button label='Edit' color='default' type='button' onClick={onEdit} variant='primary' />
+      <Button label='Delete' color='warning' type='button' onClick={onDelete} variant='primary' />
     </div>
   );
 });

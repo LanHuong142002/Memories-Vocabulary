@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 
 // Components
-import { Button, ModalNotification } from '@components';
+import { Button, NotificationModal } from '@components';
 
 describe('Testing Modal Notification component', () => {
   const handleOnClick = jest.fn();
@@ -13,14 +13,12 @@ describe('Testing Modal Notification component', () => {
     onCancel: handleOnClick,
   };
   const children = (
-    <>
-      <Button label='Close' variant='tertiary' color='warning' size='lg' onClick={handleOnClick} />
-    </>
+    <Button label='Close' variant='tertiary' color='warning' size='lg' onClick={handleOnClick} />
   );
 
   it('Should renders modal notification with title and description correctly', () => {
     const { getByText } = render(
-      <ModalNotification {...defaultProps}>{children}</ModalNotification>,
+      <NotificationModal {...defaultProps}>{children}</NotificationModal>,
     );
 
     expect(getByText(defaultProps.title)).toBeInTheDocument();
@@ -29,7 +27,7 @@ describe('Testing Modal Notification component', () => {
 
   it('Should call onCancel when click button close', () => {
     const { getByText } = render(
-      <ModalNotification {...defaultProps}>{children}</ModalNotification>,
+      <NotificationModal {...defaultProps}>{children}</NotificationModal>,
     );
 
     const closeButton = getByText('Close');

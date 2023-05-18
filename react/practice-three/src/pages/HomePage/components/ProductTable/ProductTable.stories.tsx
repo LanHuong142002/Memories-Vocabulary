@@ -6,11 +6,13 @@ import Product from '@assets/images/product.jpg';
 import Avatar from '@assets/images/avatar.jpg';
 
 // Components
-import ProductsTable, { Filters } from '.';
+import { ProductTable } from '@pages';
+
+import { Filters } from '.';
 
 export default {
-  title: 'PracticeTwo/HomePage/TableProducts',
-  component: ProductsTable,
+  title: 'PracticeTwo/HomePage/ProductTable',
+  component: ProductTable,
   decorators: [
     (Story) => (
       <div style={{ padding: '3em' }}>
@@ -18,9 +20,9 @@ export default {
       </div>
     ),
   ],
-} as ComponentMeta<typeof ProductsTable>;
+} as ComponentMeta<typeof ProductTable>;
 
-const Template: ComponentStory<typeof ProductsTable> = () => {
+const Template: ComponentStory<typeof ProductTable> = () => {
   const [filter, setFilter] = useState<Filters>({
     name: '',
     statusesId: '',
@@ -105,7 +107,7 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
     });
   };
 
-  const handleSetProductItem = () => {
+  const onSetProductItem = () => {
     console.log('handle set product item');
   };
 
@@ -114,14 +116,14 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
   };
 
   return (
-    <ProductsTable
+    <ProductTable
       filters={filter}
       products={products}
       status={listStatus}
       types={listType}
       onSearch={handleSearch}
       onEdit={handleEdit}
-      handleSetProductItem={handleSetProductItem}
+      onSetProductItem={onSetProductItem}
     />
   );
 };
