@@ -1,3 +1,3 @@
 export type { default as Product } from './product';
-export type { default as Type } from './type';
-export type { default as Status } from './status';
+export type { default as ProductType } from './ProductType';
+export type { default as ProductStatus } from './productStatus';
