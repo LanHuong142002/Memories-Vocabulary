@@ -1,10 +1,14 @@
 // Contexts
 import { ModalProvider } from '@contexts';
 
+// Helpers
+import { ErrorBoundary } from '@helpers';
+
 // Layouts
 import { Header, HomeLayout } from '@layouts';
-import { ErrorBoundary } from '@helpers';
-import { Button, ModalNotification } from '@components';
+
+// Components
+import { Button, NotificationModal } from '@components';
 
 const HomePage = () => {
   const handleCancel = () => {
@@ -17,14 +21,14 @@ const HomePage = () => {
       <ModalProvider>
         <ErrorBoundary
           fallback={
-            <ModalNotification
+            <NotificationModal
               url='/icons/trash-icon.svg'
               title='Ooops!'
               description={'Something went wrong.'}
               onCancel={handleCancel}
             >
               <Button label='Close' variant='tertiary' color='warning' size='lg' />
-            </ModalNotification>
+            </NotificationModal>
           }
         >
           <HomeLayout />
