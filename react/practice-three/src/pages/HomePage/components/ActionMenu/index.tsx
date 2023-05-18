@@ -14,7 +14,7 @@ interface ActionMenuProps {
 const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMenu(
   { onDelete, onEdit },
   ref,
-) {
+): React.ReactElement {
   return (
     <div className='action-menu-wrapper' ref={ref}>
       <Button label='Edit' color='default' type='button' onClick={onEdit} variant='primary' />

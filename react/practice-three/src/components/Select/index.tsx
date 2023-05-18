@@ -18,7 +18,14 @@ interface SelectProps {
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select = ({ valueSelected, optionAll, onChange, title, name, options }: SelectProps) => (
+const Select = ({
+  valueSelected,
+  optionAll,
+  onChange,
+  title,
+  name,
+  options,
+}: SelectProps): React.ReactElement => (
   <div className={title && 'select-box'} data-testid='select-box'>
     {title && <label className='title-select'>{title}</label>}
     <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>

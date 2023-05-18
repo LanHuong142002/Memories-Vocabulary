@@ -7,7 +7,7 @@ interface TableHeaderProps {
   children: ReactNode;
 }
 
-const TableHeader = ({ children }: TableHeaderProps) => (
+const TableHeader = ({ children }: TableHeaderProps): React.ReactElement => (
   <thead className='table-header' data-testid='table-header'>
     {children}
   </thead>

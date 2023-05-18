@@ -31,7 +31,7 @@ const ProductRow = ({
   price,
   onEdit,
   onSetProductItem,
-}: ProductRowProps) => {
+}: ProductRowProps): React.ReactElement => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
   const iconImage = useRef<HTMLDivElement>(null);
