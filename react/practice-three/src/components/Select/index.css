@@ -37,6 +37,6 @@
   padding: 10px 14px;
   border: 1px solid var(--color-muted);
   border-radius: 8px;
-  background: transparent url('../../../src/assets/icons/arrow-Icon.svg') no-repeat right;
+  background: transparent url('../../../src/assets/icons/arrow-icon.svg') no-repeat right;
   background-origin: content-box;
 }

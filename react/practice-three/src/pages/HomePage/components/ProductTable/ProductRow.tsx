@@ -130,7 +130,7 @@ const ProductRow = ({
           url={loadImage('/icons/more-icon.svg')}
           size='xs'
           alt='icon more'
-          isClickable={true}
+          isClickable
         />
         {menuPopup && <ActionMenu ref={popup} onDelete={handleDelete} onEdit={handleModalEdit} />}
       </TableCell>

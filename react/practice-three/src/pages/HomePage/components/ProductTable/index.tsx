@@ -28,7 +28,7 @@ interface Filters {
   price: string;
 }
 
-interface ProductsTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem'> {
+interface ProductTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem'> {
   filters: Filters;
   status: SelectItemProps[];
   types: SelectItemProps[];
@@ -36,7 +36,7 @@ interface ProductsTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProd
   onSearch: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const ProductsTable = ({
+const ProductTable = ({
   filters,
   status,
   types,
@@ -44,7 +44,7 @@ const ProductsTable = ({
   onSearch,
   onEdit,
   onSetProductItem,
-}: ProductsTableProps) => {
+}: ProductTableProps) => {
   return (
     <Table>
       <TableHeader>
@@ -126,5 +126,5 @@ const ProductsTable = ({
   );
 };
 
-export default memo(ProductsTable);
+export default memo(ProductTable);
 export type { Filters };
