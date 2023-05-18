@@ -25,7 +25,7 @@ describe('Testing Modal component', () => {
     expect(getByText('Test content')).toBeInTheDocument();
   });
 
-  it('Should calls toggleModal when click icon cancel', () => {
+  it('Should calls toggleModal when click "cancel" icon', () => {
     const { getByRole } = render(
       <Modal title={title} toggleModal={toggleModal}>
         Test content

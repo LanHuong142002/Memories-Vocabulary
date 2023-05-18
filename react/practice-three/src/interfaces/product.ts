@@ -1,6 +1,6 @@
-import { SelectItemProps } from '@components';
+import { ProductStatus, ProductType } from '@interfaces';
 
-interface DataProduct {
+interface Product {
   id?: string;
   image: string;
   name: string;
@@ -12,8 +12,8 @@ interface DataProduct {
   brand: string;
   statusesId?: string;
   typesId?: string;
-  statuses?: SelectItemProps;
-  types?: SelectItemProps;
+  statuses?: ProductStatus;
+  types?: ProductType;
 }
 
-export default DataProduct;
+export default Product;
