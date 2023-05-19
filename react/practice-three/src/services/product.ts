@@ -17,7 +17,7 @@ import { Product } from '@interfaces';
 const getProductsByParam = async (param: string): Promise<Product[] | string> => {
   try {
     const response = await fetch(
-      `${URL_API.BASE_URL}${URL_API.PRODUCTS + 12398129038}?_expand=statuses&_expand=types${param}`,
+      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
     );
     const products: Product[] = await response.json();
 
@@ -95,7 +95,7 @@ const deleteProduct = async (id: string): Promise<Product | string> => {
  *
  * @return {Object} product
  */
-const updateProduct = async (id: string, productUpdate: Product): Promise<Product | string> => {
+const updateProduct = async (productUpdate: Product): Promise<Product | string> => {
   try {
     const options = {
       method: 'PATCH',
@@ -104,7 +104,10 @@ const updateProduct = async (id: string, productUpdate: Product): Promise<Produc
         'Content-Type': 'application/json',
       },
     };
-    const response = await fetch(`${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`, options);
+    const response = await fetch(
+      `${URL_API.BASE_URL}${URL_API.PRODUCTS}/${productUpdate.id}`,
+      options,
+    );
     const product: Product = await response.json();
 
     if (!response.ok) {

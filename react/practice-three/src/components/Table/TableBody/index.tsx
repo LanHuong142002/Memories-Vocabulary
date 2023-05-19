@@ -7,7 +7,7 @@ interface TableBodyProps {
   children: ReactNode;
 }
 
-const TableBody = ({ children }: TableBodyProps) => (
+const TableBody = ({ children }: TableBodyProps): React.ReactElement => (
   <tbody className='table-body'>{children}</tbody>
 );
 

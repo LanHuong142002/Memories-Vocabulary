@@ -4,15 +4,18 @@ import { URL_API } from '@constants';
 // Helpers
 import { ResponseError, customMessageErrors } from '@helpers';
 
+// Interfaces
+import { ProductType } from '@interfaces';
+
 /**
  * @description function get all types
  *
  * @returns {Array} list item
  */
-const getTypes = async <T>(): Promise<T[] | string> => {
+const getTypes = async (): Promise<ProductType[] | string> => {
   try {
     const response = await fetch(`${URL_API.BASE_URL}${URL_API.TYPES}`);
-    const types: T[] = await response.json();
+    const types: ProductType[] = await response.json();
 
     if (!response.ok) {
       const message = customMessageErrors(response);

@@ -24,21 +24,26 @@ import { validation, convertBase64, loadImage } from '@helpers';
 import { ModalContext } from '@contexts';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
 
 interface ModalProps {
-  status: SelectItemProps[];
+  statuses: SelectItemProps[];
   types: SelectItemProps[];
-  productItem: DataProduct;
+  productItem: Product;
   flagProductUpdate: () => void;
 }
 
-type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
+type ErrorMessage = Pick<Product, 'name' | 'quantity' | 'brand' | 'price'>;
 
-const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
+const ProductModal = ({
+  productItem,
+  statuses,
+  types,
+  flagProductUpdate,
+}: ModalProps): React.ReactElement => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
-  const [product, setProduct] = useState(productItem);
-  const [isErrors, setIsErrors] = useState<boolean>(true);
+  const [product, setProduct] = useState<Product>(productItem);
+  const [hasErrors, setHasErrors] = useState<boolean>(true);
   const [errorsMessage, setErrorsMessage] = useState<ErrorMessage>({
     name: '',
     quantity: '',
@@ -100,7 +105,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
       // if have product's id and product has any change, we will call API to update product
       if (product.id && product !== productItem) {
-        const item = await updateProduct<DataProduct>(product.id, product);
+        const item = await updateProduct<Product>(product.id, product);
 
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed
@@ -127,14 +132,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
   useEffect(() => {
     const errors = validation<ErrorMessage>(product, ['price', 'quantity']);
     setErrorsMessage(errors);
-
-    // if input still have any errors, isErrors will set to false to disable button save
-    // if no more errors, isErrors will set to true and show button save
-    if (Object.values(errors).every((value) => !value)) {
-      setIsErrors(false);
-    } else {
-      setIsErrors(true);
-    }
+    setHasErrors(!Object.values(errors).every((value) => !value));
   }, [product]);
 
   return useMemo(() => {
@@ -198,7 +196,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
             <div className='form-group form-group-split'>
               <Select
                 title='Status'
-                options={status}
+                options={statuses}
                 name='statusesId'
                 valueSelected={product.statusesId || ''}
                 onChange={handleOnChange}
@@ -255,7 +253,7 @@ const ProductModal = ({ productItem, status, types, flagProductUpdate }: ModalPr
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={isErrors}
+              isDisabled={hasErrors}
             />
           </div>
         </form>
