@@ -14,37 +14,33 @@ import './index.css';
 // Components
 import { Modal, Button, Image, Input, Select, SelectItemProps, InputFile } from '@components';
 
-// Components of pages
-import { DataProduct } from '@pages';
-
 // Services
 import { updateProduct } from '@services';
 
 // Helpers
-import { validation, convertBase64 } from '@helpers';
+import { convertBase64, validateStringField, validateNumberField } from '@helpers';
 
 // Contexts
 import { ModalContext } from '@contexts';
 
+// Hooks
+import { useDebounce } from '@hooks';
+
+// Interfaces
+import { Product } from '@interfaces';
+
 interface ModalProps {
   status: SelectItemProps[];
   types: SelectItemProps[];
-  productItem: DataProduct;
-  flagProductUpdate: () => void;
+  productItem: Product;
+  onUpdateProductFlag: () => void;
 }
 
-type ErrorMessage = Pick<DataProduct, 'productName' | 'quantity' | 'brandName' | 'price'>;
-
-const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalProps) => {
+const ModalProduct = ({ productItem, status, types, onUpdateProductFlag }: ModalProps) => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
-  const [product, setProduct] = useState(productItem);
-  const [isErrors, setIsErrors] = useState<boolean>(true);
-  const [errorsMessage, setErrorsMessage] = useState<ErrorMessage>({
-    productName: '',
-    quantity: '',
-    brandName: '',
-    price: '',
-  });
+  const [product, setProduct] = useState<Product>(productItem);
+  const [hasError, setHasError] = useState<boolean>(true);
+  const debouncedProduct = useDebounce<Product>(product, 500);
 
   /**
    * @description function get value when input change their value
@@ -100,7 +96,7 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
       // if have product's id and product has any change, we will call API to update product
       if (product.id && product !== productItem) {
-        const item = await updateProduct<DataProduct>(product.id, product);
+        const item = await updateProduct<Product>(product.id, product);
 
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed
@@ -109,7 +105,7 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
 
           // if don't have any errors, list products will update
         } else {
-          flagProductUpdate();
+          onUpdateProductFlag();
           showHideItemModal();
         }
 
@@ -121,32 +117,37 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
     [product, productItem],
   );
 
+  const disabledButton = () => {
+    if (
+      validateNumberField(Number(product.price)) ||
+      validateStringField(product.name) ||
+      validateNumberField(Number(product.quantity), 'quantity') ||
+      validateStringField(product.brand)
+    ) {
+      setHasError(false);
+    } else {
+      setHasError(true);
+    }
+  };
+
   /**
    * @description validation input onChange
    */
   useEffect(() => {
-    const errors = validation<ErrorMessage>(product, ['price', 'quantity']);
-    setErrorsMessage(errors);
-
-    // if input still have any errors, isErrors will set to false to disable button save
-    // if no more errors, isErrors will set to true and show button save
-    if (Object.values(errors).every((value) => !value)) {
-      setIsErrors(false);
-    } else {
-      setIsErrors(true);
-    }
-  }, [product]);
+    disabledButton();
+  }, [product.price, product.name, product.quantity, product.brand]);
 
   return useMemo(() => {
     return (
       <Modal toggleModal={showHideItemModal}>
-        <form className='form-wrapper' onSubmit={handleOnSave}>
+        <form className='form-wrapper'>
           <div className='form-body'>
             <div className='form-aside'>
-              <Image image={product.productImage} size='lg' />
+              <Image url={product.image} size='lg' />
               <InputFile
-                id='productImage'
-                name='productImage'
+                url=''
+                id='image'
+                name='image'
                 text='Choose File ... '
                 onChange={handleChangeInputFile}
               />
@@ -156,12 +157,12 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
                 <div className='form-control'>
                   <Input
                     title="Product's Name"
-                    name='productName'
+                    name='name'
                     variant='primary'
-                    value={product.productName}
+                    value={product.name}
                     onChange={handleOnChange}
                   />
-                  <span className='error-message'>{errorsMessage.productName}</span>
+                  <span className='error-message'>{validateStringField(product.name)}</span>
                 </div>
               </div>
               <div className='form-group'>
@@ -174,24 +175,27 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
                     value={String(product.quantity)}
                     onChange={handleOnChange}
                   />
-                  <span className='error-message'>{errorsMessage.quantity}</span>
+                  <span className='error-message'>
+                    {validateNumberField(Number(product.quantity), 'quantity')}
+                  </span>
                 </div>
               </div>
               <div className='form-group form-group-split'>
                 <div className='form-control'>
                   <Input
                     title="Brand's Name"
-                    name='brandName'
+                    name='brand'
                     variant='primary'
-                    value={product.brandName}
+                    value={String(product.brand)}
                     onChange={handleOnChange}
                   />
-                  <span className='error-message'>{errorsMessage.brandName}</span>
+                  <span className='error-message'>{validateStringField(product.brand)}</span>
                 </div>
 
                 <div className='group-image'>
-                  <Image size='sm' isCircle={true} image={product.brandImage} />
+                  <Image size='s' isCircle={true} url={product.brandImage} />
                   <InputFile
+                    url=''
                     id='brandImage'
                     name='brandImage'
                     text='Choose File ...'
@@ -210,7 +214,9 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
                     value={String(product.price)}
                     onChange={handleOnChange}
                   />
-                  <span className='error-message'>{errorsMessage.price}</span>
+                  <span className='error-message'>
+                    {validateNumberField(Number(product.price))}
+                  </span>
                 </div>
 
                 <Select
@@ -235,14 +241,14 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
             <Button
               variant='secondary'
               color='success'
-              text='Save'
+              label='Save'
               type='submit'
-              isDisable={isErrors}
+              isDisabled={hasError}
             />
             <Button
               variant='secondary'
               color='default'
-              text='Cancel'
+              label='Cancel'
               type='button'
               onClick={showHideItemModal}
             />
@@ -250,7 +256,7 @@ const ModalProduct = ({ productItem, status, types, flagProductUpdate }: ModalPr
         </form>
       </Modal>
     );
-  }, [product, errorsMessage, status, types]);
+  }, [hasError, debouncedProduct, product, status, types]);
 };
 
 export default ModalProduct;

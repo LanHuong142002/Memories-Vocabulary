@@ -1,8 +1,8 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 // Images
-import Product from 'assets/images/product.jpg';
-import Avatar from 'assets/images/avatar.jpg';
+import Product from '@assets/images/product.jpg';
+import Avatar from '@assets/images/avatar.jpg';
 
 // Components
 import ModalProduct from '.';
@@ -15,11 +15,11 @@ export default {
 const Template: ComponentStory<typeof ModalProduct> = () => {
   const product = {
     id: '1',
-    productImage: Product,
-    productName: 'Louis Vuitton',
+    image: Product,
+    name: 'Louis Vuitton',
     quantity: 123,
     brandImage: Avatar,
-    brandName: 'Evan Flores',
+    brand: 'Evan Flores',
     status: '2',
     type: '3',
     price: 200,
@@ -35,7 +35,7 @@ const Template: ComponentStory<typeof ModalProduct> = () => {
     { id: '2', name: 'Smart Phone' },
   ];
 
-  const flagProductUpdate = () => {
+  const handleUpdateProductFlag = () => {
     console.log('product update');
   };
 
@@ -44,7 +44,7 @@ const Template: ComponentStory<typeof ModalProduct> = () => {
       productItem={product}
       status={status}
       types={types}
-      flagProductUpdate={flagProductUpdate}
+      onUpdateProductFlag={handleUpdateProductFlag}
     />
   );
 };
