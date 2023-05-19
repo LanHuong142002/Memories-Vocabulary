@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
  * @returns value
  */
 const useDebounce = <T>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
     // Update debounced value after delay
