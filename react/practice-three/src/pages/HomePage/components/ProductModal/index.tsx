@@ -30,7 +30,7 @@ interface ModalProps {
   statuses: SelectItemProps[];
   types: SelectItemProps[];
   productItem: Product;
-  flagProductUpdate: () => void;
+  onUpdateProductFlag: () => void;
 }
 
 type ErrorMessage = Pick<Product, 'name' | 'quantity' | 'brand' | 'price'>;
@@ -39,7 +39,7 @@ const ProductModal = ({
   productItem,
   statuses,
   types,
-  flagProductUpdate,
+  onUpdateProductFlag,
 }: ModalProps): React.ReactElement => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
   const [product, setProduct] = useState<Product>(productItem);
@@ -114,7 +114,7 @@ const ProductModal = ({
 
           // if don't have any errors, list products will update
         } else {
-          flagProductUpdate();
+          onUpdateProductFlag();
           showHideItemModal();
         }
 

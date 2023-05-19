@@ -42,7 +42,7 @@ const HomeLayout = () => {
   const [status, setStatus] = useState<SelectItemProps[]>([]);
   const [types, setTypes] = useState<SelectItemProps[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [flagProductUpdate, setFlagProductUpdate] = useState<boolean>(false);
+  const [updateProductFlag, setUpdateProductFlag] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -69,7 +69,7 @@ const HomeLayout = () => {
    * editing and deleting has been changed or not
    */
   const handleProductUpdate = useCallback(() => {
-    setFlagProductUpdate((prev) => !prev);
+    setUpdateProductFlag((prev) => !prev);
   }, []);
 
   /**
@@ -178,7 +178,7 @@ const HomeLayout = () => {
     };
 
     fetchData();
-  }, [flagProductUpdate, debouncedSearchTerm]);
+  }, [updateProductFlag, debouncedSearchTerm]);
 
   return (
     <main className='main-wrapper'>
@@ -196,7 +196,7 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          flagProductUpdate={handleProductUpdate}
+          updateProductFlag={handleProductUpdate}
         />
       )}
       {notificationModal && (
