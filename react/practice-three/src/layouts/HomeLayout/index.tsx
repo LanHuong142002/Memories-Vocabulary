@@ -196,7 +196,7 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          flagProductUpdate={handleProductUpdate}
+          onUpdateProductFlag={handleProductUpdate}
         />
       )}
       {notificationModal && (
