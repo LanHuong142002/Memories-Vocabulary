@@ -9,11 +9,13 @@ interface IdentityProps extends Pick<ImageProps, 'url' | 'isCircle' | 'alt'> {
   text: string;
 }
 
-const Identity = memo(({ text, url, isCircle, alt }: IdentityProps) => (
-  <div className='identity-wrapper'>
-    <Image url={url} size={isCircle ? 'xs' : 'lg'} isCircle={isCircle} alt={alt} />
-    <span>{text}</span>
-  </div>
-));
+const Identity = memo(
+  ({ text, url, isCircle, alt }: IdentityProps): React.ReactElement => (
+    <div className='identity-wrapper'>
+      <Image url={url} size={isCircle ? 'xs' : 'lg'} isCircle={isCircle} alt={alt} />
+      <span>{text}</span>
+    </div>
+  ),
+);
 
 export { Identity };

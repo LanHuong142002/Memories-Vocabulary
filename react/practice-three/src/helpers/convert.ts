@@ -49,7 +49,7 @@ const formatPrice = (value: number): string => {
  *
  * @returns {string} A string representing the complete URL of the image.
  */
-const loadImage = (src: string) => {
+const loadImage = (src: string): string => {
   return `${process.env.VITE_ASSETS_URL}${src}`;
 };
 

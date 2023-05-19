@@ -22,7 +22,7 @@ const InputFile = ({
   variant = 'primary',
   text,
   onChange,
-}: InputFileProps) => (
+}: InputFileProps): React.ReactElement => (
   <label
     htmlFor={id}
     className={`input-file-wrapper input-file-${variant}`}
