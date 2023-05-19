@@ -2,25 +2,18 @@ import { convertBase64, formatPrice, loadImage } from '@helpers';
 
 describe('Testing convertBase64', () => {
   it('Should resolve with a base64 url when given a valid file', async () => {
-    // Create a mock file object
     const file = new File(['test'], 'test.png', { type: 'image/png' });
-
-    // Call the function and wait for the promise to resolve
     const result = await convertBase64(file);
 
-    // Assert that the result is a string starting with 'data:image/png;base64,'
     expect(typeof result).toBe('string');
   });
 
   it('Should reject with an error when given an invalid file', async () => {
-    // Create a mock file object with an invalid type
     const file = new File(['test'], 'test.txt', { type: 'text/plain' });
 
     try {
-      // Call the function and wait for the promise to reject
       await convertBase64(file);
     } catch (error) {
-      // Assert that the error is an instance of Error
       expect(error).toBeInstanceOf(Error);
     }
   });
