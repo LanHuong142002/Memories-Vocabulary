@@ -23,7 +23,7 @@ const Button = ({
   isDisabled,
   isLoading,
   onClick,
-}: ButtonProps) => {
+}: ButtonProps): React.ReactElement => {
   const classes = `btn btn-${variant} btn-color-${color} btn-${size} ${
     isDisabled ? 'btn-disabled' : ''
   } ${isLoading ? 'btn-loading' : ''}`;

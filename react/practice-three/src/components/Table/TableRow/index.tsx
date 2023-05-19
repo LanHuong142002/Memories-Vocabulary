@@ -8,10 +8,8 @@ interface TableRowProps {
   classTableRow?: 'header' | 'message';
 }
 
-const TableRow = ({ children, classTableRow }: TableRowProps) => {
-  return (
-    <tr className={`table-row ${classTableRow ? `table-row-${classTableRow}` : ''}`}>{children}</tr>
-  );
-};
+const TableRow = ({ children, classTableRow }: TableRowProps): React.ReactElement => (
+  <tr className={`table-row ${classTableRow ? `table-row-${classTableRow}` : ''}`}>{children}</tr>
+);
 
 export default TableRow;

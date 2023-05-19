@@ -6,7 +6,7 @@ interface LabelProps {
   variant?: 'primary' | 'success' | 'warning';
 }
 
-const Label = ({ text, variant }: LabelProps) => (
+const Label = ({ text, variant }: LabelProps): React.ReactElement => (
   <div className={`label-wrapper ${variant ? `label-${variant}` : ''}`}>
     <span>{text}</span>
   </div>
