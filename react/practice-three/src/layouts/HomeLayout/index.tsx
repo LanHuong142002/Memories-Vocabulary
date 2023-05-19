@@ -4,24 +4,29 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import './index.css';
 
 // Components
-import { SelectItemProps, NotificationModal } from '@components';
+import { SelectItemProps, NotificationModal, Button } from '@components';
 
 // Components of page
-import { ProductsTable, ProductModal, DataProduct } from '@pages';
+import { ProductTable, ProductModal } from '@pages';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
 // Contexts
 import { ModalContext } from '@contexts';
+
+// Hooks
 import { useDebounce } from '@hooks';
 
+// Interfaces
+import { Product } from '@interfaces';
+
 interface Filter {
-  productName: string;
+  name: string;
   statusesId: string;
   typesId: string;
   quantity: string;
-  brandName: string;
+  brand: string;
   price: string;
 }
 
@@ -39,20 +44,20 @@ const HomeLayout = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [flagProductUpdate, setFlagProductUpdate] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
-    productName: '',
+    name: '',
     statusesId: '',
     typesId: '',
     quantity: '',
-    brandName: '',
+    brand: '',
     price: '',
   });
   const [productItem, setProductItem] = useState<Product>({
     id: '',
-    productImage: '',
-    productName: '',
+    image: '',
+    name: '',
     quantity: 0,
     brandImage: '',
-    brandName: '',
+    brand: '',
     statusesId: '',
     typesId: '',
     price: 0,
@@ -177,35 +182,43 @@ const HomeLayout = () => {
 
   return (
     <main className='main-wrapper'>
-      <ProductsTable
+      <ProductTable
         filters={filter}
         products={products}
         status={status}
         types={types}
         onSearch={handleSearch}
         onEdit={handleDataModal}
-        handleSetProductItem={handleSetProductItem}
+        onSetProductItem={handleSetProductItem}
       />
       {itemModal && (
         <ProductModal
           productItem={productItem}
-          status={status}
+          statuses={status}
           types={types}
           flagProductUpdate={handleProductUpdate}
         />
       )}
       {notificationModal && (
         <NotificationModal
-          id={productItem.id || ''}
-          description='Do you want to delete this ?'
-          textButtonConfirm='Delete'
-          isConfirm={true}
-          onConfirm={handleConfirm}
+          url='/icons/trash-icon.svg'
+          title='Delete product'
+          description='Are you sure you want to delete this product? This action cannot be undone.'
           onCancel={showHideNotificationModal}
-        />
+        >
+          <Button label='Cancel' variant='secondary' color='default' size='lg' />
+          <Button label='Delete' variant='tertiary' color='warning' size='lg' />
+        </NotificationModal>
       )}
       {errorsModal.status && (
-        <NotificationModal description={errorsModal.message} onCancel={handleCancel} />
+        <NotificationModal
+          url='/icons/trash-icon.svg'
+          title='Ooops!'
+          description={`Something went wrong. ${errorsModal.message}`}
+          onCancel={handleCancel}
+        >
+          <Button label='Close' variant='tertiary' color='warning' size='lg' />
+        </NotificationModal>
       )}
     </main>
   );
