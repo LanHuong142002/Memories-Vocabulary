@@ -36,7 +36,7 @@ const isPositiveNumber = (value: number): boolean => value > 0;
  *
  * @returns {string} return message error or empty string
  */
-const validateNumberField = (value: number, key?: string) => {
+const validateNumberField = (value: number, key?: string): string => {
   switch (true) {
     case isEmpty(value):
       return MESSAGE_ERRORS.EMPTY_FIELD;
@@ -58,7 +58,7 @@ const validateNumberField = (value: number, key?: string) => {
  *
  * @returns {string} return message error or empty string
  */
-const validateStringField = (value: string) => {
+const validateStringField = (value: string): string => {
   switch (true) {
     case isEmpty(value):
       return MESSAGE_ERRORS.EMPTY_FIELD;
