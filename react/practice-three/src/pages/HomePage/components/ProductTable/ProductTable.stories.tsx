@@ -6,11 +6,13 @@ import Product from '@assets/images/product.jpg';
 import Avatar from '@assets/images/avatar.jpg';
 
 // Components
-import ProductsTable, { Filters } from '.';
+import { ProductTable } from '@pages';
+
+import { Filters } from '.';
 
 export default {
-  title: 'PracticeTwo/HomePage/TableProducts',
-  component: ProductsTable,
+  title: 'PracticeTwo/HomePage/ProductTable',
+  component: ProductTable,
   decorators: [
     (Story) => (
       <div style={{ padding: '3em' }}>
@@ -18,15 +20,15 @@ export default {
       </div>
     ),
   ],
-} as ComponentMeta<typeof ProductsTable>;
+} as ComponentMeta<typeof ProductTable>;
 
-const Template: ComponentStory<typeof ProductsTable> = () => {
+const Template: ComponentStory<typeof ProductTable> = () => {
   const [filter, setFilter] = useState<Filters>({
-    productName: '',
+    name: '',
     statusesId: '',
     typesId: '',
     quantity: '',
-    brandName: '',
+    brand: '',
     price: '',
   });
 
@@ -43,8 +45,8 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
   const products = [
     {
       id: '1',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -55,13 +57,13 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
     {
       id: '2',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -72,13 +74,13 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
     {
       id: '3',
-      productImage: Product,
-      productName: 'Louis Vuitton',
+      image: Product,
+      name: 'Louis Vuitton',
       statuses: {
         id: '1',
         name: 'Available',
@@ -89,7 +91,7 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
       },
       quantity: 123,
       brandImage: Avatar,
-      brandName: 'Evan Flores',
+      brand: 'Evan Flores',
       price: 200,
     },
   ];
@@ -105,7 +107,7 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
     });
   };
 
-  const handleSetProductItem = () => {
+  const onSetProductItem = () => {
     console.log('handle set product item');
   };
 
@@ -114,14 +116,14 @@ const Template: ComponentStory<typeof ProductsTable> = () => {
   };
 
   return (
-    <ProductsTable
+    <ProductTable
       filters={filter}
       products={products}
       status={listStatus}
       types={listType}
       onSearch={handleSearch}
       onEdit={handleEdit}
-      handleSetProductItem={handleSetProductItem}
+      onSetProductItem={onSetProductItem}
     />
   );
 };

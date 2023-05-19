@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Typography component Should render Typography component 1`] = `
+<div>
+  <p
+    class="typography typography-color-primary typography-size-md typography-weight-regular"
+  >
+    Management
+  </p>
+</div>
+`;
+
+exports[`Testing Typography component Should render Typography without weight 1`] = `
+<div>
+  <p
+    class="typography typography-color-primary typography-size-md "
+  >
+    Management
+  </p>
+</div>
+`;
