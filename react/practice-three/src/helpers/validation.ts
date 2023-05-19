@@ -29,46 +29,44 @@ const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value
 const isPositiveNumber = (value: number): boolean => value > 0;
 
 /**
- * @description function validation with data of all input
+ * @description function validate number filed
  *
- * @param {Object} data is data of all input after enter value
- * @param {Array} numberFields enter name of fields which we want to check in number
+ * @param {string} key is the name of field need to validate
+ * @param {string} value is the value of field need to validate
  *
- * @returns {Object} return object with message error
+ * @returns {string} return message error or empty string
  */
-const validation = <T extends object, X>(data: T, numberFields = ['']): X => {
-  let errorsMessage = {};
-  for (const [key, value] of Object.entries(data)) {
-    if (isEmpty(value)) {
-      errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_FIELD };
-    } else if (numberFields.includes(key)) {
-      // Check which fields want to check as number
-      switch (true) {
-        // case check if the value is not an integer number
-        case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
-          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.INTEGER_NUMBER };
-          break;
-        // case check if the value is not a positive number
-        case !isPositiveNumber(value):
-          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.POSITIVE_NUMBER };
-          break;
-        default:
-          errorsMessage = { ...errorsMessage, [key]: '' };
-          break;
-      }
-    } else {
-      switch (true) {
-        // case check if the value has an empty string at the beginning or end
-        case isMatchRegex(REGEX.EMPTY_SPACE, value):
-          errorsMessage = { ...errorsMessage, [key]: MESSAGE_ERRORS.EMPTY_SPACE };
-          break;
-        default:
-          errorsMessage = { ...errorsMessage, [key]: '' };
-          break;
-      }
-    }
+const validateNumberField = (value: number, key?: string) => {
+  switch (true) {
+    case isEmpty(value):
+      return MESSAGE_ERRORS.EMPTY_FIELD;
+    // case check if the value is not an integer number
+    case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
+      return MESSAGE_ERRORS.INTEGER_NUMBER;
+    // case check if the value is not a positive number
+    case !isPositiveNumber(value):
+      return MESSAGE_ERRORS.POSITIVE_NUMBER;
+    default:
+      return '';
   }
-  return errorsMessage as X;
 };
 
-export { validation, isEmpty, isPositiveNumber, isMatchRegex };
+/**
+ * @description function validate string field
+ *
+ * @param {string} value is the value of field need to validate
+ *
+ * @returns {string} return message error or empty string
+ */
+const validateStringField = (value: string) => {
+  switch (true) {
+    case isEmpty(value):
+      return MESSAGE_ERRORS.EMPTY_FIELD;
+    case isMatchRegex(REGEX.EMPTY_SPACE, value):
+      return MESSAGE_ERRORS.EMPTY_SPACE;
+    default:
+      return '';
+  }
+};
+
+export { isEmpty, isPositiveNumber, isMatchRegex, validateStringField, validateNumberField };

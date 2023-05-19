@@ -2,9 +2,15 @@
 import { MESSAGE_ERRORS, REGEX } from '@constants';
 
 // Helpers
-import { isEmpty, isPositiveNumber, isMatchRegex, validation } from '@helpers';
+import {
+  isEmpty,
+  isPositiveNumber,
+  isMatchRegex,
+  validateNumberField,
+  validateStringField,
+} from '@helpers';
 
-describe('Testing isEmpty function', () => {
+describe('Testing isEmpty', () => {
   it('Should return true with empty string', () => {
     expect(isEmpty('')).toBe(true);
   });
@@ -18,7 +24,7 @@ describe('Testing isEmpty function', () => {
   });
 });
 
-describe('Testing isMatchRegex function', () => {
+describe('Testing isMatchRegex', () => {
   it('Should return true if the value is the integer number', () => {
     const value = '222';
     expect(isMatchRegex(REGEX.INTEGER_NUMBER, value)).toBe(true);
@@ -35,7 +41,7 @@ describe('Testing isMatchRegex function', () => {
   });
 });
 
-describe('Testing isPositiveNumber function', () => {
+describe('Testing isPositiveNumber', () => {
   it('Should return true for positive numbers', () => {
     expect(isPositiveNumber(1)).toBe(true);
   });
@@ -45,88 +51,48 @@ describe('Testing isPositiveNumber function', () => {
   });
 });
 
-describe('Testing validation function', () => {
-  interface Data {
-    name: string;
-    email: string;
-    age: number;
-    quantity?: number;
-  }
+describe('Testing validateNumberField', () => {
+  it('Should return an error message if is empty field', () => {
+    const message = validateNumberField(0);
 
-  interface MessageError {
-    name: string;
-    email: string;
-    age: string;
-    quantity?: string;
-  }
-
-  it('Should return an object with error messages for empty fields', () => {
-    const data = {
-      name: '',
-      email: '',
-      age: 25,
-    };
-    const expected = {
-      name: MESSAGE_ERRORS.EMPTY_FIELD,
-      email: MESSAGE_ERRORS.EMPTY_FIELD,
-      age: '',
-    };
-    const result = validation<Data, MessageError>(data);
-
-    expect(result).toEqual(expected);
+    expect(message).toBe(MESSAGE_ERRORS.EMPTY_FIELD);
   });
 
-  it('Should return an object with error messages for fields that should be an integer numbers', () => {
-    const data = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      age: 2,
-      quantity: 2.2,
-    };
-    const expected = {
-      name: '',
-      email: '',
-      age: '',
-      quantity: MESSAGE_ERRORS.INTEGER_NUMBER,
-    };
-    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
+  it('Should return an error message if is not integer number', () => {
+    const message = validateNumberField(2.2, 'quantity');
 
-    expect(result).toEqual(expected);
+    expect(message).toBe(MESSAGE_ERRORS.INTEGER_NUMBER);
   });
 
-  it('Should return an object with error messages for fields that should be a positive numbers', () => {
-    const data = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      age: -2,
-      quantity: 22,
-    };
-    const expected = {
-      name: '',
-      email: '',
-      age: MESSAGE_ERRORS.POSITIVE_NUMBER,
-      quantity: '',
-    };
-    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
+  it('Should return an error message if is not positive number', () => {
+    const message = validateNumberField(-22);
 
-    expect(result).toEqual(expected);
+    expect(message).toBe(MESSAGE_ERRORS.POSITIVE_NUMBER);
   });
 
-  it('Should return an object with error messages for empty space', () => {
-    const data = {
-      name: 'John Doe',
-      email: '  john.doe@example.com  ',
-      age: 0,
-      quantity: 10,
-    };
-    const expected = {
-      name: '',
-      email: MESSAGE_ERRORS.EMPTY_SPACE,
-      age: MESSAGE_ERRORS.EMPTY_FIELD,
-      quantity: '',
-    };
-    const result = validation<Data, MessageError>(data, ['age', 'quantity']);
+  it('Should return an empty string if valid', () => {
+    const message = validateNumberField(22);
 
-    expect(result).toEqual(expected);
+    expect(message).toBe('');
+  });
+});
+
+describe('Testing validateStringField', () => {
+  it('Should return an error message if is empty field', () => {
+    const message = validateStringField('');
+
+    expect(message).toBe(MESSAGE_ERRORS.EMPTY_FIELD);
+  });
+
+  it('Should return an error message if it has empty spaces at the beginning and end', () => {
+    const message = validateStringField('123   ');
+
+    expect(message).toBe(MESSAGE_ERRORS.EMPTY_SPACE);
+  });
+
+  it('Should return an empty string if it valid', () => {
+    const message = validateStringField('123');
+
+    expect(message).toBe('');
   });
 });
