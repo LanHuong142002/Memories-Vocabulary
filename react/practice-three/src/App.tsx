@@ -7,7 +7,7 @@ import { DetailsPage, HomePage } from '@pages';
 const App = () => {
   return (
     <div className='container'>
-      {/* <HomePage /> */}
+      <HomePage />
       <DetailsPage />
     </div>
   );
