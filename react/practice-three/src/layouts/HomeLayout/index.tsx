@@ -1,5 +1,8 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
+// Styles
+import './index.css';
+
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
