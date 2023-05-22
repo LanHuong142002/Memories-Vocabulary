@@ -202,6 +202,7 @@ const HomeLayout = () => {
         onSearch={handleSearch}
         onEdit={handleDataModal}
         onSetProductItem={handleSetProductItem}
+        onHandleNotification={handleNotificationModal}
       />
       {productModal && (
         <ProductModal
@@ -227,7 +228,13 @@ const HomeLayout = () => {
             size='lg'
             onClick={handleNotificationModal}
           />
-          <Button label='Delete' variant='tertiary' color='warning' size='lg' />
+          <Button
+            label='Delete'
+            variant='tertiary'
+            color='warning'
+            size='lg'
+            onClick={handleConfirm}
+          />
         </NotificationModal>
       )}
       {errorModal.status && (
