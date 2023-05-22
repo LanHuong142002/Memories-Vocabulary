@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 // Helpers
@@ -101,7 +103,9 @@ const ProductRow = ({
   const TableCellProduct = memo(() => (
     <>
       <TableCell tagName='td'>
-        <Identity url={image} text={name} alt={name} />
+        <Link to={`/details/${id}`}>
+          <Identity url={image} text={name} alt={name} />
+        </Link>
       </TableCell>
       <TableCell tagName='td'>
         <Label text={status || ''} variant={`${status === 'Available' ? 'success' : 'warning'}`} />
