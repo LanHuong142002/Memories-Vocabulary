@@ -55,13 +55,13 @@ describe('Testing postProduct', () => {
     });
   });
 
-  it('Should return a product', async () => {
+  it('Should return a product when calling API success', async () => {
     const result = await postProduct(MOCK_PRODUCT_DATA);
 
     expect(result).toEqual(MOCK_PRODUCT_DATA);
   });
 
-  it('Should return a message error if the API call fails', async () => {
+  it('Should return a message error when calling API fails', async () => {
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -77,7 +77,7 @@ describe('Testing postProduct', () => {
   });
 });
 
-describe('Testing function deleteProduct', () => {
+describe('Testing deleteProduct', () => {
   const id = '08637ccd-729e-4349-82fd-b47933f8d455';
 
   beforeEach(() => {

@@ -8,7 +8,7 @@ import { MOCK_TYPE_API } from '@constants';
 // Services
 import { getTypes } from '@services';
 
-describe('Testing function getTypes', () => {
+describe('Testing getTypes', () => {
   beforeEach(() => {
     fetchMock.mockResponse((): Promise<MockResponseInit> => {
       return new Promise((resolve) =>

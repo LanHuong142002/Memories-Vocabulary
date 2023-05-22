@@ -8,7 +8,7 @@ import { MOCK_STATUS_API } from '@constants';
 // Services
 import { getStatuses } from '@services';
 
-describe('Testing function getStatuses', () => {
+describe('Testing getStatuses', () => {
   beforeEach(() => {
     fetchMock.mockResponse((): Promise<MockResponseInit> => {
       return new Promise((resolve) =>
