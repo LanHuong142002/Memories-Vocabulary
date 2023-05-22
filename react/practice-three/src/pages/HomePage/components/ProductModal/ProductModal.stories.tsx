@@ -35,7 +35,7 @@ const Template: ComponentStory<typeof ProductModal> = () => {
     { id: '2', name: 'Smart Phone' },
   ];
 
-  const flagProductUpdate = () => {
+  const handleUpdateProductFlag = () => {
     console.log('product update');
   };
 
@@ -44,7 +44,7 @@ const Template: ComponentStory<typeof ProductModal> = () => {
       productItem={product}
       status={status}
       types={types}
-      flagProductUpdate={flagProductUpdate}
+      onUpdateProductFlag={handleUpdateProductFlag}
     />
   );
 };
