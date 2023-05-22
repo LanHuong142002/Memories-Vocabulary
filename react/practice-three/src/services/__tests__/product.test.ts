@@ -115,7 +115,6 @@ describe('Testing deleteProduct', () => {
 });
 
 describe('Testing updateProduct', () => {
-  const id = '08637ccd-729e-4349-82fd-b47933f8d455';
   beforeEach(() => {
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -128,7 +127,7 @@ describe('Testing updateProduct', () => {
   });
 
   it('Should update a product when calling API success', async () => {
-    const updatedProduct = await updateProduct(id, MOCK_PRODUCT_DATA);
+    const updatedProduct = await updateProduct(MOCK_PRODUCT_DATA);
 
     expect(updatedProduct).toEqual(MOCK_PRODUCT_DATA);
   });
@@ -144,7 +143,7 @@ describe('Testing updateProduct', () => {
       });
     });
 
-    const result = await updateProduct(id, MOCK_PRODUCT_DATA);
+    const result = await updateProduct(MOCK_PRODUCT_DATA);
 
     expect(result).toEqual(errorMessage);
   });

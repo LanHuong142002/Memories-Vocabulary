@@ -50,7 +50,7 @@ const postProduct = async (productItem: Product): Promise<Product | string> => {
     const product: Product = await response.json();
 
     if (!response.ok) {
-      const message = customMessageErrors(response);
+      const message = customErrorMessages(response);
       throw new ResponseError(message);
     }
 
