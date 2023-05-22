@@ -6,6 +6,7 @@ import './styles/main.css';
 // Pages
 import { HomePage } from '@pages';
 import { Suspense, lazy } from 'react';
+import { Spinner } from '@components';
 
 const DetailsPage = lazy(() => import('../src/pages/DetailsPage'));
 
@@ -14,9 +15,14 @@ const App = () => {
     <div className='container'>
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Suspense>
-          <Route path='/details/:id' element={<DetailsPage />} />
-        </Suspense>
+        <Route
+          path='/details/:id'
+          element={
+            <Suspense fallback={<Spinner />}>
+              <DetailsPage />
+            </Suspense>
+          }
+        />
       </Routes>
     </div>
   );
