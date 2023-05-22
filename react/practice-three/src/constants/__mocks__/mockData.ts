@@ -10,11 +10,7 @@ export const MOCK_PRODUCT_DATA = {
   price: '1000',
 };
 
-export const MOCK_PRODUCT_API = [
-  {
-    ...MOCK_PRODUCT_DATA,
-  },
-];
+export const MOCK_PRODUCT_API = [MOCK_PRODUCT_DATA];
 
 export const MOCK_TYPE_API = [
   {
