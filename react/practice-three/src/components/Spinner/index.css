@@ -1,0 +1,22 @@
+.spinner-wrapper {
+  position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner-wrapper .spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid var(--color-light);
+  border-top-color: var(--color-info);
+  animation: spinAnimation 0.8s linear infinite;
+}
+
+@keyframes spinAnimation {
+  to {
+    transform: rotate(360deg);
+  }
+}
