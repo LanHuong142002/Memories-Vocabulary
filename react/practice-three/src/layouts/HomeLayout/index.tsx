@@ -37,6 +37,7 @@ const HomeLayout = () => {
     showHideItemModal,
     showHideErrorsModal,
   } = useContext(ModalContext);
+  const [productModal, setProductModal] = useState<boolean>(false);
   const [status, setStatus] = useState<SelectItemProps[]>([]);
   const [types, setTypes] = useState<SelectItemProps[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -61,6 +62,10 @@ const HomeLayout = () => {
     price: 0,
   });
   const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
+
+  const handleProductModal = () => {
+    setProductModal((prev) => !prev);
+  };
 
   /**
    * @description flags to check if the data after
@@ -189,12 +194,13 @@ const HomeLayout = () => {
         onEdit={handleDataModal}
         onSetProductItem={handleSetProductItem}
       />
-      {itemModal && (
+      {productModal && (
         <ProductModal
           productItem={productItem}
           statuses={status}
           types={types}
           onUpdateProductFlag={handleUpdateProductFlag}
+          onHandlePropductModal={handleProductModal}
         />
       )}
       {notificationModal && (
