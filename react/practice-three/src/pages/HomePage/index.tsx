@@ -1,6 +1,3 @@
-// Contexts
-import { ModalProvider } from '@contexts';
-
 // Helpers
 import { ErrorBoundary } from '@helpers';
 
@@ -18,22 +15,20 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <ModalProvider>
-        <ErrorBoundary
-          fallback={
-            <NotificationModal
-              url='/icons/trash-icon.svg'
-              title='Ooops!'
-              description={'Something went wrong.'}
-              onCancel={handleCancel}
-            >
-              <Button label='Close' variant='tertiary' color='warning' size='lg' />
-            </NotificationModal>
-          }
-        >
-          <HomeLayout />
-        </ErrorBoundary>
-      </ModalProvider>
+      <ErrorBoundary
+        fallback={
+          <NotificationModal
+            url='/icons/trash-icon.svg'
+            title='Ooops!'
+            description={'Something went wrong.'}
+            onCancel={handleCancel}
+          >
+            <Button label='Close' variant='tertiary' color='warning' size='lg' />
+          </NotificationModal>
+        }
+      >
+        <HomeLayout />
+      </ErrorBoundary>
     </>
   );
 };

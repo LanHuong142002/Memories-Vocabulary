@@ -1,10 +1,7 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
-
-// Contexts
-import { ModalContext } from '@contexts';
 
 // Hooks
 import { useDebounce } from '@hooks';
@@ -28,16 +25,19 @@ interface Filter {
   price: string;
 }
 
+interface ErrorModal {
+  status: boolean;
+  message: string;
+}
+
 const HomeLayout = () => {
-  const {
-    itemModal,
-    notificationModal,
-    errorsModal,
-    showHideNotificationModal,
-    showHideItemModal,
-    showHideErrorsModal,
-  } = useContext(ModalContext);
   const [productModal, setProductModal] = useState<boolean>(false);
+  const [notificationModal, setNotificationModal] = useState<boolean>(false);
+  const [errorModal, setErrorModal] = useState<ErrorModal>({
+    status: false,
+    message: '',
+  });
+
   const [status, setStatus] = useState<SelectItemProps[]>([]);
   const [types, setTypes] = useState<SelectItemProps[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -65,6 +65,17 @@ const HomeLayout = () => {
 
   const handleProductModal = () => {
     setProductModal((prev) => !prev);
+  };
+
+  const handleErrorModal = (message?: string) => {
+    setErrorModal({
+      status: message ? true : false,
+      message: message || '',
+    });
+  };
+
+  const handleNotificationModal = () => {
+    setNotificationModal((prev) => !prev);
   };
 
   /**
@@ -109,7 +120,7 @@ const HomeLayout = () => {
    * @param {Object} item is data item after call api
    */
   const handleDataModal = useCallback((item: Product) => {
-    showHideItemModal();
+    handleProductModal();
     handleSetProductItem(item);
   }, []);
 
@@ -120,43 +131,41 @@ const HomeLayout = () => {
    */
   const handleConfirm = useCallback(
     async (id: string) => {
-      const product = await deleteProduct<Product>(id);
+      const product = await deleteProduct(id);
 
-      if ('messageError' in product) {
-        showHideErrorsModal(product.messageError);
-      } else if (itemModal) {
-        showHideItemModal();
-        showHideNotificationModal();
+      if (typeof product === 'string') {
+        handleErrorModal(product);
+      } else if (productModal) {
+        handleProductModal();
       } else {
-        showHideNotificationModal();
       }
       handleUpdateProductFlag();
     },
-    [itemModal],
+    [productModal],
   );
 
   /**
    * @description function cancel/ close errors modal
    */
   const handleCancel = useCallback(() => {
-    showHideErrorsModal();
+    handleErrorModal();
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-      const listTypes = await getTypes<SelectItemProps>();
-      const listStatus = await getStatuses<SelectItemProps>();
+      const listTypes = await getTypes();
+      const listStatus = await getStatuses();
 
-      if ('messageError' in listTypes && !Array.isArray(listTypes)) {
-        showHideErrorsModal(listTypes.messageError);
+      if (typeof listStatus === 'string') {
+        handleErrorModal(listStatus);
       } else {
-        setTypes(listTypes);
+        setTypes(listStatus);
       }
 
-      if ('messageError' in listStatus && !Array.isArray(listStatus)) {
-        showHideErrorsModal(listStatus.messageError);
+      if (typeof listTypes === 'string') {
+        handleErrorModal(listTypes);
       } else {
-        setStatus(listStatus);
+        setStatus(listTypes);
       }
     };
     fetchData();
@@ -171,12 +180,12 @@ const HomeLayout = () => {
     }
 
     const fetchData = async () => {
-      const listProduct = await getProductsByParam<Product>(param);
+      const listProducts = await getProductsByParam(param);
 
-      if ('messageError' in listProduct) {
-        showHideErrorsModal(listProduct.messageError);
+      if (typeof listProducts === 'string') {
+        handleErrorModal(listProducts);
       } else {
-        setProducts(listProduct);
+        setProducts(listProducts);
       }
     };
 
@@ -200,7 +209,8 @@ const HomeLayout = () => {
           statuses={status}
           types={types}
           onUpdateProductFlag={handleUpdateProductFlag}
-          onHandlePropductModal={handleProductModal}
+          onHandleProductModal={handleProductModal}
+          onHandleErrorModal={handleErrorModal}
         />
       )}
       {notificationModal && (
@@ -208,20 +218,32 @@ const HomeLayout = () => {
           url='/icons/trash-icon.svg'
           title='Delete product'
           description='Are you sure you want to delete this product? This action cannot be undone.'
-          onCancel={showHideNotificationModal}
+          onCancel={handleNotificationModal}
         >
-          <Button label='Cancel' variant='secondary' color='default' size='lg' />
+          <Button
+            label='Cancel'
+            variant='secondary'
+            color='default'
+            size='lg'
+            onClick={handleNotificationModal}
+          />
           <Button label='Delete' variant='tertiary' color='warning' size='lg' />
         </NotificationModal>
       )}
-      {errorsModal.status && (
+      {errorModal.status && (
         <NotificationModal
           url='/icons/error-icon.svg'
           title='Ooops!'
-          description={`Something went wrong. ${errorsModal.message}`}
+          description={`Something went wrong. ${errorModal.message}`}
           onCancel={handleCancel}
         >
-          <Button label='Close' variant='tertiary' color='warning' size='lg' />
+          <Button
+            label='Close'
+            variant='tertiary'
+            color='warning'
+            size='lg'
+            onClick={handleCancel}
+          />
         </NotificationModal>
       )}
     </main>

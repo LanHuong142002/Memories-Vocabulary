@@ -1,12 +1,4 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 // Styles
 import './index.css';
@@ -20,9 +12,6 @@ import { updateProduct } from '@services';
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
 
-// Contexts
-import { ModalContext } from '@contexts';
-
 // Hooks
 import { useDebounce } from '@hooks';
 
@@ -34,6 +23,8 @@ interface ModalProps {
   types: SelectItemProps[];
   productItem: Product;
   onUpdateProductFlag: () => void;
+  onHandleProductModal: () => void;
+  onHandleErrorModal: (message?: string) => void;
 }
 
 const ProductModal = ({
@@ -41,8 +32,9 @@ const ProductModal = ({
   statuses,
   types,
   onUpdateProductFlag,
+  onHandleProductModal,
+  onHandleErrorModal,
 }: ModalProps): React.ReactElement => {
-  const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
   const [product, setProduct] = useState<Product>(productItem);
   const [hasError, setHasError] = useState<boolean>(true);
   const debouncedProduct = useDebounce<Product>(product, 500);
@@ -101,22 +93,22 @@ const ProductModal = ({
 
       // if have product's id and product has any change, we will call API to update product
       if (product.id && product !== productItem) {
-        const item = await updateProduct<Product>(product.id, product);
+        const productItem = await updateProduct(product);
 
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed
-        if ('messageError' in item) {
-          showHideErrorsModal(item.messageError);
+        if (typeof productItem === 'string') {
+          onHandleErrorModal(productItem);
 
           // if don't have any errors, list products will update
         } else {
           onUpdateProductFlag();
-          showHideItemModal();
+          onHandleProductModal();
         }
 
         // if product doesn't have any change, the modal will close
       } else if (product === productItem) {
-        showHideItemModal();
+        onHandleProductModal();
       }
     },
     [product, productItem],
@@ -129,9 +121,9 @@ const ProductModal = ({
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
     ) {
-      setHasError(false);
-    } else {
       setHasError(true);
+    } else {
+      setHasError(false);
     }
   };
 
@@ -144,7 +136,7 @@ const ProductModal = ({
 
   return useMemo(() => {
     return (
-      <Modal title='Product information' toggleModal={showHideItemModal}>
+      <Modal title='Product information' toggleModal={onHandleProductModal}>
         <form className='form-wrapper' onSubmit={handleOnSave}>
           <div className='form-body'>
             <div className='form-image'>
@@ -184,7 +176,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validateNumberField(Number(product.quantity))}
+                  {validateNumberField(Number(product.quantity), 'quantity')}
                 </span>
               </div>
             </div>
@@ -255,7 +247,7 @@ const ProductModal = ({
               color='default'
               label='Cancel'
               type='button'
-              onClick={showHideItemModal}
+              onClick={onHandleProductModal}
             />
             <Button
               variant='tertiary'
