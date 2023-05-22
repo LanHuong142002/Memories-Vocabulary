@@ -2,7 +2,7 @@
 import { URL_API } from '@constants';
 
 // Helpers
-import { ResponseError, customMessageErrors } from '@helpers';
+import { ResponseError, customErrorMessages } from '@helpers';
 
 // Interfaces
 import { ProductType } from '@interfaces';
@@ -18,7 +18,7 @@ const getTypes = async (): Promise<ProductType[] | string> => {
     const types: ProductType[] = await response.json();
 
     if (!response.ok) {
-      const message = customMessageErrors(response);
+      const message = customErrorMessages(response);
       throw new ResponseError(message);
     }
 

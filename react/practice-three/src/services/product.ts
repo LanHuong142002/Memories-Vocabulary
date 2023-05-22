@@ -2,7 +2,7 @@
 import { URL_API } from '@constants';
 
 // Helpers
-import { customMessageErrors, ResponseError } from '@helpers';
+import { customErrorMessages, ResponseError } from '@helpers';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -22,7 +22,7 @@ const getProductsByParam = async (param: string): Promise<Product[] | string> =>
     const products: Product[] = await response.json();
 
     if (!response.ok) {
-      const message = customMessageErrors(response);
+      const message = customErrorMessages(response);
       throw new ResponseError(message);
     }
 
@@ -49,7 +49,7 @@ const deleteProduct = async (id: string): Promise<Product | string> => {
     const product: Product = await response.json();
 
     if (!response.ok) {
-      const message = customMessageErrors(response);
+      const message = customErrorMessages(response);
       throw new ResponseError(message);
     }
 
@@ -83,7 +83,7 @@ const updateProduct = async (productUpdate: Product): Promise<Product | string> 
     const product: Product = await response.json();
 
     if (!response.ok) {
-      const message = customMessageErrors(response);
+      const message = customErrorMessages(response);
       throw new ResponseError(message);
     }
 
