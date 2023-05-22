@@ -1,5 +1,8 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
+// Styles
+import './index.css';
+
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
@@ -14,8 +17,6 @@ import { Product } from '@interfaces';
 
 // Components
 import { SelectItemProps, Button, NotificationModal } from '@components';
-
-// Components of page
 import { ProductTable, ProductModal } from '@pages';
 
 // Styles
@@ -42,7 +43,7 @@ const HomeLayout = () => {
   const [status, setStatus] = useState<SelectItemProps[]>([]);
   const [types, setTypes] = useState<SelectItemProps[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [flagProductUpdate, setFlagProductUpdate] = useState<boolean>(false);
+  const [productFlag, setProductFlag] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -68,8 +69,8 @@ const HomeLayout = () => {
    * @description flags to check if the data after
    * editing and deleting has been changed or not
    */
-  const handleProductUpdate = useCallback(() => {
-    setFlagProductUpdate((prev) => !prev);
+  const handleUpdateProductFlag = useCallback(() => {
+    setProductFlag((prev) => !prev);
   }, []);
 
   /**
@@ -127,7 +128,7 @@ const HomeLayout = () => {
       } else {
         showHideNotificationModal();
       }
-      handleProductUpdate();
+      handleUpdateProductFlag();
     },
     [itemModal],
   );
@@ -178,7 +179,7 @@ const HomeLayout = () => {
     };
 
     fetchData();
-  }, [flagProductUpdate, debouncedSearchTerm]);
+  }, [productFlag, debouncedSearchTerm]);
 
   return (
     <main className='main-wrapper'>
@@ -196,7 +197,7 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          flagProductUpdate={handleProductUpdate}
+          onUpdateProductFlag={handleUpdateProductFlag}
         />
       )}
       {notificationModal && (
