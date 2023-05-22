@@ -6,7 +6,7 @@ import { URL_API } from '@constants';
 // Services
 import { getTypes } from '@services';
 
-const useType = () => {
+export const useType = () => {
   const { data, error, isLoading } = useSWR(`${URL_API.BASE_URL}${URL_API.TYPES}`, getTypes);
 
   return {
@@ -15,5 +15,3 @@ const useType = () => {
     isLoading,
   };
 };
-
-export { useType };
