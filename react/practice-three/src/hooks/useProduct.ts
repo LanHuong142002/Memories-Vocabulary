@@ -6,9 +6,9 @@ import { URL_API } from '@constants';
 // Services
 import { getProductsByParam } from '@services';
 
-const useProduct = () => {
+export const useProduct = (param: string) => {
   const { data, error, isLoading } = useSWR(
-    `${URL_API.BASE_URL}${URL_API.STATUSES}`,
+    `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
     getProductsByParam,
   );
 
@@ -18,5 +18,3 @@ const useProduct = () => {
     isLoading,
   };
 };
-
-export { useProduct };
