@@ -28,7 +28,8 @@ interface Filters {
   price: string;
 }
 
-interface ProductTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem'> {
+interface ProductTableProps
+  extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem' | 'onHandleNotification'> {
   filters: Filters;
   status: SelectItemProps[];
   types: SelectItemProps[];
@@ -44,6 +45,7 @@ const ProductTable = ({
   onSearch,
   onEdit,
   onSetProductItem,
+  onHandleNotification,
 }: ProductTableProps): React.ReactElement => (
   <Table>
     <TableHeader>
@@ -111,6 +113,7 @@ const ProductTable = ({
             price={item.price}
             onEdit={onEdit}
             onSetProductItem={onSetProductItem}
+            onHandleNotification={onHandleNotification}
           />
         ))
       ) : (
