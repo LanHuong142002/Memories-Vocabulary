@@ -21,13 +21,13 @@ describe('Testing function getProductsByParam', () => {
     });
   });
 
-  it('Should return a list of products', async () => {
+  it('Should return a list of products when calling API success', async () => {
     const result = await getProductsByParam(param);
 
     expect(result).toEqual(MOCK_PRODUCT_API);
   });
 
-  it('Should return an error message if the API call fails', async () => {
+  it('Should return an error message when calling API fails', async () => {
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -58,13 +58,13 @@ describe('Testing function deleteProduct', () => {
     });
   });
 
-  it('Should remove a product', async () => {
+  it('Should remove a product when calling API success', async () => {
     const result = await deleteProduct(id);
 
     expect(result).toEqual(MOCK_PRODUCT_DATA);
   });
 
-  it('Should return an error message if the API call fails', async () => {
+  it('Should return an error message when calling API fails', async () => {
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -94,13 +94,13 @@ describe('Testing function updateProduct', () => {
     });
   });
 
-  it('Should update a product', async () => {
+  it('Should update a product when calling API success', async () => {
     const updatedProduct = await updateProduct(id, MOCK_PRODUCT_DATA);
 
     expect(updatedProduct).toEqual(MOCK_PRODUCT_DATA);
   });
 
-  it('Should handle errors', async () => {
+  it('Should return an error when calling API fails', async () => {
     const errorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {

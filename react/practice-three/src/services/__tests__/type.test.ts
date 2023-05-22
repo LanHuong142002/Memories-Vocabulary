@@ -19,13 +19,13 @@ describe('Testing function getTypes', () => {
     });
   });
 
-  it('Should return a list of types', async () => {
+  it('Should return a list of types when calling API success', async () => {
     const result = await getTypes();
 
     expect(result).toEqual(MOCK_TYPE_API);
   });
 
-  it('Should return an error message if the API call fails', async () => {
+  it('Should return an error message when calling API fails', async () => {
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
