@@ -1,53 +1,40 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-
-// Styles
-import './index.css';
-
-// Components
-import { Modal, Button, Image, Input, Select, SelectItemProps, InputFile } from '@components';
-
-// Services
-import { updateProduct } from '@services';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 // Helpers
-import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
-
-// Contexts
-import { ModalContext } from '@contexts';
-
-// Hooks
-import { useDebounce } from '@hooks';
+import { convertBase64, loaderImage, validation } from '@helpers';
 
 // Interfaces
-import { Product } from '@interfaces';
+import { DataProduct } from '@interfaces';
 
-interface ModalProps {
-  statuses: SelectItemProps[];
-  types: SelectItemProps[];
-  productItem: Product;
-  onUpdateProductFlag: () => void;
-}
+// Components
+import { Button, Image, Input, InputFile, Select, SelectItemProps, Typography } from '@components';
 
-type ErrorMessage = Pick<Product, 'name' | 'quantity' | 'brand' | 'price'>;
+// CSS
+import './index.css';
 
-const ProductModal = ({
-  productItem,
-  statuses,
-  types,
-  onUpdateProductFlag,
-}: ModalProps): React.ReactElement => {
-  const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
-  const [product, setProduct] = useState<Product>(productItem);
-  const [hasError, setHasError] = useState<boolean>(true);
-  const debouncedProduct = useDebounce<Product>(product, 500);
+type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
+
+const DetailsPage = () => {
+  const [product, setProduct] = useState({
+    id: '',
+    image: '',
+    name: '',
+    quantity: 0,
+    brandImage: '',
+    brand: '',
+    statusesId: '',
+    typesId: '',
+    price: 0,
+  });
+  const [status, setStatus] = useState<SelectItemProps[]>([]);
+  const [types, setTypes] = useState<SelectItemProps[]>([]);
+  const [isErrors, setIsErrors] = useState<boolean>(true);
+  const [errorsMessage, setErrorsMessage] = useState<ErrorMessage>({
+    name: '',
+    quantity: '',
+    brand: '',
+    price: '',
+  });
 
   /**
    * @description function get value when input change their value
@@ -97,71 +84,38 @@ const ProductModal = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const handleOnSave = () => {
+    console.log('save');
+  };
 
-      // if have product's id and product has any change, we will call API to update product
-      if (product.id && product !== productItem) {
-        const item = await updateProduct<Product>(product.id, product);
-
-        // If in the process of calling the API, it returns an object containing an error,
-        // an error message will be displayed
-        if ('messageError' in item) {
-          showHideErrorsModal(item.messageError);
-
-          // if don't have any errors, list products will update
-        } else {
-          onUpdateProductFlag();
-          showHideItemModal();
-        }
-
-        // if product doesn't have any change, the modal will close
-      } else if (product === productItem) {
-        showHideItemModal();
-      }
-    },
-    [product, productItem],
-  );
-
-  const disabledButton = () => {
-    if (
-      validateNumberField(Number(product.price)) ||
-      validateStringField(product.name) ||
-      validateNumberField(Number(product.quantity), 'quantity') ||
-      validateStringField(product.brand)
-    ) {
-      setHasError(false);
-    } else {
-      setHasError(true);
-    }
+  const handleOnBack = () => {
+    console.log('back');
   };
 
   /**
    * @description validation input onChange
    */
   useEffect(() => {
-    disabledButton();
-  }, [product.price, product.name, product.quantity, product.brand]);
+    const errors = validation<ErrorMessage>(product, ['price', 'quantity']);
+    setErrorsMessage(errors);
 
-  return useMemo(() => {
-    return (
-      <Modal title='Product information' toggleModal={showHideItemModal}>
+    // if input still have any errors, isErrors will set to false to disable button save
+    // if no more errors, isErrors will set to true and show button save
+    if (Object.values(errors).every((value) => !value)) {
+      setIsErrors(false);
+    } else {
+      setIsErrors(true);
+    }
+  }, [product]);
+
+  return (
+    <main className='details-page'>
+      <div className='details-title'>
+        <Typography text='Product' tagName='h2' color='quaternary' size='lg' weight='bold' />
+      </div>
+      <div className='details-body'>
         <form className='form-wrapper' onSubmit={handleOnSave}>
           <div className='form-body'>
-            <div className='form-image'>
-              <Image url={product.image} alt='image' size='xl' isCircle={true} />
-              <InputFile
-                url={loadImage('/icons/upload-icon.svg')}
-                size='md'
-                variant='primary'
-                id='image'
-                name='image'
-                text='Click to upload'
-                onChange={handleChangeInputFile}
-              />
-            </div>
-
             <div className='form-group'>
               <div className='form-control'>
                 <Input
@@ -171,7 +125,7 @@ const ProductModal = ({
                   value={product.name}
                   onChange={handleOnChange}
                 />
-                <span className='error-message'>{validateStringField(product.name)}</span>
+                <span className='error-message'>{errorsMessage.name}</span>
               </div>
             </div>
 
@@ -185,9 +139,7 @@ const ProductModal = ({
                   value={String(product.quantity)}
                   onChange={handleOnChange}
                 />
-                <span className='error-message'>
-                  {validateNumberField(Number(product.quantity))}
-                </span>
+                <span className='error-message'>{errorsMessage.quantity}</span>
               </div>
             </div>
 
@@ -201,13 +153,13 @@ const ProductModal = ({
                   value={String(product.price)}
                   onChange={handleOnChange}
                 />
-                <span className='error-message'>{validateNumberField(Number(product.price))}</span>
+                <span className='error-message'>{errorsMessage.price}</span>
               </div>
             </div>
             <div className='form-group form-group-split'>
               <Select
                 title='Status'
-                options={statuses}
+                options={status}
                 name='statusesId'
                 valueSelected={product.statusesId || ''}
                 onChange={handleOnChange}
@@ -231,7 +183,7 @@ const ProductModal = ({
                   value={product.brand}
                   onChange={handleOnChange}
                 />
-                <span className='error-message'>{validateStringField(product.brand)}</span>
+                <span className='error-message'>{errorsMessage.brand}</span>
               </div>
 
               <div className='group-image'>
@@ -239,7 +191,7 @@ const ProductModal = ({
                 <div className='image-wrapper'>
                   <Image size='s' isCircle={true} url={product.brandImage} />
                   <InputFile
-                    url={loadImage('/icons/cloud-icon.svg')}
+                    url={loaderImage('/icons/upload-cloud.svg')}
                     id='brandImage'
                     name='brandImage'
                     text='Upload photo'
@@ -251,26 +203,39 @@ const ProductModal = ({
               </div>
             </div>
           </div>
-          <div className='form-cta'>
+          <div className='form-cta-details'>
             <Button
               variant='secondary'
               color='default'
-              label='Cancel'
+              label='Back'
               type='button'
-              onClick={showHideItemModal}
+              onClick={handleOnBack}
             />
             <Button
               variant='tertiary'
               color='success'
-              label='Confirm'
+              label='Save'
               type='submit'
-              isDisabled={hasError}
+              isDisabled={isErrors}
             />
           </div>
         </form>
-      </Modal>
-    );
-  }, [hasError, debouncedProduct, product, statuses, types]);
+        <div className='details-aside'>
+          <div className='image-wrapper'>
+            <Image url='' alt='product image' size='xxl' />
+          </div>
+          <InputFile
+            id='image'
+            name='image'
+            text='Click to update'
+            url={loaderImage('/icons/upload-icon.svg')}
+            size='md'
+            onChange={handleChangeInputFile}
+          />
+        </div>
+      </div>
+    </main>
+  );
 };
 
-export default ProductModal;
+export default DetailsPage;

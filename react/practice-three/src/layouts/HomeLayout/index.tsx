@@ -21,9 +21,11 @@ import './index.css';
 
 interface Filter {
   name: string;
+  name: string;
   statusesId: string;
   typesId: string;
   quantity: string;
+  brand: string;
   brand: string;
   price: string;
 }
@@ -194,7 +196,7 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          onUpdateProductFlag={handleUpdateProductFlag}
+          onUpdateProductFlag={handleProductUpdate}
         />
       )}
       {notificationModal && (
