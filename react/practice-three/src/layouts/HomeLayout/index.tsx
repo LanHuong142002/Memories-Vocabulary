@@ -21,11 +21,9 @@ import './index.css';
 
 interface Filter {
   name: string;
-  name: string;
   statusesId: string;
   typesId: string;
   quantity: string;
-  brand: string;
   brand: string;
   price: string;
 }
@@ -196,7 +194,7 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          onUpdateProductFlag={handleProductUpdate}
+          onUpdateProductFlag={handleUpdateProductFlag}
         />
       )}
       {notificationModal && (
@@ -212,7 +210,7 @@ const HomeLayout = () => {
       )}
       {errorsModal.status && (
         <NotificationModal
-          url='/icons/trash-icon.svg'
+          url='/icons/error-icon.svg'
           title='Ooops!'
           description={`Something went wrong. ${errorsModal.message}`}
           onCancel={handleCancel}

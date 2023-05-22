@@ -36,8 +36,6 @@ interface ModalProps {
   onUpdateProductFlag: () => void;
 }
 
-type ErrorMessage = Pick<Product, 'name' | 'quantity' | 'brand' | 'price'>;
-
 const ProductModal = ({
   productItem,
   statuses,
