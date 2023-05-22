@@ -6,9 +6,9 @@ enableFetchMocks();
 import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA } from '@constants';
 
 // Services
-import { deleteProduct, getProductsByParam, updateProduct } from '@services';
+import { deleteProduct, getProductsByParam, postProduct, updateProduct } from '@services';
 
-describe('Testing function getProductsByParam', () => {
+describe('Testing getProductsByParam', () => {
   const param = 'test param';
 
   beforeEach(() => {
@@ -39,6 +39,39 @@ describe('Testing function getProductsByParam', () => {
     });
 
     const result = await getProductsByParam(param);
+
+    expect(result).toEqual(expectedErrorMessage);
+  });
+});
+
+describe('Testing postProduct', () => {
+  beforeEach(() => {
+    fetchMock.mockResponse((): Promise<MockResponseInit> => {
+      return new Promise((resolve) =>
+        resolve({
+          body: JSON.stringify(MOCK_PRODUCT_DATA),
+        }),
+      );
+    });
+  });
+
+  it('Should return a product', async () => {
+    const result = await postProduct(MOCK_PRODUCT_DATA);
+
+    expect(result).toEqual(MOCK_PRODUCT_DATA);
+  });
+
+  it('Should return a message error if the API call fails', async () => {
+    const expectedErrorMessage = '500 Internal Server Error';
+    fetchMock.mockResponse(async () => {
+      return new Promise((resolve) => {
+        resolve({
+          status: 500,
+          body: JSON.stringify(MOCK_PRODUCT_API),
+        });
+      });
+    });
+    const result = await postProduct(MOCK_PRODUCT_DATA);
 
     expect(result).toEqual(expectedErrorMessage);
   });
@@ -81,7 +114,7 @@ describe('Testing function deleteProduct', () => {
   });
 });
 
-describe('Testing function updateProduct', () => {
+describe('Testing updateProduct', () => {
   const id = '08637ccd-729e-4349-82fd-b47933f8d455';
   beforeEach(() => {
     fetchMock.mockResponse(async () => {
