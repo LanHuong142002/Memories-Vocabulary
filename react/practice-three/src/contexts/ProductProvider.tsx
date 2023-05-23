@@ -41,7 +41,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description get products after search
    */
   const onSearchProducts = useCallback(async (param: string) => {
-    const response = await getProductsByParam(param);
+    const response = await getProductsByParam(
+      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
+    );
 
     if (typeof response === 'string') {
       setMessageError(response);
@@ -59,7 +61,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setMessageError(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}`);
+      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
     }
   }, []);
 
@@ -72,7 +74,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setMessageError(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}`);
+      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
     }
   }, []);
 
@@ -85,7 +87,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setMessageError(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}`);
+      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
     }
   }, []);
 
