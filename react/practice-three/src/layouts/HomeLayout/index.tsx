@@ -10,7 +10,7 @@ import { deleteProduct } from '@services';
 import { useDebounce, useStatus, useType } from '@hooks';
 
 // Interfaces
-import { Product } from '@interfaces';
+import { Product, ProductStatus, ProductType } from '@interfaces';
 
 // Components
 import { NotificationModal, Button } from '@components';
@@ -39,6 +39,7 @@ const HomeLayout = () => {
   const { data: types } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
+  const [newProductModal, setNewProductModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<ErrorModal>({
     status: false,
     message: '',
@@ -64,10 +65,16 @@ const HomeLayout = () => {
   });
   const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
 
+  /**
+   * @description function handle product modal
+   */
   const handleProductModal = () => {
     setProductModal((prev) => !prev);
   };
 
+  /**
+   * @description function handle error modal
+   */
   const handleErrorModal = useCallback((message?: string) => {
     setErrorModal({
       status: message ? true : false,
@@ -75,8 +82,18 @@ const HomeLayout = () => {
     });
   }, []);
 
+  /**
+   * @description function handle notification modal
+   */
   const handleNotificationModal = () => {
     setNotificationModal((prev) => !prev);
+  };
+
+  /**
+   * @description function handle new product modal
+   */
+  const handleNewProductModal = () => {
+    setNewProductModal((prev) => !prev);
   };
 
   /**
@@ -87,6 +104,10 @@ const HomeLayout = () => {
   const handleSetProductItem = useCallback((item: Product) => {
     setProductItem(item);
   }, []);
+
+  const handleConfirmAddNew = () => {};
+
+  const handleConfirmUpdate = () => {};
 
   /**
    * @description function get value search when input change value
@@ -161,23 +182,46 @@ const HomeLayout = () => {
 
   return (
     <main className='main-wrapper'>
-      <ProductTable
-        filter={filter}
-        products={products}
-        status={status ? status : []}
-        types={types ? types : []}
-        onSearch={handleSearch}
-        onEdit={handleDataModal}
-        onSetProductItem={handleSetProductItem}
-        onHandleNotification={handleNotificationModal}
-      />
+      <div className='main-header'>
+        <Button
+          label='Add New Product'
+          variant='secondary'
+          color='success'
+          size='md'
+          onClick={handleNewProductModal}
+        />
+      </div>
+      <div className='main-content'>
+        <ProductTable
+          filter={filter}
+          products={products}
+          status={status ? status : []}
+          types={types ? types : []}
+          onSearch={handleSearch}
+          onEdit={handleDataModal}
+          onSetProductItem={handleSetProductItem}
+          onHandleNotification={handleNotificationModal}
+        />
+      </div>
+      {newProductModal && (
+        <ProductModal
+          titleModal='Add new product'
+          statuses={status}
+          types={types}
+          onHandleProductModal={handleNewProductModal}
+          onHandleErrorModal={handleErrorModal}
+          onConfirm={handleConfirmAddNew}
+        />
+      )}
       {productModal && (
         <ProductModal
+          titleModal='Product information'
           productItem={productItem}
           statuses={status}
           types={types}
           onHandleProductModal={handleProductModal}
           onHandleErrorModal={handleErrorModal}
+          onConfirm={handleConfirmUpdate}
         />
       )}
       {notificationModal && (

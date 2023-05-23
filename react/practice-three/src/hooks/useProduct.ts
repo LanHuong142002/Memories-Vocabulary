@@ -15,7 +15,7 @@ interface ReturnType {
   isLoading: boolean;
 }
 
-export const useProduct = (param: string): ReturnType => {
+export const useProduct = (param?: string): ReturnType => {
   const { data, error, isLoading } = useSWR(
     `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
     getProductsByParam,
