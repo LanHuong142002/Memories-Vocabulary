@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 // Helpers
-import { convertBase64, loaderImage, validation } from '@helpers';
+import { convertBase64, loadImage, validation } from '@helpers';
 
 // Interfaces
-import { DataProduct } from '@interfaces';
+import { Product } from '@interfaces';
 
 // Components
 import { Button, Image, Input, InputFile, Select, SelectItemProps, Typography } from '@components';
@@ -12,7 +12,7 @@ import { Button, Image, Input, InputFile, Select, SelectItemProps, Typography } 
 // CSS
 import './index.css';
 
-type ErrorMessage = Pick<DataProduct, 'name' | 'quantity' | 'brand' | 'price'>;
+type ErrorMessage = Pick<Product, 'name' | 'quantity' | 'brand' | 'price'>;
 
 const DetailsPage = () => {
   const [product, setProduct] = useState({
@@ -191,7 +191,7 @@ const DetailsPage = () => {
                 <div className='image-wrapper'>
                   <Image size='s' isCircle={true} url={product.brandImage} />
                   <InputFile
-                    url={loaderImage('/icons/upload-cloud.svg')}
+                    url={loadImage('/icons/upload-cloud.svg')}
                     id='brandImage'
                     name='brandImage'
                     text='Upload photo'
@@ -228,7 +228,7 @@ const DetailsPage = () => {
             id='image'
             name='image'
             text='Click to update'
-            url={loaderImage('/icons/upload-icon.svg')}
+            url={loadImage('/icons/upload-icon.svg')}
             size='md'
             onChange={handleChangeInputFile}
           />

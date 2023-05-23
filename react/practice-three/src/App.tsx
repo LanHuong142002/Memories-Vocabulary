@@ -1,14 +1,29 @@
+import { Route, Routes } from 'react-router-dom';
+
 // Styles
 import './styles/main.css';
 
 // Pages
-import { DetailsPage, HomePage } from '@pages';
+import { HomePage } from '@pages';
+import { Suspense, lazy } from 'react';
+import { Spinner } from '@components';
+
+const DetailsPage = lazy(() => import('../src/pages/DetailsPage'));
 
 const App = () => {
   return (
     <div className='container'>
-      <HomePage />
-      <DetailsPage />
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route
+          path='/details/:id'
+          element={
+            <Suspense fallback={<Spinner />}>
+              <DetailsPage />
+            </Suspense>
+          }
+        />
+      </Routes>
     </div>
   );
 };
