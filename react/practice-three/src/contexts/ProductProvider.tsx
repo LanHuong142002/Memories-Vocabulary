@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useMemo, useState } from 'react';
+import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -28,7 +28,7 @@ export const ProductContext = createContext<Context>({} as Context);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [messageError, setMessageError] = useState('');
-  const { data: products, error, isLoading } = useProduct();
+  const { data: products, error } = useProduct();
 
   /**
    * @description function set message error
@@ -89,11 +89,13 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setMessageError(error);
+  }, [error]);
+
   const value = useMemo(
     () => ({
       products,
-      error,
-      isLoading,
       messageError,
       onAddProduct,
       onDeleteProduct,
@@ -103,8 +105,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }),
     [
       products,
-      error,
-      isLoading,
       messageError,
       onDeleteProduct,
       onUpdateProduct,
