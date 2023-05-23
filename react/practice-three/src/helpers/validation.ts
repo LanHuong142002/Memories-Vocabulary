@@ -26,7 +26,7 @@ const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value
  *
  * @returns {boolean}
  */
-const isPositiveNumber = (value: number): boolean => value > 0;
+const isPositiveNumber = (value: number): boolean => value >= 0;
 
 /**
  * @description function validate number filed
@@ -38,8 +38,6 @@ const isPositiveNumber = (value: number): boolean => value > 0;
  */
 const validateNumberField = (value: number, key?: string): string => {
   switch (true) {
-    case isEmpty(value):
-      return MESSAGE_ERRORS.EMPTY_FIELD;
     // case check if the value is not an integer number
     case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
       return MESSAGE_ERRORS.INTEGER_NUMBER;
