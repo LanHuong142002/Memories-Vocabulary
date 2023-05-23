@@ -117,7 +117,7 @@ const HomeLayout = () => {
    * @param {Object} product is a new product
    */
   const handleConfirmAddNew = useCallback((product: Product): void => {
-    console.log('product', product);
+    onAddProduct(product);
   }, []);
 
   /**
@@ -180,7 +180,7 @@ const HomeLayout = () => {
   useEffect(() => {
     const param = generateSearchParam(debouncedSearchTerm);
     onSearchProducts(param);
-  }, [filter, debouncedSearchTerm, messageError]);
+  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     if (errorStatus) onSetMessageError(errorStatus);

@@ -6,9 +6,6 @@ import './index.css';
 // Components
 import { Modal, Button, Image, Input, Select, InputFile } from '@components';
 
-// Services
-import { updateProduct } from '@services';
-
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
 
@@ -18,6 +15,9 @@ import { useDebounce } from '@hooks';
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
 
+// Constants
+import { MOCK_PRODUCT_DATA } from '@constants';
+
 interface ModalProps {
   titleModal: string;
   statuses: ProductStatus[];
@@ -25,7 +25,7 @@ interface ModalProps {
   productItem?: Product;
   onHandleProductModal: () => void;
   onHandleErrorModal: (message?: string) => void;
-  onConfirm: () => void;
+  onConfirm: (product: Product) => void;
 }
 
 const ProductModal = ({
@@ -34,7 +34,6 @@ const ProductModal = ({
   statuses,
   types,
   onHandleProductModal,
-  onHandleErrorModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
@@ -47,14 +46,14 @@ const ProductModal = ({
           quantity: 0,
           brandImage: '',
           brand: '',
-          statusesId: '',
-          typesId: '',
+          statusesId: MOCK_PRODUCT_DATA.statusesId,
+          typesId: MOCK_PRODUCT_DATA.typesId,
           price: 0,
         },
   );
   const [hasError, setHasError] = useState<boolean>(true);
   const [validationProductFlag, setValidationProductFlag] = useState<boolean>(false);
-  const debouncedProduct = useDebounce<Product>(product, 1000);
+  const debouncedProduct = useDebounce<Product>(product, 700);
 
   /**
    * @description function get value when input change their value
@@ -105,30 +104,13 @@ const ProductModal = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
+  const handleOnConfirm = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      // if have product's id and product has any change, we will call API to update product
-      if (product.id && product !== productItem) {
-        const productItem = await updateProduct(product);
-
-        // If in the process of calling the API, it returns an object containing an error,
-        // an error message will be displayed
-        if (typeof productItem === 'string') {
-          onHandleErrorModal(productItem);
-
-          // if don't have any errors, list products will update
-        } else {
-          onHandleProductModal();
-        }
-
-        // if product doesn't have any change, the modal will close
-      } else if (product === productItem) {
-        onHandleProductModal();
-      }
+      onConfirm(product);
+      onHandleProductModal();
     },
-    [product, productItem],
+    [product],
   );
 
   const disabledButton = () => {
@@ -154,24 +136,29 @@ const ProductModal = ({
   return useMemo(() => {
     return (
       <Modal title={titleModal} toggleModal={onHandleProductModal}>
-        <form className='form-wrapper' onSubmit={onConfirm}>
+        <form className='form-wrapper' onSubmit={handleOnConfirm}>
           <div className='form-body'>
             <div className='form-image'>
-              <Image
-                url={product.image ? product.image : loadImage('/images/default-image.png')}
-                alt='image'
-                size='xl'
-                isCircle={true}
-              />
-              <InputFile
-                url={loadImage('/icons/upload-icon.svg')}
-                size='md'
-                variant='primary'
-                id='image'
-                name='image'
-                text='Click to upload'
-                onChange={handleChangeInputFile}
-              />
+              <div className='form-image-wrapper'>
+                <Image
+                  url={product.image ? product.image : loadImage('/images/default-image.png')}
+                  alt='image'
+                  size='xl'
+                  isCircle={true}
+                />
+                <InputFile
+                  url={loadImage('/icons/upload-icon.svg')}
+                  size='md'
+                  variant='primary'
+                  id='image'
+                  name='image'
+                  text='Click to upload'
+                  onChange={handleChangeInputFile}
+                />
+              </div>
+              <span className='error-message'>
+                {validationProductFlag && validateStringField(debouncedProduct.image)}
+              </span>
             </div>
 
             <div className='form-group'>
@@ -256,24 +243,29 @@ const ProductModal = ({
               <div className='group-image'>
                 <p>Brand Image</p>
                 <div className='image-wrapper'>
-                  <Image
-                    size='s'
-                    isCircle={true}
-                    url={
-                      product.brandImage
-                        ? product.brandImage
-                        : loadImage('/images/default-image.png')
-                    }
-                  />
-                  <InputFile
-                    url={loadImage('/icons/cloud-icon.svg')}
-                    id='brandImage'
-                    name='brandImage'
-                    text='Upload photo'
-                    variant='secondary'
-                    size='xxs'
-                    onChange={handleChangeInputFile}
-                  />
+                  <div className='image-wrapper-content'>
+                    <Image
+                      size='s'
+                      isCircle={true}
+                      url={
+                        product.brandImage
+                          ? product.brandImage
+                          : loadImage('/images/default-image.png')
+                      }
+                    />
+                    <InputFile
+                      url={loadImage('/icons/cloud-icon.svg')}
+                      id='brandImage'
+                      name='brandImage'
+                      text='Upload photo'
+                      variant='secondary'
+                      size='xxs'
+                      onChange={handleChangeInputFile}
+                    />
+                  </div>
+                  <span className='error-message'>
+                    {validationProductFlag && validateStringField(debouncedProduct.brandImage)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -284,7 +276,7 @@ const ProductModal = ({
               color='default'
               label='Cancel'
               type='button'
-              onClick={onConfirm}
+              onClick={handleOnConfirm}
             />
             <Button
               variant='tertiary'
