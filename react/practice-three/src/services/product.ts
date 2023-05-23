@@ -14,11 +14,9 @@ import { Product } from '@interfaces';
  *
  * @returns {Array} list products
  */
-const getProductsByParam = async (param?: string): Promise<Product[] | string> => {
+const getProductsByParam = async (url: string): Promise<Product[] | string> => {
   try {
-    const response = await fetch(
-      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
-    );
+    const response = await fetch(url);
     const products: Product[] = await response.json();
 
     if (!response.ok) {
