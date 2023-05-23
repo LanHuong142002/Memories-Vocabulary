@@ -56,7 +56,7 @@
 
 .btn.btn-secondary:hover:enabled.btn-color-warning,
 .btn.btn-secondary:hover:enabled.btn-color-success {
-  border: none;
+  border: 1px solid transparent;
 }
 
 .btn.btn-secondary.btn-color-warning {
