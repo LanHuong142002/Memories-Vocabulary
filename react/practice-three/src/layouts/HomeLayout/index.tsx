@@ -1,13 +1,13 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
-// Services
-import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
+// Contexts
+import { ProductContext } from '@contexts';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import { useDebounce, useStatus, useType } from '@hooks';
 
 // Interfaces
-import { Product, ProductStatus, ProductType } from '@interfaces';
+import { Product } from '@interfaces';
 
 // Components
 import { NotificationModal, Button } from '@components';
@@ -15,6 +15,7 @@ import { ProductTable, ProductModal } from '@pages';
 
 // Styles
 import './index.css';
+import { generateSearchParam } from '@helpers';
 
 interface Filter {
   name: string;
@@ -31,6 +32,17 @@ interface ErrorModal {
 }
 
 const HomeLayout = () => {
+  const {
+    products,
+    messageError,
+    onSearchProducts,
+    onAddProduct,
+    onUpdateProduct,
+    onDeleteProduct,
+    onSetMessageError,
+  } = useContext(ProductContext);
+  const { data: status, error: errorStatus } = useStatus();
+  const { data: types, error: errorType } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
   const [newProductModal, setNewProductModal] = useState<boolean>(false);
@@ -38,10 +50,6 @@ const HomeLayout = () => {
     status: false,
     message: '',
   });
-
-  const [status, setStatus] = useState<ProductStatus[]>([]);
-  const [types, setTypes] = useState<ProductType[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -66,53 +74,67 @@ const HomeLayout = () => {
   /**
    * @description function handle product modal
    */
-  const handleProductModal = () => {
+  const handleProductModal = useCallback((): void => {
     setProductModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function handle error modal
    */
-  const handleErrorModal = (message?: string) => {
+  const handleErrorModal = useCallback((message?: string): void => {
     setErrorModal({
       status: message ? true : false,
       message: message || '',
     });
-  };
+  }, []);
 
   /**
    * @description function handle notification modal
    */
-  const handleNotificationModal = () => {
+  const handleNotificationModal = useCallback((): void => {
     setNotificationModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function handle new product modal
    */
-  const handleNewProductModal = () => {
+  const handleNewProductModal = useCallback((): void => {
     setNewProductModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function set product to product state
    *
    * @param {Object} item is product item
    */
-  const handleSetProductItem = useCallback((item: Product) => {
+  const handleSetProductItem = useCallback((item: Product): void => {
     setProductItem(item);
   }, []);
 
-  const handleConfirmAddNew = () => {};
+  /**
+   * @description function handle confirm add new product of new product modal
+   *
+   * @param {Object} product is a new product
+   */
+  const handleConfirmAddNew = useCallback((product: Product): void => {
+    console.log('product', product);
+  }, []);
 
-  const handleConfirmUpdate = () => {};
+  /**
+   * @description function handle confirm update a product of product modal
+   *
+   * @param {Object} product is a product updated
+   */
+  const handleConfirmUpdate = useCallback((product: Product): void => {
+    console.log('product', product);
+  }, []);
 
   /**
    * @description function get value search when input change value
    *
    * @param {ChangeEvent} e is event of input
    */
-  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
 
     if (name) {
@@ -131,7 +153,7 @@ const HomeLayout = () => {
    *
    * @param {Object} item is data item after call api
    */
-  const handleDataModal = useCallback((item: Product) => {
+  const handleDataModal = useCallback((item: Product): void => {
     handleProductModal();
     handleSetProductItem(item);
   }, []);
@@ -141,67 +163,30 @@ const HomeLayout = () => {
    *
    * @param {String} id is id of product which is selected
    */
-  const handleConfirm = useCallback(
-    async (id: string) => {
-      const product = await deleteProduct(id);
-
-      if (typeof product === 'string') {
-        handleErrorModal(product);
-      } else if (productModal) {
-        handleProductModal();
-      } else {
-      }
-    },
-    [productModal],
-  );
+  const handleConfirmDelete = useCallback(async (): Promise<void> => {
+    if (productItem && productItem.id) {
+      onDeleteProduct(productItem.id);
+      handleNotificationModal();
+    }
+  }, [productItem]);
 
   /**
    * @description function cancel/ close errors modal
    */
-  const handleCancel = useCallback(() => {
+  const handleCancel = useCallback((): void => {
     handleErrorModal();
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const listTypes = await getTypes();
-      const listStatus = await getStatuses();
-
-      if (typeof listStatus === 'string') {
-        handleErrorModal(listStatus);
-      } else {
-        setTypes(listStatus);
-      }
-
-      if (typeof listTypes === 'string') {
-        handleErrorModal(listTypes);
-      } else {
-        setStatus(listTypes);
-      }
-    };
-    fetchData();
-  }, []);
+    const param = generateSearchParam(debouncedSearchTerm);
+    onSearchProducts(param);
+  }, [filter, debouncedSearchTerm, messageError]);
 
   useEffect(() => {
-    let param = '&';
-    for (const [key, value] of Object.entries(debouncedSearchTerm)) {
-      if (value) {
-        param += `${key}_like=${value}&`;
-      }
-    }
-
-    const fetchData = async () => {
-      const listProducts = await getProductsByParam(param);
-
-      if (typeof listProducts === 'string') {
-        handleErrorModal(listProducts);
-      } else {
-        setProducts(listProducts);
-      }
-    };
-
-    fetchData();
-  }, [debouncedSearchTerm]);
+    if (errorStatus) onSetMessageError(errorStatus);
+    if (errorType) onSetMessageError(errorType);
+    if (messageError) handleErrorModal(messageError);
+  }, [errorStatus, errorType, messageError]);
 
   return (
     <main className='main-wrapper'>
@@ -217,9 +202,9 @@ const HomeLayout = () => {
       <div className='main-content'>
         <ProductTable
           filters={filter}
-          products={products}
-          status={status}
-          types={types}
+          products={products ? products : []}
+          status={status ? status : []}
+          types={types ? types : []}
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
@@ -266,7 +251,7 @@ const HomeLayout = () => {
             variant='tertiary'
             color='warning'
             size='lg'
-            onClick={handleConfirm}
+            onClick={handleConfirmDelete}
           />
         </NotificationModal>
       )}
