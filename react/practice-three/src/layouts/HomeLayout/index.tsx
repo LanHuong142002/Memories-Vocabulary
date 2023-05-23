@@ -7,10 +7,10 @@ import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@servi
 import { useDebounce } from '@hooks';
 
 // Interfaces
-import { Product } from '@interfaces';
+import { Product, ProductStatus, ProductType } from '@interfaces';
 
 // Components
-import { SelectItemProps, NotificationModal, Button } from '@components';
+import { NotificationModal, Button } from '@components';
 import { ProductTable, ProductModal } from '@pages';
 
 // Styles
@@ -33,15 +33,15 @@ interface ErrorModal {
 const HomeLayout = () => {
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
+  const [newProductModal, setNewProductModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<ErrorModal>({
     status: false,
     message: '',
   });
 
-  const [status, setStatus] = useState<SelectItemProps[]>([]);
-  const [types, setTypes] = useState<SelectItemProps[]>([]);
+  const [status, setStatus] = useState<ProductStatus[]>([]);
+  const [types, setTypes] = useState<ProductType[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [productFlag, setProductFlag] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -63,10 +63,16 @@ const HomeLayout = () => {
   });
   const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
 
+  /**
+   * @description function handle product modal
+   */
   const handleProductModal = () => {
     setProductModal((prev) => !prev);
   };
 
+  /**
+   * @description function handle error modal
+   */
   const handleErrorModal = (message?: string) => {
     setErrorModal({
       status: message ? true : false,
@@ -74,17 +80,19 @@ const HomeLayout = () => {
     });
   };
 
+  /**
+   * @description function handle notification modal
+   */
   const handleNotificationModal = () => {
     setNotificationModal((prev) => !prev);
   };
 
   /**
-   * @description flags to check if the data after
-   * editing and deleting has been changed or not
+   * @description function handle new product modal
    */
-  const handleUpdateProductFlag = useCallback(() => {
-    setProductFlag((prev) => !prev);
-  }, []);
+  const handleNewProductModal = () => {
+    setNewProductModal((prev) => !prev);
+  };
 
   /**
    * @description function set product to product state
@@ -94,6 +102,10 @@ const HomeLayout = () => {
   const handleSetProductItem = useCallback((item: Product) => {
     setProductItem(item);
   }, []);
+
+  const handleConfirmAddNew = () => {};
+
+  const handleConfirmUpdate = () => {};
 
   /**
    * @description function get value search when input change value
@@ -139,7 +151,6 @@ const HomeLayout = () => {
         handleProductModal();
       } else {
       }
-      handleUpdateProductFlag();
     },
     [productModal],
   );
@@ -190,27 +201,50 @@ const HomeLayout = () => {
     };
 
     fetchData();
-  }, [productFlag, debouncedSearchTerm]);
+  }, [debouncedSearchTerm]);
 
   return (
     <main className='main-wrapper'>
-      <ProductTable
-        filters={filter}
-        products={products}
-        status={status}
-        types={types}
-        onSearch={handleSearch}
-        onEdit={handleDataModal}
-        onSetProductItem={handleSetProductItem}
-      />
+      <div className='main-header'>
+        <Button
+          label='Add New Product'
+          variant='secondary'
+          color='success'
+          size='md'
+          onClick={handleNewProductModal}
+        />
+      </div>
+      <div className='main-content'>
+        <ProductTable
+          filters={filter}
+          products={products}
+          status={status}
+          types={types}
+          onSearch={handleSearch}
+          onEdit={handleDataModal}
+          onSetProductItem={handleSetProductItem}
+          onHandleNotification={handleNotificationModal}
+        />
+      </div>
+      {newProductModal && (
+        <ProductModal
+          titleModal='Add new product'
+          statuses={status}
+          types={types}
+          onHandleProductModal={handleNewProductModal}
+          onHandleErrorModal={handleErrorModal}
+          onConfirm={handleConfirmAddNew}
+        />
+      )}
       {productModal && (
         <ProductModal
+          titleModal='Product information'
           productItem={productItem}
           statuses={status}
           types={types}
-          onUpdateProductFlag={handleUpdateProductFlag}
           onHandleProductModal={handleProductModal}
           onHandleErrorModal={handleErrorModal}
+          onConfirm={handleConfirmUpdate}
         />
       )}
       {notificationModal && (
