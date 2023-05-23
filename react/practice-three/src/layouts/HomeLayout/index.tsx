@@ -1,16 +1,19 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+
+// Contexts
+import { ProductContext } from '@contexts';
 
 // Services
-import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
+import { deleteProduct } from '@services';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import { useDebounce, useStatus, useType } from '@hooks';
 
 // Interfaces
 import { Product } from '@interfaces';
 
 // Components
-import { SelectItemProps, NotificationModal, Button } from '@components';
+import { NotificationModal, Button } from '@components';
 import { ProductTable, ProductModal } from '@pages';
 
 // Styles
@@ -31,17 +34,15 @@ interface ErrorModal {
 }
 
 const HomeLayout = () => {
+  const { products, message, handleSearchProducts } = useContext(ProductContext);
+  const { data: status } = useStatus();
+  const { data: types } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<ErrorModal>({
     status: false,
     message: '',
   });
-
-  const [status, setStatus] = useState<SelectItemProps[]>([]);
-  const [types, setTypes] = useState<SelectItemProps[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [productFlag, setProductFlag] = useState<boolean>(false);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -67,24 +68,16 @@ const HomeLayout = () => {
     setProductModal((prev) => !prev);
   };
 
-  const handleErrorModal = (message?: string) => {
+  const handleErrorModal = useCallback((message?: string) => {
     setErrorModal({
       status: message ? true : false,
       message: message || '',
     });
-  };
+  }, []);
 
   const handleNotificationModal = () => {
     setNotificationModal((prev) => !prev);
   };
-
-  /**
-   * @description flags to check if the data after
-   * editing and deleting has been changed or not
-   */
-  const handleUpdateProductFlag = useCallback(() => {
-    setProductFlag((prev) => !prev);
-  }, []);
 
   /**
    * @description function set product to product state
@@ -138,8 +131,8 @@ const HomeLayout = () => {
       } else if (productModal) {
         handleProductModal();
       } else {
+        handleNotificationModal();
       }
-      handleUpdateProductFlag();
     },
     [productModal],
   );
@@ -152,26 +145,6 @@ const HomeLayout = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const listTypes = await getTypes();
-      const listStatus = await getStatuses();
-
-      if (typeof listStatus === 'string') {
-        handleErrorModal(listStatus);
-      } else {
-        setTypes(listStatus);
-      }
-
-      if (typeof listTypes === 'string') {
-        handleErrorModal(listTypes);
-      } else {
-        setStatus(listTypes);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     let param = '&';
     for (const [key, value] of Object.entries(debouncedSearchTerm)) {
       if (value) {
@@ -179,26 +152,20 @@ const HomeLayout = () => {
       }
     }
 
-    const fetchData = async () => {
-      const listProducts = await getProductsByParam(param);
+    handleSearchProducts(param);
 
-      if (typeof listProducts === 'string') {
-        handleErrorModal(listProducts);
-      } else {
-        setProducts(listProducts);
-      }
-    };
-
-    fetchData();
-  }, [productFlag, debouncedSearchTerm]);
+    if (message) {
+      handleErrorModal(message);
+    }
+  }, [filter, debouncedSearchTerm, message]);
 
   return (
     <main className='main-wrapper'>
       <ProductTable
-        filters={filter}
+        filter={filter}
         products={products}
-        status={status}
-        types={types}
+        status={status ? status : []}
+        types={types ? types : []}
         onSearch={handleSearch}
         onEdit={handleDataModal}
         onSetProductItem={handleSetProductItem}
@@ -209,7 +176,6 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          onUpdateProductFlag={handleUpdateProductFlag}
           onHandleProductModal={handleProductModal}
           onHandleErrorModal={handleErrorModal}
         />
