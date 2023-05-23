@@ -16,12 +16,12 @@ export type addProduct = {
 
 export type DeleteProduct = {
   type: ACTIONS.DELETE_PRODUCT;
-  payload: Product[];
+  payload: string;
 };
 
 export type UpdateProduct = {
   type: ACTIONS.UPDATE_PRODUCT;
-  payload: Product[];
+  payload: Product;
 };
 
 export type ProductActions = GetProducts | DeleteProduct | UpdateProduct | addProduct;

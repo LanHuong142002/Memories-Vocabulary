@@ -6,7 +6,11 @@ interface State {
   products: Product[];
 }
 
-const reducer = (state: State, action: ProductActions): State => {
+export const initialState: State = {
+  products: [],
+};
+
+const reducer = (state: State = initialState, action: ProductActions): State => {
   switch (action.type) {
     case ACTIONS.GET_PRODUCTS:
       return {
@@ -17,6 +21,22 @@ const reducer = (state: State, action: ProductActions): State => {
       return {
         ...state,
         products: [...state.products, action.payload],
+      };
+    case ACTIONS.DELETE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== action.payload),
+      };
+    case ACTIONS.UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map((product) => {
+          if (product.id === action.payload.id) {
+            return action.payload;
+          } else {
+            return product;
+          }
+        }),
       };
     default:
       return state;
