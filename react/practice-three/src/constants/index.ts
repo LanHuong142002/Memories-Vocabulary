@@ -4,3 +4,4 @@ export { default as MESSAGE_ERRORS } from './messages';
 export { default as STATUS_CODE } from './statusCode';
 export * from './actions';
 export * from './__mocks__/mockData';
+export * from './product';

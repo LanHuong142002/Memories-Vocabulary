@@ -1,3 +1,5 @@
+import { MILLION, THOUSAND } from '@constants';
+
 /**
  * @description convert file image to base 64
  *
@@ -23,10 +25,10 @@ const convertBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
  */
 const formatPrice = (value: number): string => {
   switch (true) {
-    case value >= 1000 && value < 1000000:
-      return `${value / 1000}K`;
-    case value >= 1000000:
-      return `${value / 1000000}M`;
+    case value >= THOUSAND && value < MILLION:
+      return `${value / THOUSAND}K`;
+    case value >= MILLION:
+      return `${value / MILLION}M`;
     default:
       return `${value}`;
   }
