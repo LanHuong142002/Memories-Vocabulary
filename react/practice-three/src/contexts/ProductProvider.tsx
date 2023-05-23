@@ -25,12 +25,13 @@ import { deleteProduct, getProductsByParam, postProduct, updateProduct } from '@
 
 export interface Context extends State {
   products: Product[];
-  message: string;
+  messageError: string;
   handleAddProduct: (product: Product) => void;
   handleGetProducts: (products: Product[]) => void;
   handleDeleteProduct: (id: string) => void;
   handleUpdateProduct: (product: Product) => void;
   handleSearchProducts: (param: string) => void;
+  handleSetMessageError: (message: string) => void;
 }
 
 export const ProductContext = createContext<Context>({} as Context);
@@ -38,8 +39,15 @@ export const ProductContext = createContext<Context>({} as Context);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { products } = state;
-  const [message, setMessage] = useState('');
+  const [messageError, setMessageError] = useState('');
   const { data: items, error, isLoading } = useProduct();
+
+  /**
+   * @description function set message error
+   */
+  const handleSetMessageError = useCallback((message: string) => {
+    setMessageError(message);
+  }, []);
 
   /**
    * @description function get products
@@ -55,14 +63,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description get products after search
    */
   const handleSearchProducts = useCallback(async (param: string) => {
-    const productItem = await getProductsByParam(param);
+    const response = await getProductsByParam(param);
 
-    if (typeof productItem === 'string') {
-      setMessage(productItem);
+    if (typeof response === 'string') {
+      setMessageError(response);
     } else {
       dispatch({
         type: ACTIONS.GET_PRODUCTS,
-        payload: productItem,
+        payload: response,
       });
     }
   }, []);
@@ -71,14 +79,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function add new product
    */
   const handleAddProduct = useCallback(async (product: Product) => {
-    const productItem = await postProduct(product);
+    const response = await postProduct(product);
 
-    if (typeof productItem === 'string') {
-      setMessage(productItem);
+    if (typeof response === 'string') {
+      setMessageError(response);
     } else {
       dispatch({
         type: ACTIONS.ADD_PRODUCT,
-        payload: productItem,
+        payload: response,
       });
     }
   }, []);
@@ -87,10 +95,10 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function delete product
    */
   const handleDeleteProduct = useCallback(async (id: string) => {
-    const productItem = await deleteProduct(id);
+    const response = await deleteProduct(id);
 
-    if (typeof productItem === 'string') {
-      setMessage(productItem);
+    if (typeof response === 'string') {
+      setMessageError(response);
     } else {
       dispatch({
         type: ACTIONS.DELETE_PRODUCT,
@@ -103,14 +111,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function update product
    */
   const handleUpdateProduct = useCallback(async (product: Product) => {
-    const productItem = await updateProduct(product);
+    const response = await updateProduct(product);
 
-    if (typeof productItem === 'string') {
-      setMessage(productItem);
+    if (typeof response === 'string') {
+      setMessageError(response);
     } else {
       dispatch({
         type: ACTIONS.UPDATE_PRODUCT,
-        payload: productItem,
+        payload: response,
       });
     }
   }, []);
@@ -126,23 +134,25 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       products,
       error,
       isLoading,
-      message,
+      messageError,
       handleAddProduct,
       handleGetProducts,
       handleDeleteProduct,
       handleUpdateProduct,
       handleSearchProducts,
+      handleSetMessageError,
     }),
     [
       products,
       error,
       isLoading,
-      message,
+      messageError,
       handleGetProducts,
       handleDeleteProduct,
       handleUpdateProduct,
       handleAddProduct,
       handleSearchProducts,
+      handleSetMessageError,
     ],
   );
 
