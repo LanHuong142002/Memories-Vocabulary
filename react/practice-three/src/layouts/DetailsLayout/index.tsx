@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // Hooks
@@ -30,10 +30,10 @@ import './index.css';
 
 const DetailsLayout = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { messageError, onSetMessageError, onUpdateProduct } = useContext(ProductContext);
   const { data: status, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
-  const { id } = useParams();
   const { data: productItem, error: errorGetProductById } = useProductById(id || '');
 
   const [product, setProduct] = useState<Product>({
@@ -47,7 +47,6 @@ const DetailsLayout = () => {
     typesId: '',
     price: 0,
   });
-  const [hasError, setHasError] = useState<boolean>(true);
   const [isValidateFlag, setIsValidateFlag] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 700);
   const [errorModal, setErrorModal] = useState<{
@@ -85,7 +84,7 @@ const DetailsLayout = () => {
    * @param {ChangeEvent} e is event of input file
    */
   const handleChangeInputFile = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+    async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
       const name = e.target.name;
       const [file] = e.target.files || [];
 
@@ -124,42 +123,44 @@ const DetailsLayout = () => {
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = () => {
+  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
     if (product !== productItem) {
       onUpdateProduct(product);
     }
-  };
+  }, []);
 
   /**
    * @description function redirect to home page
    */
-  const handleOnBack = () => {
+  const handleOnBack = useCallback((): void => {
     navigate('/');
-  };
+  }, []);
 
   /**
-   * @description function check form still has errors or not,
-   * if the form doesn't have any errors, the button will turn on
+   * @description function check if form have any errors the button
+   * will disabled
+   *
+   * @returns {boolean}
    */
-  const disabledButton = () => {
+  const disabledButton = (): boolean => {
     if (
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
     ) {
-      setHasError(true);
+      return true;
     } else {
-      setHasError(false);
+      return false;
     }
   };
 
   useEffect(() => {
     if (productItem) {
       setProduct(productItem);
-      disabledButton();
     }
-  }, [productItem, product.price, product.name, product.quantity, product.brand]);
+  }, [productItem]);
 
   useEffect(() => {
     if (errorStatus) onSetMessageError(errorStatus);
@@ -167,7 +168,7 @@ const DetailsLayout = () => {
     if (errorType) onSetMessageError(errorGetProductById);
 
     if (messageError) handleErrorModal(messageError);
-  }, [errorStatus, errorType, messageError]);
+  }, [errorStatus, errorType, messageError, errorGetProductById]);
 
   return (
     <>
@@ -296,7 +297,7 @@ const DetailsLayout = () => {
                   color='success'
                   label='Save'
                   type='submit'
-                  isDisabled={hasError}
+                  isDisabled={disabledButton()}
                 />
               </div>
             </form>
