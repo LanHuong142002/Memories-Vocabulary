@@ -31,12 +31,12 @@ interface Filter {
 const HomeLayout = () => {
   const { products, onDeleteProduct, onSearchProducts, onUpdateErrorMessage, errorMessage } =
     useContext(ProductContext);
-  const { data: status, error: errorStatus } = useStatus();
+  const { data: statuses, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
-  const [productModal, setProductModal] = useState<boolean>(false);
-  const [notificationModal, setNotificationModal] = useState<boolean>(false);
-  const [newProductModal, setNewProductModal] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<{
+  const [openProductModal, setOpenProductModal] = useState<boolean>(false);
+  const [openNotificationModal, setOpenNotificationModal] = useState<boolean>(false);
+  const [openNewProductModal, setOpenNewProductModal] = useState<boolean>(false);
+  const [openErrorModal, setOpenErrorModal] = useState<{
     status: boolean;
     message: string;
   }>({
@@ -68,14 +68,14 @@ const HomeLayout = () => {
    * @description function handle product modal
    */
   const handleToggleProductModal = useCallback((): void => {
-    setProductModal((prev) => !prev);
+    setOpenProductModal((prev) => !prev);
   }, []);
 
   /**
    * @description function handle error modal
    */
   const handleToggleErrorModal = useCallback((message?: string): void => {
-    setErrorModal({
+    setOpenErrorModal({
       status: !!message,
       message: message || '',
     });
@@ -85,14 +85,14 @@ const HomeLayout = () => {
    * @description function handle notification modal
    */
   const handleToggleNotificationModal = useCallback((): void => {
-    setNotificationModal((prev) => !prev);
+    setOpenNotificationModal((prev) => !prev);
   }, []);
 
   /**
    * @description function handle new product modal
    */
   const handleToggleNewProductModal = useCallback((): void => {
-    setNewProductModal((prev) => !prev);
+    setOpenNewProductModal((prev) => !prev);
   }, []);
 
   /**
@@ -195,37 +195,37 @@ const HomeLayout = () => {
       <div className='main-content'>
         <ProductTable
           filters={filter}
-          products={products ? products : []}
-          status={status ? status : []}
-          types={types ? types : []}
+          products={products || []}
+          statuses={statuses || []}
+          types={types || []}
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
-          onHandleToggleNotification={handleToggleNotificationModal}
+          onToggleNotification={handleToggleNotificationModal}
         />
       </div>
-      {newProductModal && (
+      {openNewProductModal && (
         <ProductModal
           titleModal='Add new product'
-          statuses={status}
+          statuses={statuses}
           types={types}
-          onHandleToggleProductModal={handleToggleNewProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
+          onToggleProductModal={handleToggleNewProductModal}
+          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
-      {productModal && (
+      {openProductModal && (
         <ProductModal
           titleModal='Product information'
           productItem={productItem}
-          statuses={status}
+          statuses={statuses}
           types={types}
-          onHandleToggleProductModal={handleToggleProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
+          onToggleProductModal={handleToggleProductModal}
+          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}
-      {notificationModal && (
+      {openNotificationModal && (
         <NotificationModal
           url='/icons/trash-icon.svg'
           title='Delete product'
@@ -248,11 +248,11 @@ const HomeLayout = () => {
           />
         </NotificationModal>
       )}
-      {errorModal.status && (
+      {openErrorModal.status && (
         <NotificationModal
           url='/icons/error-icon.svg'
           title='Ooops!'
-          description={`Something went wrong. ${errorModal.message}`}
+          description={`Something went wrong. ${openErrorModal.message}`}
           onCancel={handleCancel}
         >
           <Button
