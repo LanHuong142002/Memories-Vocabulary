@@ -30,7 +30,7 @@ import './index.css';
 
 const DetailsLayout = () => {
   const navigate = useNavigate();
-  const { messageError, onSetMessageError, onUpdateProduct } = useContext(ProductContext);
+  const { errorMessage, onUpdateErrorMessage, onUpdateProduct } = useContext(ProductContext);
   const { data: status, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
   const { id } = useParams();
@@ -162,12 +162,12 @@ const DetailsLayout = () => {
   }, [productItem, product.price, product.name, product.quantity, product.brand]);
 
   useEffect(() => {
-    if (errorStatus) onSetMessageError(errorStatus);
-    if (errorType) onSetMessageError(errorType);
-    if (errorType) onSetMessageError(errorGetProductById);
+    if (errorStatus) onUpdateErrorMessage(errorStatus);
+    if (errorType) onUpdateErrorMessage(errorType);
+    if (errorType) onUpdateErrorMessage(errorGetProductById);
 
-    if (messageError) handleErrorModal(messageError);
-  }, [errorStatus, errorType, messageError]);
+    if (errorMessage) handleErrorModal(errorMessage);
+  }, [errorStatus, errorType, errorMessage]);
 
   return (
     <>
