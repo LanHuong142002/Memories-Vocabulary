@@ -25,16 +25,14 @@ interface Filter {
   price: string;
 }
 
-interface ErrorModal {
-  status: boolean;
-  message: string;
-}
-
 const HomeLayout = () => {
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
   const [newProductModal, setNewProductModal] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<ErrorModal>({
+  const [errorModal, setErrorModal] = useState<{
+    status: boolean;
+    message: string;
+  }>({
     status: false,
     message: '',
   });
@@ -66,16 +64,16 @@ const HomeLayout = () => {
   /**
    * @description function handle product modal
    */
-  const handleProductModal = () => {
+  const handleToggleProductModal = () => {
     setProductModal((prev) => !prev);
   };
 
   /**
    * @description function handle error modal
    */
-  const handleErrorModal = (message?: string) => {
+  const handleToggleErrorModal = (message?: string) => {
     setErrorModal({
-      status: message ? true : false,
+      status: !!message,
       message: message || '',
     });
   };
@@ -83,14 +81,14 @@ const HomeLayout = () => {
   /**
    * @description function handle notification modal
    */
-  const handleNotificationModal = () => {
+  const handleToggleNotificationModal = () => {
     setNotificationModal((prev) => !prev);
   };
 
   /**
    * @description function handle new product modal
    */
-  const handleNewProductModal = () => {
+  const handleToggleNewProductModal = () => {
     setNewProductModal((prev) => !prev);
   };
 
@@ -132,7 +130,7 @@ const HomeLayout = () => {
    * @param {Object} item is data item after call api
    */
   const handleDataModal = useCallback((item: Product) => {
-    handleProductModal();
+    handleToggleProductModal();
     handleSetProductItem(item);
   }, []);
 
@@ -146,9 +144,9 @@ const HomeLayout = () => {
       const product = await deleteProduct(id);
 
       if (typeof product === 'string') {
-        handleErrorModal(product);
+        handleToggleErrorModal(product);
       } else if (productModal) {
-        handleProductModal();
+        handleToggleProductModal();
       } else {
       }
     },
@@ -159,7 +157,7 @@ const HomeLayout = () => {
    * @description function cancel/ close errors modal
    */
   const handleCancel = useCallback(() => {
-    handleErrorModal();
+    handleToggleErrorModal();
   }, []);
 
   useEffect(() => {
@@ -168,13 +166,13 @@ const HomeLayout = () => {
       const listStatus = await getStatuses();
 
       if (typeof listStatus === 'string') {
-        handleErrorModal(listStatus);
+        handleToggleErrorModal(listStatus);
       } else {
         setTypes(listStatus);
       }
 
       if (typeof listTypes === 'string') {
-        handleErrorModal(listTypes);
+        handleToggleErrorModal(listTypes);
       } else {
         setStatus(listTypes);
       }
@@ -194,7 +192,7 @@ const HomeLayout = () => {
       const listProducts = await getProductsByParam(param);
 
       if (typeof listProducts === 'string') {
-        handleErrorModal(listProducts);
+        handleToggleErrorModal(listProducts);
       } else {
         setProducts(listProducts);
       }
@@ -211,7 +209,7 @@ const HomeLayout = () => {
           variant='secondary'
           color='success'
           size='md'
-          onClick={handleNewProductModal}
+          onClick={handleToggleNewProductModal}
         />
       </div>
       <div className='main-content'>
@@ -223,7 +221,7 @@ const HomeLayout = () => {
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
-          onHandleNotification={handleNotificationModal}
+          onHandleToggleNotification={handleToggleNotificationModal}
         />
       </div>
       {newProductModal && (
@@ -231,8 +229,8 @@ const HomeLayout = () => {
           titleModal='Add new product'
           statuses={status}
           types={types}
-          onHandleProductModal={handleNewProductModal}
-          onHandleErrorModal={handleErrorModal}
+          onHandleToggleProductModal={handleToggleNewProductModal}
+          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
@@ -242,8 +240,8 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          onHandleProductModal={handleProductModal}
-          onHandleErrorModal={handleErrorModal}
+          onHandleToggleProductModal={handleToggleProductModal}
+          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}
@@ -252,14 +250,14 @@ const HomeLayout = () => {
           url='/icons/trash-icon.svg'
           title='Delete product'
           description='Are you sure you want to delete this product? This action cannot be undone.'
-          onCancel={handleNotificationModal}
+          onCancel={handleToggleNotificationModal}
         >
           <Button
             label='Cancel'
             variant='secondary'
             color='default'
             size='lg'
-            onClick={handleNotificationModal}
+            onClick={handleToggleNotificationModal}
           />
           <Button label='Delete' variant='tertiary' color='warning' size='lg' />
         </NotificationModal>
