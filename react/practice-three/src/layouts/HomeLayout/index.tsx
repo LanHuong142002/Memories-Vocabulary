@@ -3,6 +3,9 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 // Contexts
 import { ProductContext } from '@contexts';
 
+// Helpers
+import { generateSearchParam } from '@helpers';
+
 // Hooks
 import { useDebounce, useStatus, useType } from '@hooks';
 
@@ -15,7 +18,6 @@ import { ProductTable, ProductModal } from '@pages';
 
 // Styles
 import './index.css';
-import { generateSearchParam } from '@helpers';
 
 interface Filter {
   name: string;

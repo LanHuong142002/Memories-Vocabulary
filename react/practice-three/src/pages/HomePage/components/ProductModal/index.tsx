@@ -25,7 +25,7 @@ interface ModalProps {
   productItem?: Product;
   onHandleToggleProductModal: () => void;
   onHandleToggleErrorModal: (message?: string) => void;
-  onConfirm: () => void;
+  onConfirm: (product: Product) => void;
 }
 
 const ProductModal = ({
