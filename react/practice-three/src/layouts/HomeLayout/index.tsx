@@ -181,7 +181,7 @@ const HomeLayout = () => {
   useEffect(() => {
     const param = generateSearchParam(debouncedSearchTerm);
     onSearchProducts(param);
-  }, [debouncedSearchTerm, filter]);
+  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus);
