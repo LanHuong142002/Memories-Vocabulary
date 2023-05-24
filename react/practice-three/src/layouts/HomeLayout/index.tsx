@@ -225,7 +225,6 @@ const HomeLayout = () => {
           onConfirm={handleConfirmAddNew}
         />
       )}
-      {console.log('productModal', productModal)}
       {productModal && (
         <ProductModal
           titleModal='Product information'
