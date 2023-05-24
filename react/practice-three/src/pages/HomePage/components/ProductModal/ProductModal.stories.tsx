@@ -53,8 +53,8 @@ const Template: ComponentStory<typeof ProductModal> = () => {
       statuses={status}
       types={types}
       onConfirm={handleConfirm}
-      onHandleErrorModal={handleErrorModal}
-      onHandleProductModal={handleProductModal}
+      onToggleErrorModal={handleErrorModal}
+      onToggleProductModal={handleProductModal}
       titleModal='Product information'
     />
   );

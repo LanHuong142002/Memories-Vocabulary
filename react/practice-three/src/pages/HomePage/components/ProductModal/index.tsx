@@ -23,7 +23,7 @@ interface ModalProps {
   statuses: ProductStatus[];
   types: ProductType[];
   productItem?: Product;
-  onHandleToggleProductModal: () => void;
+  onToggleProductModal: () => void;
   onConfirm: (product: Product) => void;
 }
 
@@ -32,7 +32,7 @@ const ProductModal = ({
   productItem,
   statuses,
   types,
-  onHandleToggleProductModal,
+  onToggleProductModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
@@ -104,7 +104,7 @@ const ProductModal = ({
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       onConfirm(product);
-      onHandleToggleProductModal();
+      onToggleProductModal();
     },
     [product],
   );
@@ -128,7 +128,7 @@ const ProductModal = ({
 
   return useMemo(() => {
     return (
-      <Modal title={titleModal} toggleModal={onHandleToggleProductModal}>
+      <Modal title={titleModal} toggleModal={onToggleProductModal}>
         <form className='form-wrapper' onSubmit={handleOnConfirm}>
           <div className='form-body'>
             <div className='form-image'>
@@ -153,7 +153,6 @@ const ProductModal = ({
                 {shouldValidateForm && validateStringField(debouncedProduct.image)}
               </span>
             </div>
-            {console.log(!test())}
             <div className='form-group'>
               <div className='form-control'>
                 <Input
@@ -265,7 +264,7 @@ const ProductModal = ({
               color='default'
               label='Cancel'
               type='button'
-              onClick={onHandleToggleProductModal}
+              onClick={onToggleProductModal}
             />
             <Button
               variant='tertiary'
