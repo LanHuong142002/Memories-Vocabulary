@@ -69,7 +69,7 @@ const HomeLayout = () => {
     typesId: '',
     price: 0,
   });
-  const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
+  const debouncedSearchTerm = useDebounce<Filter>(filter, 1000);
 
   /**
    * @description function handle product modal
@@ -183,13 +183,7 @@ const HomeLayout = () => {
   }, []);
 
   useEffect(() => {
-    const filterObjectByValue = Object.fromEntries(
-      Object.entries(debouncedSearchTerm).filter(([_, value]) => value !== ''),
-    );
-
-    if (Object.keys(filterObjectByValue).length) {
-      onSearchProducts(generateSearchParam(debouncedSearchTerm));
-    }
+    onSearchProducts(generateSearchParam(debouncedSearchTerm));
   }, [debouncedSearchTerm, onSearchProducts]);
 
   useEffect(() => {
