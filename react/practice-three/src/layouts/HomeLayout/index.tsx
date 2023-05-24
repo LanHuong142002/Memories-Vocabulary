@@ -202,13 +202,13 @@ const HomeLayout = () => {
       <div className='main-content'>
         <ProductTable
           filters={filter}
-          products={products ? products : []}
-          status={status ? status : []}
-          types={types ? types : []}
+          products={products || []}
+          status={status || []}
+          types={types || []}
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
-          onHandleToggleNotification={handleToggleNotificationModal}
+          onToggleNotification={handleToggleNotificationModal}
         />
       </div>
       {newProductModal && (
