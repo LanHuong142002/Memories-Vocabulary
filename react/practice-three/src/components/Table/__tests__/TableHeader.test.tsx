@@ -1,4 +1,6 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+
+// Components
 import { TableHeader } from '@components';
 
 describe('TableHeader', () => {
@@ -10,15 +12,24 @@ describe('TableHeader', () => {
   );
 
   it('Should renders children correctly', () => {
-    const { getByText } = render(<TableHeader>{children}</TableHeader>);
+    const { getByText } = render(
+      <table>
+        <TableHeader>{children}</TableHeader>
+      </table>,
+    );
 
     expect(getByText('Header 1')).toBeInTheDocument();
     expect(getByText('Header 2')).toBeInTheDocument();
   });
 
   it('Should renders class name correctly', () => {
-    const { container } = render(<TableHeader>{children}</TableHeader>);
+    render(
+      <table data-testid='table-wrapper'>
+        <TableHeader>{children}</TableHeader>
+      </table>,
+    );
+    const table = screen.getByTestId('table-wrapper');
 
-    expect(container.firstChild).toHaveClass('table-header');
+    expect(table.firstChild).toHaveClass('table-header');
   });
 });
