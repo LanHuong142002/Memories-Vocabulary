@@ -126,11 +126,8 @@ const HomeLayout = () => {
    * @param {Object} product is a product updated
    */
   const handleConfirmUpdate = useCallback((product: Product): void => {
-    if (product !== productItem) {
-      onUpdateProduct(product);
-    } else {
-      handleToggleProductModal();
-    }
+    onUpdateProduct(product);
+    handleToggleProductModal();
   }, []);
 
   /**
