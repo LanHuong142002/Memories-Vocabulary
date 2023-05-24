@@ -26,10 +26,10 @@ interface Filter {
 }
 
 const HomeLayout = () => {
-  const [productModal, setProductModal] = useState<boolean>(false);
-  const [notificationModal, setNotificationModal] = useState<boolean>(false);
-  const [newProductModal, setNewProductModal] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<{
+  const [openProductModal, setOpenProductModal] = useState<boolean>(false);
+  const [openNotificationModal, setOpenNotificationModal] = useState<boolean>(false);
+  const [openNewProductModal, setOpenNewProductModal] = useState<boolean>(false);
+  const [openErrorModal, setOpenErrorModal] = useState<{
     status: boolean;
     message: string;
   }>({
@@ -37,7 +37,7 @@ const HomeLayout = () => {
     message: '',
   });
 
-  const [status, setStatus] = useState<ProductStatus[]>([]);
+  const [statuses, setStatuses] = useState<ProductStatus[]>([]);
   const [types, setTypes] = useState<ProductType[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<Filter>({
@@ -65,14 +65,14 @@ const HomeLayout = () => {
    * @description function handle product modal
    */
   const handleToggleProductModal = () => {
-    setProductModal((prev) => !prev);
+    setOpenProductModal((prev) => !prev);
   };
 
   /**
    * @description function handle error modal
    */
   const handleToggleErrorModal = (message?: string) => {
-    setErrorModal({
+    setOpenErrorModal({
       status: !!message,
       message: message || '',
     });
@@ -82,14 +82,14 @@ const HomeLayout = () => {
    * @description function handle notification modal
    */
   const handleToggleNotificationModal = () => {
-    setNotificationModal((prev) => !prev);
+    setOpenNotificationModal((prev) => !prev);
   };
 
   /**
    * @description function handle new product modal
    */
   const handleToggleNewProductModal = () => {
-    setNewProductModal((prev) => !prev);
+    setOpenNewProductModal((prev) => !prev);
   };
 
   /**
@@ -145,12 +145,12 @@ const HomeLayout = () => {
 
       if (typeof product === 'string') {
         handleToggleErrorModal(product);
-      } else if (productModal) {
+      } else if (openProductModal) {
         handleToggleProductModal();
       } else {
       }
     },
-    [productModal],
+    [openProductModal],
   );
 
   /**
@@ -174,7 +174,7 @@ const HomeLayout = () => {
       if (typeof listTypes === 'string') {
         handleToggleErrorModal(listTypes);
       } else {
-        setStatus(listTypes);
+        setStatuses(listTypes);
       }
     };
     fetchData();
@@ -216,36 +216,36 @@ const HomeLayout = () => {
         <ProductTable
           filters={filter}
           products={products}
-          status={status}
+          statuses={statuses}
           types={types}
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
-          onHandleToggleNotification={handleToggleNotificationModal}
+          onToggleNotification={handleToggleNotificationModal}
         />
       </div>
-      {newProductModal && (
+      {openNewProductModal && (
         <ProductModal
           titleModal='Add new product'
-          statuses={status}
+          statuses={statuses}
           types={types}
-          onHandleToggleProductModal={handleToggleNewProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
+          onToggleProductModal={handleToggleNewProductModal}
+          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
-      {productModal && (
+      {openProductModal && (
         <ProductModal
           titleModal='Product information'
           productItem={productItem}
-          statuses={status}
+          statuses={statuses}
           types={types}
-          onHandleToggleProductModal={handleToggleProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
+          onToggleProductModal={handleToggleProductModal}
+          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}
-      {notificationModal && (
+      {openNotificationModal && (
         <NotificationModal
           url='/icons/trash-icon.svg'
           title='Delete product'
@@ -262,11 +262,11 @@ const HomeLayout = () => {
           <Button label='Delete' variant='tertiary' color='warning' size='lg' />
         </NotificationModal>
       )}
-      {errorModal.status && (
+      {openErrorModal.status && (
         <NotificationModal
           url='/icons/error-icon.svg'
           title='Ooops!'
-          description={`Something went wrong. ${errorModal.message}`}
+          description={`Something went wrong. ${openErrorModal.message}`}
           onCancel={handleCancel}
         >
           <Button

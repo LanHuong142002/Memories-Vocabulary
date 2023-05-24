@@ -23,8 +23,8 @@ interface ModalProps {
   statuses: ProductStatus[];
   types: ProductType[];
   productItem?: Product;
-  onHandleToggleProductModal: () => void;
-  onHandleToggleErrorModal: (message?: string) => void;
+  onToggleProductModal: () => void;
+  onToggleErrorModal: (message?: string) => void;
   onConfirm: () => void;
 }
 
@@ -33,8 +33,8 @@ const ProductModal = ({
   productItem,
   statuses,
   types,
-  onHandleToggleProductModal,
-  onHandleToggleErrorModal,
+  onToggleProductModal,
+  onToggleErrorModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
@@ -114,16 +114,16 @@ const ProductModal = ({
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed
         if (typeof productItem === 'string') {
-          onHandleToggleErrorModal(productItem);
+          onToggleErrorModal(productItem);
 
           // if don't have any errors, list products will update
         } else {
-          onHandleToggleProductModal();
+          onToggleProductModal();
         }
 
         // if product doesn't have any change, the modal will close
       } else if (product === productItem) {
-        onHandleToggleProductModal();
+        onToggleProductModal();
       }
     },
     [product, productItem],
@@ -151,7 +151,7 @@ const ProductModal = ({
 
   return useMemo(() => {
     return (
-      <Modal title={titleModal} toggleModal={onHandleToggleProductModal}>
+      <Modal title={titleModal} toggleModal={onToggleProductModal}>
         <form className='form-wrapper' onSubmit={onConfirm}>
           <div className='form-body'>
             <div className='form-image'>
