@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
 
 // Styles
 import './index.css';
@@ -51,7 +51,6 @@ const ProductModal = ({
           price: 0,
         },
   );
-  const [hasError, setHasError] = useState<boolean>(true);
   const [isValidateFlag, setIsValidateFlag] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 700);
 
@@ -113,7 +112,13 @@ const ProductModal = ({
     [product],
   );
 
-  const disabledButton = () => {
+  /**
+   * @description function check if form have any errors the button
+   * will disabled
+   *
+   * @returns {boolean}
+   */
+  const disabledButton = (): boolean => {
     if (
       validateStringField(debouncedProduct.brandImage) ||
       validateStringField(debouncedProduct.image) ||
@@ -122,18 +127,11 @@ const ProductModal = ({
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
     ) {
-      setHasError(true);
+      return true;
     } else {
-      setHasError(false);
+      return false;
     }
   };
-
-  /**
-   * @description validation input onChange
-   */
-  useEffect(() => {
-    disabledButton();
-  }, [product.price, product.name, product.quantity, product.brand]);
 
   return useMemo(() => {
     return (
@@ -285,13 +283,13 @@ const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={hasError}
+              isDisabled={disabledButton()}
             />
           </div>
         </form>
       </Modal>
     );
-  }, [hasError, debouncedProduct, product, statuses, types]);
+  }, [debouncedProduct, product, statuses, types]);
 };
 
 export default ProductModal;
