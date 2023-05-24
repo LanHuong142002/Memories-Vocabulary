@@ -139,19 +139,15 @@ const DetailsLayout = () => {
    * @description function check if form have any errors the button
    * will disabled
    *
-   * @returns {boolean}
+   * @returns {string}
    */
-  const disabledButton = (): boolean => {
-    if (
+  const disabledButton = (): string => {
+    return (
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   useEffect(() => {
@@ -295,7 +291,7 @@ const DetailsLayout = () => {
                   color='success'
                   label='Save'
                   type='submit'
-                  isDisabled={disabledButton()}
+                  isDisabled={!disabledButton()}
                 />
               </div>
             </form>
