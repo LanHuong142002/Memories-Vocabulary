@@ -127,7 +127,6 @@ const HomeLayout = () => {
    */
   const handleConfirmUpdate = useCallback((product: Product): void => {
     onUpdateProduct(product);
-    handleToggleProductModal();
   }, []);
 
   /**
@@ -221,6 +220,7 @@ const HomeLayout = () => {
           onConfirm={handleConfirmAddNew}
         />
       )}
+      {console.log('productModal', productModal)}
       {productModal && (
         <ProductModal
           titleModal='Product information'
