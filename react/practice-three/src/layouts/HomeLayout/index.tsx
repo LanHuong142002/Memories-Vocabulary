@@ -117,7 +117,12 @@ const HomeLayout = () => {
    * @param {Object} product is a new product
    */
   const handleConfirmAddNew = useCallback((product: Product): void => {
-    onAddProduct(product);
+    const newProduct = {
+      ...product,
+      id: product.id || crypto.randomUUID(),
+    };
+
+    onAddProduct(newProduct);
   }, []);
 
   /**
