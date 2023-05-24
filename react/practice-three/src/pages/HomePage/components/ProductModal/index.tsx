@@ -23,8 +23,8 @@ interface ModalProps {
   statuses: ProductStatus[];
   types: ProductType[];
   productItem?: Product;
-  onHandleProductModal: () => void;
-  onHandleErrorModal: (message?: string) => void;
+  onHandleToggleProductModal: () => void;
+  onHandleToggleErrorModal: (message?: string) => void;
   onConfirm: () => void;
 }
 
@@ -33,27 +33,25 @@ const ProductModal = ({
   productItem,
   statuses,
   types,
-  onHandleProductModal,
-  onHandleErrorModal,
+  onHandleToggleProductModal,
+  onHandleToggleErrorModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
-    productItem
-      ? productItem
-      : {
-          id: '',
-          image: '',
-          name: '',
-          quantity: 0,
-          brandImage: '',
-          brand: '',
-          statusesId: '',
-          typesId: '',
-          price: 0,
-        },
+    productItem || {
+      id: '',
+      image: '',
+      name: '',
+      quantity: 0,
+      brandImage: '',
+      brand: '',
+      statusesId: '',
+      typesId: '',
+      price: 0,
+    },
   );
   const [hasError, setHasError] = useState<boolean>(true);
-  const [validationProductFlag, setValidationProductFlag] = useState<boolean>(false);
+  const [shouldValidateForm, setShouldValidateForm] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 1000);
 
   /**
@@ -72,7 +70,7 @@ const ProductModal = ({
           [name]: value,
         });
       }
-      setValidationProductFlag(true);
+      setShouldValidateForm(true);
     },
     [product],
   );
@@ -116,16 +114,16 @@ const ProductModal = ({
         // If in the process of calling the API, it returns an object containing an error,
         // an error message will be displayed
         if (typeof productItem === 'string') {
-          onHandleErrorModal(productItem);
+          onHandleToggleErrorModal(productItem);
 
           // if don't have any errors, list products will update
         } else {
-          onHandleProductModal();
+          onHandleToggleProductModal();
         }
 
         // if product doesn't have any change, the modal will close
       } else if (product === productItem) {
-        onHandleProductModal();
+        onHandleToggleProductModal();
       }
     },
     [product, productItem],
@@ -153,12 +151,12 @@ const ProductModal = ({
 
   return useMemo(() => {
     return (
-      <Modal title={titleModal} toggleModal={onHandleProductModal}>
+      <Modal title={titleModal} toggleModal={onHandleToggleProductModal}>
         <form className='form-wrapper' onSubmit={onConfirm}>
           <div className='form-body'>
             <div className='form-image'>
               <Image
-                url={product.image ? product.image : loadImage('/images/default-image.png')}
+                url={product.image || loadImage('/images/default-image.png')}
                 alt='image'
                 size='xl'
                 isCircle={true}
@@ -184,7 +182,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateStringField(debouncedProduct.name)}
+                  {shouldValidateForm && validateStringField(debouncedProduct.name)}
                 </span>
               </div>
             </div>
@@ -200,7 +198,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag &&
+                  {shouldValidateForm &&
                     validateNumberField(Number(debouncedProduct.quantity), 'quantity')}
                 </span>
               </div>
@@ -217,7 +215,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateNumberField(Number(debouncedProduct.price))}
+                  {shouldValidateForm && validateNumberField(Number(debouncedProduct.price))}
                 </span>
               </div>
             </div>
@@ -249,7 +247,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateStringField(debouncedProduct.brand)}
+                  {shouldValidateForm && validateStringField(debouncedProduct.brand)}
                 </span>
               </div>
 
@@ -259,11 +257,7 @@ const ProductModal = ({
                   <Image
                     size='s'
                     isCircle={true}
-                    url={
-                      product.brandImage
-                        ? product.brandImage
-                        : loadImage('/images/default-image.png')
-                    }
+                    url={product.brandImage || loadImage('/images/default-image.png')}
                   />
                   <InputFile
                     url={loadImage('/icons/cloud-icon.svg')}

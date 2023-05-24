@@ -17,7 +17,7 @@ import { ActionMenu } from '@pages';
 interface ProductRowProps extends Product {
   onEdit: (item: Product) => void;
   onSetProductItem: (item: Product) => void;
-  onHandleNotification: () => void;
+  onHandleToggleNotification: () => void;
 }
 
 const ProductRow = ({
@@ -34,7 +34,7 @@ const ProductRow = ({
   price,
   onEdit,
   onSetProductItem,
-  onHandleNotification,
+  onHandleToggleNotification,
 }: ProductRowProps): React.ReactElement => {
   const [menuPopup, setMenuPopup] = useState<boolean>(false);
   const popup = useRef<HTMLDivElement>(null);
@@ -78,7 +78,7 @@ const ProductRow = ({
    * @description function show confirm and set id for confirm popup
    */
   const handleDelete = useCallback(() => {
-    onHandleNotification();
+    onHandleToggleNotification();
     onSetProductItem({
       id,
       image,
