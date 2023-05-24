@@ -113,21 +113,17 @@ const ProductModal = ({
    * @description function check if form have any errors the button
    * will disabled
    *
-   * @returns {boolean}
+   * @returns {string}
    */
-  const disabledButton = (): boolean => {
-    if (
+  const disabledButton = (): string => {
+    return (
       validateStringField(debouncedProduct.brandImage) ||
       validateStringField(debouncedProduct.image) ||
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   return useMemo(() => {
@@ -157,7 +153,7 @@ const ProductModal = ({
                 {shouldValidateForm && validateStringField(debouncedProduct.image)}
               </span>
             </div>
-
+            {console.log(!test())}
             <div className='form-group'>
               <div className='form-control'>
                 <Input
@@ -276,7 +272,7 @@ const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={disabledButton()}
+              isDisabled={!disabledButton()}
             />
           </div>
         </form>
