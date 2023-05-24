@@ -183,9 +183,14 @@ const HomeLayout = () => {
   }, []);
 
   useEffect(() => {
-    const param = generateSearchParam(debouncedSearchTerm);
-    onSearchProducts(param);
-  }, [debouncedSearchTerm]);
+    const filterObjectByValue = Object.fromEntries(
+      Object.entries(debouncedSearchTerm).filter(([_, value]) => value !== ''),
+    );
+
+    if (Object.keys(filterObjectByValue).length) {
+      onSearchProducts(generateSearchParam(debouncedSearchTerm));
+    }
+  }, [debouncedSearchTerm, onSearchProducts]);
 
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus);
