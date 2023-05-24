@@ -103,28 +103,11 @@ const ProductModal = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback(
+  const handleOnConfirm = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      // if have product's id and product has any change, we will call API to update product
-      if (product.id && product !== productItem) {
-        const productItem = await updateProduct(product);
-
-        // If in the process of calling the API, it returns an object containing an error,
-        // an error message will be displayed
-        if (typeof productItem === 'string') {
-          onHandleToggleErrorModal(productItem);
-
-          // if don't have any errors, list products will update
-        } else {
-          onHandleToggleProductModal();
-        }
-
-        // if product doesn't have any change, the modal will close
-      } else if (product === productItem) {
-        onHandleToggleProductModal();
-      }
+      onConfirm(product);
+      onHandleToggleProductModal();
     },
     [product, productItem],
   );
@@ -152,7 +135,7 @@ const ProductModal = ({
   return useMemo(() => {
     return (
       <Modal title={titleModal} toggleModal={onHandleToggleProductModal}>
-        <form className='form-wrapper' onSubmit={onConfirm}>
+        <form className='form-wrapper' onSubmit={handleOnConfirm}>
           <div className='form-body'>
             <div className='form-image'>
               <Image
@@ -278,7 +261,7 @@ const ProductModal = ({
               color='default'
               label='Cancel'
               type='button'
-              onClick={onConfirm}
+              onClick={onHandleToggleProductModal}
             />
             <Button
               variant='tertiary'

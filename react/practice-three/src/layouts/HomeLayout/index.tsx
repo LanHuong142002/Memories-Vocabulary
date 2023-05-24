@@ -29,15 +29,8 @@ interface Filter {
 }
 
 const HomeLayout = () => {
-  const {
-    products,
-    messageError,
-    onSearchProducts,
-    onAddProduct,
-    onUpdateProduct,
-    onDeleteProduct,
-    onSetMessageError,
-  } = useContext(ProductContext);
+  const { products, onDeleteProduct, onSearchProducts, onUpdateErrorMessage, errorMessage } =
+    useContext(ProductContext);
   const { data: status, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
@@ -180,13 +173,13 @@ const HomeLayout = () => {
   useEffect(() => {
     const param = generateSearchParam(debouncedSearchTerm);
     onSearchProducts(param);
-  }, [filter, debouncedSearchTerm, messageError]);
+  }, [filter, debouncedSearchTerm, errorMessage]);
 
   useEffect(() => {
-    if (errorStatus) onSetMessageError(errorStatus);
-    if (errorType) onSetMessageError(errorType);
-    if (messageError) handleToggleErrorModal(messageError);
-  }, [errorStatus, errorType, messageError]);
+    if (errorStatus) onUpdateErrorMessage(errorStatus);
+    if (errorType) onUpdateErrorMessage(errorType);
+    if (errorMessage) handleToggleErrorModal(errorMessage);
+  }, [errorStatus, errorType, errorMessage]);
 
   return (
     <main className='main-wrapper'>
