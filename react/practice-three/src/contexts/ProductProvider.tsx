@@ -16,103 +16,101 @@ import { mutate } from 'swr';
 
 export interface Context {
   products: Product[];
-  messageError: string;
+  errorMessage: string;
   onAddProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
   onUpdateProduct: (product: Product) => void;
   onSearchProducts: (param: string) => void;
-  onSetMessageError: (message: string) => void;
+  onUpdateErrorMessage: (message: string) => void;
 }
 
 export const ProductContext = createContext<Context>({} as Context);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [messageError, setMessageError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { data: products, error } = useProduct();
 
   /**
    * @description function set message error
    */
-  const onSetMessageError = useCallback((message: string) => {
-    setMessageError(message);
+  const handleUpdateErrorMessage = useCallback((message: string) => {
+    setErrorMessage(message);
   }, []);
 
   /**
    * @description get products after search
    */
-  const onSearchProducts = useCallback(async (param: string) => {
-    const response = await getProductsByParam(
-      `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
-    );
+  const handleSearchProducts = useCallback(async (param: string) => {
+    const response = await getProductsByParam(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
 
     if (typeof response === 'string') {
-      setMessageError(response);
+      setErrorMessage(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
+      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
     }
   }, []);
 
   /**
    * @description function add new product
    */
-  const onAddProduct = useCallback(async (product: Product) => {
+  const handleAddProduct = useCallback(async (product: Product) => {
     const response = await postProduct(product);
 
     if (typeof response === 'string') {
-      setMessageError(response);
+      setErrorMessage(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
+      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
     }
   }, []);
 
   /**
    * @description function delete product
    */
-  const onDeleteProduct = useCallback(async (id: string) => {
+  const handleDeleteProduct = useCallback(async (id: string) => {
     const response = await deleteProduct(id);
 
     if (typeof response === 'string') {
-      setMessageError(response);
+      setErrorMessage(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
+      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
     }
   }, []);
 
   /**
    * @description function update product
    */
-  const onUpdateProduct = useCallback(async (product: Product) => {
+  const handleUpdateProduct = useCallback(async (product: Product) => {
     const response = await updateProduct(product);
 
     if (typeof response === 'string') {
-      setMessageError(response);
+      setErrorMessage(response);
     } else {
-      mutate(`${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`);
+      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
     }
   }, []);
 
   useEffect(() => {
-    setMessageError(error);
+    setErrorMessage(error);
   }, [error]);
 
   const value = useMemo(
     () => ({
       products,
-      messageError,
-      onAddProduct,
-      onDeleteProduct,
-      onUpdateProduct,
-      onSearchProducts,
-      onSetMessageError,
+      errorMessage,
+      onAddProduct: handleAddProduct,
+      onDeleteProduct: handleDeleteProduct,
+      onUpdateProduct: handleUpdateProduct,
+      onSearchProducts: handleSearchProducts,
+      onUpdateErrorMessage: handleUpdateErrorMessage,
     }),
     [
       products,
-      messageError,
-      onDeleteProduct,
-      onUpdateProduct,
-      onAddProduct,
-      onSearchProducts,
-      onSetMessageError,
+      errorMessage,
+      handleAddProduct,
+      handleDeleteProduct,
+      handleUpdateProduct,
+      handleSearchProducts,
+      handleUpdateErrorMessage,
     ],
   );
 
