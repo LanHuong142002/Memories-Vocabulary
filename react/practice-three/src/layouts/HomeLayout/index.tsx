@@ -29,8 +29,15 @@ interface Filter {
 }
 
 const HomeLayout = () => {
-  const { products, onDeleteProduct, onSearchProducts, onUpdateErrorMessage, errorMessage } =
-    useContext(ProductContext);
+  const {
+    products,
+    onAddProduct,
+    onDeleteProduct,
+    onUpdateProduct,
+    onSearchProducts,
+    onUpdateErrorMessage,
+    errorMessage,
+  } = useContext(ProductContext);
   const { data: status, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
@@ -122,7 +129,7 @@ const HomeLayout = () => {
     if (product !== productItem) {
       onUpdateProduct(product);
     } else {
-      handleProductModal();
+      handleToggleProductModal();
     }
   }, []);
 
@@ -214,7 +221,6 @@ const HomeLayout = () => {
           statuses={status}
           types={types}
           onHandleToggleProductModal={handleToggleNewProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
@@ -225,7 +231,6 @@ const HomeLayout = () => {
           statuses={status}
           types={types}
           onHandleToggleProductModal={handleToggleProductModal}
-          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}

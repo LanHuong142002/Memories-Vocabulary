@@ -24,8 +24,7 @@ interface ModalProps {
   types: ProductType[];
   productItem?: Product;
   onHandleToggleProductModal: () => void;
-  onHandleToggleErrorModal: (message?: string) => void;
-  onConfirm: (product: Productproduct: Product) => void;
+  onConfirm: (product: Product) => void;
 }
 
 const ProductModal = ({
@@ -34,7 +33,6 @@ const ProductModal = ({
   statuses,
   types,
   onHandleToggleProductModal,
-  onHandleToggleErrorModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
@@ -156,7 +154,7 @@ const ProductModal = ({
                 />
               </div>
               <span className='error-message'>
-                {isValidateFlag && validateStringField(debouncedProduct.image)}
+                {shouldValidateForm && validateStringField(debouncedProduct.image)}
               </span>
             </div>
 
@@ -246,9 +244,7 @@ const ProductModal = ({
                     <Image
                       size='s'
                       isCircle={true}
-                      url={
-                        product.brandImage || loadImage('/images/default-image.png')
-                      }
+                      url={product.brandImage || loadImage('/images/default-image.png')}
                     />
                     <InputFile
                       url={loadImage('/icons/cloud-icon.svg')}
@@ -261,7 +257,7 @@ const ProductModal = ({
                     />
                   </div>
                   <span className='error-message'>
-                    {isValidateFlag && validateStringField(debouncedProduct.brandImage)}
+                    {shouldValidateForm && validateStringField(debouncedProduct.brandImage)}
                   </span>
                 </div>
               </div>
