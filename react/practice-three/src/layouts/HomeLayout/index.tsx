@@ -1,8 +1,5 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
-// Styles
-import './index.css';
-
 // Services
 import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
 
@@ -16,7 +13,7 @@ import { useDebounce } from '@hooks';
 import { Product } from '@interfaces';
 
 // Components
-import { SelectItemProps, Button, NotificationModal } from '@components';
+import { SelectItemProps, NotificationModal, Button } from '@components';
 import { ProductTable, ProductModal } from '@pages';
 
 // Styles
@@ -213,7 +210,7 @@ const HomeLayout = () => {
       )}
       {errorsModal.status && (
         <NotificationModal
-          url='/icons/trash-icon.svg'
+          url='/icons/error-icon.svg'
           title='Ooops!'
           description={`Something went wrong. ${errorsModal.message}`}
           onCancel={handleCancel}

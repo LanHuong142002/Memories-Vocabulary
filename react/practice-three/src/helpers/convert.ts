@@ -1,3 +1,5 @@
+import { MILLION, THOUSAND } from '@constants';
+
 /**
  * @description convert file image to base 64
  *
@@ -9,14 +11,8 @@ const convertBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
-
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
+    fileReader.onload = () => resolve(fileReader.result);
+    fileReader.onerror = (error) => reject(error);
   });
 };
 
@@ -28,15 +24,11 @@ const convertBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
  * @returns a string with abbreviation suffixes
  */
 const formatPrice = (value: number): string => {
-  let number = 0;
-
   switch (true) {
-    case value >= 1000:
-      number = value / 1000;
-      return `${number}K`;
-    case value >= 1000000:
-      number = value / 1000000;
-      return `${number}M`;
+    case value >= THOUSAND && value < MILLION:
+      return `${value / THOUSAND}K`;
+    case value >= MILLION:
+      return `${value / MILLION}M`;
     default:
       return `${value}`;
   }
