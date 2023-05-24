@@ -11,7 +11,7 @@ import { CustomErrors, customErrors } from '@helpers';
  *
  * @returns {Array} list products
  */
-const getProductsByParam = async <T>(param: string): Promise<T[] | CustomErrors> => {
+const getProductsByParam = async <T>(param?: string): Promise<T[] | CustomErrors> => {
   try {
     const response = await fetch(
       `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
