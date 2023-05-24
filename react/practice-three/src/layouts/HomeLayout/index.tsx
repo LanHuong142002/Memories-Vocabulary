@@ -3,6 +3,9 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 // Contexts
 import { ProductContext } from '@contexts';
 
+// Helpers
+import { generateSearchParam } from '@helpers';
+
 // Hooks
 import { useDebounce, useStatus, useType } from '@hooks';
 
@@ -15,7 +18,6 @@ import { ProductTable, ProductModal } from '@pages';
 
 // Styles
 import './index.css';
-import { generateSearchParam } from '@helpers';
 
 interface Filter {
   name: string;
@@ -26,27 +28,18 @@ interface Filter {
   price: string;
 }
 
-interface ErrorModal {
-  status: boolean;
-  message: string;
-}
-
 const HomeLayout = () => {
-  const {
-    products,
-    messageError,
-    onSearchProducts,
-    onAddProduct,
-    onUpdateProduct,
-    onDeleteProduct,
-    onSetMessageError,
-  } = useContext(ProductContext);
+  const { products, onDeleteProduct, onSearchProducts, onUpdateErrorMessage, errorMessage } =
+    useContext(ProductContext);
   const { data: status, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
   const [productModal, setProductModal] = useState<boolean>(false);
   const [notificationModal, setNotificationModal] = useState<boolean>(false);
   const [newProductModal, setNewProductModal] = useState<boolean>(false);
-  const [errorModal, setErrorModal] = useState<ErrorModal>({
+  const [errorModal, setErrorModal] = useState<{
+    status: boolean;
+    message: string;
+  }>({
     status: false,
     message: '',
   });
@@ -74,16 +67,16 @@ const HomeLayout = () => {
   /**
    * @description function handle product modal
    */
-  const handleProductModal = useCallback((): void => {
+  const handleToggleProductModal = useCallback((): void => {
     setProductModal((prev) => !prev);
   }, []);
 
   /**
    * @description function handle error modal
    */
-  const handleErrorModal = useCallback((message?: string): void => {
+  const handleToggleErrorModal = useCallback((message?: string): void => {
     setErrorModal({
-      status: message ? true : false,
+      status: !!message,
       message: message || '',
     });
   }, []);
@@ -91,14 +84,14 @@ const HomeLayout = () => {
   /**
    * @description function handle notification modal
    */
-  const handleNotificationModal = useCallback((): void => {
+  const handleToggleNotificationModal = useCallback((): void => {
     setNotificationModal((prev) => !prev);
   }, []);
 
   /**
    * @description function handle new product modal
    */
-  const handleNewProductModal = useCallback((): void => {
+  const handleToggleNewProductModal = useCallback((): void => {
     setNewProductModal((prev) => !prev);
   }, []);
 
@@ -158,7 +151,7 @@ const HomeLayout = () => {
    * @param {Object} item is data item after call api
    */
   const handleDataModal = useCallback((item: Product): void => {
-    handleProductModal();
+    handleToggleProductModal();
     handleSetProductItem(item);
   }, []);
 
@@ -170,7 +163,7 @@ const HomeLayout = () => {
   const handleConfirmDelete = useCallback(async (): Promise<void> => {
     if (productItem && productItem.id) {
       onDeleteProduct(productItem.id);
-      handleNotificationModal();
+      handleToggleNotificationModal();
     }
   }, [productItem]);
 
@@ -178,19 +171,19 @@ const HomeLayout = () => {
    * @description function cancel/ close errors modal
    */
   const handleCancel = useCallback((): void => {
-    handleErrorModal();
+    handleToggleErrorModal();
   }, []);
 
   useEffect(() => {
     const param = generateSearchParam(debouncedSearchTerm);
     onSearchProducts(param);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, filter]);
 
   useEffect(() => {
-    if (errorStatus) onSetMessageError(errorStatus);
-    if (errorType) onSetMessageError(errorType);
-    if (messageError) handleErrorModal(messageError);
-  }, [errorStatus, errorType, messageError]);
+    if (errorStatus) onUpdateErrorMessage(errorStatus);
+    if (errorType) onUpdateErrorMessage(errorType);
+    if (errorMessage) handleToggleErrorModal(errorMessage);
+  }, [errorStatus, errorType, errorMessage]);
 
   return (
     <main className='main-wrapper'>
@@ -200,7 +193,7 @@ const HomeLayout = () => {
           variant='secondary'
           color='success'
           size='md'
-          onClick={handleNewProductModal}
+          onClick={handleToggleNewProductModal}
         />
       </div>
       <div className='main-content'>
@@ -212,7 +205,7 @@ const HomeLayout = () => {
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
-          onHandleNotification={handleNotificationModal}
+          onHandleToggleNotification={handleToggleNotificationModal}
         />
       </div>
       {newProductModal && (
@@ -220,8 +213,8 @@ const HomeLayout = () => {
           titleModal='Add new product'
           statuses={status}
           types={types}
-          onHandleProductModal={handleNewProductModal}
-          onHandleErrorModal={handleErrorModal}
+          onHandleToggleProductModal={handleToggleNewProductModal}
+          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
@@ -231,8 +224,8 @@ const HomeLayout = () => {
           productItem={productItem}
           statuses={status}
           types={types}
-          onHandleProductModal={handleProductModal}
-          onHandleErrorModal={handleErrorModal}
+          onHandleToggleProductModal={handleToggleProductModal}
+          onHandleToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}
@@ -241,14 +234,14 @@ const HomeLayout = () => {
           url='/icons/trash-icon.svg'
           title='Delete product'
           description='Are you sure you want to delete this product? This action cannot be undone.'
-          onCancel={handleNotificationModal}
+          onCancel={handleToggleNotificationModal}
         >
           <Button
             label='Cancel'
             variant='secondary'
             color='default'
             size='lg'
-            onClick={handleNotificationModal}
+            onClick={handleToggleNotificationModal}
           />
           <Button
             label='Delete'
