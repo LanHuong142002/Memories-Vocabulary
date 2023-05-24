@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Identity } from '@components';
 
 describe('Testing identity component', () => {
@@ -21,19 +21,13 @@ describe('Testing identity component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should call onClick event when click to image and text', () => {
+  it('Should render Identity with class correctly', () => {
     render(<Identity {...defaultProps} />);
 
-    const image = screen.getByRole('img', {
-      name: /vendôme louis/i,
-    });
-    fireEvent.click(image);
+    const identity = screen.getByTestId('identity-wrapper');
 
-    const text = screen.getByText(/vendôme louis/i);
-    fireEvent.click(text);
-
-    expect(handleClick).toBeCalled();
-    expect(handleClick).toBeCalledTimes(2);
+    expect(identity).toBeInTheDocument();
+    expect(identity).toHaveClass('identity-wrapper');
   });
 
   it('Should render Identity in the circle shape correctly', () => {

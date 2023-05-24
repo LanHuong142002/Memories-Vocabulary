@@ -4,6 +4,7 @@ exports[`Testing identity component Should render Identity 1`] = `
 <div>
   <div
     class="identity-wrapper"
+    data-testid="identity-wrapper"
   >
     <figure
       class="image-wrapper image-size-lg "

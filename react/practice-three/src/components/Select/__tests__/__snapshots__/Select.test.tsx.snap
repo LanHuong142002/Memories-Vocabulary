@@ -5,9 +5,6 @@ exports[`Testing Select component Should render Select component 1`] = `
   <div
     data-testid="select-box"
   >
-    <label
-      class="title-select"
-    />
     <select
       class="select-wrapper"
       name="type"
