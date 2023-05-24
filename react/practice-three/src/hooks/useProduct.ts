@@ -21,9 +21,16 @@ interface ReturnTypeProductById {
   isLoading: boolean;
 }
 
-export const useProduct = (): ReturnTypeProduct => {
+/**
+ * @description Custom hook to fetch product data.
+ *
+ * @param {string} param Optional parameter to customize the request URL.
+ *
+ * @returns {Object} An object containing the product data, error, and loading state.
+ */
+export const useProduct = (param?: string): ReturnTypeProduct => {
   const { data, error, isLoading } = useSWR(
-    `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types`,
+    `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
     getProductsByParam,
   );
 
@@ -34,6 +41,13 @@ export const useProduct = (): ReturnTypeProduct => {
   };
 };
 
+/**
+ * @description Custom hook to fetch product data by id.
+ *
+ * @param {string} param Optional parameter to customize the request URL.
+ *
+ * @returns {Object} An object containing the product data, error, and loading state.
+ */
 export const useProductById = (id: string): ReturnTypeProductById => {
   const { data, error, isLoading } = useSWR(
     `${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`,
