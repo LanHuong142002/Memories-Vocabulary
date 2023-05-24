@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA } from '@constants';
 
 // Hooks
-import { useProduct } from '@hooks';
+import { useProduct, useProductById } from '@hooks';
 
 jest.mock('swr');
 
@@ -39,7 +39,7 @@ describe('Testing useProductById', () => {
       isLoading: mockIsLoading,
     });
 
-    const { result } = renderHook(() => useProduct());
+    const { result } = renderHook(() => useProductById('1'));
 
     expect(result.current.data).toEqual(MOCK_PRODUCT_DATA);
     expect(result.current.error).toEqual(mockError);
