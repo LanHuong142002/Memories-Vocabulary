@@ -36,7 +36,12 @@ interface ModalProps {
   onUpdateProductFlag: () => void;
 }
 
-const ProductModal = ({ productItem, statuses, types, onUpdateProductFlag }: ModalProps) => {
+const ProductModal = ({
+  productItem,
+  statuses,
+  types,
+  onUpdateProductFlag,
+}: ModalProps): React.ReactElement => {
   const { showHideItemModal, showHideErrorsModal } = useContext(ModalContext);
   const [product, setProduct] = useState<Product>(productItem);
   const [hasError, setHasError] = useState<boolean>(true);
