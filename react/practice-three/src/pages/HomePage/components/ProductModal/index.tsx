@@ -52,7 +52,7 @@ const ProductModal = ({
         },
   );
   const [hasError, setHasError] = useState<boolean>(true);
-  const [validationProductFlag, setValidationProductFlag] = useState<boolean>(false);
+  const [isValidateFlag, setIsValidateFlag] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 700);
 
   /**
@@ -71,7 +71,7 @@ const ProductModal = ({
           [name]: value,
         });
       }
-      setValidationProductFlag(true);
+      setIsValidateFlag(true);
     },
     [product],
   );
@@ -115,6 +115,8 @@ const ProductModal = ({
 
   const disabledButton = () => {
     if (
+      validateStringField(debouncedProduct.brandImage) ||
+      validateStringField(debouncedProduct.image) ||
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
       validateNumberField(Number(product.quantity), 'quantity') ||
@@ -157,7 +159,7 @@ const ProductModal = ({
                 />
               </div>
               <span className='error-message'>
-                {validationProductFlag && validateStringField(debouncedProduct.image)}
+                {isValidateFlag && validateStringField(debouncedProduct.image)}
               </span>
             </div>
 
@@ -171,7 +173,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateStringField(debouncedProduct.name)}
+                  {isValidateFlag && validateStringField(debouncedProduct.name)}
                 </span>
               </div>
             </div>
@@ -187,7 +189,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag &&
+                  {isValidateFlag &&
                     validateNumberField(Number(debouncedProduct.quantity), 'quantity')}
                 </span>
               </div>
@@ -204,7 +206,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateNumberField(Number(debouncedProduct.price))}
+                  {isValidateFlag && validateNumberField(Number(debouncedProduct.price))}
                 </span>
               </div>
             </div>
@@ -236,7 +238,7 @@ const ProductModal = ({
                   onChange={handleOnChange}
                 />
                 <span className='error-message'>
-                  {validationProductFlag && validateStringField(debouncedProduct.brand)}
+                  {isValidateFlag && validateStringField(debouncedProduct.brand)}
                 </span>
               </div>
 
@@ -264,7 +266,7 @@ const ProductModal = ({
                     />
                   </div>
                   <span className='error-message'>
-                    {validationProductFlag && validateStringField(debouncedProduct.brandImage)}
+                    {isValidateFlag && validateStringField(debouncedProduct.brandImage)}
                   </span>
                 </div>
               </div>
@@ -276,7 +278,7 @@ const ProductModal = ({
               color='default'
               label='Cancel'
               type='button'
-              onClick={handleOnConfirm}
+              onClick={onHandleProductModal}
             />
             <Button
               variant='tertiary'

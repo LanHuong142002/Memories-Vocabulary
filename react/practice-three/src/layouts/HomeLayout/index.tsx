@@ -126,7 +126,11 @@ const HomeLayout = () => {
    * @param {Object} product is a product updated
    */
   const handleConfirmUpdate = useCallback((product: Product): void => {
-    console.log('product', product);
+    if (product !== productItem) {
+      onUpdateProduct(product);
+    } else {
+      handleProductModal();
+    }
   }, []);
 
   /**
