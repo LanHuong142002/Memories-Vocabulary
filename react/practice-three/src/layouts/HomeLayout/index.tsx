@@ -210,7 +210,6 @@ const HomeLayout = () => {
           statuses={statuses}
           types={types}
           onToggleProductModal={handleToggleNewProductModal}
-          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
@@ -221,7 +220,6 @@ const HomeLayout = () => {
           statuses={statuses}
           types={types}
           onToggleProductModal={handleToggleProductModal}
-          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}

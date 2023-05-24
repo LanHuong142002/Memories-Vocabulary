@@ -6,9 +6,6 @@ import './index.css';
 // Components
 import { Modal, Button, Image, Input, Select, InputFile } from '@components';
 
-// Services
-import { updateProduct } from '@services';
-
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
 
@@ -24,7 +21,6 @@ interface ModalProps {
   types: ProductType[];
   productItem?: Product;
   onToggleProductModal: () => void;
-  onToggleErrorModal: (message?: string) => void;
   onConfirm: (product: Product) => void;
 }
 
@@ -34,7 +30,6 @@ const ProductModal = ({
   statuses,
   types,
   onToggleProductModal,
-  onToggleErrorModal,
   onConfirm,
 }: ModalProps): React.ReactElement => {
   const [product, setProduct] = useState<Product>(
