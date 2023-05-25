@@ -41,7 +41,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description get products after search
    */
-  const handleSearchProducts = useCallback(async (paramSearch: string) => {
+  const handleSearchProducts = useCallback((paramSearch: string) => {
     setParam(paramSearch);
     mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
   }, []);
