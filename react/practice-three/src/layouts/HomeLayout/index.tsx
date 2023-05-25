@@ -29,8 +29,15 @@ interface Filter {
 }
 
 const HomeLayout = () => {
-  const { products, onDeleteProduct, onSearchProducts, onUpdateErrorMessage, errorMessage } =
-    useContext(ProductContext);
+  const {
+    products,
+    onAddProduct,
+    onDeleteProduct,
+    onUpdateProduct,
+    onSearchProducts,
+    onUpdateErrorMessage,
+    errorMessage,
+  } = useContext(ProductContext);
   const { data: statuses, error: errorStatus } = useStatus();
   const { data: types, error: errorType } = useType();
   const [openProductModal, setOpenProductModal] = useState<boolean>(false);
@@ -62,7 +69,7 @@ const HomeLayout = () => {
     typesId: '',
     price: 0,
   });
-  const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
+  const debouncedSearchTerm = useDebounce<Filter>(filter, 1000);
 
   /**
    * @description function handle product modal
@@ -110,7 +117,12 @@ const HomeLayout = () => {
    * @param {Object} product is a new product
    */
   const handleConfirmAddNew = useCallback((product: Product): void => {
-    console.log('product', product);
+    const newProduct = {
+      ...product,
+      id: product.id || crypto.randomUUID(),
+    };
+
+    onAddProduct(newProduct);
   }, []);
 
   /**
@@ -119,7 +131,7 @@ const HomeLayout = () => {
    * @param {Object} product is a product updated
    */
   const handleConfirmUpdate = useCallback((product: Product): void => {
-    console.log('product', product);
+    onUpdateProduct(product);
   }, []);
 
   /**
@@ -171,9 +183,8 @@ const HomeLayout = () => {
   }, []);
 
   useEffect(() => {
-    const param = generateSearchParam(debouncedSearchTerm);
-    onSearchProducts(param);
-  }, [filter, debouncedSearchTerm, errorMessage]);
+    onSearchProducts(generateSearchParam(debouncedSearchTerm));
+  }, [debouncedSearchTerm, onSearchProducts]);
 
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus);

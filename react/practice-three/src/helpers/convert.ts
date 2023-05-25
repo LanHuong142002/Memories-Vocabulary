@@ -45,4 +45,22 @@ const loadImage = (src: string): string => {
   return `${process.env.VITE_ASSETS_URL}${src}`;
 };
 
-export { convertBase64, formatPrice, loadImage };
+/**
+ * @description function generate a object to a string param
+ *
+ * @param {Object} values is an object value input
+ *
+ * @returns {string}
+ */
+const generateSearchParam = <T extends object>(values: T): string => {
+  let param = '&';
+  for (const [key, value] of Object.entries(values)) {
+    if (value) {
+      param += `${key}_like=${value}&`;
+    }
+  }
+
+  return param;
+};
+
+export { convertBase64, formatPrice, loadImage, generateSearchParam };

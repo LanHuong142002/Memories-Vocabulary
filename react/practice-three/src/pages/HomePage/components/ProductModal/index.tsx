@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
 
 // Styles
 import './index.css';
@@ -14,6 +14,9 @@ import { useDebounce } from '@hooks';
 
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
+
+// Constants
+import { MOCK_PRODUCT_DATA } from '@constants';
 
 interface ModalProps {
   titleModal: string;
@@ -40,12 +43,11 @@ const ProductModal = ({
       quantity: 0,
       brandImage: '',
       brand: '',
-      statusesId: '',
-      typesId: '',
+      statusesId: MOCK_PRODUCT_DATA.statusesId,
+      typesId: MOCK_PRODUCT_DATA.typesId,
       price: 0,
     },
   );
-  const [hasError, setHasError] = useState<boolean>(true);
   const [shouldValidateForm, setShouldValidateForm] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 1000);
 
@@ -104,28 +106,25 @@ const ProductModal = ({
       onConfirm(product);
       onToggleProductModal();
     },
-    [product, productItem],
+    [product],
   );
 
-  const disabledButton = () => {
-    if (
+  /**
+   * @description function check if form have any errors the button
+   * will disabled
+   *
+   * @returns {string}
+   */
+  const disabledButton = (): string => {
+    return (
+      validateStringField(debouncedProduct.brandImage) ||
+      validateStringField(debouncedProduct.image) ||
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
       validateNumberField(Number(product.quantity), 'quantity') ||
       validateStringField(product.brand)
-    ) {
-      setHasError(true);
-    } else {
-      setHasError(false);
-    }
+    );
   };
-
-  /**
-   * @description validation input onChange
-   */
-  useEffect(() => {
-    disabledButton();
-  }, [product.price, product.name, product.quantity, product.brand]);
 
   return useMemo(() => {
     return (
@@ -133,23 +132,27 @@ const ProductModal = ({
         <form className='form-wrapper' onSubmit={handleOnConfirm}>
           <div className='form-body'>
             <div className='form-image'>
-              <Image
-                url={product.image || loadImage('/images/default-image.png')}
-                alt='image'
-                size='xl'
-                isCircle={true}
-              />
-              <InputFile
-                url={loadImage('/icons/upload-icon.svg')}
-                size='md'
-                variant='primary'
-                id='image'
-                name='image'
-                text='Click to upload'
-                onChange={handleChangeInputFile}
-              />
+              <div className='form-image-wrapper'>
+                <Image
+                  url={product.image || loadImage('/images/default-image.png')}
+                  alt='image'
+                  size='xl'
+                  isCircle={true}
+                />
+                <InputFile
+                  url={loadImage('/icons/upload-icon.svg')}
+                  size='md'
+                  variant='primary'
+                  id='image'
+                  name='image'
+                  text='Click to upload'
+                  onChange={handleChangeInputFile}
+                />
+              </div>
+              <span className='error-message'>
+                {shouldValidateForm && validateStringField(debouncedProduct.image)}
+              </span>
             </div>
-
             <div className='form-group'>
               <div className='form-control'>
                 <Input
@@ -232,20 +235,25 @@ const ProductModal = ({
               <div className='group-image'>
                 <p>Brand Image</p>
                 <div className='image-wrapper'>
-                  <Image
-                    size='s'
-                    isCircle={true}
-                    url={product.brandImage || loadImage('/images/default-image.png')}
-                  />
-                  <InputFile
-                    url={loadImage('/icons/cloud-icon.svg')}
-                    id='brandImage'
-                    name='brandImage'
-                    text='Upload photo'
-                    variant='secondary'
-                    size='xxs'
-                    onChange={handleChangeInputFile}
-                  />
+                  <div className='image-wrapper-content'>
+                    <Image
+                      size='s'
+                      isCircle={true}
+                      url={product.brandImage || loadImage('/images/default-image.png')}
+                    />
+                    <InputFile
+                      url={loadImage('/icons/cloud-icon.svg')}
+                      id='brandImage'
+                      name='brandImage'
+                      text='Upload photo'
+                      variant='secondary'
+                      size='xxs'
+                      onChange={handleChangeInputFile}
+                    />
+                  </div>
+                  <span className='error-message'>
+                    {shouldValidateForm && validateStringField(debouncedProduct.brandImage)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -263,13 +271,13 @@ const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={hasError}
+              isDisabled={!disabledButton()}
             />
           </div>
         </form>
       </Modal>
     );
-  }, [hasError, debouncedProduct, product, statuses, types]);
+  }, [debouncedProduct, product, statuses, types]);
 };
 
 export default ProductModal;
