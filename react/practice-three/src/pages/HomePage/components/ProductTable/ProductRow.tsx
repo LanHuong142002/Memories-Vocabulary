@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 // Helpers
@@ -8,10 +7,8 @@ import { formatPrice, loadImage } from '@helpers';
 // Interfaces
 import { Product } from '@interfaces';
 
-// Component
+// Components
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
-
-// Components of pages
 import { ActionMenu } from '@pages';
 
 interface ProductRowProps extends Product {

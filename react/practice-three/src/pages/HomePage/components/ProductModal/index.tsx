@@ -1,10 +1,7 @@
 import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
 
-// Styles
-import './index.css';
-
-// Components
-import { Modal, Button, Image, Input, Select, InputFile } from '@components';
+// Constants
+import { MOCK_PRODUCT_DATA } from '@constants';
 
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
@@ -15,8 +12,11 @@ import { useDebounce } from '@hooks';
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
 
-// Constants
-import { MOCK_PRODUCT_DATA } from '@constants';
+// Components
+import { Modal, Button, Image, Input, Select, InputFile } from '@components';
+
+// Styles
+import './index.css';
 
 interface ModalProps {
   titleModal: string;
@@ -57,7 +57,7 @@ const ProductModal = ({
    * @param {ChangeEvent} e is event of input or select
    */
   const handleOnChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
       const value = e.target.value;
 
@@ -78,7 +78,7 @@ const ProductModal = ({
    * @param {ChangeEvent} e is event of input file
    */
   const handleChangeInputFile = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+    async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
       const name = e.target.name;
       const [file] = e.target.files || [];
 
@@ -101,7 +101,7 @@ const ProductModal = ({
    * @param {SubmitEvent} e is submit event of form
    */
   const handleOnConfirm = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault();
       onConfirm(product);
       onToggleProductModal();
@@ -271,7 +271,7 @@ const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={!disabledButton()}
+              isDisabled={!!disabledButton()}
             />
           </div>
         </form>
