@@ -35,16 +35,27 @@ const Template: ComponentStory<typeof ProductModal> = () => {
     { id: '2', name: 'Smart Phone' },
   ];
 
-  const handleUpdateProductFlag = () => {
-    console.log('product update');
+  const handleConfirm = () => {
+    console.log('confirm');
+  };
+
+  const handleErrorModal = () => {
+    console.log('error modal');
+  };
+
+  const handleProductModal = () => {
+    console.log('product modal');
   };
 
   return (
     <ProductModal
       productItem={product}
-      status={status}
+      statuses={status}
       types={types}
-      onUpdateProductFlag={handleUpdateProductFlag}
+      onConfirm={handleConfirm}
+      onToggleErrorModal={handleErrorModal}
+      onToggleProductModal={handleProductModal}
+      titleModal='Product information'
     />
   );
 };

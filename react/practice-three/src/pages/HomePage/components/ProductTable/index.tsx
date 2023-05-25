@@ -28,9 +28,10 @@ interface Filters {
   price: string;
 }
 
-interface ProductTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem'> {
+interface ProductTableProps
+  extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem' | 'onToggleNotification'> {
   filters: Filters;
-  status: SelectItemProps[];
+  statuses: SelectItemProps[];
   types: SelectItemProps[];
   products: Product[];
   onSearch: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -38,12 +39,13 @@ interface ProductTableProps extends Pick<ProductRowProps, 'onEdit' | 'onSetProdu
 
 const ProductTable = ({
   filters,
-  status,
+  statuses,
   types,
   products,
   onSearch,
   onEdit,
   onSetProductItem,
+  onToggleNotification,
 }: ProductTableProps): React.ReactElement => (
   <Table>
     <TableHeader>
@@ -54,7 +56,7 @@ const ProductTable = ({
         <TableCell title='Status' tagName='th'>
           <Select
             name='statusesId'
-            options={status}
+            options={statuses}
             optionAll={true}
             valueSelected={filters.statusesId}
             onChange={onSearch}
@@ -111,6 +113,7 @@ const ProductTable = ({
             price={item.price}
             onEdit={onEdit}
             onSetProductItem={onSetProductItem}
+            onToggleNotification={onToggleNotification}
           />
         ))
       ) : (

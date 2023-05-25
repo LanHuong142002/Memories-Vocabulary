@@ -38,6 +38,11 @@
   background-color: var(--background-primary);
 }
 
+.details-page .group-image > .image-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
 .form-cta-details {
   display: flex;
   gap: 22px;

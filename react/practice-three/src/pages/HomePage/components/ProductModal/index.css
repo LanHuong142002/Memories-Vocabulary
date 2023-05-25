@@ -10,7 +10,7 @@
   gap: 16px;
 }
 
-.form-body .form-image {
+.form-body .form-image .form-image-wrapper {
   display: flex;
   gap: 20px;
 }
@@ -30,7 +30,7 @@
   font-size: var(--font-small);
 }
 
-.form-group-split .group-image .image-wrapper {
+.form-group-split .group-image .image-wrapper-content {
   display: flex;
   gap: 10px;
 }
@@ -45,7 +45,7 @@
   justify-content: flex-end;
 }
 
-.form-control .error-message {
+.form-body .error-message {
   font-family: var(--font-semiBold), var(--font-default);
   color: var(--color-warning);
   font-size: var(--font-normal);
