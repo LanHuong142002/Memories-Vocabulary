@@ -125,7 +125,9 @@ const DetailsLayout = () => {
    */
   const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onUpdateProduct(product);
+    if (product) {
+      onUpdateProduct(product);
+    }
   }, []);
 
   /**
