@@ -27,21 +27,21 @@ export interface Context {
 export const ProductContext = createContext<Context>({} as Context);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [param, setParam] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [param, setParam] = useState<string>('');
   const { data: products, error } = useProduct(param);
 
   /**
    * @description function set message error
    */
-  const handleUpdateErrorMessage = useCallback((message: string) => {
+  const handleUpdateErrorMessage = useCallback((message: string): void => {
     setErrorMessage(message);
   }, []);
 
   /**
    * @description get products after search
    */
-  const handleSearchProducts = useCallback((paramSearch: string) => {
+  const handleSearchProducts = useCallback((paramSearch: string): void => {
     setParam(paramSearch);
     mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
   }, []);
@@ -49,7 +49,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description function add new product
    */
-  const handleAddProduct = useCallback(async (product: Product) => {
+  const handleAddProduct = useCallback(async (product: Product): Promise<void> => {
     const response = await postProduct(product);
 
     if (typeof response === 'string') {
@@ -62,7 +62,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description function delete product
    */
-  const handleDeleteProduct = useCallback(async (id: string) => {
+  const handleDeleteProduct = useCallback(async (id: string): Promise<void> => {
     const response = await deleteProduct(id);
 
     if (typeof response === 'string') {
@@ -75,7 +75,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description function update product
    */
-  const handleUpdateProduct = useCallback(async (product: Product) => {
+  const handleUpdateProduct = useCallback(async (product: Product): Promise<void> => {
     const response = await updateProduct(product);
 
     if (typeof response === 'string') {

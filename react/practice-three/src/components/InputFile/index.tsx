@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactElement } from 'react';
 
 // Styles
 import './index.css';
@@ -22,7 +22,7 @@ const InputFile = ({
   variant = 'primary',
   text,
   onChange,
-}: InputFileProps): React.ReactElement => (
+}: InputFileProps): ReactElement => (
   <label
     htmlFor={id}
     className={`input-file-wrapper input-file-${variant}`}

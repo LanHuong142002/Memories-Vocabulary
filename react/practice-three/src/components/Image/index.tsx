@@ -1,4 +1,4 @@
-import { forwardRef, MouseEvent } from 'react';
+import { forwardRef, MouseEvent, ReactElement } from 'react';
 
 // Styles
 import './index.css';
@@ -15,7 +15,7 @@ interface ImageProps {
 const Image = forwardRef<HTMLElement, ImageProps>(function Image(
   { url, isCircle, alt = 'image', size = 'xs', isClickable, onClick },
   ref,
-): React.ReactElement {
+): ReactElement {
   const classes = `image-wrapper image-size-${size} ${isClickable ? 'image-cursor-pointer' : ''}`;
 
   return (

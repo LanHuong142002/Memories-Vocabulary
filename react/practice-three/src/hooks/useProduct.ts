@@ -30,7 +30,7 @@ interface ReturnTypeProductById {
  */
 export const useProduct = (param?: string): ReturnTypeProduct => {
   const { data, error, isLoading } = useSWR(
-    `${URL_API.BASE_URL}${URL_API.PRODUCTS}?_expand=statuses&_expand=types${param}`,
+    `${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`,
     getProductsByParam,
   );
 
@@ -44,7 +44,7 @@ export const useProduct = (param?: string): ReturnTypeProduct => {
 /**
  * @description Custom hook to fetch product data by id.
  *
- * @param {string} param Optional parameter to customize the request URL.
+ * @param {string} id is id of product want to find
  *
  * @returns {Object} An object containing the product data, error, and loading state.
  */

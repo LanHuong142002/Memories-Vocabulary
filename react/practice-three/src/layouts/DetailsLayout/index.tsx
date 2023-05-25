@@ -63,7 +63,7 @@ const DetailsLayout = () => {
    * @param {ChangeEvent} e is event of input or select
    */
   const handleOnChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
       const value = e.target.value;
 
@@ -161,7 +161,7 @@ const DetailsLayout = () => {
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus);
     if (errorType) onUpdateErrorMessage(errorType);
-    if (errorType) onUpdateErrorMessage(errorGetProductById);
+    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById);
 
     if (errorMessage) handleErrorModal(errorMessage);
   }, [errorStatus, errorType, errorMessage, errorGetProductById]);

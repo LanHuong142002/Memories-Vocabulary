@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-// Styles
+import { ReactElement, ReactNode } from 'react';
 
+// Styles
 import './index.css';
 
 // Components
@@ -21,7 +21,7 @@ const NotificationModal = ({
   children,
   title,
   onCancel,
-}: NotificationModalProps): React.ReactElement => (
+}: NotificationModalProps): ReactElement => (
   <Modal url={url} toggleModal={onCancel}>
     <div className='notification-modal'>
       <div className='notification-modal-text'>

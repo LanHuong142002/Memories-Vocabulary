@@ -1,7 +1,7 @@
 import { ProductStatus, ProductType } from '@interfaces';
 
 interface Product {
-  id?: string;
+  id: string;
   image: string;
   name: string;
   status?: string;
