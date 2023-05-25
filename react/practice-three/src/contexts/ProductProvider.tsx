@@ -43,7 +43,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    */
   const handleSearchProducts = useCallback(async (paramSearch: string) => {
     setParam(paramSearch);
-    mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
+    mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
   }, []);
 
   /**
@@ -55,7 +55,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setErrorMessage(response);
     } else {
-      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
+      mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
     }
   }, []);
 
@@ -68,7 +68,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setErrorMessage(response);
     } else {
-      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
+      console.log(2, `${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
+      mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
     }
   }, []);
 
@@ -81,7 +82,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setErrorMessage(response);
     } else {
-      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
+      mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
     }
   }, []);
 
