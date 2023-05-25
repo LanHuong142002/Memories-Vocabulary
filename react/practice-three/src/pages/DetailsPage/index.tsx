@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 // Helpers
 import { ErrorBoundary } from '@helpers';
 
@@ -8,8 +10,10 @@ import { DetailsLayout } from '@layouts';
 import { Button, NotificationModal } from '@components';
 
 const DetailsPage = () => {
+  const navigate = useNavigate();
+
   const handleCancel = () => {
-    console.log('cancel');
+    navigate('/');
   };
 
   return (
@@ -18,10 +22,16 @@ const DetailsPage = () => {
         <NotificationModal
           url='/icons/trash-icon.svg'
           title='Ooops!'
-          description={'Something went wrong.'}
+          description={'Something went wrong. Click close button to redirect to home page'}
           onCancel={handleCancel}
         >
-          <Button label='Close' variant='tertiary' color='warning' size='lg' />
+          <Button
+            label='Close'
+            variant='tertiary'
+            color='warning'
+            size='lg'
+            onClick={handleCancel}
+          />
         </NotificationModal>
       }
     >
