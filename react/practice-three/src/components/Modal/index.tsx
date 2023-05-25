@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // Styles
 import './index.css';
@@ -16,7 +16,7 @@ interface ModalProps {
   toggleModal: () => void;
 }
 
-const Modal = ({ title, url, children, toggleModal }: ModalProps): React.ReactElement => (
+const Modal = ({ title, url, children, toggleModal }: ModalProps): ReactElement => (
   <div className='overlay'>
     <div className='modal-wrapper'>
       <div className='modal-header'>

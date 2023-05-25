@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // Styles
 import './index.css';
@@ -7,7 +7,7 @@ interface TableBodyProps {
   children: ReactNode;
 }
 
-const TableBody = ({ children }: TableBodyProps): React.ReactElement => (
+const TableBody = ({ children }: TableBodyProps): ReactElement => (
   <tbody className='table-body'>{children}</tbody>
 );
 

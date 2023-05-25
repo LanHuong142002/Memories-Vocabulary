@@ -1,5 +1,6 @@
+import { ReactElement, memo } from 'react';
+
 // Styles
-import { memo } from 'react';
 import './index.css';
 
 // Components
@@ -10,7 +11,7 @@ interface IdentityProps extends Pick<ImageProps, 'url' | 'isCircle' | 'alt'> {
 }
 
 const Identity = memo(
-  ({ text, url, isCircle, alt }: IdentityProps): React.ReactElement => (
+  ({ text, url, isCircle, alt }: IdentityProps): ReactElement => (
     <div className='identity-wrapper' data-testid={'identity-wrapper'}>
       <Image url={url} size={isCircle ? 'xs' : 'lg'} isCircle={isCircle} alt={alt} />
       <span>{text}</span>

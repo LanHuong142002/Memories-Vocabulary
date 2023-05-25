@@ -1,4 +1,7 @@
 // Styles
+import { ReactElement } from 'react';
+
+// Styles
 import './index.css';
 
 interface TypographyProps {
@@ -15,7 +18,7 @@ const Typography = ({
   size = 'md',
   color = 'primary',
   weight,
-}: TypographyProps): React.ReactElement => {
+}: TypographyProps): ReactElement => {
   const TagName = tagName;
   const classes = `typography typography-color-${color} typography-size-${size} ${
     weight ? `typography-weight-${weight}` : ''

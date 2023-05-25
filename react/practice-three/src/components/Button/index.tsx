@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, ReactElement } from 'react';
 
 // Styles
 import './index.css';
@@ -23,7 +23,7 @@ const Button = ({
   isDisabled,
   isLoading,
   onClick,
-}: ButtonProps): React.ReactElement => {
+}: ButtonProps): ReactElement => {
   const classes = `btn btn-${variant} btn-color-${color} btn-${size} ${
     isDisabled ? 'btn-disabled' : ''
   } ${isLoading ? 'btn-loading' : ''}`;

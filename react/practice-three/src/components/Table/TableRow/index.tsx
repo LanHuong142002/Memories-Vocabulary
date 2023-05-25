@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // Styles
 import './index.css';
@@ -8,7 +8,7 @@ interface TableRowProps {
   classTableRow?: 'header' | 'message';
 }
 
-const TableRow = ({ children, classTableRow }: TableRowProps): React.ReactElement => (
+const TableRow = ({ children, classTableRow }: TableRowProps): ReactElement => (
   <tr className={`table-row ${classTableRow ? `table-row-${classTableRow}` : ''}`}>{children}</tr>
 );
 

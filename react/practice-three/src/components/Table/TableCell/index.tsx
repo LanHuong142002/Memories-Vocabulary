@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // Styles
 import './index.css';
@@ -9,7 +9,7 @@ interface TableCellProps {
   children?: ReactNode;
 }
 
-const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): React.ReactElement => {
+const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): ReactElement => {
   const TagName = tagName;
 
   return (

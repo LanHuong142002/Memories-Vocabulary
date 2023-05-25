@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactElement } from 'react';
 
 // Styles
 import './index.css';
@@ -21,7 +21,7 @@ const Input = ({
   title,
   type = 'text',
   onChange,
-}: InputProps): React.ReactElement => (
+}: InputProps): ReactElement => (
   <>
     {title ? (
       <div className='text-wrapper'>

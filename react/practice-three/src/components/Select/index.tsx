@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactElement } from 'react';
 
 // Styles
 import './index.css';
@@ -25,7 +25,7 @@ const Select = ({
   title,
   name,
   options,
-}: SelectProps): React.ReactElement => (
+}: SelectProps): ReactElement => (
   <div className={title && 'select-box'} data-testid='select-box'>
     {title && <label className='title-select'>{title}</label>}
     <select className='select-wrapper' name={name} value={valueSelected} onChange={onChange}>
