@@ -271,7 +271,7 @@ const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={!disabledButton()}
+              isDisabled={!!disabledButton()}
             />
           </div>
         </form>

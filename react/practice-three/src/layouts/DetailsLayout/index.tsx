@@ -291,7 +291,7 @@ const DetailsLayout = () => {
                   color='success'
                   label='Save'
                   type='submit'
-                  isDisabled={!disabledButton()}
+                  isDisabled={!!disabledButton()}
                 />
               </div>
             </form>
