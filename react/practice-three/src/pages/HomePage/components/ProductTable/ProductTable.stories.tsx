@@ -115,14 +115,19 @@ const Template: ComponentStory<typeof ProductTable> = () => {
     console.log('edit');
   };
 
+  const handleToggleNotification = () => {
+    console.log('toggle');
+  };
+
   return (
     <ProductTable
       filters={filter}
       products={products}
-      status={listStatus}
+      statuses={listStatus}
       types={listType}
       onSearch={handleSearch}
       onEdit={handleEdit}
+      onToggleNotification={handleToggleNotification}
       onSetProductItem={onSetProductItem}
     />
   );

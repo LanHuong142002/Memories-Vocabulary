@@ -39,10 +39,6 @@ const Template: ComponentStory<typeof ProductModal> = () => {
     console.log('confirm');
   };
 
-  const handleErrorModal = () => {
-    console.log('error modal');
-  };
-
   const handleProductModal = () => {
     console.log('product modal');
   };
@@ -53,7 +49,6 @@ const Template: ComponentStory<typeof ProductModal> = () => {
       statuses={status}
       types={types}
       onConfirm={handleConfirm}
-      onToggleErrorModal={handleErrorModal}
       onToggleProductModal={handleProductModal}
       titleModal='Product information'
     />
