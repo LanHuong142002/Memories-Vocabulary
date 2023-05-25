@@ -60,6 +60,7 @@ export default defineConfig({
       '@contexts': path.resolve(__dirname, 'src/contexts'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@services': path.resolve(__dirname, 'src/services'),
+      '@stores': path.resolve(__dirname, 'src/stores'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@layouts': path.resolve(__dirname, 'src/layouts'),

@@ -1,13 +1,16 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
-// Services
-import { getTypes, getStatuses, deleteProduct, getProductsByParam } from '@services';
+// Contexts
+import { ProductContext } from '@contexts';
+
+// Helpers
+import { generateSearchParam } from '@helpers';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import { useDebounce, useStatus, useType } from '@hooks';
 
 // Interfaces
-import { Product, ProductStatus, ProductType } from '@interfaces';
+import { Product } from '@interfaces';
 
 // Components
 import { NotificationModal, Button } from '@components';
@@ -26,6 +29,17 @@ interface Filter {
 }
 
 const HomeLayout = () => {
+  const {
+    products,
+    onAddProduct,
+    onDeleteProduct,
+    onUpdateProduct,
+    onSearchProducts,
+    onUpdateErrorMessage,
+    errorMessage,
+  } = useContext(ProductContext);
+  const { data: statuses, error: errorStatus } = useStatus();
+  const { data: types, error: errorType } = useType();
   const [openProductModal, setOpenProductModal] = useState<boolean>(false);
   const [openNotificationModal, setOpenNotificationModal] = useState<boolean>(false);
   const [openNewProductModal, setOpenNewProductModal] = useState<boolean>(false);
@@ -36,10 +50,6 @@ const HomeLayout = () => {
     status: false,
     message: '',
   });
-
-  const [statuses, setStatuses] = useState<ProductStatus[]>([]);
-  const [types, setTypes] = useState<ProductType[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -59,58 +69,77 @@ const HomeLayout = () => {
     typesId: '',
     price: 0,
   });
-  const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
+  const debouncedSearchTerm = useDebounce<Filter>(filter, 1000);
 
   /**
    * @description function handle product modal
    */
-  const handleToggleProductModal = () => {
+  const handleToggleProductModal = useCallback((): void => {
     setOpenProductModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function handle error modal
    */
-  const handleToggleErrorModal = (message?: string) => {
+  const handleToggleErrorModal = useCallback((message?: string): void => {
     setOpenErrorModal({
       status: !!message,
       message: message || '',
     });
-  };
+  }, []);
 
   /**
    * @description function handle notification modal
    */
-  const handleToggleNotificationModal = () => {
+  const handleToggleNotificationModal = useCallback((): void => {
     setOpenNotificationModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function handle new product modal
    */
-  const handleToggleNewProductModal = () => {
+  const handleToggleNewProductModal = useCallback((): void => {
     setOpenNewProductModal((prev) => !prev);
-  };
+  }, []);
 
   /**
    * @description function set product to product state
    *
    * @param {Object} item is product item
    */
-  const handleSetProductItem = useCallback((item: Product) => {
+  const handleSetProductItem = useCallback((item: Product): void => {
     setProductItem(item);
   }, []);
 
-  const handleConfirmAddNew = () => {};
+  /**
+   * @description function handle confirm add new product of new product modal
+   *
+   * @param {Object} product is a new product
+   */
+  const handleConfirmAddNew = useCallback((product: Product): void => {
+    const newProduct = {
+      ...product,
+      id: product.id || crypto.randomUUID(),
+    };
 
-  const handleConfirmUpdate = () => {};
+    onAddProduct(newProduct);
+  }, []);
+
+  /**
+   * @description function handle confirm update a product of product modal
+   *
+   * @param {Object} product is a product updated
+   */
+  const handleConfirmUpdate = useCallback((product: Product): void => {
+    onUpdateProduct(product);
+  }, []);
 
   /**
    * @description function get value search when input change value
    *
    * @param {ChangeEvent} e is event of input
    */
-  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
 
     if (name) {
@@ -129,7 +158,7 @@ const HomeLayout = () => {
    *
    * @param {Object} item is data item after call api
    */
-  const handleDataModal = useCallback((item: Product) => {
+  const handleDataModal = useCallback((item: Product): void => {
     handleToggleProductModal();
     handleSetProductItem(item);
   }, []);
@@ -139,67 +168,29 @@ const HomeLayout = () => {
    *
    * @param {String} id is id of product which is selected
    */
-  const handleConfirm = useCallback(
-    async (id: string) => {
-      const product = await deleteProduct(id);
-
-      if (typeof product === 'string') {
-        handleToggleErrorModal(product);
-      } else if (openProductModal) {
-        handleToggleProductModal();
-      } else {
-      }
-    },
-    [openProductModal],
-  );
+  const handleConfirmDelete = useCallback(async (): Promise<void> => {
+    if (productItem && productItem.id) {
+      onDeleteProduct(productItem.id);
+      handleToggleNotificationModal();
+    }
+  }, [productItem]);
 
   /**
    * @description function cancel/ close errors modal
    */
-  const handleCancel = useCallback(() => {
+  const handleCancel = useCallback((): void => {
     handleToggleErrorModal();
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const listTypes = await getTypes();
-      const listStatus = await getStatuses();
-
-      if (typeof listStatus === 'string') {
-        handleToggleErrorModal(listStatus);
-      } else {
-        setTypes(listStatus);
-      }
-
-      if (typeof listTypes === 'string') {
-        handleToggleErrorModal(listTypes);
-      } else {
-        setStatuses(listTypes);
-      }
-    };
-    fetchData();
-  }, []);
+    onSearchProducts(generateSearchParam(debouncedSearchTerm));
+  }, [debouncedSearchTerm, onSearchProducts]);
 
   useEffect(() => {
-    let param = '&';
-    for (const [key, value] of Object.entries(debouncedSearchTerm)) {
-      if (value) {
-        param += `${key}_like=${value}&`;
-      }
-    }
-
-    const fetchData = async () => {
-      const listProducts = await getProductsByParam(param);
-
-      if (typeof listProducts === 'string') {
-        handleToggleErrorModal(listProducts);
-      } else {
-        setProducts(listProducts);
-      }
-    };
-
-    fetchData();
-  }, [debouncedSearchTerm]);
+    if (errorStatus) onUpdateErrorMessage(errorStatus);
+    if (errorType) onUpdateErrorMessage(errorType);
+    if (errorMessage) handleToggleErrorModal(errorMessage);
+  }, [errorStatus, errorType, errorMessage]);
 
   return (
     <main className='main-wrapper'>
@@ -215,9 +206,9 @@ const HomeLayout = () => {
       <div className='main-content'>
         <ProductTable
           filters={filter}
-          products={products}
-          statuses={statuses}
-          types={types}
+          products={products || []}
+          statuses={statuses || []}
+          types={types || []}
           onSearch={handleSearch}
           onEdit={handleDataModal}
           onSetProductItem={handleSetProductItem}
@@ -230,7 +221,6 @@ const HomeLayout = () => {
           statuses={statuses}
           types={types}
           onToggleProductModal={handleToggleNewProductModal}
-          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmAddNew}
         />
       )}
@@ -241,7 +231,6 @@ const HomeLayout = () => {
           statuses={statuses}
           types={types}
           onToggleProductModal={handleToggleProductModal}
-          onToggleErrorModal={handleToggleErrorModal}
           onConfirm={handleConfirmUpdate}
         />
       )}
@@ -259,7 +248,13 @@ const HomeLayout = () => {
             size='lg'
             onClick={handleToggleNotificationModal}
           />
-          <Button label='Delete' variant='tertiary' color='warning' size='lg' />
+          <Button
+            label='Delete'
+            variant='tertiary'
+            color='warning'
+            size='lg'
+            onClick={handleConfirmDelete}
+          />
         </NotificationModal>
       )}
       {openErrorModal.status && (
