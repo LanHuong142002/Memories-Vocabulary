@@ -10,7 +10,7 @@ import { URL_API } from '@constants';
 import { useProduct } from '@hooks';
 
 // Services
-import { deleteProduct, getProductsByParam, postProduct, updateProduct } from '@services';
+import { deleteProduct, postProduct, updateProduct } from '@services';
 
 import { mutate } from 'swr';
 
@@ -28,7 +28,8 @@ export const ProductContext = createContext<Context>({} as Context);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const { data: products, error } = useProduct();
+  const [param, setParam] = useState('');
+  const { data: products, error } = useProduct(param);
 
   /**
    * @description function set message error
@@ -40,14 +41,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description get products after search
    */
-  const handleSearchProducts = useCallback(async (param: string) => {
-    const response = await getProductsByParam(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
-
-    if (typeof response === 'string') {
-      setErrorMessage(response);
-    } else {
-      mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
-    }
+  const handleSearchProducts = useCallback(async (paramSearch: string) => {
+    setParam(paramSearch);
+    mutate(URL_API.PRODUCTS_WITH_STATUS_TYPE);
   }, []);
 
   /**

@@ -10,7 +10,7 @@ import { Product } from '@interfaces';
 /**
  * @description function get all products
  *
- * @param {String} param is endpoint
+ * @param {String} url is endpoint
  *
  * @returns {Array} list products
  */
@@ -25,6 +25,29 @@ const getProductsByParam = async (url: string): Promise<Product[] | string> => {
     }
 
     return products;
+  } catch (error) {
+    return (error as ResponseError).message;
+  }
+};
+
+/**
+ * @description function get product by id
+ *
+ * @param {String} param is endpoint
+ *
+ * @returns {Array} list products
+ */
+const getProductById = async (url: string): Promise<Product | string> => {
+  try {
+    const response = await fetch(url);
+    const product: Product = await response.json();
+
+    if (!response.ok) {
+      const message = customErrorMessages(response);
+      throw new ResponseError(message);
+    }
+
+    return product;
   } catch (error) {
     return (error as ResponseError).message;
   }
@@ -119,4 +142,4 @@ const updateProduct = async (productUpdate: Product): Promise<Product | string> 
   }
 };
 
-export { updateProduct, getProductsByParam, deleteProduct, postProduct };
+export { updateProduct, getProductsByParam, deleteProduct, postProduct, getProductById };

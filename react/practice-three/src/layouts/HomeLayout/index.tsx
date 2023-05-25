@@ -69,7 +69,7 @@ const HomeLayout = () => {
     typesId: '',
     price: 0,
   });
-  const debouncedSearchTerm = useDebounce<Filter>(filter, 500);
+  const debouncedSearchTerm = useDebounce<Filter>(filter, 1000);
 
   /**
    * @description function handle product modal
@@ -132,7 +132,6 @@ const HomeLayout = () => {
    */
   const handleConfirmUpdate = useCallback((product: Product): void => {
     onUpdateProduct(product);
-    handleToggleProductModal();
   }, []);
 
   /**
@@ -184,9 +183,8 @@ const HomeLayout = () => {
   }, []);
 
   useEffect(() => {
-    const param = generateSearchParam(debouncedSearchTerm);
-    onSearchProducts(param);
-  }, [debouncedSearchTerm, filter]);
+    onSearchProducts(generateSearchParam(debouncedSearchTerm));
+  }, [debouncedSearchTerm, onSearchProducts]);
 
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus);
