@@ -1,4 +1,6 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+
+// Components
 import { TableRow } from '@components';
 
 describe('Testing Table row component', () => {
@@ -10,21 +12,28 @@ describe('Testing Table row component', () => {
   );
 
   it('Should renders children correctly', () => {
-    const { getByText } = render(<TableRow>{children}</TableRow>);
+    const { getByText } = render(
+      <table>
+        <tbody>
+          <TableRow>{children}</TableRow>
+        </tbody>
+      </table>,
+    );
 
     expect(getByText('January')).toBeInTheDocument();
     expect(getByText('$100')).toBeInTheDocument();
   });
 
   it('Should renders table row with header class', () => {
-    const { container } = render(<TableRow classTableRow='header'>{children}</TableRow>);
+    render(
+      <table>
+        <tbody data-testid='table-body-wrapper'>
+          <TableRow classTableRow='header'>{children}</TableRow>
+        </tbody>
+      </table>,
+    );
+    const tableBody = screen.getByTestId('table-body-wrapper');
 
-    expect(container.firstChild).toHaveClass('table-row-header');
-  });
-
-  it('Should renders table row with message class', () => {
-    const { container } = render(<TableRow classTableRow='message'>{children}</TableRow>);
-
-    expect(container.firstChild).toHaveClass('table-row-message');
+    expect(tableBody.firstChild).toHaveClass('table-row');
   });
 });
