@@ -68,7 +68,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (typeof response === 'string') {
       setErrorMessage(response);
     } else {
-      console.log(2, `${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
       mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}&`);
     }
   }, []);
