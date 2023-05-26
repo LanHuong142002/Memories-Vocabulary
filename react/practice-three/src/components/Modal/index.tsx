@@ -13,7 +13,7 @@ interface ModalProps {
   children: ReactNode;
   title?: string;
   url?: string;
-  toggleModal: () => void;
+  toggleModal?: () => void;
 }
 
 const Modal = ({ title, url, children, toggleModal }: ModalProps): ReactElement => (

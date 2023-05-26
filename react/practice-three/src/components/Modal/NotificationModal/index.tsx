@@ -10,8 +10,8 @@ interface NotificationModalProps {
   title: string;
   description: string;
   url: string;
-  children: ReactNode;
-  onCancel: () => void;
+  children?: ReactNode;
+  onCancel?: () => void;
 }
 
 const NotificationModal = ({
