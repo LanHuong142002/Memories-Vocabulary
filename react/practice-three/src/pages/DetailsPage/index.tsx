@@ -1,28 +1,80 @@
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
 
-// Helpers
-import { ErrorBoundary } from '@helpers';
+// Interfaces
+import { Product } from '@interfaces';
 
 // Layouts
 import { DetailsLayout } from '@layouts';
 
 // Layouts
-import { Button, NotificationModal } from '@components';
+import { Button, NotificationModal, Typography } from '@components';
+import { DetailsBody } from '@pages';
 
 const DetailsPage = () => {
-  const navigate = useNavigate();
+  const [errorModal, setErrorModal] = useState<{
+    status: boolean;
+    message: string;
+  }>({
+    status: false,
+    message: '',
+  });
+  const [product, setProduct] = useState<Product>({
+    id: '',
+    image: '',
+    name: '',
+    quantity: 0,
+    brandImage: '',
+    brand: '',
+    statusesId: '',
+    typesId: '',
+    price: 0,
+  });
 
-  const handleCancel = () => {
-    navigate('/');
+  /**
+   * @description function set product state
+   *
+   * @param {Object} productItem
+   */
+  const handleProduct = (productItem: Product) => {
+    setProduct(productItem);
   };
 
+  /**
+   * @description function handle error modal
+   */
+  const handleErrorModal = useCallback((message?: string): void => {
+    setErrorModal({
+      status: message ? true : false,
+      message: message || '',
+    });
+  }, []);
+
+  /**
+   * @description function cancel/ close errors modal
+   */
+  const handleCancel = useCallback((): void => {
+    handleErrorModal();
+  }, []);
+
   return (
-    <ErrorBoundary
-      fallback={
+    <>
+      <DetailsLayout
+        detailsTitle={
+          <Typography text={product.name} tagName='h2' color='quaternary' size='lg' weight='bold' />
+        }
+        detailsBody={
+          <DetailsBody
+            product={product}
+            onErrorModal={handleErrorModal}
+            onProduct={handleProduct}
+          />
+        }
+      />
+      {errorModal.status && (
         <NotificationModal
-          url='/icons/trash-icon.svg'
+          url='/icons/error-icon.svg'
           title='Ooops!'
-          description={'Something went wrong. Click close button to redirect to home page'}
+          description={`Something went wrong. ${errorModal.message}`}
           onCancel={handleCancel}
         >
           <Button
@@ -33,10 +85,8 @@ const DetailsPage = () => {
             onClick={handleCancel}
           />
         </NotificationModal>
-      }
-    >
-      <DetailsLayout />
-    </ErrorBoundary>
+      )}
+    </>
   );
 };
 

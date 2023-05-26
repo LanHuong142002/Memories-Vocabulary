@@ -5,3 +5,4 @@ export { default as ProductRow } from './HomePage/components/ProductTable/Produc
 export { default as ActionMenu } from './HomePage/components/ActionMenu';
 export { default as ProductModal } from './HomePage/components/ProductModal';
 export { default as ProductTable } from './HomePage/components/ProductTable';
+export * from './DetailsPage/components/DetailsBody';

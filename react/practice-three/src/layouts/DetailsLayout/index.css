@@ -15,39 +15,3 @@
   justify-content: center;
   gap: 120px;
 }
-
-.details-page .details-body .form-wrapper {
-  width: 430px;
-  gap: 65px;
-}
-
-.details-page .details-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.details-page .details-aside > label {
-  width: 100%;
-}
-
-.details-page .details-aside > .image-wrapper {
-  width: 380px;
-  height: 380px;
-  border-radius: 5px;
-  background-color: var(--background-primary);
-}
-
-.details-page .group-image > .image-wrapper {
-  display: flex;
-  gap: 10px;
-}
-
-.form-cta-details {
-  display: flex;
-  gap: 22px;
-}
-
-.form-cta-details > button {
-  width: 100%;
-}
