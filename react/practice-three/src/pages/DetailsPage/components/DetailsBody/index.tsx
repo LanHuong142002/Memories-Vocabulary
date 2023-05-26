@@ -46,7 +46,13 @@ export const DetailsBody = ({
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
-      const value = e.target.value;
+      let value: number | string;
+
+      if (name === 'quantity' || name === 'price') {
+        value = Number(e.target.value);
+      } else {
+        value = e.target.value;
+      }
 
       if (name) {
         onProduct({
@@ -89,9 +95,9 @@ export const DetailsBody = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>): void => {
+  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>, productItem: Product): void => {
     e.preventDefault();
-    onUpdateProduct(product);
+    onUpdateProduct(productItem);
   }, []);
 
   /**
@@ -189,7 +195,6 @@ export const DetailsBody = ({
               valueSelected={product.statusesId || ''}
               onChange={handleOnChange}
             />
-
             <Select
               title='Types'
               options={types || []}

@@ -59,7 +59,13 @@ export const ProductModal = ({
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
-      const value = e.target.value;
+      let value: number | string;
+
+      if (name === 'quantity' || name === 'price') {
+        value = Number(e.target.value);
+      } else {
+        value = e.target.value;
+      }
 
       if (name) {
         setProduct({
