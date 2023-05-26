@@ -8,7 +8,9 @@ import { HomePage } from '@pages';
 // Styles
 import './styles/main.css';
 
-const DetailsPage = lazy(() => import('../src/pages/DetailsPage'));
+const DetailsPage = lazy(() =>
+  import('./pages/DetailsPage').then((module) => ({ default: module.DetailsPage })),
+);
 
 const App = () => {
   const navigate = useNavigate();
