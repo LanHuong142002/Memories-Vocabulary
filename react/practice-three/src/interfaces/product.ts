@@ -1,15 +1,15 @@
 import { ProductStatus, ProductType } from '@interfaces';
 
 export interface Product {
+  price: number;
+  quantity: number;
   id: string;
   image: string;
   name: string;
-  price: number;
-  quantity: number;
   brandImage: string;
   brand: string;
-  statuses?: ProductStatus;
   statusesId?: string;
-  types?: ProductType;
   typesId?: string;
+  statuses?: ProductStatus;
+  types?: ProductType;
 }
