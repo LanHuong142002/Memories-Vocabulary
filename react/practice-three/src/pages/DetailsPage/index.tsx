@@ -10,7 +10,7 @@ import { DetailsLayout } from '@layouts';
 import { Button, NotificationModal, Typography } from '@components';
 import { DetailsBody } from '@pages';
 
-const DetailsPage = () => {
+export const DetailsPage = () => {
   const [errorModal, setErrorModal] = useState<{
     status: boolean;
     message: string;
@@ -89,5 +89,3 @@ const DetailsPage = () => {
     </>
   );
 };
-
-export default DetailsPage;

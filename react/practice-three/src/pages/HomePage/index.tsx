@@ -2,15 +2,22 @@
 import { Header, HomeLayout } from '@layouts';
 
 // Components
-import { Button, NotificationModal } from '@components';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import ProductModal from './components/ProductModal';
-import { Product } from '@interfaces';
-import { ProductContext } from '@contexts';
-import { useStatus, useType } from '@hooks';
-import { HomeBody } from './components/HomeBody';
 
-const HomePage = () => {
+// Interfaces
+import { Product } from '@interfaces';
+
+// Contexts
+import { ProductContext } from '@contexts';
+
+// Hooks
+import { useStatus, useType } from '@hooks';
+
+// Components
+import { ProductModal, HomeBody } from '@pages';
+import { Button, NotificationModal } from '@components';
+
+export const HomePage = () => {
   const { onAddProduct, onDeleteProduct, onUpdateProduct, onUpdateErrorMessage, errorMessage } =
     useContext(ProductContext);
   const { data: statuses, error: errorStatus } = useStatus();
@@ -221,5 +228,3 @@ const HomePage = () => {
     </>
   );
 };
-
-export default HomePage;

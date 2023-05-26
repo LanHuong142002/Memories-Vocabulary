@@ -1,5 +1,8 @@
 import { ChangeEvent, memo } from 'react';
 
+// Interfaces
+import { Product, ProductStatus, ProductType } from '@interfaces';
+
 // Components
 import {
   Table,
@@ -9,17 +12,11 @@ import {
   TableRow,
   Input,
   Select,
-  SelectItemProps,
   Typography,
 } from '@components';
-
-// Components of pages
 import { ProductRow, ProductRowProps } from '@pages';
 
-// Interfaces
-import { Product } from '@interfaces';
-
-interface Filters {
+export interface Filters {
   name: string;
   statusesId: string;
   typesId: string;
@@ -31,23 +28,23 @@ interface Filters {
 interface ProductTableProps
   extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem' | 'onToggleNotification'> {
   filters: Filters;
-  statuses: SelectItemProps[];
-  types: SelectItemProps[];
+  statuses: ProductStatus[];
+  types: ProductType[];
   products: Product[];
   onSearch: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const ProductTable = ({
-  filters,
-  statuses,
-  types,
-  products,
-  onSearch,
-  onEdit,
-  onSetProductItem,
-  onToggleNotification,
-}: ProductTableProps): React.ReactElement => {
-  return (
+export const ProductTable = memo(
+  ({
+    filters,
+    statuses,
+    types,
+    products,
+    onSearch,
+    onEdit,
+    onSetProductItem,
+    onToggleNotification,
+  }: ProductTableProps): React.ReactElement => (
     <Table>
       <TableHeader>
         <TableRow classTableRow='header'>
@@ -126,8 +123,5 @@ const ProductTable = ({
         )}
       </TableBody>
     </Table>
-  );
-};
-
-export default memo(ProductTable);
-export type { Filters };
+  ),
+);
