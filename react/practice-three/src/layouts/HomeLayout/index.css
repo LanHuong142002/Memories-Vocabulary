@@ -1,13 +1,13 @@
-.main-wrapper {
+.home-wrapper {
   padding-bottom: 40px;
 }
 
-.main-wrapper .main-header {
+.home-wrapper .home-header {
   display: flex;
   justify-content: flex-end;
   padding-bottom: 20px;
 }
 
-.main-wrapper {
+.home-wrapper {
   padding-bottom: 40px;
 }

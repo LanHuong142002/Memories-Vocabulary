@@ -1,3 +1,3 @@
-export { default as Header } from './Header';
-export { default as HomeLayout } from './HomeLayout';
-export { default as DetailsLayout } from './DetailsLayout';
+export * from './Header';
+export * from './HomeLayout';
+export * from './DetailsLayout';
