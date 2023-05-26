@@ -14,9 +14,9 @@ interface Error {
 }
 
 interface ReturnType {
-  data: ProductStatus[] | undefined;
-  error: Error | undefined;
   isLoading: boolean;
+  error: Error | undefined;
+  data: ProductStatus[] | undefined;
 }
 
 export const useStatus = (): ReturnType => {
