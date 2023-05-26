@@ -3,7 +3,7 @@ import { forwardRef, MouseEvent, ReactElement } from 'react';
 // Styles
 import './index.css';
 
-interface ImageProps {
+export interface ImageProps {
   url: string;
   alt?: string;
   size?: 'xxxs' | 'xxs' | 'xs' | 's' | 'md' | 'lg' | 'xl' | 'xxl';
@@ -12,7 +12,7 @@ interface ImageProps {
   onClick?: (e: MouseEvent) => void;
 }
 
-const Image = forwardRef<HTMLElement, ImageProps>(function Image(
+export const Image = forwardRef<HTMLElement, ImageProps>(function Image(
   { url, isCircle, alt = 'image', size = 'xs', isClickable, onClick },
   ref,
 ): ReactElement {
@@ -24,6 +24,3 @@ const Image = forwardRef<HTMLElement, ImageProps>(function Image(
     </figure>
   );
 });
-
-export { Image };
-export type { ImageProps };

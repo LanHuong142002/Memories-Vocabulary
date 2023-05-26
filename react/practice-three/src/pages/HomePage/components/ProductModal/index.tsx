@@ -27,7 +27,7 @@ interface ModalProps {
   onConfirm: (product: Product) => void;
 }
 
-const ProductModal = ({
+export const ProductModal = ({
   titleModal,
   productItem,
   statuses,
@@ -128,8 +128,8 @@ const ProductModal = ({
     );
   };
 
-  return useMemo(() => {
-    return (
+  return useMemo(
+    () => (
       <Modal title={titleModal} toggleModal={onToggleProductModal}>
         <form className='form-wrapper' onSubmit={handleOnConfirm}>
           <div className='form-body'>
@@ -278,8 +278,7 @@ const ProductModal = ({
           </div>
         </form>
       </Modal>
-    );
-  }, [debouncedProduct, product, statuses, types]);
+    ),
+    [debouncedProduct, product, statuses, types],
+  );
 };
-
-export default ProductModal;

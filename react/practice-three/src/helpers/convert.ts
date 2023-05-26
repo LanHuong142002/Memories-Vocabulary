@@ -7,7 +7,7 @@ import { MILLION, THOUSAND } from '@constants';
  *
  * @returns {Promise} a promise with result is a url base 64 or an error
  */
-const convertBase64 = (file: File): Promise<string | null> => {
+export const convertBase64 = (file: File): Promise<string | null> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -30,7 +30,7 @@ const convertBase64 = (file: File): Promise<string | null> => {
  *
  * @returns a string with abbreviation suffixes
  */
-const formatPrice = (value: number): string => {
+export const formatPrice = (value: number): string => {
   switch (true) {
     case value >= THOUSAND && value < MILLION:
       return `${value / THOUSAND}K`;
@@ -48,7 +48,7 @@ const formatPrice = (value: number): string => {
  *
  * @returns {string} A string representing the complete URL of the image.
  */
-const loadImage = (src: string): string => {
+export const loadImage = (src: string): string => {
   return `${process.env.VITE_ASSETS_URL}${src}`;
 };
 
@@ -59,7 +59,7 @@ const loadImage = (src: string): string => {
  *
  * @returns {string}
  */
-const generateSearchParam = <T extends object>(values: T): string => {
+export const generateSearchParam = <T extends object>(values: T): string => {
   let param = '&';
   for (const [key, value] of Object.entries(values)) {
     if (value) {
@@ -69,5 +69,3 @@ const generateSearchParam = <T extends object>(values: T): string => {
 
   return param;
 };
-
-export { convertBase64, formatPrice, loadImage, generateSearchParam };

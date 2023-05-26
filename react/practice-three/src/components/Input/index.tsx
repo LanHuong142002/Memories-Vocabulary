@@ -3,7 +3,7 @@ import { ChangeEvent, ReactElement } from 'react';
 // Styles
 import './index.css';
 
-interface InputProps {
+export interface InputProps {
   name: string;
   value: string;
   variant?: 'default' | 'primary';
@@ -13,7 +13,7 @@ interface InputProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({
+export const Input = ({
   name,
   value,
   placeholder,
@@ -47,6 +47,3 @@ const Input = ({
     )}
   </>
 );
-
-export { Input };
-export type { InputProps };
