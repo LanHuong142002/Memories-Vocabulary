@@ -9,15 +9,19 @@ import { getProductById, getProductsByParam } from '@services';
 // Interfaces
 import { Product } from '@interfaces';
 
+interface Error {
+  message: string;
+}
+
 interface ReturnTypeProduct {
-  data: Product[];
-  error: string;
+  data: Product[] | undefined;
+  error: Error | undefined;
   isLoading: boolean;
 }
 
 interface ReturnTypeProductById {
-  data: Product;
-  error: string;
+  data: Product | undefined;
+  error: Error | undefined;
   isLoading: boolean;
 }
 
@@ -29,13 +33,13 @@ interface ReturnTypeProductById {
  * @returns {Object} An object containing the product data, error, and loading state.
  */
 export const useProduct = (param?: string): ReturnTypeProduct => {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<Product[], Error | undefined>(
     `${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`,
     getProductsByParam,
   );
 
   return {
-    data: data as Product[],
+    data,
     error,
     isLoading,
   };
@@ -49,13 +53,13 @@ export const useProduct = (param?: string): ReturnTypeProduct => {
  * @returns {Object} An object containing the product data, error, and loading state.
  */
 export const useProductById = (id: string): ReturnTypeProductById => {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<Product, Error | undefined>(
     `${URL_API.BASE_URL}${URL_API.PRODUCTS}/${id}`,
     getProductById,
   );
 
   return {
-    data: data as Product,
+    data,
     error,
     isLoading,
   };

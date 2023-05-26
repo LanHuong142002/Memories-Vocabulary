@@ -9,17 +9,24 @@ import { getTypes } from '@services';
 // Interfaces
 import { ProductType } from '@interfaces';
 
+interface Error {
+  message: string;
+}
+
 interface ReturnType {
-  data: ProductType[];
-  error: string;
+  data: ProductType[] | undefined;
+  error: Error | undefined;
   isLoading: boolean;
 }
 
 export const useType = (): ReturnType => {
-  const { data, error, isLoading } = useSWR(`${URL_API.BASE_URL}${URL_API.TYPES}`, getTypes);
+  const { data, error, isLoading } = useSWR<ProductType[], Error | undefined>(
+    `${URL_API.BASE_URL}${URL_API.TYPES}`,
+    getTypes,
+  );
 
   return {
-    data: data as ProductType[],
+    data,
     error,
     isLoading,
   };
