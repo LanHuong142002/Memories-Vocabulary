@@ -3,11 +3,11 @@ import { MESSAGE_ERRORS, REGEX } from '@constants';
 /**
  * @description function check the value is empty or not
  *
- * @param {string | number} value is value of input
+ * @param {string} value is value of input
  *
  * @returns {boolean}
  */
-const isEmpty = (value: string | number): boolean => !value;
+const isEmpty = (value: string): boolean => !value;
 
 /**
  * @description function check the value match with regex or not
