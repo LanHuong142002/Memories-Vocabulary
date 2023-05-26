@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { ReactElement, forwardRef } from 'react';
 
 // Styles
 import './index.css';
@@ -14,7 +14,7 @@ interface ActionMenuProps {
 export const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMenu(
   { onDelete, onEdit },
   ref,
-): React.ReactElement {
+): ReactElement {
   return (
     <div className='action-menu-wrapper' ref={ref}>
       <Button label='Edit' color='default' type='button' onClick={onEdit} variant='primary' />
