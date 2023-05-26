@@ -11,7 +11,9 @@ import { Product } from '@interfaces';
 import { TableCell, TableRow, Identity, Image, Label, Typography } from '@components';
 import { ActionMenu } from '@pages';
 
-export interface ProductRowProps extends Product {
+export interface ProductRowProps extends Omit<Product, 'statuses' | 'types'> {
+  status: string;
+  type: string;
   onEdit: (item: Product) => void;
   onSetProductItem: (item: Product) => void;
   onToggleNotification: () => void;
@@ -60,17 +62,15 @@ export const ProductRow = memo(
         id,
         image,
         name,
-        type,
-        typesId,
         quantity,
-        status,
-        statusesId,
-        brandImage,
         brand,
+        brandImage,
         price,
+        typesId,
+        statusesId,
       });
       setMenuPopup(false);
-    }, [id, image, name, type, typesId, quantity, status, statusesId, brandImage, brand, price]);
+    }, [id, image, name, typesId, quantity, statusesId, brandImage, brand, price]);
 
     /**
      * @description function show confirm and set id for confirm popup
@@ -81,10 +81,8 @@ export const ProductRow = memo(
         id,
         image,
         name,
-        type,
         typesId,
         quantity,
-        status,
         statusesId,
         brandImage,
         brand,
