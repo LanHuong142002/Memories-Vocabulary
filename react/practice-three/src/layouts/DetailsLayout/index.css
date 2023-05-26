@@ -9,9 +9,3 @@
   width: 935px;
   padding-bottom: 20px;
 }
-
-.details-page .details-body {
-  display: flex;
-  justify-content: center;
-  gap: 120px;
-}
