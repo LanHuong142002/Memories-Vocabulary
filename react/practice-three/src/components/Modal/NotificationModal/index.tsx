@@ -7,7 +7,6 @@ import './index.css';
 import { Modal } from '@components';
 
 interface NotificationModalProps {
-  id?: string;
   title: string;
   description: string;
   url: string;

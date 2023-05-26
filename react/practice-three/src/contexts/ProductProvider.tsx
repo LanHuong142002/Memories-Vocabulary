@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { mutate } from 'swr';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -11,8 +12,6 @@ import { useProduct } from '@hooks';
 
 // Services
 import { deleteProduct, postProduct, updateProduct } from '@services';
-
-import { mutate } from 'swr';
 
 export interface Context {
   products: Product[];
