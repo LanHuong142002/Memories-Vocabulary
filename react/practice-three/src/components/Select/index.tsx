@@ -34,7 +34,8 @@ export const Select = ({
           All
         </option>
       )}
-      {options.length &&
+      {Array.isArray(options) &&
+        options.length &&
         options.map(({ id, name }) => (
           <option className='select-item' value={id} key={id}>
             {name}

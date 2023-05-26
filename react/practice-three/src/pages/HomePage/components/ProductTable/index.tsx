@@ -54,7 +54,7 @@ export const ProductTable = memo(
           <TableCell title='Status' tagName='th'>
             <Select
               name='statusesId'
-              options={statuses}
+              options={statuses || []}
               optionAll={true}
               valueSelected={filters.statusesId}
               onChange={onSearch}
@@ -63,7 +63,7 @@ export const ProductTable = memo(
           <TableCell title='Type' tagName='th'>
             <Select
               name='typesId'
-              options={types}
+              options={types || []}
               optionAll={true}
               valueSelected={filters.typesId}
               onChange={onSearch}
@@ -94,7 +94,7 @@ export const ProductTable = memo(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.length > 0 ? (
+        {Array.isArray(products) && products.length ? (
           products.map((item) => (
             <ProductRow
               key={item.id}
