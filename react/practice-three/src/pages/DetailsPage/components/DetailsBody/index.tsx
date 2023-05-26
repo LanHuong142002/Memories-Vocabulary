@@ -1,4 +1,12 @@
-import { ChangeEvent, FormEvent, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // Interfaces
@@ -27,7 +35,7 @@ export const DetailsBody = ({
   onErrorModal: (errorMessage: string) => void;
   onProduct: (productItem: Product) => void;
   product: Product;
-}) => {
+}): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { errorMessage, onUpdateErrorMessage, onUpdateProduct } = useContext(ProductContext);

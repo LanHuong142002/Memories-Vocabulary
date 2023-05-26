@@ -9,7 +9,7 @@ export const HomeLayout = ({
 }: {
   homeBody: ReactElement;
   homeHeader: ReactElement;
-}) => (
+}): ReactElement => (
   <main className='home-wrapper'>
     <div className='home-header'>{homeHeader}</div>
     <div className='home-body'>{homeBody}</div>

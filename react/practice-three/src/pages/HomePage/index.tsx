@@ -2,7 +2,7 @@
 import { Header, HomeLayout } from '@layouts';
 
 // Components
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useContext, useEffect, useState } from 'react';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -17,7 +17,7 @@ import { useStatus, useType } from '@hooks';
 import { ProductModal, HomeBody } from '@pages';
 import { Button, NotificationModal } from '@components';
 
-export const HomePage = () => {
+export const HomePage = (): ReactElement => {
   const { onAddProduct, onDeleteProduct, onUpdateProduct, onUpdateErrorMessage, errorMessage } =
     useContext(ProductContext);
   const { data: statuses, error: errorStatus } = useStatus();

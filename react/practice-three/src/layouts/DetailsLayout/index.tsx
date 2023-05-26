@@ -9,7 +9,7 @@ export const DetailsLayout = ({
 }: {
   detailsTitle: ReactElement;
   detailsBody: ReactElement;
-}) => (
+}): ReactElement => (
   <main className='details-page'>
     <div className='details-title'>{detailsTitle}</div>
     <div className='details-body'>{detailsBody}</div>

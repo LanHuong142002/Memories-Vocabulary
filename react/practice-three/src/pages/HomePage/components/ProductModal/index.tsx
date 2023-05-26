@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, ReactElement, useCallback, useMemo, useState } from 'react';
 
 // Constants
 import { MOCK_PRODUCT_DATA } from '@constants';
@@ -34,7 +34,7 @@ export const ProductModal = ({
   types,
   onToggleProductModal,
   onConfirm,
-}: ModalProps): React.ReactElement => {
+}: ModalProps): ReactElement => {
   const [product, setProduct] = useState<Product>(
     productItem || {
       id: '',

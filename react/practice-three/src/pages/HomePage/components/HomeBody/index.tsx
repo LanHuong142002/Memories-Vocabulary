@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, ReactElement, useCallback, useContext, useEffect, useState } from 'react';
 
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
@@ -38,7 +38,7 @@ export const HomeBody = ({
   onDataModal,
   onProductItem,
   onToggleNotificationModal,
-}: HomeBodyProps) => {
+}: HomeBodyProps): ReactElement => {
   const { products, onSearchProducts } = useContext(ProductContext);
   const [filter, setFilter] = useState<Filter>({
     name: '',

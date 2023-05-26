@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from 'react';
+import { ChangeEvent, ReactElement, memo } from 'react';
 
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
@@ -44,7 +44,7 @@ export const ProductTable = memo(
     onEdit,
     onSetProductItem,
     onToggleNotification,
-  }: ProductTableProps): React.ReactElement => (
+  }: ProductTableProps): ReactElement => (
     <Table>
       <TableHeader>
         <TableRow classTableRow='header'>

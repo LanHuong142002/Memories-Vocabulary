@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -10,7 +10,7 @@ import { DetailsLayout } from '@layouts';
 import { Button, NotificationModal, Typography } from '@components';
 import { DetailsBody } from '@pages';
 
-export const DetailsPage = () => {
+export const DetailsPage = (): ReactElement => {
   const [errorModal, setErrorModal] = useState<{
     status: boolean;
     message: string;
