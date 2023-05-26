@@ -14,20 +14,17 @@ import { Product } from '@interfaces';
  *
  * @returns {Array} list products
  */
-const getProductsByParam = async (url: string): Promise<Product[] | string> => {
-  try {
-    const response = await fetch(url);
-    const products: Product[] = await response.json();
+const getProductsByParam = async (url: string): Promise<Product[]> => {
+  const response = await fetch(url);
+  const products: Product[] = await response.json();
 
-    if (!response.ok) {
-      const message = customErrorMessages(response);
-      throw new ResponseError(message);
-    }
+  if (!response.ok) {
+    const message = customErrorMessages(response);
 
-    return products;
-  } catch (error) {
-    return (error as ResponseError).message;
+    throw new ResponseError(message);
   }
+
+  return products;
 };
 
 /**
@@ -37,20 +34,16 @@ const getProductsByParam = async (url: string): Promise<Product[] | string> => {
  *
  * @returns {Array} list products
  */
-const getProductById = async (url: string): Promise<Product | string> => {
-  try {
-    const response = await fetch(url);
-    const product: Product = await response.json();
+const getProductById = async (url: string): Promise<Product> => {
+  const response = await fetch(url);
+  const product: Product = await response.json();
 
-    if (!response.ok) {
-      const message = customErrorMessages(response);
-      throw new ResponseError(message);
-    }
-
-    return product;
-  } catch (error) {
-    return (error as ResponseError).message;
+  if (!response.ok) {
+    const message = customErrorMessages(response);
+    throw new ResponseError(message);
   }
+
+  return product;
 };
 
 /**

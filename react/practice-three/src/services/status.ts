@@ -12,19 +12,15 @@ import { ProductStatus } from '@interfaces';
  *
  * @returns {Array} list statuses
  */
-const getStatuses = async (): Promise<ProductStatus[] | string> => {
-  try {
-    const response = await fetch(`${URL_API.BASE_URL}${URL_API.STATUSES}`);
-    const statuses: ProductStatus[] = await response.json();
+const getStatuses = async (): Promise<ProductStatus[]> => {
+  const response = await fetch(`${URL_API.BASE_URL}${URL_API.STATUSES}`);
+  const statuses: ProductStatus[] = await response.json();
 
-    if (!response.ok) {
-      const message = customErrorMessages(response);
-      throw new ResponseError(message);
-    }
-    return statuses;
-  } catch (error) {
-    return (error as ResponseError).message;
+  if (!response.ok) {
+    const message = customErrorMessages(response);
+    throw new ResponseError(message);
   }
+  return statuses;
 };
 
 export { getStatuses };
