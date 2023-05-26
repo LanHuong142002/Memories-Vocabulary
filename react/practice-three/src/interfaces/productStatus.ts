@@ -1,6 +1,4 @@
-interface ProductStatus {
+export interface ProductStatus {
   id: string;
   name: string;
 }
-
-export default ProductStatus;

@@ -7,8 +7,6 @@ interface TableProps {
   children: ReactNode;
 }
 
-const Table = ({ children }: TableProps): ReactElement => (
+export const Table = ({ children }: TableProps): ReactElement => (
   <table className='table-wrapper'>{children}</table>
 );
-
-export default Table;

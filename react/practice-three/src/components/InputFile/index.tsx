@@ -14,7 +14,7 @@ interface InputFileProps extends Pick<ImageProps, 'url' | 'size'> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputFile = ({
+export const InputFile = ({
   name,
   id,
   url,
@@ -35,5 +35,3 @@ const InputFile = ({
     </div>
   </label>
 );
-
-export default InputFile;

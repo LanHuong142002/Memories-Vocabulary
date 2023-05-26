@@ -3,7 +3,7 @@ import { MouseEvent, ReactElement } from 'react';
 // Styles
 import './index.css';
 
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -14,7 +14,7 @@ interface ButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button = ({
+export const Button = ({
   label,
   variant = 'primary',
   size = 'sm',
@@ -35,6 +35,3 @@ const Button = ({
     </button>
   );
 };
-
-export { Button };
-export type { ButtonProps };

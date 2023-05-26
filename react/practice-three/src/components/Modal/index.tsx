@@ -16,7 +16,7 @@ interface ModalProps {
   toggleModal?: () => void;
 }
 
-const Modal = ({ title, url, children, toggleModal }: ModalProps): ReactElement => (
+export const Modal = ({ title, url, children, toggleModal }: ModalProps): ReactElement => (
   <div className='overlay'>
     <div className='modal-wrapper'>
       <div className='modal-header'>
@@ -36,5 +36,3 @@ const Modal = ({ title, url, children, toggleModal }: ModalProps): ReactElement 
     </div>
   </div>
 );
-
-export default Modal;

@@ -9,7 +9,7 @@ interface TableCellProps {
   children?: ReactNode;
 }
 
-const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): ReactElement => {
+export const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): ReactElement => {
   const TagName = tagName;
 
   return (
@@ -19,5 +19,3 @@ const TableCell = ({ children, title, tagName = 'td' }: TableCellProps): ReactEl
     </TagName>
   );
 };
-
-export default TableCell;
