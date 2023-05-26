@@ -5,6 +5,7 @@ export * from './Input';
 export * from './Button';
 export * from './Typography';
 export * from './Select';
+export * from './ErrorBoundary';
 export { default as InputFile } from './InputFile';
 export { default as Modal } from './Modal';
 export { default as Table } from './Table';

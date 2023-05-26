@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { ErrorBoundary } from '@helpers';
+import { ErrorBoundary } from '@components';
 
 describe('Testing ErrorBoundary class', () => {
   it('Should render children when there is no error', () => {
