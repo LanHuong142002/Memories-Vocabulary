@@ -4,24 +4,24 @@ import { MouseEvent, ReactElement } from 'react';
 import './index.css';
 
 export interface ButtonProps {
+  isDisabled?: boolean;
+  isLoading?: boolean;
   label: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   type?: 'button' | 'submit' | 'reset';
   color?: 'success' | 'warning' | 'default';
-  isDisabled?: boolean;
-  isLoading?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const Button = ({
+  isDisabled,
+  isLoading,
   label,
   variant = 'primary',
   size = 'sm',
   color = 'default',
   type = 'button',
-  isDisabled,
-  isLoading,
   onClick,
 }: ButtonProps): ReactElement => {
   const classes = `btn btn-${variant} btn-color-${color} btn-${size} ${

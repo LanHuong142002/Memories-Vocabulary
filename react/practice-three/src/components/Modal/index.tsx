@@ -10,9 +10,9 @@ import { Image } from '@components';
 import { loadImage } from '@helpers';
 
 interface ModalProps {
-  children: ReactNode;
   title?: string;
   url?: string;
+  children: ReactNode;
   toggleModal?: () => void;
 }
 

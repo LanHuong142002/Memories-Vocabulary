@@ -28,13 +28,13 @@ import { Button, Image, Input, InputFile, Select } from '@components';
 import './index.css';
 
 export const DetailsBody = ({
-  onErrorModal,
   product,
+  onErrorModal,
   onProduct,
 }: {
+  product: Product;
   onErrorModal: (errorMessage: string) => void;
   onProduct: (productItem: Product) => void;
-  product: Product;
 }): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();

@@ -5,16 +5,16 @@ import { ReactElement } from 'react';
 import './index.css';
 
 export interface TypographyProps {
-  tagName?: 'h1' | 'h2' | 'h3' | 'p';
   text: string;
+  tagName?: 'h1' | 'h2' | 'h3' | 'p';
   size?: 'xs' | 's' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'quaternary';
   weight?: 'regular' | 'bold' | 'semiBold';
 }
 
 export const Typography = ({
-  tagName = 'p',
   text,
+  tagName = 'p',
   size = 'md',
   color = 'primary',
   weight,
