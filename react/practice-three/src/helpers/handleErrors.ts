@@ -9,7 +9,7 @@ import { STATUS_CODE } from '@constants';
  *
  * @returns {Object}
  */
-const customErrorMessages = (response: Response): string => {
+export const customErrorMessages = (response: Response): string => {
   switch (response.status) {
     case STATUS_CODE.BAD_REQUEST:
       return `${response.status} Bad Request`;
@@ -27,5 +27,3 @@ const customErrorMessages = (response: Response): string => {
       return `${response.status} Fail to fetch`;
   }
 };
-
-export { customErrorMessages };

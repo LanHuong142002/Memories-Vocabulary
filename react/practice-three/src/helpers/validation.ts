@@ -7,7 +7,7 @@ import { MESSAGE_ERRORS, REGEX } from '@constants';
  *
  * @returns {boolean}
  */
-const isEmpty = (value: string | number): boolean => !value;
+export const isEmpty = (value: string | number): boolean => !value;
 
 /**
  * @description function check the value match with regex or not
@@ -17,7 +17,7 @@ const isEmpty = (value: string | number): boolean => !value;
  *
  * @returns {boolean}
  */
-const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value);
+export const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value);
 
 /**
  * @description function check the number is a positive number or not
@@ -26,7 +26,7 @@ const isMatchRegex = (regex: RegExp, value: string): boolean => regex.test(value
  *
  * @returns {boolean}
  */
-const isPositiveNumber = (value: number): boolean => value >= 0;
+export const isPositiveNumber = (value: number): boolean => value >= 0;
 
 /**
  * @description function validate number filed
@@ -36,7 +36,7 @@ const isPositiveNumber = (value: number): boolean => value >= 0;
  *
  * @returns {string} return message error or empty string
  */
-const validateNumberField = (value: number, key?: string): string => {
+export const validateNumberField = (value: number, key?: string): string => {
   switch (true) {
     // case check if the value is not an integer number
     case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
@@ -56,7 +56,7 @@ const validateNumberField = (value: number, key?: string): string => {
  *
  * @returns {string} return message error or empty string
  */
-const validateStringField = (value: string): string => {
+export const validateStringField = (value: string): string => {
   switch (true) {
     case isEmpty(value):
       return MESSAGE_ERRORS.EMPTY_FIELD;
@@ -66,5 +66,3 @@ const validateStringField = (value: string): string => {
       return '';
   }
 };
-
-export { isEmpty, isPositiveNumber, isMatchRegex, validateStringField, validateNumberField };

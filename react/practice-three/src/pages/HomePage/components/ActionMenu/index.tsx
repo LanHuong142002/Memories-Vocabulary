@@ -11,7 +11,7 @@ interface ActionMenuProps {
   onDelete: () => void;
 }
 
-const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMenu(
+export const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMenu(
   { onDelete, onEdit },
   ref,
 ): React.ReactElement {
@@ -22,5 +22,3 @@ const ActionMenu = forwardRef<HTMLDivElement, ActionMenuProps>(function ActionMe
     </div>
   );
 });
-
-export default ActionMenu;

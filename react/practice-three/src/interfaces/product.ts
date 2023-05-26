@@ -1,6 +1,6 @@
 import { ProductStatus, ProductType } from '@interfaces';
 
-interface Product {
+export interface Product {
   id: string;
   image: string;
   name: string;
@@ -15,5 +15,3 @@ interface Product {
   statuses?: ProductStatus;
   types?: ProductType;
 }
-
-export default Product;

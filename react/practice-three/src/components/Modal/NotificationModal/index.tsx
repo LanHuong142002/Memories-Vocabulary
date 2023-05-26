@@ -14,7 +14,7 @@ interface NotificationModalProps {
   onCancel?: () => void;
 }
 
-const NotificationModal = ({
+export const NotificationModal = ({
   url,
   description,
   children,
@@ -31,5 +31,3 @@ const NotificationModal = ({
     </div>
   </Modal>
 );
-
-export default NotificationModal;
