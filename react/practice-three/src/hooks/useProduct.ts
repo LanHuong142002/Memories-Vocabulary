@@ -15,14 +15,14 @@ interface Error {
 
 interface ReturnTypeProduct {
   isLoading: boolean;
-  error: Error | undefined;
-  data: Product[] | undefined;
+  error?: Error;
+  data?: Product[];
 }
 
 interface ReturnTypeProductById {
   isLoading: boolean;
-  error: Error | undefined;
-  data: Product | undefined;
+  error?: Error;
+  data?: Product;
 }
 
 /**
