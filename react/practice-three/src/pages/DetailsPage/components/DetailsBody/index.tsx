@@ -97,9 +97,9 @@ export const DetailsBody = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>): void => {
+  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>, productItem: Product): void => {
     e.preventDefault();
-    onUpdateProduct(product);
+    onUpdateProduct(productItem);
   }, []);
 
   /**
@@ -140,7 +140,7 @@ export const DetailsBody = ({
 
   return (
     <>
-      <form className='form-wrapper' onSubmit={handleOnSave}>
+      <form className='form-wrapper' onSubmit={(e) => handleOnSave(e, product)}>
         <div className='form-body'>
           <div className='form-group'>
             <div className='form-control'>

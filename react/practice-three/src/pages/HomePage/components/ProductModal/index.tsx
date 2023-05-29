@@ -161,6 +161,7 @@ export const ProductModal = ({
                   variant='primary'
                   value={product.name}
                   onChange={handleOnChange}
+                  placeholder='Enter name...'
                 />
                 <span className='error-message'>
                   {shouldValidateForm && validateStringField(debouncedProduct.name)}
@@ -177,6 +178,7 @@ export const ProductModal = ({
                   type='number'
                   value={String(product.quantity)}
                   onChange={handleOnChange}
+                  placeholder='Enter quantity...'
                 />
                 <span className='error-message'>
                   {shouldValidateForm &&
