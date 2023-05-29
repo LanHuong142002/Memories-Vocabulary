@@ -7,10 +7,8 @@ interface TableHeaderProps {
   children: ReactNode;
 }
 
-const TableHeader = ({ children }: TableHeaderProps): ReactElement => (
+export const TableHeader = ({ children }: TableHeaderProps): ReactElement => (
   <thead className='table-header' data-testid='table-header'>
     {children}
   </thead>
 );
-
-export default TableHeader;

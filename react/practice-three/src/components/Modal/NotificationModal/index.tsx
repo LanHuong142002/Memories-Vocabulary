@@ -7,15 +7,14 @@ import './index.css';
 import { Modal } from '@components';
 
 interface NotificationModalProps {
-  id?: string;
   title: string;
   description: string;
   url: string;
-  children: ReactNode;
-  onCancel: () => void;
+  children?: ReactNode;
+  onCancel?: () => void;
 }
 
-const NotificationModal = ({
+export const NotificationModal = ({
   url,
   description,
   children,
@@ -32,5 +31,3 @@ const NotificationModal = ({
     </div>
   </Modal>
 );
-
-export default NotificationModal;

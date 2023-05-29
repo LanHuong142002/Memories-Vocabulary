@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { mutate } from 'swr';
 
 // Interfaces
 import { Product } from '@interfaces';
@@ -12,9 +13,7 @@ import { useProduct } from '@hooks';
 // Services
 import { deleteProduct, postProduct, updateProduct } from '@services';
 
-import { mutate } from 'swr';
-
-export interface Context {
+export interface ProductContext {
   products: Product[];
   errorMessage: string;
   onAddProduct: (product: Product) => void;
@@ -24,7 +23,7 @@ export interface Context {
   onUpdateErrorMessage: (message: string) => void;
 }
 
-export const ProductContext = createContext<Context>({} as Context);
+export const ProductContext = createContext<ProductContext>({} as ProductContext);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');

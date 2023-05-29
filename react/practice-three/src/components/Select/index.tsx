@@ -18,7 +18,7 @@ interface SelectProps {
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select = ({
+export const Select = ({
   valueSelected,
   optionAll,
   onChange,
@@ -43,6 +43,3 @@ const Select = ({
     </select>
   </div>
 );
-
-export { Select };
-export type { SelectProps, SelectItemProps };

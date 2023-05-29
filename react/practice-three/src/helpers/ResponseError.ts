@@ -1,7 +1,5 @@
-class ResponseError extends Error {
+export class ResponseError extends Error {
   constructor(message: string) {
     super(message);
   }
 }
-
-export default ResponseError;

@@ -10,7 +10,7 @@ interface IdentityProps extends Pick<ImageProps, 'url' | 'isCircle' | 'alt'> {
   text: string;
 }
 
-const Identity = memo(
+export const Identity = memo(
   ({ text, url, isCircle, alt }: IdentityProps): ReactElement => (
     <div className='identity-wrapper' data-testid={'identity-wrapper'}>
       <Image url={url} size={isCircle ? 'xs' : 'lg'} isCircle={isCircle} alt={alt} />
@@ -18,5 +18,3 @@ const Identity = memo(
     </div>
   ),
 );
-
-export { Identity };
