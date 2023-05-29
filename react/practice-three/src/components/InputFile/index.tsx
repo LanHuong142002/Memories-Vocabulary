@@ -17,10 +17,10 @@ interface InputFileProps extends Pick<ImageProps, 'url' | 'size'> {
 export const InputFile = ({
   name,
   id,
+  text,
   url,
   size,
   variant = 'primary',
-  text,
   onChange,
 }: InputFileProps): ReactElement => (
   <label

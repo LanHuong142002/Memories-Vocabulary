@@ -4,16 +4,16 @@ import { forwardRef, MouseEvent, ReactElement } from 'react';
 import './index.css';
 
 export interface ImageProps {
+  isCircle?: boolean;
+  isClickable?: boolean;
   url: string;
   alt?: string;
   size?: 'xxxs' | 'xxs' | 'xs' | 's' | 'md' | 'lg' | 'xl' | 'xxl';
-  isCircle?: boolean;
-  isClickable?: boolean;
   onClick?: (e: MouseEvent) => void;
 }
 
 export const Image = forwardRef<HTMLElement, ImageProps>(function Image(
-  { url, isCircle, alt = 'image', size = 'xs', isClickable, onClick },
+  { isClickable, isCircle, url, alt = 'image', size = 'xs', onClick },
   ref,
 ): ReactElement {
   const classes = `image-wrapper image-size-${size} ${isClickable ? 'image-cursor-pointer' : ''}`;

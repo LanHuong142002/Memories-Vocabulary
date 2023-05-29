@@ -20,9 +20,9 @@ import './index.css';
 
 interface ModalProps {
   titleModal: string;
+  productItem?: Product;
   statuses: ProductStatus[];
   types: ProductType[];
-  productItem?: Product;
   onToggleProductModal: () => void;
   onConfirm: (product: Product) => void;
 }
