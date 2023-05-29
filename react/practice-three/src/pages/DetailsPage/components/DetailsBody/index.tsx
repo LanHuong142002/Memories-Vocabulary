@@ -5,12 +5,16 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // Interfaces
 import { Product } from '@interfaces';
+
+// Constants
+import { PRODUCT_FIELDS } from '@constants';
 
 // Hooks
 import { useDebounce, useProductById, useStatus, useType } from '@hooks';
@@ -28,13 +32,13 @@ import { Button, Image, Input, InputFile, Select } from '@components';
 import './index.css';
 
 export const DetailsBody = ({
-  onErrorModal,
   product,
-  onProduct,
+  onOpenErrorModal,
+  onSetProduct,
 }: {
-  onErrorModal: (errorMessage: string) => void;
-  onProduct: (productItem: Product) => void;
   product: Product;
+  onOpenErrorModal: (errorMessage: string) => void;
+  onSetProduct: (productItem: Product) => void;
 }): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,7 +47,7 @@ export const DetailsBody = ({
   const { data: types, error: errorType } = useType();
   const { data: productItem, error: errorGetProductById } = useProductById(id || '');
 
-  const [isValidateFlag, setIsValidateFlag] = useState<boolean>(false);
+  const [shouldValidateForm, setShouldValidateForm] = useState<boolean>(false);
   const debouncedProduct = useDebounce<Product>(product, 700);
 
   /**
@@ -54,15 +58,21 @@ export const DetailsBody = ({
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
-      const value = e.target.value;
+      let value: number | string;
+
+      if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
+        value = Number(e.target.value);
+      } else {
+        value = e.target.value;
+      }
 
       if (name) {
-        onProduct({
+        onSetProduct({
           ...product,
           [name]: value,
         });
       }
-      setIsValidateFlag(true);
+      setShouldValidateForm(true);
     },
     [product],
   );
@@ -81,7 +91,7 @@ export const DetailsBody = ({
         const image = await convertBase64(file);
 
         if (image) {
-          onProduct({
+          onSetProduct({
             ...product,
             [name]: image,
           });
@@ -115,32 +125,42 @@ export const DetailsBody = ({
    *
    * @returns {string}
    */
-  const disabledButton = (): string => {
-    return (
-      validateNumberField(Number(product.price)) ||
-      validateStringField(product.name) ||
-      validateNumberField(Number(product.quantity), 'quantity') ||
-      validateStringField(product.brand)
-    );
-  };
+  const disabledButton = useMemo(
+    (): string =>
+      validateNumberField(Number(debouncedProduct.price)) ||
+      validateStringField(debouncedProduct.name) ||
+      validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY) ||
+      validateStringField(debouncedProduct.brand),
+    [
+      debouncedProduct.price,
+      debouncedProduct.name,
+      debouncedProduct.quantity,
+      debouncedProduct.brand,
+    ],
+  );
 
   useEffect(() => {
     if (productItem) {
-      onProduct(productItem);
+      onSetProduct(productItem);
     }
   }, [productItem]);
 
   useEffect(() => {
-    if (errorStatus) onUpdateErrorMessage(errorStatus);
-    if (errorType) onUpdateErrorMessage(errorType);
-    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById);
+    if (errorStatus) onUpdateErrorMessage(errorStatus.message);
+    if (errorType) onUpdateErrorMessage(errorType.message);
+    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById.message);
 
-    if (errorMessage) onErrorModal(errorMessage);
+    if (errorMessage) onOpenErrorModal(errorMessage);
   }, [errorStatus, errorType, errorMessage, errorGetProductById]);
 
   return (
     <>
-      <form className='form-wrapper' onSubmit={(e) => handleOnSave(e, product)}>
+      <form
+        className='form-wrapper'
+        onSubmit={(e) => {
+          handleOnSave(e, product);
+        }}
+      >
         <div className='form-body'>
           <div className='form-group'>
             <div className='form-control'>
@@ -152,7 +172,7 @@ export const DetailsBody = ({
                 onChange={handleOnChange}
               />
               <span className='error-message'>
-                {isValidateFlag && validateStringField(debouncedProduct.name)}
+                {shouldValidateForm && validateStringField(debouncedProduct.name)}
               </span>
             </div>
           </div>
@@ -168,8 +188,8 @@ export const DetailsBody = ({
                 onChange={handleOnChange}
               />
               <span className='error-message'>
-                {isValidateFlag &&
-                  validateNumberField(Number(debouncedProduct.quantity), 'quantity')}
+                {shouldValidateForm &&
+                  validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY)}
               </span>
             </div>
           </div>
@@ -185,7 +205,7 @@ export const DetailsBody = ({
                 onChange={handleOnChange}
               />
               <span className='error-message'>
-                {isValidateFlag && validateNumberField(Number(debouncedProduct.price))}
+                {shouldValidateForm && validateNumberField(Number(debouncedProduct.price))}
               </span>
             </div>
           </div>
@@ -197,7 +217,6 @@ export const DetailsBody = ({
               valueSelected={product.statusesId || ''}
               onChange={handleOnChange}
             />
-
             <Select
               title='Types'
               options={types || []}
@@ -217,7 +236,7 @@ export const DetailsBody = ({
                 onChange={handleOnChange}
               />
               <span className='error-message'>
-                {isValidateFlag && validateStringField(debouncedProduct.brand)}
+                {shouldValidateForm && validateStringField(debouncedProduct.brand)}
               </span>
             </div>
             <div className='group-image'>
@@ -251,7 +270,7 @@ export const DetailsBody = ({
             color='success'
             label='Save'
             type='submit'
-            isDisabled={!!disabledButton()}
+            isDisabled={!!disabledButton}
           />
         </div>
       </form>

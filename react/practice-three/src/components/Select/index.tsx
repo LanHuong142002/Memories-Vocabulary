@@ -10,21 +10,21 @@ interface SelectItemProps {
 }
 
 interface SelectProps {
+  optionAll?: boolean;
   valueSelected: string;
   name: string;
-  options: SelectItemProps[];
-  optionAll?: boolean;
   title?: string;
+  options: SelectItemProps[];
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const Select = ({
-  valueSelected,
   optionAll,
-  onChange,
-  title,
+  valueSelected,
   name,
+  title,
   options,
+  onChange,
 }: SelectProps): ReactElement => (
   <div className={title && 'select-box'} data-testid='select-box'>
     {title && <label className='title-select'>{title}</label>}
@@ -34,7 +34,7 @@ export const Select = ({
           All
         </option>
       )}
-      {options.length &&
+      {options?.length &&
         options.map(({ id, name }) => (
           <option className='select-item' value={id} key={id}>
             {name}

@@ -31,3 +31,39 @@ exports[`Testing Select component Should render Select component 1`] = `
   </div>
 </div>
 `;
+
+exports[`Testing Select component should render without title and optionAll 1`] = `
+<div
+  class="select-box"
+  data-testid="select-box"
+>
+  <label
+    class="title-select"
+  >
+    Full Name
+  </label>
+  <select
+    class="select-wrapper"
+    name="type"
+  >
+    <option
+      class="select-item"
+      value="f678be1f-ce92-4483-82b9-9fb06e88b196"
+    >
+      Bracelet
+    </option>
+    <option
+      class="select-item"
+      value="e76918cc-89fe-4329-99e5-63b939df3306"
+    >
+      Ring
+    </option>
+    <option
+      class="select-item"
+      value="39919010-766d-4672-81b3-f60cfdadfbd9"
+    >
+      Watch
+    </option>
+  </select>
+</div>
+`;

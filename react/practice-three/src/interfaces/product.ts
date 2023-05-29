@@ -1,13 +1,11 @@
 import { ProductStatus, ProductType } from '@interfaces';
 
 export interface Product {
+  price: number;
+  quantity: number;
   id: string;
   image: string;
   name: string;
-  status?: string;
-  price: number | string;
-  type?: string;
-  quantity: number | string;
   brandImage: string;
   brand: string;
   statusesId?: string;

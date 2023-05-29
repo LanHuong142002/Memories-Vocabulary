@@ -13,9 +13,9 @@ import { useProduct } from '@hooks';
 // Services
 import { deleteProduct, postProduct, updateProduct } from '@services';
 
-export interface ProductContext {
-  products: Product[];
+export interface ProductContextType {
   errorMessage: string;
+  products?: Product[];
   onAddProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
   onUpdateProduct: (product: Product) => void;
@@ -23,7 +23,7 @@ export interface ProductContext {
   onUpdateErrorMessage: (message: string) => void;
 }
 
-export const ProductContext = createContext<ProductContext>({} as ProductContext);
+export const ProductContext = createContext<ProductContextType>({} as ProductContextType);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -40,7 +40,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   /**
    * @description get products after search
    */
-  const handleSearchProducts = useCallback(async (paramSearch: string): Promise<void> => {
+  const handleSearchProducts = useCallback((paramSearch: string): void => {
     setParam(paramSearch);
     mutate(`${URL_API.PRODUCTS_WITH_STATUS_TYPE}${param}`);
   }, []);
@@ -85,7 +85,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    setErrorMessage(error);
+    if (error) {
+      setErrorMessage(error.message);
+    }
   }, [error]);
 
   const value = useMemo(
