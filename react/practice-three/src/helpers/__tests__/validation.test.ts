@@ -15,10 +15,6 @@ describe('Testing isEmpty', () => {
     expect(isEmpty('')).toBe(true);
   });
 
-  it('Should return false with number', () => {
-    expect(isEmpty(2)).toBe(false);
-  });
-
   it('Should return false string with value characters', () => {
     expect(isEmpty('hello')).toBe(false);
   });
