@@ -211,7 +211,7 @@ export const ProductModal = ({
             <div className='form-group form-group-split'>
               <Select
                 title='Status'
-                options={statuses}
+                options={statuses || []}
                 name='statusesId'
                 valueSelected={product.statusesId || ''}
                 onChange={handleOnChange}
@@ -219,7 +219,7 @@ export const ProductModal = ({
 
               <Select
                 title='Types'
-                options={types}
+                options={types || []}
                 name='typesId'
                 valueSelected={product.typesId || ''}
                 onChange={handleOnChange}

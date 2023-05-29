@@ -138,8 +138,8 @@ export const HomePage = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (errorStatus) onUpdateErrorMessage(errorStatus);
-    if (errorType) onUpdateErrorMessage(errorType);
+    if (errorStatus) onUpdateErrorMessage(errorStatus.message);
+    if (errorType) onUpdateErrorMessage(errorType.message);
 
     if (errorMessage) handleToggleErrorModal(errorMessage);
   }, [errorStatus, errorType, errorMessage]);
@@ -159,8 +159,8 @@ export const HomePage = (): ReactElement => {
         }
         homeBody={
           <HomeBody
-            statuses={statuses}
-            types={types}
+            statuses={statuses || []}
+            types={types || []}
             onDataModal={handleDataModal}
             onProductItem={handleProductItem}
             onToggleNotificationModal={handleToggleNotificationModal}
@@ -170,8 +170,8 @@ export const HomePage = (): ReactElement => {
       {openNewProductModal && (
         <ProductModal
           titleModal='Add new product'
-          statuses={statuses}
-          types={types}
+          statuses={statuses || []}
+          types={types || []}
           onToggleProductModal={handleToggleNewProductModal}
           onConfirm={handleConfirmAddNew}
         />
@@ -180,8 +180,8 @@ export const HomePage = (): ReactElement => {
         <ProductModal
           titleModal='Product information'
           productItem={productItem}
-          statuses={statuses}
-          types={types}
+          statuses={statuses || []}
+          types={types || []}
           onToggleProductModal={handleToggleProductModal}
           onConfirm={handleConfirmUpdate}
         />

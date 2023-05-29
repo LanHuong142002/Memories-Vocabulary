@@ -137,9 +137,9 @@ export const DetailsBody = ({
   }, [productItem]);
 
   useEffect(() => {
-    if (errorStatus) onUpdateErrorMessage(errorStatus);
-    if (errorType) onUpdateErrorMessage(errorType);
-    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById);
+    if (errorStatus) onUpdateErrorMessage(errorStatus.message);
+    if (errorType) onUpdateErrorMessage(errorType.message);
+    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById.message);
 
     if (errorMessage) onErrorModal(errorMessage);
   }, [errorStatus, errorType, errorMessage, errorGetProductById]);
