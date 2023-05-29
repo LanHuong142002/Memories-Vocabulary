@@ -15,7 +15,7 @@ import { deleteProduct, postProduct, updateProduct } from '@services';
 
 export interface ProductContextType {
   errorMessage: string;
-  products: Product[] | undefined;
+  products?: Product[];
   onAddProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
   onUpdateProduct: (product: Product) => void;
