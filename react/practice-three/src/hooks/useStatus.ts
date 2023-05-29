@@ -9,17 +9,24 @@ import { getStatuses } from '@services';
 // Interfaces
 import { ProductStatus } from '@interfaces';
 
+interface Error {
+  message: string;
+}
+
 interface ReturnType {
-  data: ProductStatus[];
-  error: string;
   isLoading: boolean;
+  error?: Error;
+  data?: ProductStatus[];
 }
 
 export const useStatus = (): ReturnType => {
-  const { data, error, isLoading } = useSWR(`${URL_API.BASE_URL}${URL_API.STATUSES}`, getStatuses);
+  const { data, error, isLoading } = useSWR<ProductStatus[]>(
+    `${URL_API.BASE_URL}${URL_API.STATUSES}`,
+    getStatuses,
+  );
 
   return {
-    data: data as ProductStatus[],
+    data,
     error,
     isLoading,
   };

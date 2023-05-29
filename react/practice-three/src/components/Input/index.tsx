@@ -7,9 +7,9 @@ export interface InputProps {
   name: string;
   value: string;
   placeholder?: string;
+  title?: string;
   variant?: 'default' | 'primary';
   type?: 'text' | 'number';
-  title?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -6,8 +6,6 @@ export interface Product {
   id: string;
   image: string;
   name: string;
-  status?: string;
-  type?: string;
   brandImage: string;
   brand: string;
   statusesId?: string;
