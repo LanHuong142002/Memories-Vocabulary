@@ -27,7 +27,7 @@ describe('Testing Select component', () => {
 
     const select = screen.getByTestId('select-box');
 
-    expect(select).toHaveClass('select-box');
+    expect(select).toMatchSnapshot();
   });
 
   it('should render select with optionAll correctly', () => {

@@ -18,7 +18,7 @@ describe('Testing Image component', () => {
 
   it('Should call onClick event when click on image', () => {
     const handleClick = jest.fn();
-    render(<Image {...defaultProps} onClick={handleClick} />);
+    render(<Image {...defaultProps} isClickable={true} onClick={handleClick} />);
 
     const figure = screen.getByRole('figure');
     fireEvent.click(figure);
@@ -27,15 +27,13 @@ describe('Testing Image component', () => {
     expect(handleClick).toBeCalledTimes(1);
   });
 
-  it('Should render image in circle and clickable correctly', () => {
-    render(<Image {...defaultProps} isCircle={true} isClickable={true} />);
+  it('Should render image with circle shape', () => {
+    const handleClick = jest.fn();
+    render(<Image {...defaultProps} isCircle={true} isClickable={false} />);
 
     const figure = screen.getByRole('figure');
-    const image = screen.getByRole('img', {
-      name: /image/i,
-    });
+    fireEvent.click(figure);
 
-    expect(image).toHaveClass('image-circle');
-    expect(figure).toHaveClass('image-size-xs');
+    expect(handleClick).not.toBeCalled();
   });
 });

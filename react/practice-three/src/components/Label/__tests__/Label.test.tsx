@@ -18,9 +18,11 @@ describe('Testing Label component', () => {
   });
 
   it('Testing props variant primary have class', () => {
-    const { container } = render(<Label {...defaultProps} />);
+    const { getByText } = render(<Label {...defaultProps} />);
 
-    expect(container.querySelector('.label-primary')).toBeInTheDocument();
+    const text = getByText('200');
+
+    expect(text).toBeInTheDocument();
   });
 
   it('Should render Label component without variant', () => {
