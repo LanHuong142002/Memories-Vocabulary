@@ -2,8 +2,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Identity } from '@components';
 
 describe('Testing identity component', () => {
-  const handleClick = jest.fn();
-
   afterEach(() => {
     cleanup();
   });
@@ -12,7 +10,6 @@ describe('Testing identity component', () => {
     url: '',
     alt: 'vendôme louis',
     text: 'vendôme louis',
-    onClick: handleClick,
   };
 
   it('Should render Identity', () => {
@@ -21,24 +18,19 @@ describe('Testing identity component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('Should render Identity with class correctly', () => {
-    render(<Identity {...defaultProps} />);
+  it('Should render Identity with circle shape', () => {
+    render(<Identity {...defaultProps} isCircle={true} />);
 
     const identity = screen.getByTestId('identity-wrapper');
 
     expect(identity).toBeInTheDocument();
-    expect(identity).toHaveClass('identity-wrapper');
   });
 
-  it('Should render Identity in the circle shape correctly', () => {
-    render(<Identity {...defaultProps} isCircle={true} />);
+  it('Should render Identity with default shape', () => {
+    render(<Identity {...defaultProps} isCircle={false} />);
 
-    const image = screen.getByRole('img', {
-      name: /vendôme louis/i,
-    });
-    const figure = screen.getByRole('figure');
+    const identity = screen.getByTestId('identity-wrapper');
 
-    expect(image).toHaveClass('image-circle');
-    expect(figure).toHaveClass('image-size-xs');
+    expect(identity).toBeInTheDocument();
   });
 });

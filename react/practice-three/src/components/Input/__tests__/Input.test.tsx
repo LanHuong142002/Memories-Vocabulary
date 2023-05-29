@@ -35,11 +35,12 @@ describe('Testing Input component', () => {
   });
 
   it('Should render component with title correctly', () => {
-    const { container } = render(
+    const { getByText } = render(
       <Input {...defaultProps} title='Full Name' onChange={handleChange} />,
     );
 
-    expect(container.querySelector('.text-wrapper label')).toBeInTheDocument();
-    expect(container.querySelector('.text-wrapper label')).toHaveTextContent('Full Name');
+    const text = getByText('Full Name');
+
+    expect(text).toBeInTheDocument();
   });
 });

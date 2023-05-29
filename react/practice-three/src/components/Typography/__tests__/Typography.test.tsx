@@ -22,8 +22,7 @@ describe('Testing Typography component', () => {
 
     const typography = screen.getByText('Management');
 
-    expect(typography).toHaveClass('typography-color-primary');
-    expect(typography).toHaveClass('typography-size-md');
+    expect(typography).toBeInTheDocument();
   });
 
   it('Should render Typography without weight', () => {

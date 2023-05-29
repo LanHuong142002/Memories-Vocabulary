@@ -6,9 +6,9 @@ import './index.css';
 export interface InputProps {
   name: string;
   value: string;
+  placeholder?: string;
   variant?: 'default' | 'primary';
   type?: 'text' | 'number';
-  placeholder?: string;
   title?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -17,8 +17,8 @@ export const Input = ({
   name,
   value,
   placeholder,
-  variant = 'default',
   title,
+  variant = 'default',
   type = 'text',
   onChange,
 }: InputProps): ReactElement => (
