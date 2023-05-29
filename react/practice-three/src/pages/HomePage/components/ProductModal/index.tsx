@@ -91,10 +91,12 @@ export const ProductModal = ({
       if (file) {
         const image = await convertBase64(file);
 
-        setProduct({
-          ...product,
-          [name]: image,
-        });
+        if (image) {
+          setProduct({
+            ...product,
+            [name]: image,
+          });
+        }
       }
     },
     [product],
