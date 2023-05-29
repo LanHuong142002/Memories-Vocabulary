@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, ReactElement, useCallback, useMemo, useState } from 'react';
 
 // Constants
-import { MOCK_PRODUCT_DATA } from '@constants';
+import { MOCK_PRODUCT_DATA, PRODUCT_FIELDS } from '@constants';
 
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
@@ -61,7 +61,7 @@ export const ProductModal = ({
       const name = e.target.name;
       let value: number | string;
 
-      if (name === 'quantity' || name === 'price') {
+      if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
         value = Number(e.target.value);
       } else {
         value = e.target.value;
@@ -123,16 +123,23 @@ export const ProductModal = ({
    *
    * @returns {string}
    */
-  const disabledButton = (): string => {
-    return (
+  const disabledButton = useMemo(
+    (): string =>
       validateStringField(debouncedProduct.brandImage) ||
       validateStringField(debouncedProduct.image) ||
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
-      validateNumberField(Number(product.quantity), 'quantity') ||
-      validateStringField(product.brand)
-    );
-  };
+      validateNumberField(Number(product.quantity), PRODUCT_FIELDS.QUANTITY) ||
+      validateStringField(product.brand),
+    [
+      debouncedProduct.brandImage,
+      debouncedProduct.image,
+      debouncedProduct.price,
+      debouncedProduct.name,
+      debouncedProduct.quantity,
+      debouncedProduct.brand,
+    ],
+  );
 
   return useMemo(
     () => (
@@ -188,7 +195,7 @@ export const ProductModal = ({
                 />
                 <span className='error-message'>
                   {shouldValidateForm &&
-                    validateNumberField(Number(debouncedProduct.quantity), 'quantity')}
+                    validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY)}
                 </span>
               </div>
             </div>
@@ -279,7 +286,7 @@ export const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={!!disabledButton()}
+              isDisabled={!!disabledButton}
             />
           </div>
         </form>
