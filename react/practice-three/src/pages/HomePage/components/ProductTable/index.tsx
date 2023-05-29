@@ -94,7 +94,7 @@ export const ProductTable = memo(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.isArray(products) && products.length ? (
+        {products?.length ? (
           products.map((item) => (
             <ProductRow
               key={item.id}

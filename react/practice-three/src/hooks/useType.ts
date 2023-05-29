@@ -15,8 +15,8 @@ interface Error {
 
 interface ReturnType {
   isLoading: boolean;
-  error: Error | undefined;
-  data: ProductType[] | undefined;
+  error?: Error;
+  data?: ProductType[];
 }
 
 export const useType = (): ReturnType => {
