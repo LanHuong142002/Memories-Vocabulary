@@ -148,7 +148,7 @@ export const HomePage = (): ReactElement => {
     <>
       <Header />
       <HomeLayout
-        homeHeader={
+        header={
           <Button
             label='Add New Product'
             variant='secondary'
@@ -157,16 +157,15 @@ export const HomePage = (): ReactElement => {
             onClick={handleToggleNewProductModal}
           />
         }
-        homeBody={
-          <HomeBody
-            statuses={statuses || []}
-            types={types || []}
-            onDataModal={handleDataModal}
-            onProductItem={handleProductItem}
-            onToggleNotificationModal={handleToggleNotificationModal}
-          />
-        }
-      />
+      >
+        <HomeBody
+          statuses={statuses || []}
+          types={types || []}
+          onDataModal={handleDataModal}
+          onProductItem={handleProductItem}
+          onToggleNotificationModal={handleToggleNotificationModal}
+        />
+      </HomeLayout>
       {openNewProductModal && (
         <ProductModal
           titleModal='Add new product'

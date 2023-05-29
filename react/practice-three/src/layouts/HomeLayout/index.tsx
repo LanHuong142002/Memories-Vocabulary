@@ -1,17 +1,17 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // Styles
 import './index.css';
 
 export const HomeLayout = ({
-  homeBody,
-  homeHeader,
+  children,
+  header,
 }: {
-  homeBody: ReactElement;
-  homeHeader: ReactElement;
+  header: ReactElement;
+  children: ReactNode;
 }): ReactElement => (
   <main className='home-wrapper'>
-    <div className='home-header'>{homeHeader}</div>
-    <div className='home-body'>{homeBody}</div>
+    <div className='home-header'>{header}</div>
+    <div className='home-body'>{children}</div>
   </main>
 );

@@ -1,17 +1,17 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 // CSS
 import './index.css';
 
 export const DetailsLayout = ({
-  detailsTitle,
-  detailsBody,
+  title,
+  children,
 }: {
-  detailsTitle: ReactElement;
-  detailsBody: ReactElement;
+  title: ReactElement;
+  children: ReactNode;
 }): ReactElement => (
   <main className='details-page'>
-    <div className='details-title'>{detailsTitle}</div>
-    <div className='details-body'>{detailsBody}</div>
+    <div className='details-title'>{title}</div>
+    <div className='details-body'>{children}</div>
   </main>
 );

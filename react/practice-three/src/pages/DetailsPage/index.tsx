@@ -35,14 +35,14 @@ export const DetailsPage = (): ReactElement => {
    *
    * @param {Object} productItem
    */
-  const handleProduct = (productItem: Product) => {
+  const handleSetProduct = (productItem: Product) => {
     setProduct(productItem);
   };
 
   /**
    * @description function handle error modal
    */
-  const handleErrorModal = useCallback((message?: string): void => {
+  const handleOpenErrorModal = useCallback((message?: string): void => {
     setErrorModal({
       status: message ? true : false,
       message: message || '',
@@ -53,23 +53,22 @@ export const DetailsPage = (): ReactElement => {
    * @description function cancel/ close errors modal
    */
   const handleCancel = useCallback((): void => {
-    handleErrorModal();
+    handleOpenErrorModal();
   }, []);
 
   return (
     <>
       <DetailsLayout
-        detailsTitle={
+        title={
           <Typography text={product.name} tagName='h2' color='quaternary' size='lg' weight='bold' />
         }
-        detailsBody={
-          <DetailsBody
-            product={product}
-            onErrorModal={handleErrorModal}
-            onProduct={handleProduct}
-          />
-        }
-      />
+      >
+        <DetailsBody
+          product={product}
+          onOpenErrorModal={handleOpenErrorModal}
+          onSetProduct={handleSetProduct}
+        />
+      </DetailsLayout>
       {errorModal.status && (
         <NotificationModal
           url='/icons/error-icon.svg'
