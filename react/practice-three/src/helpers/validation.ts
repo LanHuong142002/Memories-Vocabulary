@@ -1,4 +1,4 @@
-import { MESSAGE_ERRORS, REGEX } from '@constants';
+import { MESSAGE_ERRORS, PRODUCT_FIELDS, REGEX } from '@constants';
 
 /**
  * @description function check the value is empty or not
@@ -39,7 +39,7 @@ export const isPositiveNumber = (value: number): boolean => value >= 0;
 export const validateNumberField = (value: number, key?: string): string => {
   switch (true) {
     // case check if the value is not an integer number
-    case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === 'quantity':
+    case !isMatchRegex(REGEX.INTEGER_NUMBER, String(value)) && key === PRODUCT_FIELDS.QUANTITY:
       return MESSAGE_ERRORS.INTEGER_NUMBER;
     // case check if the value is not a positive number
     case !isPositiveNumber(value):

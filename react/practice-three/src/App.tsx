@@ -1,26 +1,72 @@
-import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
+// Components
+import { Button, NotificationModal, Spinner, ErrorBoundary } from '@components';
+import { HomePage } from '@pages';
 
 // Styles
 import './styles/main.css';
 
-// Pages
-import { HomePage } from '@pages';
-import { Suspense, lazy } from 'react';
-import { Spinner } from '@components';
-
-const DetailsPage = lazy(() => import('../src/pages/DetailsPage'));
+const DetailsPage = lazy(() =>
+  import('./pages/DetailsPage').then((module) => ({ default: module.DetailsPage })),
+);
 
 const App = () => {
+  const navigate = useNavigate();
+
+  /**
+   * @description function redirect to home page of modal
+   * error boundary
+   */
+  const handleCancel = () => {
+    navigate('/');
+  };
+
   return (
     <div className='container'>
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route
+          path='/'
+          element={
+            <ErrorBoundary
+              fallback={
+                <NotificationModal
+                  url='/icons/trash-icon.svg'
+                  title='Ooops!'
+                  description={'Something went wrong.'}
+                />
+              }
+            >
+              <HomePage />
+            </ErrorBoundary>
+          }
+        />
         <Route
           path='/details/:id'
           element={
-            <Suspense fallback={<Spinner />}>
-              <DetailsPage />
-            </Suspense>
+            <ErrorBoundary
+              fallback={
+                <NotificationModal
+                  url='/icons/trash-icon.svg'
+                  title='Ooops!'
+                  description={'Something went wrong. Click close button to redirect to home page'}
+                  onCancel={handleCancel}
+                >
+                  <Button
+                    label='Close'
+                    variant='tertiary'
+                    color='warning'
+                    size='lg'
+                    onClick={handleCancel}
+                  />
+                </NotificationModal>
+              }
+            >
+              <Suspense fallback={<Spinner />}>
+                <DetailsPage />
+              </Suspense>
+            </ErrorBoundary>
           }
         />
       </Routes>

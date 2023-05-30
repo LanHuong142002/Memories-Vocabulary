@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, ReactElement, useCallback, useMemo, useState } from 'react';
 
 // Constants
-import { MOCK_PRODUCT_DATA } from '@constants';
+import { MOCK_PRODUCT_DATA, PRODUCT_FIELDS } from '@constants';
 
 // Helpers
 import { convertBase64, validateStringField, validateNumberField, loadImage } from '@helpers';
@@ -20,9 +20,9 @@ import './index.css';
 
 interface ModalProps {
   titleModal: string;
+  productItem?: Product;
   statuses: ProductStatus[];
   types: ProductType[];
-  productItem?: Product;
   onToggleProductModal: () => void;
   onConfirm: (product: Product) => void;
 }
@@ -34,7 +34,7 @@ export const ProductModal = ({
   types,
   onToggleProductModal,
   onConfirm,
-}: ModalProps): React.ReactElement => {
+}: ModalProps): ReactElement => {
   const [product, setProduct] = useState<Product>(
     productItem || {
       id: '',
@@ -59,7 +59,13 @@ export const ProductModal = ({
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const name = e.target.name;
-      const value = e.target.value;
+      let value: number | string;
+
+      if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
+        value = Number(e.target.value);
+      } else {
+        value = e.target.value;
+      }
 
       if (name) {
         setProduct({
@@ -117,16 +123,23 @@ export const ProductModal = ({
    *
    * @returns {string}
    */
-  const disabledButton = (): string => {
-    return (
+  const disabledButton = useMemo(
+    (): string =>
       validateStringField(debouncedProduct.brandImage) ||
       validateStringField(debouncedProduct.image) ||
       validateNumberField(Number(product.price)) ||
       validateStringField(product.name) ||
-      validateNumberField(Number(product.quantity), 'quantity') ||
-      validateStringField(product.brand)
-    );
-  };
+      validateNumberField(Number(product.quantity), PRODUCT_FIELDS.QUANTITY) ||
+      validateStringField(product.brand),
+    [
+      debouncedProduct.brandImage,
+      debouncedProduct.image,
+      debouncedProduct.price,
+      debouncedProduct.name,
+      debouncedProduct.quantity,
+      debouncedProduct.brand,
+    ],
+  );
 
   return useMemo(
     () => (
@@ -163,6 +176,7 @@ export const ProductModal = ({
                   variant='primary'
                   value={product.name}
                   onChange={handleOnChange}
+                  placeholder='Enter name...'
                 />
                 <span className='error-message'>
                   {shouldValidateForm && validateStringField(debouncedProduct.name)}
@@ -179,10 +193,11 @@ export const ProductModal = ({
                   type='number'
                   value={String(product.quantity)}
                   onChange={handleOnChange}
+                  placeholder='Enter quantity...'
                 />
                 <span className='error-message'>
                   {shouldValidateForm &&
-                    validateNumberField(Number(debouncedProduct.quantity), 'quantity')}
+                    validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY)}
                 </span>
               </div>
             </div>
@@ -205,7 +220,7 @@ export const ProductModal = ({
             <div className='form-group form-group-split'>
               <Select
                 title='Status'
-                options={statuses}
+                options={statuses || []}
                 name='statusesId'
                 valueSelected={product.statusesId || ''}
                 onChange={handleOnChange}
@@ -213,7 +228,7 @@ export const ProductModal = ({
 
               <Select
                 title='Types'
-                options={types}
+                options={types || []}
                 name='typesId'
                 valueSelected={product.typesId || ''}
                 onChange={handleOnChange}
@@ -273,7 +288,7 @@ export const ProductModal = ({
               color='success'
               label='Confirm'
               type='submit'
-              isDisabled={!!disabledButton()}
+              isDisabled={!!disabledButton}
             />
           </div>
         </form>
