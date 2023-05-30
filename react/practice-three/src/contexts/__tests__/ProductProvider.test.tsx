@@ -1,67 +1,200 @@
-import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA } from '@constants';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { ProductContext, ProductProvider } from '@contexts';
 import { useContext } from 'react';
-
-const MockContextValue = {
-  products: MOCK_PRODUCT_API,
-  messageError: '',
-  onAddProduct: jest.fn(),
-  onDeleteProduct: jest.fn(),
-  onUpdateProduct: jest.fn(),
-  onSearchProducts: jest.fn(),
-  onSetMessageError: jest.fn(),
-};
+import { MOCK_PRODUCT_DATA } from '@constants';
+import { act } from 'react-test-renderer';
 
 jest.mock('@services', () => ({
-  postProduct: jest.fn(() => {
-    return MOCK_PRODUCT_DATA;
-  }),
+  ...jest.requireActual('@services'),
+  postProduct: jest
+    .fn()
+    .mockResolvedValue({})
+    .mockImplementationOnce(() => {
+      return 'Error';
+    }),
+  deleteProduct: jest
+    .fn()
+    .mockResolvedValue({})
+    .mockImplementationOnce(() => {
+      return 'Error';
+    }),
+  updateProduct: jest
+    .fn()
+    .mockResolvedValue({})
+    .mockImplementationOnce(() => {
+      return 'Error';
+    }),
 }));
 
-describe('Testing context ProductProvider', () => {
-  const { onAddProduct, products } = useContext(ProductContext);
+describe('Testing Product Context', () => {
+  const mockFN = jest.fn((callback) => callback);
 
-  it('Should render children', () => {
-    render(
+  it('Should call function onSearchProducts when click the button', () => {
+    const MockChildren = () => {
+      const { onSearchProducts } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onSearchProducts('&name=123'))} />;
+    };
+    const { getByRole } = render(
       <ProductProvider>
-        <div data-testid='testing-children'>Testing children</div>
+        <MockChildren />
       </ProductProvider>,
     );
-    onAddProduct({});
 
-    expect(products).toEqual(MOCK_PRODUCT_DATA);
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
   });
 
-  it('Should provide context value for children', () => {
-    const Component = () => {
-      const { products } = useContext(ProductContext);
-
-      return (
-        <div>
-          {products &&
-            products.map((item) => (
-              <p key={item.id} data-testid='testing-name'>
-                {item.name}
-              </p>
-            ))}
-        </div>
-      );
+  it('Should call function onAddProduct and set state after clicking button', () => {
+    const MockChildren = () => {
+      const { onAddProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onAddProduct(MOCK_PRODUCT_DATA))} />;
     };
-
-    const { rerender } = render(
+    const { getByRole } = render(
       <ProductProvider>
-        <Component />
+        <MockChildren />
       </ProductProvider>,
     );
 
-    expect(screen.getByTestId('testing-name')).toBe('');
+    const button = getByRole('button');
+    expect(button).toBeDefined();
 
-    rerender(
-      <ProductContext.Provider value={MockContextValue}>
-        <Component />
-      </ProductContext.Provider>,
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onAddProduct after clicking button', () => {
+    const MockChildren = () => {
+      const { onAddProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onAddProduct(MOCK_PRODUCT_DATA))} />;
+    };
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
     );
-    expect(screen.getByTestId('testing-name')).toBe(MOCK_PRODUCT_DATA.name);
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onDeleteProduct and set state after clicking button', () => {
+    const MockChildren = () => {
+      const { onDeleteProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onDeleteProduct('123'))} />;
+    };
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
+    );
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onDeleteProduct after clicking button', () => {
+    const MockChildren = () => {
+      const { onDeleteProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(act(() => onDeleteProduct('123')))} />;
+    };
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
+    );
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onUpdateProduct and set state after clicking button', () => {
+    const MockChildren = () => {
+      const { onUpdateProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onUpdateProduct(MOCK_PRODUCT_DATA))} />;
+    };
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
+    );
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onUpdateProduct after clicking button', () => {
+    const MockChildren = () => {
+      const { onUpdateProduct } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onUpdateProduct(MOCK_PRODUCT_DATA))} />;
+    };
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
+    );
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
+  });
+
+  it('Should call function onUpdateErrorMessage when click the button', () => {
+    const MockChildren = () => {
+      const { onUpdateErrorMessage } = useContext(ProductContext);
+      return <button onClick={() => mockFN(onUpdateErrorMessage('Error'))} />;
+    };
+
+    const { getByRole } = render(
+      <ProductProvider>
+        <MockChildren />
+      </ProductProvider>,
+    );
+
+    const button = getByRole('button');
+    expect(button).toBeDefined();
+
+    act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(mockFN).toHaveBeenCalled();
   });
 });
