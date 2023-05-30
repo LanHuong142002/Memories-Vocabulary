@@ -2,6 +2,9 @@ import fetchMock from 'jest-fetch-mock';
 import { MockResponseInit, enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks();
 
+// Helpers
+import { ResponseError } from '@helpers';
+
 // Constants
 import { MOCK_TYPE_API } from '@constants';
 
@@ -26,6 +29,7 @@ describe('Testing getTypes', () => {
   });
 
   it('Should return an error message when calling API fails', async () => {
+    let result = '';
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -36,7 +40,11 @@ describe('Testing getTypes', () => {
       });
     });
 
-    const result = await getTypes();
+    try {
+      await getTypes();
+    } catch (error) {
+      return (result = (error as ResponseError).message);
+    }
 
     expect(result).toEqual(expectedErrorMessage);
   });

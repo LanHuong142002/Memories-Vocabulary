@@ -13,6 +13,7 @@ import {
   postProduct,
   updateProduct,
 } from '@services';
+import { ResponseError } from '@helpers';
 
 describe('Testing getProductsByParam', () => {
   const param = 'test param';
@@ -34,6 +35,7 @@ describe('Testing getProductsByParam', () => {
   });
 
   it('Should return an error message when calling API fails', async () => {
+    let result = '';
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -44,7 +46,11 @@ describe('Testing getProductsByParam', () => {
       });
     });
 
-    const result = await getProductsByParam(param);
+    try {
+      await getProductsByParam(param);
+    } catch (error) {
+      return (result = (error as ResponseError).message);
+    }
 
     expect(result).toEqual(expectedErrorMessage);
   });
@@ -70,6 +76,7 @@ describe('Testing getProductById', () => {
   });
 
   it('Should return an error message when calling API fails', async () => {
+    let result = '';
     const expectedErrorMessage = '500 Internal Server Error';
     fetchMock.mockResponse(async () => {
       return new Promise((resolve) => {
@@ -80,7 +87,11 @@ describe('Testing getProductById', () => {
       });
     });
 
-    const result = await getProductById(url);
+    try {
+      await getProductById(url);
+    } catch (error) {
+      return (result = (error as ResponseError).message);
+    }
 
     expect(result).toEqual(expectedErrorMessage);
   });
