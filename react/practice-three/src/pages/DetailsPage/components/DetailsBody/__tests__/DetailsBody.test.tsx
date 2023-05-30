@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { DetailsBody } from '@pages';
 import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,13 +8,13 @@ import { act } from 'react-dom/test-utils';
 
 jest.mock('@hooks', () => ({
   useStatus: jest.fn(() => {
-    return { data: MOCK_STATUS_API, error: '' };
+    return { data: MOCK_STATUS_API, error: 'error' };
   }),
   useType: jest.fn(() => {
-    return { data: MOCK_TYPE_API, error: '' };
+    return { data: MOCK_TYPE_API, error: 'error' };
   }),
   useProductById: jest.fn(() => {
-    return { data: MOCK_PRODUCT_DATA, error: '' };
+    return { data: MOCK_PRODUCT_DATA, error: 'error' };
   }),
   useProduct: jest.fn(() => {
     return { data: MOCK_PRODUCT_API, error: '' };
@@ -31,12 +31,14 @@ jest.mock('@helpers', () => ({
   loadImage: jest.fn(),
 }));
 
+const mockUpdateProduct = jest.fn();
+
 const mockValue = {
   errorMessage: 'error',
   products: MOCK_PRODUCT_API,
   onAddProduct: jest.fn(),
   onDeleteProduct: jest.fn(),
-  onUpdateProduct: jest.fn(),
+  onUpdateProduct: mockUpdateProduct,
   onSearchProducts: jest.fn(),
   onUpdateErrorMessage: jest.fn(),
 };
@@ -79,13 +81,14 @@ describe('Testing Details Body', () => {
   });
 
   it('should call handleOnChange when input values change', async () => {
-    // const file = new File(['image.jpg'], 'image.jpg', { type: 'image/png' });
-    const { getByPlaceholderText } = render(
+    const file = new File(['image.jpg'], 'image.jpg', { type: 'image/png' });
+    const mockSetProduct = jest.fn();
+    const { container, getByPlaceholderText } = render(
       <Component>
         <DetailsBody
           product={MOCK_PRODUCT_DATA}
           onOpenErrorModal={jest.fn()}
-          onSetProduct={jest.fn()}
+          onSetProduct={mockSetProduct}
         />
       </Component>,
     );
@@ -93,25 +96,21 @@ describe('Testing Details Body', () => {
     const inputQuantity = getByPlaceholderText('Enter quantity...') as HTMLInputElement;
     const inputPrice = getByPlaceholderText('Enter price...') as HTMLInputElement;
     const inputName = getByPlaceholderText('Enter name...') as HTMLInputElement;
-    // const inputFile = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const inputFile = container.querySelector('input[type="file"]') as HTMLInputElement;
 
     act(() => {
       fireEvent.change(inputQuantity, { target: { value: '200' } });
       fireEvent.change(inputPrice, { target: { value: '200000' } });
       fireEvent.change(inputName, { target: { value: 'Lorem' } });
-      // fireEvent.change(inputFile, { target: { files: [file] } });
+      fireEvent.change(inputFile, { target: { files: [file] } });
     });
 
-    await waitFor(() => {
-      expect(inputQuantity.value).toBe('200');
-      expect(inputPrice.value).toBe('200000');
-      expect(inputName.value).toBe('Lorem');
-      // expect(inputFile.files![0]).toBe(file);
-    });
+    expect(mockSetProduct).toHaveBeenCalled();
+    expect(mockSetProduct).toHaveBeenCalledWith(MOCK_PRODUCT_DATA);
   });
 
   it('Should call submit function when enter or click to button submit', () => {
-    const { container, getByRole } = render(
+    const { getByRole, getByPlaceholderText } = render(
       <Component>
         <DetailsBody
           product={MOCK_PRODUCT_DATA}
@@ -121,13 +120,14 @@ describe('Testing Details Body', () => {
       </Component>,
     );
     const button = getByRole('button', { name: 'Save' });
-    const buttonBack = getByRole('button', { name: 'Back' });
+    const input = getByPlaceholderText('Enter name...');
 
     act(() => {
+      fireEvent.change(input, { target: { value: 'lorem' } });
       fireEvent.click(button);
-      fireEvent.click(buttonBack);
     });
 
-    expect(container).toBeInTheDocument();
+    expect(mockUpdateProduct).toBeCalled();
+    expect(mockUpdateProduct).toBeCalledWith(MOCK_PRODUCT_DATA);
   });
 });

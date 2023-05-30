@@ -33,18 +33,19 @@ describe('Testing Details Page', () => {
   });
 
   it('Should render notification when have error and click close button', () => {
-    const { getByText, container } = render(
+    const { getByText } = render(
       <MockContext>
         <DetailsPage />
       </MockContext>,
     );
 
     const button = getByText('Close');
+    const notification = getByText('Ooops!');
 
     act(() => {
       fireEvent.click(button);
     });
 
-    expect(container).toBeInTheDocument();
+    expect(notification).not.toBeInTheDocument();
   });
 });
