@@ -17,7 +17,7 @@ export const mockProductContext = {
   onUpdateErrorMessage: jest.fn(),
 };
 
-export const MockContext = ({
+export const MockProvider = ({
   children,
   value = mockProductContext,
 }: {

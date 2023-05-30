@@ -1,14 +1,14 @@
 import { fireEvent, render } from '@testing-library/react';
 import { HomePage } from '@pages';
 import { act } from 'react-dom/test-utils';
-import { MockContext } from '@helpers';
+import { MockProvider } from '@helpers';
 
 describe('HomePage', () => {
   it('Should render NotificationModal when have error and click Close button', () => {
     const { getByText } = render(
-      <MockContext>
+      <MockProvider>
         <HomePage />
-      </MockContext>,
+      </MockProvider>,
     );
     const notificationModal = getByText('Close');
     const notificationModalText = getByText('Ooops!');
@@ -21,9 +21,9 @@ describe('HomePage', () => {
 
   it('Should render confirm modal when click button delete in action menu and click button confirm delete', () => {
     const { getByText, getByAltText, getByRole } = render(
-      <MockContext>
+      <MockProvider>
         <HomePage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     const icon = getByAltText('icon more');
@@ -53,9 +53,9 @@ describe('HomePage', () => {
 
   it('Should render product modal when click button edit in action menu and click button submit', () => {
     const { getByText, getByAltText, getByRole } = render(
-      <MockContext>
+      <MockProvider>
         <HomePage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     const icon = getByAltText('icon more');
@@ -85,9 +85,9 @@ describe('HomePage', () => {
 
   it('Should render new product modal when click button add new product, type in input and click confirm button ', () => {
     const { getByRole, getByPlaceholderText } = render(
-      <MockContext>
+      <MockProvider>
         <HomePage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     const buttonOpenAddNewProductModal = getByRole('button', {

@@ -1,14 +1,14 @@
 import { fireEvent, render } from '@testing-library/react';
 import { DetailsPage } from '@pages';
 import { act } from 'react-dom/test-utils';
-import { MockContext } from '@helpers';
+import { MockProvider } from '@helpers';
 
 describe('Testing Details Page', () => {
   it('Should render component correctly', () => {
     const { container } = render(
-      <MockContext>
+      <MockProvider>
         <DetailsPage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     expect(container).toBeInTheDocument();
@@ -16,9 +16,9 @@ describe('Testing Details Page', () => {
 
   it('Should set the product state correctly', () => {
     const { container } = render(
-      <MockContext>
+      <MockProvider>
         <DetailsPage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     const input = container.querySelector('input[name="name"]') as HTMLInputElement;
@@ -34,9 +34,9 @@ describe('Testing Details Page', () => {
 
   it('Should render notification when have error and click close button', () => {
     const { getByText } = render(
-      <MockContext>
+      <MockProvider>
         <DetailsPage />
-      </MockContext>,
+      </MockProvider>,
     );
 
     const button = getByText('Close');
