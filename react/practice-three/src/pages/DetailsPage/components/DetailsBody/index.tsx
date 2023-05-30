@@ -74,7 +74,7 @@ export const DetailsBody = ({
       }
       setShouldValidateForm(true);
     },
-    [product],
+    [onSetProduct, product],
   );
 
   /**
@@ -143,7 +143,7 @@ export const DetailsBody = ({
     if (productItem) {
       onSetProduct(productItem);
     }
-  }, [productItem]);
+  }, [productItem, onSetProduct]);
 
   useEffect(() => {
     if (errorStatus) onUpdateErrorMessage(errorStatus.message);
@@ -160,6 +160,7 @@ export const DetailsBody = ({
         onSubmit={(e) => {
           handleOnSave(e, product);
         }}
+        data-testid='form-wrapper'
       >
         <div className='form-body'>
           <div className='form-group'>
@@ -170,6 +171,7 @@ export const DetailsBody = ({
                 variant='primary'
                 value={product.name}
                 onChange={handleOnChange}
+                placeholder='Enter name...'
               />
               <span className='error-message'>
                 {shouldValidateForm && validateStringField(debouncedProduct.name)}
@@ -186,6 +188,7 @@ export const DetailsBody = ({
                 type='number'
                 value={String(product.quantity)}
                 onChange={handleOnChange}
+                placeholder='Enter quantity...'
               />
               <span className='error-message'>
                 {shouldValidateForm &&
@@ -203,6 +206,7 @@ export const DetailsBody = ({
                 type='number'
                 value={String(product.price)}
                 onChange={handleOnChange}
+                placeholder='Enter price...'
               />
               <span className='error-message'>
                 {shouldValidateForm && validateNumberField(Number(debouncedProduct.price))}
