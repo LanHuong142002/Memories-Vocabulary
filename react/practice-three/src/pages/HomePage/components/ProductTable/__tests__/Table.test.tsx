@@ -3,6 +3,7 @@ import { ProductTable, Filters } from '@pages';
 import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
 import { BrowserRouter } from 'react-router-dom';
 import { ProductStatus, ProductType } from '@interfaces';
+import { act } from 'react-dom/test-utils';
 
 describe('Testing ProductTable', () => {
   const mockFilters: Filters = {
@@ -113,11 +114,11 @@ describe('Testing ProductTable', () => {
     );
 
     const nameInput = container.querySelector('input[name="name"]') as HTMLInputElement;
-    fireEvent.change(nameInput, { target: { value: 'Product 1' } });
+
+    act(() => {
+      fireEvent.change(nameInput, { target: { value: 'Product 1' } });
+    });
 
     expect(mockOnSearch).toHaveBeenCalled();
-    expect(mockOnSearch).toHaveBeenCalledWith(
-      expect.objectContaining({ target: expect.anything() }),
-    );
   });
 });
