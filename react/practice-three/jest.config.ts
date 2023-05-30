@@ -37,6 +37,7 @@ const config: Config.InitialOptions = {
     '!**/constants/**',
     '!**/types/**',
     '!**/styles/**',
+    '!src/main.tsx',
   ],
   globals: {
     'ts-jest': {
