@@ -4,21 +4,25 @@ import { act } from 'react-dom/test-utils';
 import { MockProvider } from '@helpers';
 
 describe('Testing Details Page', () => {
-  it('Should render component correctly', () => {
-    const { container } = render(
-      <MockProvider>
-        <DetailsPage />
-      </MockProvider>,
+  it('Should render component correctly', async () => {
+    const { container } = await act(async () =>
+      render(
+        <MockProvider>
+          <DetailsPage />
+        </MockProvider>,
+      ),
     );
 
     expect(container).toBeInTheDocument();
   });
 
-  it('Should set the product state correctly', () => {
-    const { container } = render(
-      <MockProvider>
-        <DetailsPage />
-      </MockProvider>,
+  it('Should set the product state correctly', async () => {
+    const { container } = await act(async () =>
+      render(
+        <MockProvider>
+          <DetailsPage />
+        </MockProvider>,
+      ),
     );
 
     const input = container.querySelector('input[name="name"]') as HTMLInputElement;
@@ -32,11 +36,13 @@ describe('Testing Details Page', () => {
     expect(input.value).toBe('full name');
   });
 
-  it('Should render notification modal when have error and after that click button close to close modal', () => {
-    const { getByText } = render(
-      <MockProvider>
-        <DetailsPage />
-      </MockProvider>,
+  it('Should render notification when have error and after that click button close to close', async () => {
+    const { getByText } = await act(async () =>
+      render(
+        <MockProvider>
+          <DetailsPage />
+        </MockProvider>,
+      ),
     );
 
     const button = getByText('Close');

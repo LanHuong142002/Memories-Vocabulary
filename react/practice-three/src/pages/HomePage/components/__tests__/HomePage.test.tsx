@@ -4,11 +4,13 @@ import { act } from 'react-dom/test-utils';
 import { MockProvider } from '@helpers';
 
 describe('HomePage', () => {
-  it('Should render NotificationModal when have error and click Close button', () => {
-    const { getByText } = render(
-      <MockProvider>
-        <HomePage />
-      </MockProvider>,
+  it('Should render NotificationModal when have error and click Close button', async () => {
+    const { getByText } = await act(async () =>
+      render(
+        <MockProvider>
+          <HomePage />
+        </MockProvider>,
+      ),
     );
     const notificationModal = getByText('Close');
     const notificationModalText = getByText('Ooops!');
@@ -19,11 +21,13 @@ describe('HomePage', () => {
     expect(notificationModalText).not.toBeInTheDocument();
   });
 
-  it('Should render confirm modal when click button delete in action menu and click button confirm delete', () => {
-    const { getByText, getByAltText, getByRole } = render(
-      <MockProvider>
-        <HomePage />
-      </MockProvider>,
+  it('Should render confirm modal when click button delete in action menu and click button confirm delete', async () => {
+    const { getByText, getByAltText, getByRole } = await act(async () =>
+      render(
+        <MockProvider>
+          <HomePage />
+        </MockProvider>,
+      ),
     );
 
     const icon = getByAltText('icon more');
@@ -51,11 +55,13 @@ describe('HomePage', () => {
     expect(confirmModal).not.toBeInTheDocument();
   });
 
-  it('Should render product modal when click button edit in action menu and click button submit', () => {
-    const { getByText, getByAltText, getByRole } = render(
-      <MockProvider>
-        <HomePage />
-      </MockProvider>,
+  it('Should render product modal when click button edit in action menu and click button submit', async () => {
+    const { getByText, getByAltText, getByRole } = await act(async () =>
+      render(
+        <MockProvider>
+          <HomePage />
+        </MockProvider>,
+      ),
     );
 
     const icon = getByAltText('icon more');
@@ -83,11 +89,13 @@ describe('HomePage', () => {
     expect(productModal).not.toBeInTheDocument();
   });
 
-  it('Should render new product modal when click button add new product, type in input and click confirm button ', () => {
-    const { getByRole, getByPlaceholderText } = render(
-      <MockProvider>
-        <HomePage />
-      </MockProvider>,
+  it('Should render new product modal when click button add new product, type in input and click confirm button ', async () => {
+    const { getByRole, getByPlaceholderText } = await act(async () =>
+      render(
+        <MockProvider>
+          <HomePage />
+        </MockProvider>,
+      ),
     );
 
     const buttonOpenAddNewProductModal = getByRole('button', {
