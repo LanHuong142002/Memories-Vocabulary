@@ -32,7 +32,11 @@ describe('Testing Product Context', () => {
       return (
         <>
           {products ? (
-            products.map((item) => <p data-testid='product-name'>{item.name}</p>)
+            products.map((item) => (
+              <p data-testid='product-name' key={item.id}>
+                {item.name}
+              </p>
+            ))
           ) : (
             <p>No products display</p>
           )}
@@ -55,25 +59,20 @@ describe('Testing Product Context', () => {
       return (
         <>
           {products ? (
-            products.map((item) => (
-              <p data-testid='product-name' key={item.id}>
-                {item.name}
-              </p>
-            ))
+            <p data-testid='product-name'>{products.length}</p>
           ) : (
             <p>No products display</p>
           )}
         </>
       );
     };
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ProductContext.Provider value={mockValue}>
         <MockChildren />
       </ProductContext.Provider>,
     );
-    const text = getByText(MOCK_PRODUCT_DATA.name);
 
-    expect(text).toBeInTheDocument();
+    expect(getByTestId('product-name')).toHaveTextContent('1');
   });
 
   it('Should render products filtered when click the button', async () => {
