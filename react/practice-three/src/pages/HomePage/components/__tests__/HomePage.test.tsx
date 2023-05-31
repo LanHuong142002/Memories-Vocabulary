@@ -1,7 +1,32 @@
 import { fireEvent, render } from '@testing-library/react';
 import { HomePage } from '@pages';
 import { act } from 'react-dom/test-utils';
-import { MockProvider } from '@helpers';
+import { MOCK_PRODUCT_API } from '@constants';
+import { ReactNode } from 'react';
+import { ProductContext, ProductContextType } from '@contexts';
+import { BrowserRouter } from 'react-router-dom';
+
+const mockProductContext = {
+  errorMessage: 'error',
+  products: MOCK_PRODUCT_API,
+  onAddProduct: jest.fn(),
+  onDeleteProduct: jest.fn(),
+  onUpdateProduct: jest.fn(),
+  onSearchProducts: jest.fn(),
+  onUpdateErrorMessage: jest.fn(),
+};
+
+const MockProvider = ({
+  children,
+  value = mockProductContext,
+}: {
+  children: ReactNode;
+  value?: ProductContextType;
+}) => (
+  <BrowserRouter>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>;
+  </BrowserRouter>
+);
 
 describe('HomePage', () => {
   it('Should render NotificationModal when have error and click Close button', async () => {

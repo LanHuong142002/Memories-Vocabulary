@@ -1,9 +1,33 @@
 import { fireEvent, render } from '@testing-library/react';
 import { HomeBody } from '@pages';
-import { MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
+import { MOCK_PRODUCT_API, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
 import { Product, ProductStatus, ProductType } from '@interfaces';
 import { act } from 'react-dom/test-utils';
-import { MockProvider, mockProductContext } from '@helpers';
+import { ReactNode } from 'react';
+import { ProductContext, ProductContextType } from '@contexts';
+import { BrowserRouter } from 'react-router-dom';
+
+const mockProductContext = {
+  errorMessage: 'error',
+  products: MOCK_PRODUCT_API,
+  onAddProduct: jest.fn(),
+  onDeleteProduct: jest.fn(),
+  onUpdateProduct: jest.fn(),
+  onSearchProducts: jest.fn(),
+  onUpdateErrorMessage: jest.fn(),
+};
+
+const MockProvider = ({
+  children,
+  value = mockProductContext,
+}: {
+  children: ReactNode;
+  value?: ProductContextType;
+}) => (
+  <BrowserRouter>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>;
+  </BrowserRouter>
+);
 
 describe('Testing HomeBody', () => {
   const mockOnDataModal = jest.fn();
