@@ -32,7 +32,7 @@ describe('Testing Details Page', () => {
     expect(input.value).toBe('full name');
   });
 
-  it('Should render notification when have error and click close button', () => {
+  it('Should render notification modal when have error and after that click button close to close modal', () => {
     const { getByText } = render(
       <MockProvider>
         <DetailsPage />
