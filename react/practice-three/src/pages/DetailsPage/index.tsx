@@ -54,7 +54,7 @@ export const DetailsPage = (): ReactElement => {
    */
   const handleCancel = useCallback((): void => {
     handleOpenErrorModal();
-  }, []);
+  }, [handleOpenErrorModal]);
 
   return (
     <>

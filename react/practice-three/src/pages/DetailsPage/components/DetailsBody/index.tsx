@@ -74,7 +74,7 @@ export const DetailsBody = ({
       }
       setShouldValidateForm(true);
     },
-    [onSetProduct, product],
+    [product, onSetProduct],
   );
 
   /**
@@ -98,7 +98,7 @@ export const DetailsBody = ({
         }
       }
     },
-    [product],
+    [product, onSetProduct],
   );
 
   /**
@@ -107,17 +107,20 @@ export const DetailsBody = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback((e: FormEvent<HTMLFormElement>, productItem: Product): void => {
-    e.preventDefault();
-    onUpdateProduct(productItem);
-  }, []);
+  const handleOnSave = useCallback(
+    (e: FormEvent<HTMLFormElement>, productItem: Product): void => {
+      e.preventDefault();
+      onUpdateProduct(productItem);
+    },
+    [onUpdateProduct],
+  );
 
   /**
    * @description function redirect to home page
    */
   const handleOnBack = useCallback((): void => {
     navigate('/');
-  }, []);
+  }, [navigate]);
 
   /**
    * @description function check if form have any errors the button
@@ -146,12 +149,29 @@ export const DetailsBody = ({
   }, [productItem, onSetProduct]);
 
   useEffect(() => {
-    if (errorStatus) onUpdateErrorMessage(errorStatus.message);
-    if (errorType) onUpdateErrorMessage(errorType.message);
-    if (errorGetProductById) onUpdateErrorMessage(errorGetProductById.message);
+    if (errorStatus) {
+      onUpdateErrorMessage(errorStatus.message);
+    }
 
-    if (errorMessage) onOpenErrorModal(errorMessage);
-  }, [errorStatus, errorType, errorMessage, errorGetProductById]);
+    if (errorType) {
+      onUpdateErrorMessage(errorType.message);
+    }
+
+    if (errorGetProductById) {
+      onUpdateErrorMessage(errorGetProductById.message);
+    }
+
+    if (errorMessage) {
+      onOpenErrorModal(errorMessage);
+    }
+  }, [
+    errorStatus,
+    errorType,
+    errorMessage,
+    errorGetProductById,
+    onUpdateErrorMessage,
+    onOpenErrorModal,
+  ]);
 
   return (
     <>
