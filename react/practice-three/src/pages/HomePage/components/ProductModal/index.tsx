@@ -114,7 +114,7 @@ export const ProductModal = ({
       onConfirm(product);
       onToggleProductModal();
     },
-    [product],
+    [product, onConfirm, onToggleProductModal],
   );
 
   /**
@@ -127,10 +127,10 @@ export const ProductModal = ({
     (): string =>
       validateStringField(debouncedProduct.brandImage) ||
       validateStringField(debouncedProduct.image) ||
-      validateNumberField(Number(product.price)) ||
-      validateStringField(product.name) ||
-      validateNumberField(Number(product.quantity), PRODUCT_FIELDS.QUANTITY) ||
-      validateStringField(product.brand),
+      validateNumberField(Number(debouncedProduct.price)) ||
+      validateStringField(debouncedProduct.name) ||
+      validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY) ||
+      validateStringField(debouncedProduct.brand),
     [
       debouncedProduct.brandImage,
       debouncedProduct.image,
@@ -294,6 +294,30 @@ export const ProductModal = ({
         </form>
       </Modal>
     ),
-    [debouncedProduct, product, statuses, types],
+    [
+      debouncedProduct.brand,
+      debouncedProduct.brandImage,
+      debouncedProduct.image,
+      debouncedProduct.name,
+      debouncedProduct.price,
+      debouncedProduct.quantity,
+      disabledButton,
+      handleChangeInputFile,
+      handleOnChange,
+      handleOnConfirm,
+      onToggleProductModal,
+      product.brand,
+      product.brandImage,
+      product.image,
+      product.name,
+      product.price,
+      product.quantity,
+      product.statusesId,
+      product.typesId,
+      shouldValidateForm,
+      statuses,
+      titleModal,
+      types,
+    ],
   );
 };
