@@ -1,7 +1,32 @@
 import { fireEvent, render } from '@testing-library/react';
 import { DetailsPage } from '@pages';
 import { act } from 'react-dom/test-utils';
-import { MockProvider } from '@helpers';
+import { MOCK_PRODUCT_API } from '@constants';
+import { BrowserRouter } from 'react-router-dom';
+import { ProductContext, ProductContextType } from '@contexts';
+import { ReactNode } from 'react';
+
+const mockProductContext = {
+  errorMessage: 'error',
+  products: MOCK_PRODUCT_API,
+  onAddProduct: jest.fn(),
+  onDeleteProduct: jest.fn(),
+  onUpdateProduct: jest.fn(),
+  onSearchProducts: jest.fn(),
+  onUpdateErrorMessage: jest.fn(),
+};
+
+const MockProvider = ({
+  children,
+  value = mockProductContext,
+}: {
+  children: ReactNode;
+  value?: ProductContextType;
+}) => (
+  <BrowserRouter>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>;
+  </BrowserRouter>
+);
 
 describe('Testing Details Page', () => {
   it('Should render component correctly', async () => {

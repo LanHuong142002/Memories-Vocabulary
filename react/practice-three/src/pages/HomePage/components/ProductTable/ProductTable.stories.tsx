@@ -9,6 +9,7 @@ import Avatar from '@assets/images/avatar.jpg';
 import { ProductTable } from '@pages';
 
 import { Filters } from '.';
+import { BrowserRouter } from 'react-router-dom';
 
 export default {
   title: 'PracticeTwo/HomePage/ProductTable',
@@ -120,16 +121,18 @@ const Template: ComponentStory<typeof ProductTable> = () => {
   };
 
   return (
-    <ProductTable
-      filters={filter}
-      products={products}
-      statuses={listStatus}
-      types={listType}
-      onSearch={handleSearch}
-      onEdit={handleEdit}
-      onToggleNotification={handleToggleNotification}
-      onSetProductItem={onSetProductItem}
-    />
+    <BrowserRouter>
+      <ProductTable
+        filters={filter}
+        products={products}
+        statuses={listStatus}
+        types={listType}
+        onSearch={handleSearch}
+        onEdit={handleEdit}
+        onToggleNotification={handleToggleNotification}
+        onSetProductItem={onSetProductItem}
+      />
+    </BrowserRouter>
   );
 };
 
