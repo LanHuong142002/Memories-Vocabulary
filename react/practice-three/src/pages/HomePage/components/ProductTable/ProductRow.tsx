@@ -70,7 +70,7 @@ export const ProductRow = memo(
         statusesId,
       });
       setMenuPopup(false);
-    }, [id, image, name, typesId, quantity, statusesId, brandImage, brand, price]);
+    }, [id, image, name, quantity, brand, brandImage, price, typesId, statusesId, onEdit]);
 
     /**
      * @description function show confirm and set id for confirm popup
@@ -89,7 +89,19 @@ export const ProductRow = memo(
         price,
       });
       setMenuPopup(false);
-    }, [id]);
+    }, [
+      brand,
+      brandImage,
+      id,
+      image,
+      name,
+      price,
+      quantity,
+      statusesId,
+      typesId,
+      onSetProductItem,
+      onToggleNotification,
+    ]);
 
     useEffect(() => {
       document.addEventListener('click', handleShowHideMenuPopup, true);
@@ -97,7 +109,7 @@ export const ProductRow = memo(
       return () => {
         document.removeEventListener('click', handleShowHideMenuPopup, true);
       };
-    }, []);
+    }, [handleShowHideMenuPopup]);
 
     const TableCellProduct = memo(() => (
       <>

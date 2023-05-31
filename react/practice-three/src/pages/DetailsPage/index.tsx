@@ -35,9 +35,9 @@ export const DetailsPage = (): ReactElement => {
    *
    * @param {Object} productItem
    */
-  const handleSetProduct = (productItem: Product) => {
+  const handleSetProduct = useCallback((productItem: Product) => {
     setProduct(productItem);
-  };
+  }, []);
 
   /**
    * @description function handle error modal
@@ -54,7 +54,7 @@ export const DetailsPage = (): ReactElement => {
    */
   const handleCancel = useCallback((): void => {
     handleOpenErrorModal();
-  }, []);
+  }, [handleOpenErrorModal]);
 
   return (
     <>

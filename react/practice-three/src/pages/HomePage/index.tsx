@@ -90,33 +90,42 @@ export const HomePage = (): ReactElement => {
    *
    * @param {Object} item is data item after call api
    */
-  const handleDataModal = useCallback((item: Product): void => {
-    handleToggleProductModal();
-    handleProductItem(item);
-  }, []);
+  const handleDataModal = useCallback(
+    (item: Product): void => {
+      handleToggleProductModal();
+      handleProductItem(item);
+    },
+    [handleProductItem, handleToggleProductModal],
+  );
 
   /**
    * @description function handle confirm add new product of new product modal
    *
    * @param {Object} product is a new product
    */
-  const handleConfirmAddNew = useCallback((product: Product): void => {
-    const newProduct = {
-      ...product,
-      id: product.id || crypto.randomUUID(),
-    };
+  const handleConfirmAddNew = useCallback(
+    (product: Product): void => {
+      const newProduct = {
+        ...product,
+        id: product.id || crypto.randomUUID(),
+      };
 
-    onAddProduct(newProduct);
-  }, []);
+      onAddProduct(newProduct);
+    },
+    [onAddProduct],
+  );
 
   /**
    * @description function handle confirm update a product of product modal
    *
    * @param {Object} product is a product updated
    */
-  const handleConfirmUpdate = useCallback((product: Product): void => {
-    onUpdateProduct(product);
-  }, []);
+  const handleConfirmUpdate = useCallback(
+    (product: Product): void => {
+      onUpdateProduct(product);
+    },
+    [onUpdateProduct],
+  );
 
   /**
    * @description function delete of confirm modal
@@ -128,21 +137,28 @@ export const HomePage = (): ReactElement => {
       onDeleteProduct(productItem.id);
       handleToggleNotificationModal();
     }
-  }, [productItem]);
+  }, [handleToggleNotificationModal, onDeleteProduct, productItem]);
 
   /**
    * @description function cancel/ close errors modal
    */
   const handleCancel = useCallback((): void => {
     handleToggleErrorModal();
-  }, []);
+  }, [handleToggleErrorModal]);
 
   useEffect(() => {
-    if (errorStatus) onUpdateErrorMessage(errorStatus.message);
-    if (errorType) onUpdateErrorMessage(errorType.message);
+    if (errorStatus) {
+      onUpdateErrorMessage(errorStatus.message);
+    }
 
-    if (errorMessage) handleToggleErrorModal(errorMessage);
-  }, [errorStatus, errorType, errorMessage]);
+    if (errorType) {
+      onUpdateErrorMessage(errorType.message);
+    }
+
+    if (errorMessage) {
+      handleToggleErrorModal(errorMessage);
+    }
+  }, [errorStatus, errorType, errorMessage, onUpdateErrorMessage, handleToggleErrorModal]);
 
   return (
     <>
