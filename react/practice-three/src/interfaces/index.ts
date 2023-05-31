@@ -1,3 +1,3 @@
-export type * from './product';
-export type * from './productStatus';
-export type * from './productType';
+export * from './product';
+export * from './productStatus';
+export * from './productType';
