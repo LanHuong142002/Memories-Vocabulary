@@ -46,7 +46,7 @@ const mockValue = {
 describe('Testing Details Body', () => {
   const handleOpenErrorModal = jest.fn();
   const handleSetProduct = jest.fn();
-  const Component = ({ children }: { children: ReactNode }) => (
+  const MockProvider = ({ children }: { children: ReactNode }) => (
     <BrowserRouter>
       <ProductContext.Provider value={mockValue}>{children}</ProductContext.Provider>
     </BrowserRouter>
@@ -54,13 +54,13 @@ describe('Testing Details Body', () => {
 
   it('Should render component correctly', () => {
     const { container } = render(
-      <Component>
+      <MockProvider>
         <DetailsBody
           onOpenErrorModal={handleOpenErrorModal}
           onSetProduct={handleSetProduct}
           product={MOCK_PRODUCT_DATA}
         />
-      </Component>,
+      </MockProvider>,
     );
 
     expect(container).toBeInTheDocument();
@@ -68,13 +68,13 @@ describe('Testing Details Body', () => {
 
   it('Should render component without statuses and types', () => {
     const { container } = render(
-      <Component>
+      <MockProvider>
         <DetailsBody
           onOpenErrorModal={handleOpenErrorModal}
           onSetProduct={handleSetProduct}
           product={MOCK_PRODUCT_DATA}
         />
-      </Component>,
+      </MockProvider>,
     );
 
     expect(container).toBeInTheDocument();
@@ -84,13 +84,13 @@ describe('Testing Details Body', () => {
     const file = new File(['image.jpg'], 'image.jpg', { type: 'image/png' });
     const mockSetProduct = jest.fn();
     const { container, getByPlaceholderText } = render(
-      <Component>
+      <MockProvider>
         <DetailsBody
           product={MOCK_PRODUCT_DATA}
           onOpenErrorModal={jest.fn()}
           onSetProduct={mockSetProduct}
         />
-      </Component>,
+      </MockProvider>,
     );
 
     const inputQuantity = getByPlaceholderText('Enter quantity...') as HTMLInputElement;
@@ -105,19 +105,18 @@ describe('Testing Details Body', () => {
       fireEvent.change(inputFile, { target: { files: [file] } });
     });
 
-    expect(mockSetProduct).toHaveBeenCalled();
     expect(mockSetProduct).toHaveBeenCalledWith(MOCK_PRODUCT_DATA);
   });
 
   it('Should call submit function when enter or click to button submit', () => {
     const { getByRole, getByPlaceholderText } = render(
-      <Component>
+      <MockProvider>
         <DetailsBody
           product={MOCK_PRODUCT_DATA}
           onOpenErrorModal={jest.fn()}
           onSetProduct={jest.fn()}
         />
-      </Component>,
+      </MockProvider>,
     );
     const button = getByRole('button', { name: 'Save' });
     const input = getByPlaceholderText('Enter name...');
@@ -127,7 +126,6 @@ describe('Testing Details Body', () => {
       fireEvent.click(button);
     });
 
-    expect(mockUpdateProduct).toBeCalled();
     expect(mockUpdateProduct).toBeCalledWith(MOCK_PRODUCT_DATA);
   });
 });
