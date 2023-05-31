@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductModal } from '@pages';
 import { MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
 import { act } from 'react-dom/test-utils';
@@ -73,31 +73,33 @@ describe('ProductModal', () => {
   });
 
   test('Should update product file when input file value changes', async () => {
-    const { container } = render(
-      <ProductModal
-        titleModal='Product Modal'
-        productItem={MOCK_PRODUCT_DATA}
-        statuses={MOCK_STATUS_API}
-        types={MOCK_TYPE_API}
-        onToggleProductModal={mockOnToggleProductModal}
-        onConfirm={mockOnConfirm}
-      />,
+    const { container } = await act(async () =>
+      render(
+        <ProductModal
+          titleModal='Product Modal'
+          productItem={MOCK_PRODUCT_DATA}
+          statuses={MOCK_STATUS_API}
+          types={MOCK_TYPE_API}
+          onToggleProductModal={mockOnToggleProductModal}
+          onConfirm={mockOnConfirm}
+        />,
+      ),
     );
 
     const inputFile = container.querySelector('input[name="image"]') as HTMLInputElement;
-    const file = new File(['dummy content'], 'dummy.jpg', { type: 'image/jpeg' });
+    const file = new File(['lorem'], 'lorem.jpg', { type: 'image/jpeg' });
     Object.defineProperty(inputFile, 'files', {
       value: [file],
     });
 
-    fireEvent.change(inputFile);
-
-    await waitFor(() => {
-      expect(inputFile.files).toHaveLength(1);
-      expect(inputFile.files![0]).toStrictEqual(file);
-      expect(mockOnToggleProductModal).not.toHaveBeenCalled();
-      expect(mockOnConfirm).not.toHaveBeenCalled();
+    await act(() => {
+      fireEvent.change(inputFile);
     });
+
+    expect(inputFile.files).toHaveLength(1);
+    expect(inputFile.files![0]).toStrictEqual(file);
+    expect(mockOnToggleProductModal).not.toHaveBeenCalled();
+    expect(mockOnConfirm).not.toHaveBeenCalled();
   });
 
   test('Should call onConfirm and onToggleProductModal when form is submitted', () => {
