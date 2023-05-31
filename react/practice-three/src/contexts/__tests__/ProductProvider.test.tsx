@@ -59,20 +59,24 @@ describe('Testing Product Context', () => {
       return (
         <>
           {products ? (
-            <p data-testid='product-name'>{products.length}</p>
+            products.map((item) => (
+              <p data-testid='product-name' key={item.id}>
+                {products.length}
+              </p>
+            ))
           ) : (
             <p>No products display</p>
           )}
         </>
       );
     };
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       <ProductContext.Provider value={mockValue}>
         <MockChildren />
       </ProductContext.Provider>,
     );
 
-    expect(getByTestId('product-name')).toHaveTextContent('1');
+    expect(getAllByTestId('product-name')).toHaveLength(1);
   });
 
   it('Should render products filtered when click the button', async () => {
