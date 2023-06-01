@@ -39,7 +39,7 @@ export const HomeBody = ({
   onProductItem,
   onToggleNotificationModal,
 }: HomeBodyProps): ReactElement => {
-  const { products, onSearchProducts } = useContext(ProductContext);
+  const { isLoading, products, onSearchProducts } = useContext(ProductContext);
   const [filter, setFilter] = useState<Filter>({
     name: '',
     statusesId: '',
@@ -74,6 +74,7 @@ export const HomeBody = ({
 
   return (
     <ProductTable
+      isLoading={isLoading}
       filters={filter}
       products={products || []}
       statuses={statuses || []}

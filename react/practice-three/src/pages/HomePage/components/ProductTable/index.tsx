@@ -13,6 +13,7 @@ import {
   Input,
   Select,
   Typography,
+  Spinner,
 } from '@components';
 import { ProductRow, ProductRowProps } from '@pages';
 
@@ -27,6 +28,7 @@ export interface Filters {
 
 interface ProductTableProps
   extends Pick<ProductRowProps, 'onEdit' | 'onSetProductItem' | 'onToggleNotification'> {
+  isLoading?: boolean;
   filters: Filters;
   statuses: ProductStatus[];
   types: ProductType[];
@@ -36,6 +38,7 @@ interface ProductTableProps
 
 export const ProductTable = memo(
   ({
+    isLoading,
     filters,
     statuses,
     types,
@@ -94,7 +97,9 @@ export const ProductTable = memo(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products?.length ? (
+        {isLoading ? (
+          <Spinner />
+        ) : products?.length ? (
           products.map((item) => (
             <ProductRow
               key={item.id}

@@ -14,6 +14,7 @@ import { useProduct } from '@hooks';
 import { deleteProduct, postProduct, updateProduct } from '@services';
 
 export interface ProductContextType {
+  isLoading?: boolean;
   errorMessage: string;
   products?: Product[];
   onAddProduct: (product: Product) => void;
@@ -28,7 +29,7 @@ export const ProductContext = createContext<ProductContextType>({} as ProductCon
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [param, setParam] = useState<string>('');
-  const { data: products, error } = useProduct(param);
+  const { data: products, error, isLoading } = useProduct(param);
 
   /**
    * @description function set message error
@@ -95,6 +96,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo(
     () => ({
+      isLoading,
       products,
       errorMessage,
       onAddProduct: handleAddProduct,
@@ -104,6 +106,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       onUpdateErrorMessage: handleUpdateErrorMessage,
     }),
     [
+      isLoading,
       products,
       errorMessage,
       handleAddProduct,
