@@ -48,7 +48,7 @@ export const HomeBody = ({
     brand: '',
     price: '',
   });
-  const debouncedSearchTerm = useDebounce<Filter>(filter, 1000);
+  const debouncedSearchTerm = useDebounce<Filter>(filter, 700);
 
   /**
    * @description function get value search when input change value

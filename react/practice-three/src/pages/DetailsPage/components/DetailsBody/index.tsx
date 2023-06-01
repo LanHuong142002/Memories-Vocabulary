@@ -48,7 +48,7 @@ export const DetailsBody = ({
   const { data: productItem, error: errorGetProductById } = useProductById(id || '');
 
   const [shouldValidateForm, setShouldValidateForm] = useState<boolean>(false);
-  const debouncedProduct = useDebounce<Product>(product, 700);
+  const debouncedProduct = useDebounce<Product>(product, 500);
 
   /**
    * @description function get value when input change their value

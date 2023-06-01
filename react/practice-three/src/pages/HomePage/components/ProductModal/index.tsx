@@ -49,7 +49,7 @@ export const ProductModal = ({
     },
   );
   const [shouldValidateForm, setShouldValidateForm] = useState<boolean>(false);
-  const debouncedProduct = useDebounce<Product>(product, 1000);
+  const debouncedProduct = useDebounce<Product>(product, 500);
 
   /**
    * @description function get value when input change their value
