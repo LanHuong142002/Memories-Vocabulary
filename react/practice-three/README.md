@@ -18,7 +18,7 @@
 - Apply ReactJS knowledge to practice (extends from practice #1 and practice #2)
 - Code splitting
 - Apply error boundaries to catch errors
-- Apply useContext and useReducer for state management
+- Apply useContext for state management
 - Apply SWR for fetching data - from a simple JSON-server
 - Unit test coverage as much as possible (at least 80%)
 
