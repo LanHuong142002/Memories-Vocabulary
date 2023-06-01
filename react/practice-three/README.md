@@ -36,7 +36,7 @@
 
 - Timeline
   - Estimate days: 9 days
-  - Actual days:
+  - Actual days: 16 days
 - Techniques Stack:
   - [HTML5](https://developer.mozilla.org/en-US/docs/Glossary/HTML5)/[CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
   - [JavaScript](https://www.w3schools.com/js/)
@@ -44,7 +44,7 @@
   - [ReactJS](https://reactjs.org/)
   - [Storybook](https://storybook.js.org/)
   - [JSON Server](https://github.com/typicode/json-server)
-  - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+  - [Jest](https://jestjs.io/)/[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - Development Tools:
   - [Vite](https://vitejs.dev/)
   - [Eslint](https://eslint.org/)
@@ -64,7 +64,7 @@
 ### Development Environment
 
 - Node v16.16
-- pnpm v8.2.0
+- pnpm v7.19.0
 - ReactJS v18.2.0
 - Storybook ReactJS v6.5.16
 - Vite v3.1.3
