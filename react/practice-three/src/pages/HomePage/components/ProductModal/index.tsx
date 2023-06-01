@@ -141,183 +141,156 @@ export const ProductModal = ({
     ],
   );
 
-  return useMemo(
-    () => (
-      <Modal title={titleModal} toggleModal={onToggleProductModal}>
-        <form className='form-wrapper' onSubmit={handleOnConfirm}>
-          <div className='form-body'>
-            <div className='form-image'>
-              <div className='form-image-wrapper'>
-                <Image
-                  url={product.image || loadImage('/images/default-image.png')}
-                  alt='image'
-                  size='xl'
-                  isCircle={true}
-                />
-                <InputFile
-                  url={loadImage('/icons/upload-icon.svg')}
-                  size='md'
-                  variant='primary'
-                  id='image'
-                  name='image'
-                  text='Click to upload'
-                  onChange={handleChangeInputFile}
-                />
-              </div>
+  return (
+    <Modal title={titleModal} toggleModal={onToggleProductModal}>
+      <form className='form-wrapper' onSubmit={handleOnConfirm}>
+        <div className='form-body'>
+          <div className='form-image'>
+            <div className='form-image-wrapper'>
+              <Image
+                url={product.image || loadImage('/images/default-image.png')}
+                alt='image'
+                size='xl'
+                isCircle={true}
+              />
+              <InputFile
+                url={loadImage('/icons/upload-icon.svg')}
+                size='md'
+                variant='primary'
+                id='image'
+                name='image'
+                text='Click to upload'
+                onChange={handleChangeInputFile}
+              />
+            </div>
+            <span className='error-message'>
+              {shouldValidateForm && validateStringField(debouncedProduct.image)}
+            </span>
+          </div>
+          <div className='form-group'>
+            <div className='form-control'>
+              <Input
+                title='Name'
+                name='name'
+                variant='primary'
+                value={product.name}
+                onChange={handleOnChange}
+                placeholder='Enter name...'
+              />
               <span className='error-message'>
-                {shouldValidateForm && validateStringField(debouncedProduct.image)}
+                {shouldValidateForm && validateStringField(debouncedProduct.name)}
               </span>
             </div>
-            <div className='form-group'>
-              <div className='form-control'>
-                <Input
-                  title='Name'
-                  name='name'
-                  variant='primary'
-                  value={product.name}
-                  onChange={handleOnChange}
-                  placeholder='Enter name...'
-                />
-                <span className='error-message'>
-                  {shouldValidateForm && validateStringField(debouncedProduct.name)}
-                </span>
-              </div>
-            </div>
+          </div>
 
-            <div className='form-group'>
-              <div className='form-control'>
-                <Input
-                  title='Quantity'
-                  name='quantity'
-                  variant='primary'
-                  type='number'
-                  value={String(product.quantity)}
-                  onChange={handleOnChange}
-                  placeholder='Enter quantity...'
-                />
-                <span className='error-message'>
-                  {shouldValidateForm &&
-                    validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY)}
-                </span>
-              </div>
+          <div className='form-group'>
+            <div className='form-control'>
+              <Input
+                title='Quantity'
+                name='quantity'
+                variant='primary'
+                type='number'
+                value={String(product.quantity)}
+                onChange={handleOnChange}
+                placeholder='Enter quantity...'
+              />
+              <span className='error-message'>
+                {shouldValidateForm &&
+                  validateNumberField(Number(debouncedProduct.quantity), PRODUCT_FIELDS.QUANTITY)}
+              </span>
             </div>
+          </div>
 
-            <div className='form-group'>
-              <div className='form-control'>
-                <Input
-                  title='Price'
-                  name='price'
-                  variant='primary'
-                  type='number'
-                  value={String(product.price)}
-                  onChange={handleOnChange}
-                />
-                <span className='error-message'>
-                  {shouldValidateForm && validateNumberField(Number(debouncedProduct.price))}
-                </span>
-              </div>
-            </div>
-            <div className='form-group form-group-split'>
-              <Select
-                title='Status'
-                options={statuses || []}
-                name='statusesId'
-                valueSelected={product.statusesId || ''}
+          <div className='form-group'>
+            <div className='form-control'>
+              <Input
+                title='Price'
+                name='price'
+                variant='primary'
+                type='number'
+                value={String(product.price)}
                 onChange={handleOnChange}
               />
+              <span className='error-message'>
+                {shouldValidateForm && validateNumberField(Number(debouncedProduct.price))}
+              </span>
+            </div>
+          </div>
+          <div className='form-group form-group-split'>
+            <Select
+              title='Status'
+              options={statuses || []}
+              name='statusesId'
+              valueSelected={product.statusesId || ''}
+              onChange={handleOnChange}
+            />
 
-              <Select
-                title='Types'
-                options={types || []}
-                name='typesId'
-                valueSelected={product.typesId || ''}
+            <Select
+              title='Types'
+              options={types || []}
+              name='typesId'
+              valueSelected={product.typesId || ''}
+              onChange={handleOnChange}
+            />
+          </div>
+
+          <div className='form-group form-group-split'>
+            <div className='form-control'>
+              <Input
+                title='Brand'
+                name='brand'
+                variant='primary'
+                value={product.brand}
                 onChange={handleOnChange}
               />
+              <span className='error-message'>
+                {shouldValidateForm && validateStringField(debouncedProduct.brand)}
+              </span>
             </div>
 
-            <div className='form-group form-group-split'>
-              <div className='form-control'>
-                <Input
-                  title='Brand'
-                  name='brand'
-                  variant='primary'
-                  value={product.brand}
-                  onChange={handleOnChange}
-                />
-                <span className='error-message'>
-                  {shouldValidateForm && validateStringField(debouncedProduct.brand)}
-                </span>
-              </div>
-
-              <div className='group-image'>
-                <p>Brand Image</p>
-                <div className='image-wrapper'>
-                  <div className='image-wrapper-content'>
-                    <Image
-                      size='s'
-                      isCircle={true}
-                      url={product.brandImage || loadImage('/images/default-image.png')}
-                    />
-                    <InputFile
-                      url={loadImage('/icons/cloud-icon.svg')}
-                      id='brandImage'
-                      name='brandImage'
-                      text='Upload photo'
-                      variant='secondary'
-                      size='xxs'
-                      onChange={handleChangeInputFile}
-                    />
-                  </div>
-                  <span className='error-message'>
-                    {shouldValidateForm && validateStringField(debouncedProduct.brandImage)}
-                  </span>
+            <div className='group-image'>
+              <p>Brand Image</p>
+              <div className='image-wrapper'>
+                <div className='image-wrapper-content'>
+                  <Image
+                    size='s'
+                    isCircle={true}
+                    url={product.brandImage || loadImage('/images/default-image.png')}
+                  />
+                  <InputFile
+                    url={loadImage('/icons/cloud-icon.svg')}
+                    id='brandImage'
+                    name='brandImage'
+                    text='Upload photo'
+                    variant='secondary'
+                    size='xxs'
+                    onChange={handleChangeInputFile}
+                  />
                 </div>
+                <span className='error-message'>
+                  {shouldValidateForm && validateStringField(debouncedProduct.brandImage)}
+                </span>
               </div>
             </div>
           </div>
-          <div className='form-cta'>
-            <Button
-              variant='secondary'
-              color='default'
-              label='Cancel'
-              type='button'
-              onClick={onToggleProductModal}
-            />
-            <Button
-              variant='tertiary'
-              color='success'
-              label='Confirm'
-              type='submit'
-              isDisabled={!!disabledButton}
-            />
-          </div>
-        </form>
-      </Modal>
-    ),
-    [
-      debouncedProduct.brand,
-      debouncedProduct.brandImage,
-      debouncedProduct.image,
-      debouncedProduct.name,
-      debouncedProduct.price,
-      debouncedProduct.quantity,
-      disabledButton,
-      handleChangeInputFile,
-      handleOnChange,
-      handleOnConfirm,
-      onToggleProductModal,
-      product.brand,
-      product.brandImage,
-      product.image,
-      product.name,
-      product.price,
-      product.quantity,
-      product.statusesId,
-      product.typesId,
-      shouldValidateForm,
-      statuses,
-      titleModal,
-      types,
-    ],
+        </div>
+        <div className='form-cta'>
+          <Button
+            variant='secondary'
+            color='default'
+            label='Cancel'
+            type='button'
+            onClick={onToggleProductModal}
+          />
+          <Button
+            variant='tertiary'
+            color='success'
+            label='Confirm'
+            type='submit'
+            isDisabled={!!disabledButton}
+          />
+        </div>
+      </form>
+    </Modal>
   );
 };
