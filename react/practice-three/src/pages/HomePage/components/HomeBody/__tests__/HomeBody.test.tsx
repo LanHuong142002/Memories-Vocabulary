@@ -1,11 +1,19 @@
-import { fireEvent, render } from '@testing-library/react';
-import { HomeBody } from '@pages';
-import { MOCK_PRODUCT_API, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
-import { Product, ProductStatus, ProductType } from '@interfaces';
 import { act } from 'react-dom/test-utils';
 import { ReactNode } from 'react';
-import { ProductContext, ProductContextType } from '@contexts';
 import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, render } from '@testing-library/react';
+
+// Constants
+import { MOCK_PRODUCT_API, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
+
+// Interfaces
+import { Product, ProductStatus, ProductType } from '@interfaces';
+
+// Contexts
+import { ProductContext, ProductContextType } from '@contexts';
+
+// Components
+import { HomeBody } from '@pages';
 
 const mockProductContext = {
   errorMessage: 'error',

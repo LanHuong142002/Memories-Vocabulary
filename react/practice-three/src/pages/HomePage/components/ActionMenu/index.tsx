@@ -1,10 +1,10 @@
 import { ReactElement, forwardRef } from 'react';
 
-// Styles
-import './index.css';
-
 // Components
 import { Button } from '@components';
+
+// Styles
+import './index.css';
 
 interface ActionMenuProps {
   onEdit: () => void;

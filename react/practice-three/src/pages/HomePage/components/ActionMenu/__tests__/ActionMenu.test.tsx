@@ -1,4 +1,6 @@
 import { render, fireEvent } from '@testing-library/react';
+
+// Components
 import { ActionMenu } from '@pages';
 
 describe('Testing Action Menu component', () => {

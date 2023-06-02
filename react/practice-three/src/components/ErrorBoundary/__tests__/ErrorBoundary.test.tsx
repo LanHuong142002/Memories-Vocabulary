@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+
+// Components
 import { ErrorBoundary } from '@components';
 
 describe('Testing ErrorBoundary class', () => {

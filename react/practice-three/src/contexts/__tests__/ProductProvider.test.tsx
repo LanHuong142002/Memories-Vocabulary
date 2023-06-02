@@ -1,10 +1,14 @@
-import { fireEvent, render } from '@testing-library/react';
-import { ProductContext, ProductProvider } from '@contexts';
-import { useContext } from 'react';
-import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, URL_API } from '@constants';
-import { act } from 'react-test-renderer';
 import * as services from '@services';
 import * as useSWR from 'swr';
+import { act } from 'react-test-renderer';
+import { useContext } from 'react';
+import { fireEvent, render } from '@testing-library/react';
+
+// Contexts
+import { ProductContext, ProductProvider } from '@contexts';
+
+// Components
+import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, URL_API } from '@constants';
 
 const mockValue = {
   errorMessage: 'Error',

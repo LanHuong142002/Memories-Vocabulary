@@ -1,5 +1,9 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
+// Constants
 import { MOCK_TYPE_API } from '@constants';
+
+// Components
 import { Select } from '@components';
 
 describe('Testing Select component', () => {

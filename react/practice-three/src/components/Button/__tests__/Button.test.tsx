@@ -1,4 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
+// Components
 import { Button, ButtonProps } from '@components';
 
 describe('Testing button component', () => {

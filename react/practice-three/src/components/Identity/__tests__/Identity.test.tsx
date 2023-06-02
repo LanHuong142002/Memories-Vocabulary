@@ -1,4 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
+
+// Components
 import { Identity } from '@components';
 
 describe('Testing identity component', () => {

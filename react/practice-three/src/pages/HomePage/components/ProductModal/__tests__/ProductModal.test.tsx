@@ -1,8 +1,14 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ProductModal } from '@pages';
-import { MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
 import { act } from 'react-dom/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+
+// Interfaces
 import { ProductStatus, ProductType } from '@interfaces';
+
+// Constants
+import { MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
+
+// Components
+import { ProductModal } from '@pages';
 
 jest.mock('@helpers', () => ({
   convertBase64: jest.fn().mockResolvedValue('image test'),

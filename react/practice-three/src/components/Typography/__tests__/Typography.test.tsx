@@ -1,4 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
+
+// Components
 import { Typography, TypographyProps } from '@components';
 
 describe('Testing Typography component', () => {

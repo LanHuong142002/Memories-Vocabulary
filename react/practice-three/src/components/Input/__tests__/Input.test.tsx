@@ -1,4 +1,6 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+
+// Components
 import { Input, InputProps } from '@components';
 
 describe('Testing Input component', () => {

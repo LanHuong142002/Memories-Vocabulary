@@ -1,4 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
+
+// Components
 import { Label, LabelProps } from '@components';
 
 describe('Testing Label component', () => {
