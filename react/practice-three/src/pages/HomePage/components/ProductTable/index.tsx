@@ -96,8 +96,12 @@ export const ProductTable = ({
       </TableRow>
     </TableHeader>
     <TableBody>
-      {isLoading ? (
-        <Spinner />
+      {!isLoading ? (
+        <TableRow classTableRow='spinner'>
+          <TableCell>
+            <Spinner />
+          </TableCell>
+        </TableRow>
       ) : products?.length ? (
         products.map((item) => (
           <ProductRow
