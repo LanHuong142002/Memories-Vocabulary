@@ -63,7 +63,7 @@ export const DetailsBody = ({
       if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
         value = Number(e.target.value);
       } else {
-        value = e.target.value;
+        value = e.target.value.trim();
       }
 
       if (name) {
