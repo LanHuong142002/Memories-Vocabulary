@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+
+// Components
 import { Header } from '@layouts';
 
 describe('Testing Header component', () => {

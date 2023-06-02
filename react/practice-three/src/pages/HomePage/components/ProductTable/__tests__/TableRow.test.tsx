@@ -1,7 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ProductRow, ProductRowProps } from '@pages';
-import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+
+// Components
+import { ProductRow, ProductRowProps } from '@pages';
 
 describe('Testing ProductRow', () => {
   const mockProduct: ProductRowProps = {

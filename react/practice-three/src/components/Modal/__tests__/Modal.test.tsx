@@ -1,4 +1,6 @@
 import { render, fireEvent } from '@testing-library/react';
+
+// Components
 import { Modal } from '@components';
 
 describe('Testing Modal component', () => {

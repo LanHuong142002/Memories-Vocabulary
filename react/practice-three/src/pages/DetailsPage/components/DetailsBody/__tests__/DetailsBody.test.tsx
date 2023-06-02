@@ -1,10 +1,16 @@
-import { fireEvent, render } from '@testing-library/react';
-import { DetailsBody } from '@pages';
-import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
-import { BrowserRouter } from 'react-router-dom';
-import { ProductContext } from '@contexts';
-import { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
+import { ReactNode } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, render } from '@testing-library/react';
+
+// Constants
+import { MOCK_PRODUCT_API, MOCK_PRODUCT_DATA, MOCK_STATUS_API, MOCK_TYPE_API } from '@constants';
+
+// Contexts
+import { ProductContext } from '@contexts';
+
+// Components
+import { DetailsBody } from '@pages';
 
 jest.mock('@hooks', () => ({
   useStatus: jest.fn(() => {

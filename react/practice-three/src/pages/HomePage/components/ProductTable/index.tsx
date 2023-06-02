@@ -96,7 +96,7 @@ export const ProductTable = ({
       </TableRow>
     </TableHeader>
     <TableBody>
-      {!isLoading ? (
+      {isLoading ? (
         <TableRow classTableRow='spinner'>
           <TableCell>
             <Spinner />

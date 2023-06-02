@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+
+// Components
 import { Table } from '@components';
 
 describe('Testing Table component', () => {

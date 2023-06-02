@@ -1,4 +1,6 @@
 import { render } from '@testing-library/react';
+
+// Components
 import { HomeLayout } from '@layouts';
 
 describe('Testing DetailsLayout', () => {

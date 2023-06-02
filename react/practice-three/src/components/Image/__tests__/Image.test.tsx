@@ -1,4 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
+// Components
 import { Image, ImageProps } from '@components';
 
 describe('Testing Image component', () => {
