@@ -97,7 +97,7 @@ export const ProductTable = memo(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {!isLoading ? (
+        {isLoading ? (
           <TableRow classTableRow='spinner'>
             <TableCell>
               <Spinner />
