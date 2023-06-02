@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactElement, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, ReactElement, useMemo, useState } from 'react';
 
 // Constants
 import { MOCK_PRODUCT_DATA, PRODUCT_FIELDS } from '@constants';
@@ -56,51 +56,45 @@ export const ProductModal = ({
    *
    * @param {ChangeEvent} e is event of input or select
    */
-  const handleOnChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-      const name = e.target.name;
-      let value: number | string;
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    const name = e.target.name;
+    let value: number | string;
 
-      if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
-        value = Number(e.target.value);
-      } else {
-        value = e.target.value;
-      }
+    if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
+      value = Number(e.target.value);
+    } else {
+      value = e.target.value;
+    }
 
-      if (name) {
-        setProduct({
-          ...product,
-          [name]: value,
-        });
-      }
-      setShouldValidateForm(true);
-    },
-    [product],
-  );
+    if (name) {
+      setProduct({
+        ...product,
+        [name]: value,
+      });
+    }
+    setShouldValidateForm(true);
+  };
 
   /**
    * @description function get file when value of input file change
    *
    * @param {ChangeEvent} e is event of input file
    */
-  const handleChangeInputFile = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
-      const name = e.target.name;
-      const [file] = e.target.files || [];
+  const handleChangeInputFile = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const name = e.target.name;
+    const [file] = e.target.files || [];
 
-      if (file) {
-        const image = await convertBase64(file);
+    if (file) {
+      const image = await convertBase64(file);
 
-        if (image) {
-          setProduct({
-            ...product,
-            [name]: image,
-          });
-        }
+      if (image) {
+        setProduct({
+          ...product,
+          [name]: image,
+        });
       }
-    },
-    [product],
-  );
+    }
+  };
 
   /**
    * @description function that saves the data taken from the inputs
@@ -108,14 +102,11 @@ export const ProductModal = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnConfirm = useCallback(
-    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-      e.preventDefault();
-      onConfirm(product);
-      onToggleProductModal();
-    },
-    [product, onConfirm, onToggleProductModal],
-  );
+  const handleOnConfirm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    onConfirm(product);
+    onToggleProductModal();
+  };
 
   /**
    * @description function check if form have any errors the button

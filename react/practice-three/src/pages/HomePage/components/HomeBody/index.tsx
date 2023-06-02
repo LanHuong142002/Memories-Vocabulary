@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useCallback, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, ReactElement, useContext, useEffect, useState } from 'react';
 
 // Interfaces
 import { Product, ProductStatus, ProductType } from '@interfaces';
@@ -55,7 +55,7 @@ export const HomeBody = ({
    *
    * @param {ChangeEvent} e is event of input
    */
-  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
 
     if (name) {
@@ -66,7 +66,7 @@ export const HomeBody = ({
         };
       });
     }
-  }, []);
+  };
 
   useEffect(() => {
     onSearchProducts(generateSearchParam(debouncedSearchTerm));

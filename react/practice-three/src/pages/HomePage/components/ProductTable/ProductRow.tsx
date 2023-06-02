@@ -45,13 +45,13 @@ export const ProductRow = memo(
      *
      * @param {Event} e is event click
      */
-    const handleShowHideMenuPopup = useCallback((event: Event) => {
+    const handleShowHideMenuPopup = (event: Event) => {
       if (popup.current && !popup.current.contains(event.target as Node)) {
         setMenuPopup(false);
       } else if (iconImage.current && iconImage.current?.contains(event.target as Node)) {
         setMenuPopup((prev) => !prev);
       }
-    }, []);
+    };
 
     /**
      * @description function calls the API to get the product's data by id.

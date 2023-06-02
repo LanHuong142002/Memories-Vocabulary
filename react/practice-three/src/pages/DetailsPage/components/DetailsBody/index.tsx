@@ -55,51 +55,45 @@ export const DetailsBody = ({
    *
    * @param {ChangeEvent} e is event of input or select
    */
-  const handleOnChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-      const name = e.target.name;
-      let value: number | string;
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    const name = e.target.name;
+    let value: number | string;
 
-      if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
-        value = Number(e.target.value);
-      } else {
-        value = e.target.value;
-      }
+    if (name === PRODUCT_FIELDS.QUANTITY || name === PRODUCT_FIELDS.PRICE) {
+      value = Number(e.target.value);
+    } else {
+      value = e.target.value;
+    }
 
-      if (name) {
-        onSetProduct({
-          ...product,
-          [name]: value,
-        });
-      }
-      setShouldValidateForm(true);
-    },
-    [product, onSetProduct],
-  );
+    if (name) {
+      onSetProduct({
+        ...product,
+        [name]: value,
+      });
+    }
+    setShouldValidateForm(true);
+  };
 
   /**
    * @description function get file when value of input file change
    *
    * @param {ChangeEvent} e is event of input file
    */
-  const handleChangeInputFile = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
-      const name = e.target.name;
-      const [file] = e.target.files || [];
+  const handleChangeInputFile = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const name = e.target.name;
+    const [file] = e.target.files || [];
 
-      if (file) {
-        const image = await convertBase64(file);
+    if (file) {
+      const image = await convertBase64(file);
 
-        if (image) {
-          onSetProduct({
-            ...product,
-            [name]: image,
-          });
-        }
+      if (image) {
+        onSetProduct({
+          ...product,
+          [name]: image,
+        });
       }
-    },
-    [product, onSetProduct],
-  );
+    }
+  };
 
   /**
    * @description function that saves the data taken from the inputs
@@ -107,13 +101,10 @@ export const DetailsBody = ({
    *
    * @param {SubmitEvent} e is submit event of form
    */
-  const handleOnSave = useCallback(
-    (e: FormEvent<HTMLFormElement>, productItem: Product): void => {
-      e.preventDefault();
-      onUpdateProduct(productItem);
-    },
-    [onUpdateProduct],
-  );
+  const handleOnSave = (e: FormEvent<HTMLFormElement>, productItem: Product): void => {
+    e.preventDefault();
+    onUpdateProduct(productItem);
+  };
 
   /**
    * @description function redirect to home page
