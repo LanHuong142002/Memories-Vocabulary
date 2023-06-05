@@ -54,12 +54,12 @@ export const HomePage = (): ReactElement => {
   /**
    * @description function handle error modal
    */
-  const handleToggleErrorModal = useCallback((message?: string): void => {
+  const handleToggleErrorModal = (message?: string): void => {
     setOpenErrorModal({
       status: !!message,
       message: message || '',
     });
-  }, []);
+  };
 
   /**
    * @description function handle notification modal
@@ -71,9 +71,9 @@ export const HomePage = (): ReactElement => {
   /**
    * @description function handle new product modal
    */
-  const handleToggleNewProductModal = useCallback((): void => {
+  const handleToggleNewProductModal = (): void => {
     setOpenNewProductModal((prev) => !prev);
-  }, []);
+  };
 
   /**
    * @description function set product to product state
@@ -103,48 +103,42 @@ export const HomePage = (): ReactElement => {
    *
    * @param {Object} product is a new product
    */
-  const handleConfirmAddNew = useCallback(
-    (product: Product): void => {
-      const newProduct = {
-        ...product,
-        id: product.id || crypto.randomUUID(),
-      };
+  const handleConfirmAddNew = (product: Product): void => {
+    const newProduct = {
+      ...product,
+      id: product.id || crypto.randomUUID(),
+    };
 
-      onAddProduct(newProduct);
-    },
-    [onAddProduct],
-  );
+    onAddProduct(newProduct);
+  };
 
   /**
    * @description function handle confirm update a product of product modal
    *
    * @param {Object} product is a product updated
    */
-  const handleConfirmUpdate = useCallback(
-    (product: Product): void => {
-      onUpdateProduct(product);
-    },
-    [onUpdateProduct],
-  );
+  const handleConfirmUpdate = (product: Product): void => {
+    onUpdateProduct(product);
+  };
 
   /**
    * @description function delete of confirm modal
    *
    * @param {String} id is id of product which is selected
    */
-  const handleConfirmDelete = useCallback(async (): Promise<void> => {
+  const handleConfirmDelete = (): void => {
     if (productItem && productItem.id) {
       onDeleteProduct(productItem.id);
       handleToggleNotificationModal();
     }
-  }, [handleToggleNotificationModal, onDeleteProduct, productItem]);
+  };
 
   /**
    * @description function cancel/ close errors modal
    */
-  const handleCancel = useCallback((): void => {
+  const handleCancel = (): void => {
     handleToggleErrorModal();
-  }, [handleToggleErrorModal]);
+  };
 
   useEffect(() => {
     if (errorStatus) {
