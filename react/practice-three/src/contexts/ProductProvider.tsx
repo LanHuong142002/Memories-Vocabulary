@@ -30,7 +30,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [param, setParam] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: products, error, isLoading: isLoadingProducts } = useProduct(param);
+  const { data: products, error, isLoading: isFetching } = useProduct(param);
 
   /**
    * @description function set message error
@@ -100,8 +100,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setErrorMessage(error.message);
     }
 
-    setIsLoading(isLoadingProducts);
-  }, [error, isLoadingProducts]);
+    setIsLoading(isFetching);
+  }, [error, isFetching]);
 
   const value = useMemo(
     () => ({
