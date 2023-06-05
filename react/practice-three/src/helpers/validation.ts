@@ -26,7 +26,7 @@ export const isMatchRegex = (regex: RegExp, value: string): boolean => regex.tes
  *
  * @returns {boolean}
  */
-export const isPositiveNumber = (value: number): boolean => value >= 0;
+export const isPositiveNumber = (value: number): boolean => value > 0;
 
 /**
  * @description function validate number filed
@@ -60,8 +60,6 @@ export const validateStringField = (value: string): string => {
   switch (true) {
     case isEmpty(value):
       return MESSAGE_ERRORS.EMPTY_FIELD;
-    case isMatchRegex(REGEX.EMPTY_SPACE, value):
-      return MESSAGE_ERRORS.EMPTY_SPACE;
     default:
       return '';
   }
