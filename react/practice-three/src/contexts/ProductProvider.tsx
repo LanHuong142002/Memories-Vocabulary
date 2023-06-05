@@ -29,7 +29,8 @@ export const ProductContext = createContext<ProductContextType>({} as ProductCon
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [param, setParam] = useState<string>('');
-  const { data: products, error, isLoading } = useProduct(param);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data: products, error, isLoading: isFetching } = useProduct(param);
 
   /**
    * @description function set message error
@@ -53,7 +54,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function add new product
    */
   const handleAddProduct = useCallback(async (product: Product): Promise<void> => {
+    setIsLoading(true);
     const response = await postProduct(product);
+    setIsLoading(false);
 
     if (typeof response === 'string') {
       setErrorMessage(response);
@@ -66,7 +69,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function delete product
    */
   const handleDeleteProduct = useCallback(async (id: string): Promise<void> => {
+    setIsLoading(true);
     const response = await deleteProduct(id);
+    setIsLoading(false);
 
     if (typeof response === 'string') {
       setErrorMessage(response);
@@ -79,7 +84,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
    * @description function update product
    */
   const handleUpdateProduct = useCallback(async (product: Product): Promise<void> => {
+    setIsLoading(true);
     const response = await updateProduct(product);
+    setIsLoading(false);
 
     if (typeof response === 'string') {
       setErrorMessage(response);
@@ -92,7 +99,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (error) {
       setErrorMessage(error.message);
     }
-  }, [error]);
+
+    setIsLoading(isFetching);
+  }, [error, isFetching]);
 
   const value = useMemo(
     () => ({
