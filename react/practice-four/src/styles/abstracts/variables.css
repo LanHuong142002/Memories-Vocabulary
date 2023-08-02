@@ -1,1 +1,71 @@
+:root {
+  /* Colors */
+  --cl-dark-1: #000;
+  --cl-dark-2: #333;
+  --cl-dark-3: #555;
+  --cl-dark-4: #888;
+  --cl-dark-5: #ddd;
+  --cl-dark-6: #f9f9f9;
 
+  --cl-light-1: #fff;
+  --cl-light-2: #f3f4f8;
+  --cl-light-3: #f5f5f5;
+
+  --cl-red-1: #f30000;
+  --cl-red-2: #a94442;
+  --cl-red-3: #d9534f;
+  --cl-red-4: #f76b6b;
+  --cl-red-5: #f2dede;
+
+  --cl-green-1: #5cb85c;
+  --cl-green-2: #dff0d8;
+
+  --cl-cyan-1: #5bc0de;
+  --cl-cyan-2: #d9edf7;
+
+  --cl-orange-1: #ff7300;
+  --cl-orange-2: #f0ad4e;
+
+  --cl-yellow-1: #fcf8e3;
+  --cl-yellow-2: #faebcc;
+
+  --cl-opacity-primary: rgba(56, 67, 84, 0.05);
+  --cl-opacity-secondary: rgba(0, 0, 0, 0.1);
+  --cl-opacity-tertiary: rgba(243, 244, 248, 0.65);
+
+  /* Button colors */
+  --cl-button-primary: var(--cl-orange-1);
+
+  /* Text colors */
+  --cl-text-default: var(--cl-dark-2);
+  --cl-text-primary: var(--cl-dark-1);
+  --cl-text-secondary: var(--cl-light-1);
+  --cl-text-tertiary: var(--cl-dark-4);
+  --cl-text-quaternary: var(--cl-orange-1);
+  --cl-text-error: var(--cl-red-1);
+
+  /* Input colors */
+  --cl-input-border-primary: var(--cl-orange-1);
+  --cl-input-default: var(--cl-light-3);
+  --cl-input-error: var(--cl-red-5);
+  --cl-input-success: var(--cl-green-2);
+
+  /* Font sizes */
+  --fs-xxl: 30px;
+  --fs-xl: 24px;
+  --fs-l: 20px;
+  --fs-m: 18px;
+  --fs-s: 15px;
+  --fs-xs: 14px;
+  --fs-xxs: 12px;
+
+  /* Font weight */
+  --fw-bold: 700;
+  --fw-semiBold: 500;
+  --fw-regular: 400;
+  --fw-light: 300;
+
+  /* Fonts */
+  --font-primary: 'HelveticaNeue';
+  --font-default: 'Helvetica, Arial, sans-serif';
+}
