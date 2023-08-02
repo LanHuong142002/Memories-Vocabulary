@@ -1,0 +1,29 @@
+.btn {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: var(--fs-s);
+  color: var(--cl-text-secondary);
+  font-weight: var(--fw-light);
+  background-color: var(--cl-button-primary);
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.btn.btn-size-m {
+  font-size: var(--fs-m);
+}
+
+.btn.btn-size-s {
+  font-size: var(--fs-s);
+}
+
+.btn.btn-size-xs {
+  font-size: var(--fs-s);
+  padding: 2px 15px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
