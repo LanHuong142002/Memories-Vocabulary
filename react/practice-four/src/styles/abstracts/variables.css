@@ -5,7 +5,8 @@
   --cl-dark-3: #555;
   --cl-dark-4: #888;
   --cl-dark-5: #ddd;
-  --cl-dark-6: #f9f9f9;
+  --cl-dark-6: #e8e8e8;
+  --cl-dark-7: #f9f9f9;
 
   --cl-light-1: #fff;
   --cl-light-2: #f3f4f8;
@@ -66,6 +67,6 @@
   --fw-light: 300;
 
   /* Fonts */
-  --font-primary: 'HelveticaNeue';
-  --font-default: 'Helvetica, Arial, sans-serif';
+  --font-primary: HelveticaNeue;
+  --font-default: Helvetica, Arial, sans-serif;
 }

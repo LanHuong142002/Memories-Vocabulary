@@ -31,6 +31,5 @@
 }
 
 body {
-  height: 100vh;
   font-family: var(--font-primary), var(--font-default);
 }
