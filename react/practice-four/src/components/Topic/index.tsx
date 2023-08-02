@@ -2,18 +2,18 @@
 import './index.css';
 
 export interface TopicProps {
+  isAddNew?: boolean;
+  quantity?: number;
   text: string;
   variant?: 'default' | 'selected';
-  quantity?: number;
-  isAddNew?: boolean;
   onClick: () => void;
 }
 
 export const Topic = ({
+  isAddNew = false,
+  quantity = 0,
   text,
   variant = 'default',
-  quantity = 0,
-  isAddNew = false,
   onClick,
 }: TopicProps) => (
   <div className={`topic topic-${variant}`} onClick={onClick}>
