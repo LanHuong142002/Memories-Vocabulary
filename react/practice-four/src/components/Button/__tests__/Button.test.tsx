@@ -28,7 +28,7 @@ describe('Test button component', () => {
     expect(handleClick).toHaveBeenCalled();
   });
 
-  it('Should not call onClick when button disabled component', () => {
+  it('Should not call onClick when button disabled', () => {
     const handleClick = jest.fn();
     const { getByText } = render(
       <Button {...defaultProps} onClick={handleClick} isDisabled={true} />,
