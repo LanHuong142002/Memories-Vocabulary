@@ -1,0 +1,29 @@
+import { fireEvent, render } from '@testing-library/react';
+
+import { Topic } from '..';
+
+describe('Test topic component', () => {
+  const handleClick = jest.fn();
+
+  const defaultProps = {
+    name: 'School',
+    quantity: 10,
+    isAddNew: true,
+    onClick: handleClick,
+  };
+
+  it('Should render topic component', () => {
+    const { container } = render(<Topic {...defaultProps} />);
+
+    expect(container).toBeInTheDocument();
+  });
+
+  it('Should call onClick when click topic component', () => {
+    const { getByText } = render(<Topic {...defaultProps} />);
+
+    const topic = getByText('School (10)');
+    fireEvent.click(topic);
+
+    expect(handleClick).toHaveBeenCalled();
+  });
+});
