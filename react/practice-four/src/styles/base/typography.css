@@ -1,1 +1,35 @@
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: '../../assets/fonts/HelveticaNeue-Bold.otf';
+  font-weight: var(--fw-bold);
+  font-style: 'normal';
+  font-display: 'swap';
+}
 
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: '../../assets/fonts/HelveticaNeue-SemiBold.otf';
+  font-weight: var(--fw-semiBold);
+  font-style: 'normal';
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: '../../assets/fonts/HelveticaNeue-Regular.otf';
+  font-weight: var(--fw-regular);
+  font-style: 'normal';
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: '../../assets/fonts/HelveticaNeue-Light.otf';
+  font-weight: var(--fw-light);
+  font-style: 'normal';
+  font-display: 'swap';
+}
+
+body {
+  font-family: var(--font-primary), var(--font-default);
+}

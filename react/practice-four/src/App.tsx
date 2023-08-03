@@ -1,1 +1,1 @@
-export const App = () => <div>practice</div>;
+export const App = () => <main className='container'></main>;
