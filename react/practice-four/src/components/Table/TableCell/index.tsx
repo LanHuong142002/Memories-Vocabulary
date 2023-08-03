@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, memo } from 'react';
 
 // Styles
 import './index.css';
@@ -8,7 +8,7 @@ interface TableCellProps {
   children?: ReactNode;
 }
 
-export const TableCell = ({ children, tagName = 'td' }: TableCellProps): ReactElement => {
+export const TableCell = memo(({ children, tagName = 'td' }: TableCellProps): ReactElement => {
   const TagName = tagName;
 
   return (
@@ -16,4 +16,4 @@ export const TableCell = ({ children, tagName = 'td' }: TableCellProps): ReactEl
       {children}
     </TagName>
   );
-};
+});

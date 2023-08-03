@@ -2,3 +2,8 @@ export * from './Topic';
 export * from './Label';
 export * from './Button';
 export * from './Spinner';
+export * from './Table';
+export * from './Table/TableBody';
+export * from './Table/TableCell';
+export * from './Table/TableHeader';
+export * from './Table/TableRow';
