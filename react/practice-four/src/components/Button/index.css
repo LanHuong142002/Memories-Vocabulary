@@ -1,25 +1,25 @@
 .btn {
   cursor: pointer;
   padding: 10px 20px;
-  font-size: var(--fs-s);
-  color: var(--cl-text-secondary);
-  font-weight: var(--fw-light);
-  background-color: var(--cl-button-primary);
+  font-size: var(--font-size-s);
+  color: var(--text-secondary-color);
+  font-weight: var(--font-weight-light);
+  background-color: var(--button-primary-color);
   border: none;
   border-radius: 3px;
   box-sizing: border-box;
 }
 
 .btn.btn-size-m {
-  font-size: var(--fs-m);
+  font-size: var(--font-size-m);
 }
 
 .btn.btn-size-s {
-  font-size: var(--fs-s);
+  font-size: var(--font-size-s);
 }
 
 .btn.btn-size-xs {
-  font-size: var(--fs-s);
+  font-size: var(--font-size-s);
   padding: 2px 15px;
 }
 

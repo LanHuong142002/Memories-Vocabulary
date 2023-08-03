@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
+
+// Styles
 import './index.css';
 
 export interface ButtonProps {
@@ -9,14 +11,15 @@ export interface ButtonProps {
   children?: ReactNode;
 }
 
-export const Button = ({
-  isDisabled = false,
-  label,
-  size = 's',
-  onClick,
-  children,
-}: ButtonProps) => (
-  <button type='button' className={`btn btn-size-${size}`} onClick={onClick} disabled={isDisabled}>
-    {children || label}
-  </button>
+export const Button = memo(
+  ({ isDisabled = false, label, size = 's', onClick, children }: ButtonProps) => (
+    <button
+      type='button'
+      className={`btn btn-size-${size}`}
+      onClick={onClick}
+      disabled={isDisabled}
+    >
+      {children || label}
+    </button>
+  ),
 );
