@@ -11,14 +11,14 @@
 }
 
 .topic-default {
-  background-color: var(--cl-opacity-tertiary);
-  border: 2px solid var(--cl-opacity-secondary);
-  color: var(--cl-dark-secondary);
+  background-color: var(--color-opacity-tertiary);
+  border: 2px solid var(--color-opacity-secondary);
+  color: var(--color-black-200);
 }
 
 .topic-selected {
-  border: 2px solid var(--cl-orange-1);
-  color: var(--cl-text-quaternary);
+  border: 2px solid var(--color-orange-100);
+  color: var(--text-quaternary-color);
 }
 
 .topic .topic-icon {
@@ -38,13 +38,13 @@
 }
 
 .topic-selected .topic-icon {
-  color: var(--cl-text-secondary);
-  background-color: var(--cl-orange-1);
+  color: var(--text-secondary-color);
+  background-color: var(--color-orange-100);
 }
 
 .topic-default:hover .topic-icon {
-  color: var(--cl-light-1);
-  background-color: var(--cl-dark-6);
+  color: var(--color-white-100);
+  background-color: var(--color-white-400);
 }
 
 .topic .topic-icon span,
