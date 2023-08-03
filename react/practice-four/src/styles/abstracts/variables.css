@@ -6,6 +6,8 @@
   --color-black-400: #888;
   --color-black-500: #ddd;
 
+  --color-grey-100: #786f6f;
+
   --color-white-100: #fff;
   --color-white-200: #f3f4f8;
   --color-white-300: #f5f5f5;
@@ -33,6 +35,7 @@
   --color-opacity-primary: rgba(56, 67, 84, 0.05);
   --color-opacity-secondary: rgba(0, 0, 0, 0.1);
   --color-opacity-tertiary: rgba(243, 244, 248, 0.65);
+  --color-opacity-quaternary: rgba(255, 255, 255, 0.8);
 
   /* Button colors */
   --button-primary-color: var(--color-orange-100);
