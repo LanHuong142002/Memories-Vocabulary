@@ -6,8 +6,9 @@
   --color-black-400: #888;
   --color-black-500: #ddd;
 
-  --color-gray-100: #868e96;
-  --color-gray-200: #343a40;
+  --color-grey-100: #786f6f;
+  --color-gray-200: #868e96;
+  --color-gray-300: #343a40;
 
   --color-white-100: #fff;
   --color-white-200: #f3f4f8;
@@ -36,6 +37,7 @@
   --color-opacity-primary: rgba(56, 67, 84, 0.05);
   --color-opacity-secondary: rgba(0, 0, 0, 0.1);
   --color-opacity-tertiary: rgba(243, 244, 248, 0.65);
+  --color-opacity-quaternary: rgba(255, 255, 255, 0.8);
 
   /* Background colors */
   --background-primary-color: #1a1b1e;
