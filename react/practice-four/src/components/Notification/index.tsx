@@ -1,3 +1,6 @@
+import { memo } from 'react';
+
+// Styles
 import './index.css';
 
 interface NotificationProps {
@@ -6,9 +9,9 @@ interface NotificationProps {
   theme?: 'dark' | 'light';
 }
 
-export const Notification = ({ theme = 'dark', description, title }: NotificationProps) => (
+export const Notification = memo(({ theme = 'dark', description, title }: NotificationProps) => (
   <div className={`notification notification-${theme}`}>
     <p className='title'>{title}</p>
     <p className='description'>{description}</p>
   </div>
-);
+));
