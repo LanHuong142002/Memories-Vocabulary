@@ -1,3 +1,6 @@
+import { memo } from 'react';
+
+// Styles
 import './index.css';
 
 interface LabelProps {
@@ -5,8 +8,8 @@ interface LabelProps {
   color: 'success' | 'failed' | 'normal';
 }
 
-export const Label = ({ name, color }: LabelProps) => (
+export const Label = memo(({ name, color }: LabelProps) => (
   <div className={`label label-${color}`}>
     <span>{name}</span>
   </div>
-);
+));
