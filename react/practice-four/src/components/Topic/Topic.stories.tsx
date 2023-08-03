@@ -20,7 +20,7 @@ type Story = StoryObj<typeof Topic>;
 
 export const Default: Story = {
   args: {
-    text: 'School',
+    name: 'School',
     variant: 'default',
     quantity: 10,
   },
@@ -28,7 +28,7 @@ export const Default: Story = {
 
 export const Selected: Story = {
   args: {
-    text: 'School',
+    name: 'School',
     variant: 'selected',
   },
 };

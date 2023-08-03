@@ -4,7 +4,7 @@ import './index.css';
 export interface TopicProps {
   isAddNew?: boolean;
   quantity?: number;
-  text: string;
+  name: string;
   variant?: 'default' | 'selected';
   onClick: () => void;
 }
@@ -12,14 +12,14 @@ export interface TopicProps {
 export const Topic = ({
   isAddNew = false,
   quantity = 0,
-  text,
+  name,
   variant = 'default',
   onClick,
 }: TopicProps) => (
   <div className={`topic topic-${variant}`} onClick={onClick}>
-    <span>{`${text} ${quantity > 0 ? `(${quantity})` : ''}`}</span>
+    <span>{`${name} ${quantity > 0 ? `(${quantity})` : ''}`}</span>
     <div className='topic-icon'>
-      <span>{isAddNew ? '+' : '✔'}</span>
+      <span>{isAddNew ? '\u002b' : '\u2714'}</span>
     </div>
   </div>
 );
