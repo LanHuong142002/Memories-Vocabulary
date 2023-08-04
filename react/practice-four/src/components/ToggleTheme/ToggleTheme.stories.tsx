@@ -1,18 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
+import { ChangeEvent, useState } from 'react';
 
 // Components
-import { ToggleTheme } from '@components';
+import { ToggleTheme, ToggleThemeProps } from '@components';
 
 const meta: Meta<typeof ToggleTheme> = {
   title: 'PracticeFour/ToggleTheme',
   component: ToggleTheme,
-  argTypes: {
-    onChange: { action: 'changed' },
-    theme: {
-      control: { type: 'radio' },
-      options: ['dark', 'light'],
-    },
-  },
   decorators: [
     (Story) => (
       <div style={{ margin: '10px' }}>
@@ -22,12 +16,18 @@ const meta: Meta<typeof ToggleTheme> = {
   ],
 };
 
-type Story = StoryObj<typeof ToggleTheme>;
+const Template: StoryFn<ToggleThemeProps> = () => {
+  const [toggle, setToggle] = useState(false);
 
-export const Default: Story = {
-  args: {
-    theme: 'dark',
-  },
+  const handleToggleTheme = (event: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.currentTarget;
+    setToggle(checked);
+  };
+
+  return <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />;
 };
+
+export const Primary = Template.bind({});
+Primary.args = {};
 
 export default meta;
