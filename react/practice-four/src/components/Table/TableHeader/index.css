@@ -1,11 +1,10 @@
-.table-header {
-  border-bottom: 2px solid var(--color-light);
-}
-
 .table-header > .table-row.table-row-primary:nth-child(1) {
   padding: 8px;
   border-bottom: 2px solid var(--color-black-500);
-  background-color: var(--color-white-100);
-  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
+}
+
+.table-wrapper-dark .table-header > .table-row.table-row-primary:nth-child(1),
+.table-header > .table-row.table-row-primary:nth-child(1) {
+  background-color: transparent;
 }

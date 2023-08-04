@@ -1,25 +1,31 @@
 .table-row {
-  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   border-bottom: 1px solid var(--color-black-500);
   color: var(--color-black-200);
+  font-size: var(--font-size-xs);
+}
+
+.table-wrapper-dark .table-row {
+  color: var(--color-white-200);
 }
 
 .table-row.table-row-primary {
   height: 42px;
 }
 
-.table-row.table-row-primary:nth-child(even):hover {
-  background-color: var(--color-white-500);
+.table-row.table-row-primary:nth-child(even) {
+  background-color: transparent;
 }
 
+.table-row.table-row-primary:nth-child(even):hover,
 .table-row.table-row-primary:nth-child(odd) {
   background-color: var(--color-white-500);
 }
 
-.table-row.table-row-primary:nth-child(even) {
-  background-color: var(--color-white-100);
+.table-wrapper-dark .table-row.table-row-primary:nth-child(even):hover,
+.table-wrapper-dark .table-row.table-row-primary:nth-child(odd) {
+  background-color: var(--color-black-300);
 }
