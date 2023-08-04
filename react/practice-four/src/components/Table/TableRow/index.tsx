@@ -5,11 +5,11 @@ import './index.css';
 
 interface TableRowProps {
   children: ReactNode;
-  variant?: 'primary';
+  size?: 's' | 'm';
 }
 
 export const TableRow = memo(
-  ({ children, variant = 'primary' }: TableRowProps): ReactElement => (
-    <tr className={`table-row table-row-${variant}`}>{children}</tr>
+  ({ children, size = 'm' }: TableRowProps): ReactElement => (
+    <tr className={`table-row table-row-${size}`}>{children}</tr>
   ),
 );

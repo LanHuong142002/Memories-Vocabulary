@@ -12,20 +12,24 @@
   color: var(--color-white-200);
 }
 
-.table-row.table-row-primary {
+.table-row.table-row-s {
+  height: 30px;
+}
+
+.table-row.table-row-m {
   height: 42px;
 }
 
-.table-row.table-row-primary:nth-child(even) {
+.table-row:nth-child(even) {
   background-color: transparent;
 }
 
-.table-row.table-row-primary:nth-child(even):hover,
-.table-row.table-row-primary:nth-child(odd) {
+.table-row:nth-child(even):hover,
+.table-row:nth-child(odd) {
   background-color: var(--color-white-500);
 }
 
-.table-wrapper-dark .table-row.table-row-primary:nth-child(even):hover,
-.table-wrapper-dark .table-row.table-row-primary:nth-child(odd) {
+.table-wrapper-dark .table-row:nth-child(even):hover,
+.table-wrapper-dark .table-row:nth-child(odd) {
   background-color: var(--color-black-300);
 }
