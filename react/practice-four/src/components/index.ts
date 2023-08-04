@@ -1,3 +1,4 @@
+export * from './Input';
 export * from './Topic';
 export * from './Label';
 export * from './Button';
@@ -7,3 +8,4 @@ export * from './Table/TableBody';
 export * from './Table/TableCell';
 export * from './Table/TableHeader';
 export * from './Table/TableRow';
+export * from './Notification';
