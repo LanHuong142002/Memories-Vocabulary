@@ -1,9 +1,10 @@
 // Interfaces
 import { VocabularyResult } from '@interfaces';
 
+import { memo } from 'react';
+
 // Components
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
-import { memo } from 'react';
 
 export interface TableResultProps {
   theme?: 'light' | 'dark';
