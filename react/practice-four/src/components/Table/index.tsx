@@ -4,12 +4,17 @@ import { ReactElement, ReactNode, memo } from 'react';
 import './index.css';
 
 interface TableProps {
+  hasBorderCell?: boolean;
   theme?: 'light' | 'dark';
   children: ReactNode;
 }
 
 export const Table = memo(
-  ({ children, theme = 'light' }: TableProps): ReactElement => (
-    <table className={`table-wrapper table-wrapper-${theme}`}>{children}</table>
+  ({ hasBorderCell = false, children, theme = 'light' }: TableProps): ReactElement => (
+    <table
+      className={`table-wrapper table-wrapper-${theme} ${hasBorderCell ? 'table-cell-border' : ''}`}
+    >
+      {children}
+    </table>
   ),
 );
