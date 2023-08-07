@@ -1,0 +1,28 @@
+.wrapper {
+  height: 100%;
+}
+
+.wrapper .wrapper-header {
+  width: 100%;
+  height: 10%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: end;
+  box-sizing: border-box;
+}
+
+.wrapper-content {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-box {
+  min-width: 55%;
+  border-radius: 4px;
+  padding: 50px;
+  box-shadow: 0 2px 8px var(--color-opacity-primary);
+  background-color: var(--color-white-100);
+}

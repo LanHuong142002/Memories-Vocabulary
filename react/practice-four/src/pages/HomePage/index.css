@@ -1,0 +1,15 @@
+.wrapper-home-page .description > p {
+  padding-bottom: 10px;
+}
+
+.wrapper-home-page .description p {
+  text-align: center;
+}
+
+.wrapper-home-page .topics {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+  padding: 25px 0 15px 0;
+}
