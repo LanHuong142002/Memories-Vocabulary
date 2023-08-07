@@ -4,9 +4,10 @@
 
 .wrapper .wrapper-header {
   width: 100%;
-  height: 10%;
+  height: 8%;
   padding: 15px 30px;
   display: flex;
+  gap: 10px;
   justify-content: end;
   box-sizing: border-box;
 }
