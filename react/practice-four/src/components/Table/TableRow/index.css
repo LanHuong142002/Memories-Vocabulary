@@ -1,7 +1,6 @@
 .table-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  vertical-align: middle;
+  text-align: center;
   box-sizing: border-box;
   border-bottom: 1px solid var(--color-black-500);
   color: var(--color-black-200);
