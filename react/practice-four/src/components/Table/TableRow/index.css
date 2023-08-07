@@ -28,6 +28,13 @@
   background-color: var(--color-white-500);
 }
 
+.table-cell-border .table-row:nth-child(odd) {
+  background-color: transparent;
+}
+.table-cell-border .table-row:hover {
+  background-color: var(--color-white-300);
+}
+
 .table-wrapper-dark .table-row:nth-child(even):hover,
 .table-wrapper-dark .table-row:nth-child(odd) {
   background-color: var(--color-black-300);

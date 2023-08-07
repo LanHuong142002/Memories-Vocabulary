@@ -5,6 +5,8 @@
 }
 
 .table-wrapper-dark .table-header > .table-row:nth-child(1),
-.table-header > .table-row:nth-child(1) {
+.table-wrapper-dark .table-header > .table-row:nth-child(2):hover,
+.table-header > .table-row:nth-child(1):hover,
+.table-header > .table-row:nth-child(2):hover {
   background-color: transparent;
 }
