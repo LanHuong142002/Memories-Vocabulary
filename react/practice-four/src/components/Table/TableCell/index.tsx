@@ -10,13 +10,9 @@ interface TableCellProps {
 }
 
 export const TableCell = memo(
-  ({ children, tagName = 'td', color }: TableCellProps): ReactElement => {
-    const TagName = tagName;
-
-    return (
-      <TagName className={`table-cell table-cell-${color ? color : ''}`} data-testid='table-cell'>
-        {children}
-      </TagName>
-    );
-  },
+  ({ children, tagName: TagName = 'td', color }: TableCellProps): ReactElement => (
+    <TagName className={`table-cell table-cell-${color ? color : ''}`} data-testid='table-cell'>
+      {children}
+    </TagName>
+  ),
 );
