@@ -10,3 +10,4 @@ export * from './Table/TableHeader';
 export * from './Table/TableRow';
 export * from './Notification';
 export * from './TableResult';
+export * from './TableResult/TableRowResult';

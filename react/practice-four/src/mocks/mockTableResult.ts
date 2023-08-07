@@ -21,3 +21,11 @@ export const mockTableResult = [
     answer: 'quyen vo',
   },
 ];
+
+export const mockResult = {
+  isSuccess: true,
+  no: 1,
+  native: 'pen',
+  translation: 'cay but',
+  answer: 'cay but',
+};

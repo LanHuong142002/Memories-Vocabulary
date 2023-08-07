@@ -1,6 +1,6 @@
 export interface VocabularyResult {
+  id?: number;
   isSuccess: boolean;
-  no: number;
   native: string;
   translation: string;
   answer: string;

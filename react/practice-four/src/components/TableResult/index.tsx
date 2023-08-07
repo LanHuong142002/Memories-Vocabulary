@@ -2,14 +2,15 @@
 import { VocabularyResult } from '@interfaces';
 
 // Components
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@components';
+import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
+import { memo } from 'react';
 
 export interface TableResultProps {
   theme?: 'light' | 'dark';
   result: VocabularyResult[];
 }
 
-export const TableResult = ({ result, theme = 'light' }: TableResultProps) => (
+export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
   <Table theme={theme} hasBorderCell={true}>
     <TableHeader>
       <TableRow>
@@ -31,28 +32,16 @@ export const TableResult = ({ result, theme = 'light' }: TableResultProps) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {result.map((item) => (
-        <>
-          <TableRow>
-            <TableCell tagName='td' rowspan={2}>
-              {item.no}
-            </TableCell>
-            <TableCell tagName='td' rowspan={2}>
-              {item.native}
-            </TableCell>
-            <TableCell tagName='td'>{item.translation}</TableCell>
-            <TableCell tagName='td'>{item.answer}</TableCell>
-            <TableCell tagName='td' rowspan={2} color={item.isSuccess ? 'success' : 'failed'}>
-              {item.isSuccess ? '\u2714' : '\u2718'}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell tagName='td' colspan={2} color={item.isSuccess ? 'success' : 'failed'}>
-              {item.isSuccess ? '\u2714' : '\u2718'}
-            </TableCell>
-          </TableRow>
-        </>
+      {result.map((item, index) => (
+        <TableRowResult
+          key={`table-result-${index}`}
+          index={index + 1}
+          answer={item.answer}
+          isSuccess={item.isSuccess}
+          native={item.native}
+          translation={item.translation}
+        />
       ))}
     </TableBody>
   </Table>
-);
+));
