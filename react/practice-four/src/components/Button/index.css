@@ -1,13 +1,24 @@
 .btn {
   cursor: pointer;
-  padding: 10px 20px;
   font-size: var(--font-size-s);
-  color: var(--text-secondary-color);
   font-weight: var(--font-weight-light);
-  background-color: var(--button-primary-color);
-  border: none;
   border-radius: 3px;
   box-sizing: border-box;
+}
+
+.btn.btn-primary {
+  padding: 10px 20px;
+  color: var(--text-secondary-color);
+  background-color: var(--button-primary-color);
+  border: none;
+}
+
+.btn.btn-secondary {
+  width: 25px;
+  height: 25px;
+  color: var(--button-primary-color);
+  background-color: transparent;
+  border: 2px solid var(--button-primary-color);
 }
 
 .btn.btn-size-m {
