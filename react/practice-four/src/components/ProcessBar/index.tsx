@@ -11,12 +11,13 @@ interface ProcessBarProps {
 
 export const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
   const limitStep = step > totalStep ? totalStep : step;
+  const percent = (limitStep / totalStep) * 100;
 
   return (
     <div className='process-wrapper'>
       <div
         className={`process process-${calculateStepLevel(step, totalStep)}`}
-        style={{ width: `${(limitStep / totalStep) * 100}%` }}
+        style={{ width: `${percent}%` }}
       >
         {`${limitStep} of ${totalStep}`}
       </div>

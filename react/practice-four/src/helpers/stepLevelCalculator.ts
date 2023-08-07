@@ -1,4 +1,8 @@
+// Constants
 import { STATUS_PROCESS } from '@constants';
+
+// Interfaces
+import { StatusProcess } from '@interfaces';
 
 /**
  * @description Calculates the step level for the process bar in 4 levels based on given parameters.
@@ -25,10 +29,7 @@ const calculateEachStep = (
  *
  * @returns {string | undefined} - The status level: very-low | low | medium | high
  */
-export const calculateStepLevel = (
-  step: number,
-  totalStep: number,
-): 'very-low' | 'low' | 'medium' | 'high' | undefined => {
+export const calculateStepLevel = (step: number, totalStep: number): StatusProcess => {
   // divide the sum of the steps and take the integer part
   const eachStep = totalStep / 4;
   const surplus = eachStep - Math.floor(eachStep);
@@ -51,6 +52,6 @@ export const calculateStepLevel = (
     case step > totalStep:
       return STATUS_PROCESS.HIGH;
     default:
-      return undefined;
+      return STATUS_PROCESS.VERY_LOW;
   }
 };
