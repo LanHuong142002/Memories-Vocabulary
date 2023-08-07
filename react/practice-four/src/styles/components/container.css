@@ -3,6 +3,6 @@
   background-color: var(--color-white-200);
 }
 
-.container.container-dark {
+.container-dark {
   background-color: var(--background-primary-color);
 }
