@@ -1,13 +1,17 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
-import { TableVocabulary, TableVocabularyProps } from '@components';
+import { TableVocabulary } from '@components';
 
 const meta: Meta<typeof TableVocabulary> = {
   title: 'PracticeFour/TableVocabulary',
   component: TableVocabulary,
   argTypes: {
     onClick: { action: 'clicked' },
+    theme: {
+      control: { type: 'radio' },
+      options: ['dark', 'light'],
+    },
   },
   decorators: [
     (Story) => (
@@ -18,38 +22,36 @@ const meta: Meta<typeof TableVocabulary> = {
   ],
 };
 
-const Template: StoryFn<TableVocabularyProps> = () => {
-  const mockData = [
-    {
-      id: 1,
-      english: 'pen',
-      vietnamese: 'cay but',
-    },
-    {
-      id: 2,
-      english: 'eraser',
-      vietnamese: 'cuc tay',
-    },
-    {
-      id: 3,
-      english: 'book',
-      vietnamese: 'cuon sach',
-    },
-    {
-      id: 4,
-      english: 'notebook',
-      vietnamese: 'cuon vo',
-    },
-  ];
+const mockData = [
+  {
+    id: 1,
+    english: 'pen',
+    vietnamese: 'cay but',
+  },
+  {
+    id: 2,
+    english: 'eraser',
+    vietnamese: 'cuc tay',
+  },
+  {
+    id: 3,
+    english: 'book',
+    vietnamese: 'cuon sach',
+  },
+  {
+    id: 4,
+    english: 'notebook',
+    vietnamese: 'cuon vo',
+  },
+];
 
-  const handleOnClick = () => {
-    console.log('clicked');
-  };
+type Story = StoryObj<typeof TableVocabulary>;
 
-  return <TableVocabulary vocabularies={mockData} onClick={handleOnClick} />;
+export const Default: Story = {
+  args: {
+    theme: 'light',
+    vocabularies: mockData,
+  },
 };
-
-export const Default = Template.bind({});
-Default.args = {};
 
 export default meta;

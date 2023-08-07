@@ -9,12 +9,17 @@ import {
 import { Vocabulary } from '@interfaces';
 
 export interface TableVocabularyProps {
+  theme?: 'light' | 'dark';
   vocabularies: Vocabulary[];
   onClick: (id: number) => void;
 }
 
-export const TableVocabulary = ({ vocabularies, onClick }: TableVocabularyProps) => (
-  <Table>
+export const TableVocabulary = ({
+  theme = 'light',
+  vocabularies,
+  onClick,
+}: TableVocabularyProps) => (
+  <Table theme={theme}>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th'>No.</TableCell>
