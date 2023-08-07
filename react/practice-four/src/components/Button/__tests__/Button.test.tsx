@@ -20,7 +20,7 @@ describe('Test button component', () => {
   });
 
   it('Should call onClick when click button component', () => {
-    const { getByText } = render(<Button {...defaultProps} />);
+    const { getByText } = render(<Button variant='secondary' {...defaultProps} />);
 
     const button = getByText('Back to Vocabulary List');
     fireEvent.click(button);
