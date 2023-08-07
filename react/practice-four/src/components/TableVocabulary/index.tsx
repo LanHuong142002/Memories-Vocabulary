@@ -1,3 +1,9 @@
+import { memo } from 'react';
+
+// Interfaces
+import { Vocabulary } from '@interfaces';
+
+// Components
 import {
   Table,
   TableBody,
@@ -6,14 +12,13 @@ import {
   TableRow,
   TableRowVocabulary,
 } from '@components';
-import { Vocabulary } from '@interfaces';
 
 export interface TableVocabularyProps {
   vocabularies: Vocabulary[];
   onClick: (id: number) => void;
 }
 
-export const TableVocabulary = ({ vocabularies, onClick }: TableVocabularyProps) => (
+export const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) => (
   <Table>
     <TableHeader>
       <TableRow>
@@ -35,4 +40,4 @@ export const TableVocabulary = ({ vocabularies, onClick }: TableVocabularyProps)
       ))}
     </TableBody>
   </Table>
-);
+));
