@@ -1,21 +1,21 @@
 .table-cell {
   text-align: center;
+  vertical-align: middle;
   overflow-wrap: break-word;
   padding: 8px;
   height: 100%;
-  width: 100%;
   box-sizing: border-box;
 }
 
-.table-cell.table-cell-success {
+.table-cell-success {
   background-color: var(--color-green-200);
 }
 
-.table-wrapper-dark .table-cell.table-cell-success,
-.table-wrapper-dark .table-cell.table-cell-failed {
+.table-wrapper-dark .table-cell-success,
+.table-wrapper-dark .table-cell-failed {
   color: var(--color-black-400);
 }
 
-.table-cell.table-cell-failed {
+.table-cell-failed {
   background-color: var(--color-red-500);
 }
