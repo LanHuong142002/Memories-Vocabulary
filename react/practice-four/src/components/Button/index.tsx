@@ -5,17 +5,25 @@ import './index.css';
 
 export interface ButtonProps {
   isDisabled?: boolean;
-  label: string;
+  label?: string;
+  variant?: 'primary' | 'secondary';
   size?: 'xs' | 's' | 'm';
   onClick: () => void;
   children?: ReactNode;
 }
 
 export const Button = memo(
-  ({ isDisabled = false, label, size = 's', onClick, children }: ButtonProps) => (
+  ({
+    isDisabled = false,
+    label,
+    size = 's',
+    variant = 'primary',
+    onClick,
+    children,
+  }: ButtonProps) => (
     <button
       type='button'
-      className={`btn btn-size-${size}`}
+      className={`btn btn-size-${size} btn-${variant}`}
       onClick={onClick}
       disabled={isDisabled}
     >

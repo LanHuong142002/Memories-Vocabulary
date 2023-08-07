@@ -4,4 +4,5 @@ export * from './Label';
 export * from './Button';
 export * from './Spinner';
 export * from './Notification';
+export * from './ProcessBar';
 export * from './ToggleTheme';
