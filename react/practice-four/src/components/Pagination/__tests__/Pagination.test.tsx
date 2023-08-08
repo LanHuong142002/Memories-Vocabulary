@@ -2,15 +2,15 @@ import { fireEvent, render } from '@testing-library/react';
 import { Pagination } from '..';
 
 describe('Test pagination component', () => {
+  const defaultProps = {
+    onFirstList: jest.fn(),
+    onLastList: jest.fn(),
+    onNext: jest.fn(),
+    onPrev: jest.fn(),
+  };
+
   it('Should render pagination component', () => {
-    const { container } = render(
-      <Pagination
-        onFirstList={jest.fn()}
-        onLastList={jest.fn()}
-        onNext={jest.fn()}
-        onPrev={jest.fn()}
-      />,
-    );
+    const { container } = render(<Pagination {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
