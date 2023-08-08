@@ -16,6 +16,8 @@
   background-color: var(--color-green-200);
 }
 
+/* Use class table-wrapper-dark that can 
+  be changed based on the theme passed from the table component */
 .table-wrapper-dark .table-cell-success,
 .table-wrapper-dark .table-cell-failed {
   color: var(--color-black-400);

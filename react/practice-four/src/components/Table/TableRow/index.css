@@ -35,6 +35,8 @@
   background-color: var(--color-white-300);
 }
 
+/* Use class table-wrapper-dark that can 
+  be changed based on the theme passed from the table component */
 .table-wrapper-dark .table-row:nth-child(even):hover,
 .table-wrapper-dark .table-row:nth-child(odd) {
   background-color: var(--color-black-300);

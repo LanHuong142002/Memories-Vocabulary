@@ -14,3 +14,5 @@ export * from './TableResult/TableRowResult';
 export * from './ProcessBar';
 export * from './ToggleTheme';
 export * from './Typography';
+export * from './TableVocabulary';
+export * from './TableVocabulary/TableRowVocabulary';
