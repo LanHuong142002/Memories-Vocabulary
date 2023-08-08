@@ -16,19 +16,7 @@ describe('Test pagination component', () => {
   });
 
   it('Should call onClick when click 4 buttons in pagination component', () => {
-    const handleFirstList = jest.fn();
-    const handleLastList = jest.fn();
-    const handleNext = jest.fn();
-    const handlePrev = jest.fn();
-
-    const { getByRole } = render(
-      <Pagination
-        onFirstList={handleFirstList}
-        onLastList={handleLastList}
-        onNext={handleNext}
-        onPrev={handlePrev}
-      />,
-    );
+    const { getByRole } = render(<Pagination {...defaultProps} />);
 
     const buttonFirst = getByRole('button', {
       name: /«/,
@@ -48,9 +36,9 @@ describe('Test pagination component', () => {
     fireEvent.click(buttonNext);
     fireEvent.click(buttonPrev);
 
-    expect(handleFirstList).toBeCalled();
-    expect(handleLastList).toBeCalled();
-    expect(handleNext).toBeCalled();
-    expect(handlePrev).toBeCalled();
+    expect(defaultProps.onFirstList).toBeCalled();
+    expect(defaultProps.onLastList).toBeCalled();
+    expect(defaultProps.onNext).toBeCalled();
+    expect(defaultProps.onPrev).toBeCalled();
   });
 });
