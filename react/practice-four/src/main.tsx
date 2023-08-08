@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 
 // Components
 import { App } from '@App';
+import { ErrorBoundary } from '@components';
+import { ErrorPage } from '@pages';
 
 // Styles
 import './styles/main.css';
@@ -11,7 +13,9 @@ import './styles/main.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
-      <App />
+      <ErrorBoundary fallback={<ErrorPage />}>
+        <App />
+      </ErrorBoundary>
     </Router>
   </StrictMode>,
 );
