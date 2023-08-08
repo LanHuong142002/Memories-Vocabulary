@@ -8,9 +8,9 @@ import { URL } from '@constants';
  *
  * @param {String} endpoint is url endpoint
  *
- * @returns {Object | string} data or message error
+ * @returns {T} data
  */
-export const getData = async <T>(endpoint: string): Promise<T | string> => {
+export const getData = async <T>(endpoint: string): Promise<T> => {
   const response = await axios.get<T>(`${URL.BASE}${endpoint}`);
 
   return response.data;
@@ -19,9 +19,10 @@ export const getData = async <T>(endpoint: string): Promise<T | string> => {
 /**
  * @description function post data
  *
+ * @param {items} item is new item
  * @param {String} endpoint is url endpoint
  *
- * @returns {Object | string} data or message error
+ * @returns {T} data
  */
 export const postData = async <T>(items: T, endpoint: string): Promise<T> => {
   const response = await axios.post<T>(`${URL.BASE}${endpoint}`, items);
@@ -32,12 +33,13 @@ export const postData = async <T>(items: T, endpoint: string): Promise<T> => {
 /**
  * @description function put data
  *
+ * @param {items} item is item updated
  * @param {String} endpoint is url endpoint
  *
- * @returns {Object | string} data or message error
+ * @returns {T} data
  */
-export const putData = async <T>(items: T, endpoint: string, id: string): Promise<T | string> => {
-  const response = await axios.put<T>(`${URL.BASE}${endpoint}/${id}`, items);
+export const putData = async <T>(items: T, endpoint: string): Promise<T> => {
+  const response = await axios.put<T>(`${URL.BASE}${endpoint}`, items);
 
   return response.data;
 };
