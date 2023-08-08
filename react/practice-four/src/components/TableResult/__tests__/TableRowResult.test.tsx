@@ -7,7 +7,7 @@ describe('Test table row result component', () => {
     const { container, getAllByText, getByText } = render(
       <TableRowResult
         answer={mockResult.answer}
-        index={1}
+        order={1}
         isSuccess={mockResult.isSuccess}
         native={mockResult.native}
         translation={mockResult.translation}
@@ -23,7 +23,7 @@ describe('Test table row result component', () => {
     const { container, getAllByText } = render(
       <TableRowResult
         answer={mockResult.answer}
-        index={1}
+        order={1}
         isSuccess={false}
         native={mockResult.native}
         translation={mockResult.translation}

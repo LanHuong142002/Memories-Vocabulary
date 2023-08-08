@@ -7,15 +7,15 @@ import { VocabularyResult } from '@interfaces';
 import { TableCell, TableRow } from '@components';
 
 interface TableRowResultProps extends VocabularyResult {
-  index: number;
+  order: number;
 }
 
 export const TableRowResult = memo(
-  ({ isSuccess, index, native, translation, answer }: TableRowResultProps) => (
+  ({ isSuccess, order, native, translation, answer }: TableRowResultProps) => (
     <>
       <TableRow>
         <TableCell tagName='td' rowspan={2}>
-          {index + 1}
+          {order}
         </TableCell>
         <TableCell tagName='td' rowspan={2}>
           {native}
