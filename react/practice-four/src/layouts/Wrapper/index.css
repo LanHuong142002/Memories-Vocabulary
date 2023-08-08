@@ -26,7 +26,7 @@
 }
 
 .wrapper-box {
-  min-width: 55%;
+  width: 55%;
   border-radius: 4px;
   padding: 50px;
   box-shadow: 0 2px 8px var(--color-opacity-primary);
