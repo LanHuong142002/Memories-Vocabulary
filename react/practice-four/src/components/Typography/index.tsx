@@ -1,4 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
+
+// Contexts
+import { ThemeContext } from '@contexts';
+
+// Styles
 import './index.css';
 
 interface TypographyProps {
@@ -10,15 +15,18 @@ interface TypographyProps {
 }
 
 export const Typography = ({
-  theme = 'light',
   size = 'xs',
   color = 'primary',
   tagName: TagName = 'p',
   children,
-}: TypographyProps) => (
-  <TagName
-    className={`typography typography-${size} typography-color-${color} typography-${theme}`}
-  >
-    {children}
-  </TagName>
-);
+}: TypographyProps) => {
+  const { theme } = useContext(ThemeContext);
+
+  return (
+    <TagName
+      className={`typography typography-${size} typography-color-${color} typography-${theme}`}
+    >
+      {children}
+    </TagName>
+  );
+};

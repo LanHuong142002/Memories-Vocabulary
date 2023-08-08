@@ -10,7 +10,7 @@ import { Button, ToggleTheme } from '@components';
 import './index.css';
 
 export const Wrapper = ({ className, children }: { className: string; children: ReactNode }) => {
-  const { onToggleTheme } = useContext(ThemeContext);
+  const { theme, onToggleTheme } = useContext(ThemeContext);
   const [toggle, setToggle] = useState<boolean>(false);
 
   /**
@@ -40,7 +40,7 @@ export const Wrapper = ({ className, children }: { className: string; children: 
         </Button>
       </div>
       <div className='wrapper-content'>
-        <div className='wrapper-box'>{children}</div>
+        <div className={`wrapper-box ${theme ? `wrapper-box-${theme}` : ''}`}>{children}</div>
       </div>
     </div>
   );

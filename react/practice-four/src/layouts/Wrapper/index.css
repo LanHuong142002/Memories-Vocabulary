@@ -25,6 +25,10 @@
   align-items: center;
 }
 
+.wrapper-box.wrapper-box-dark {
+  background-color: var(--background-secondary-color);
+}
+
 .wrapper-box {
   min-width: 55%;
   border-radius: 4px;
