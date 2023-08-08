@@ -19,6 +19,7 @@ export const getData = async <T>(endpoint: string): Promise<T> => {
 /**
  * @description function post data
  *
+ * @param {items} item is new item
  * @param {String} endpoint is url endpoint
  *
  * @returns {T} data
@@ -32,6 +33,7 @@ export const postData = async <T>(items: T, endpoint: string): Promise<T> => {
 /**
  * @description function put data
  *
+ * @param {items} item is item updated
  * @param {String} endpoint is url endpoint
  *
  * @returns {T} data
