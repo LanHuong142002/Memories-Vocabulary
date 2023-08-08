@@ -8,8 +8,13 @@
   padding: 15px 30px;
   display: flex;
   gap: 10px;
+  align-items: center;
   justify-content: end;
   box-sizing: border-box;
+}
+
+.wrapper .wrapper-header button {
+  height: 100%;
 }
 
 .wrapper-content {

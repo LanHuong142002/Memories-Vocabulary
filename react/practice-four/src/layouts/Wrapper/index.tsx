@@ -7,7 +7,7 @@ import './index.css';
 import { Button, ToggleTheme } from '@components';
 
 export const Wrapper = ({ className, children }: { className: string; children: ReactNode }) => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   /**
    * @description function change theme
