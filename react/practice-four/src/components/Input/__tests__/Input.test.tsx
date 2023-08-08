@@ -11,13 +11,19 @@ describe('Test input component', () => {
     onChange: handleChange,
   };
 
-  it('Should render input component', () => {
-    const { container } = render(<Input variant='tertiary' {...defaultProps} />);
+  it('Should render input default', () => {
+    const { container } = render(<Input {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
 
-  it('Should render input secondary component', () => {
+  it('Should render input component without error', () => {
+    const { container } = render(<Input variant='secondary' {...defaultProps} />);
+
+    expect(container).toBeInTheDocument();
+  });
+
+  it('Should render input secondary component with error', () => {
     const { container } = render(<Input variant='secondary' error='error' {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
