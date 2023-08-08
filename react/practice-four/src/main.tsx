@@ -7,6 +7,8 @@ import { ThemeProvider } from '@contexts';
 
 // Components
 import { App } from '@App';
+import { ErrorBoundary } from '@components';
+import { ErrorPage } from '@pages';
 
 // Styles
 import './styles/main.css';
@@ -14,9 +16,11 @@ import './styles/main.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <ErrorBoundary fallback={<ErrorPage />}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ErrorBoundary>
     </Router>
   </StrictMode>,
 );
