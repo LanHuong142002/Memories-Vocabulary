@@ -23,7 +23,7 @@ export const getData = async <T>(endpoint: string): Promise<T | string> => {
  *
  * @returns {Object | string} data or message error
  */
-export const postData = async <T, K>(items: K, endpoint: string): Promise<T> => {
+export const postData = async <T>(items: T, endpoint: string): Promise<T> => {
   const response = await axios.post<T>(`${URL.BASE}${endpoint}`, items);
 
   return response.data;
@@ -36,8 +36,8 @@ export const postData = async <T, K>(items: K, endpoint: string): Promise<T> => 
  *
  * @returns {Object | string} data or message error
  */
-export const putData = async <T>(items: T, endpoint: string): Promise<T | string> => {
-  const response = await axios.put<T>(`${URL.BASE}${endpoint}`, items);
+export const putData = async <T>(items: T, endpoint: string, id: string): Promise<T | string> => {
+  const response = await axios.put<T>(`${URL.BASE}${endpoint}/${id}`, items);
 
   return response.data;
 };
