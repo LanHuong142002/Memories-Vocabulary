@@ -31,12 +31,12 @@ export const TableVocabulary = memo(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {vocabularies.map((vocab) => (
+        {vocabularies.map(({ id, english, vietnamese }) => (
           <TableRowVocabulary
-            key={`table-vocabulary-${vocab.id}`}
-            english={vocab.english}
-            vietnamese={vocab.vietnamese}
-            id={vocab.id}
+            key={`table-vocabulary-${id}`}
+            english={english}
+            vietnamese={vietnamese}
+            id={id}
             onClick={onClick}
           />
         ))}
