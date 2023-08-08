@@ -2,6 +2,7 @@
   cursor: pointer;
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-light);
+  font-family: var(--font-primary), var(--font-default);
   border-radius: 3px;
   box-sizing: border-box;
 }
@@ -19,6 +20,16 @@
   color: var(--button-primary-color);
   background-color: transparent;
   border: 2px solid var(--button-primary-color);
+}
+
+.btn.btn-tertiary {
+  border: none;
+  background-color: transparent;
+  color: var(--button-primary-color);
+}
+
+.btn.btn-size-xxl {
+  font-size: var(--font-size-xxl);
 }
 
 .btn.btn-size-m {
