@@ -6,8 +6,8 @@ import './index.css';
 export interface ButtonProps {
   isDisabled?: boolean;
   label?: string;
-  variant?: 'primary' | 'secondary';
-  size?: 'xs' | 's' | 'm';
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'xs' | 's' | 'm' | 'xxl';
   onClick: () => void;
   children?: ReactNode;
 }
