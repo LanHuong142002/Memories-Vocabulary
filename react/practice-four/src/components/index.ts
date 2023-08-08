@@ -11,3 +11,6 @@ export * from './Table/TableRow';
 export * from './Notification';
 export * from './TableResult';
 export * from './TableResult/TableRowResult';
+export * from './ProcessBar';
+export * from './ToggleTheme';
+export * from './Typography';
