@@ -27,7 +27,9 @@ export const Wrapper = ({ className, children }: { className: string; children: 
     <div className={`wrapper wrapper-${className}-page`}>
       <div className='wrapper-header'>
         <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-        <Button onClick={handleBackToHome}>Back to Home</Button>
+        <Button variant='primary' size='xs' onClick={handleBackToHome}>
+          Back to Home
+        </Button>
       </div>
       <div className='wrapper-content'>
         <div className='wrapper-box'>{children}</div>
