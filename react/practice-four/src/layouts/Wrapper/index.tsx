@@ -11,7 +11,7 @@ import './index.css';
 
 export const Wrapper = ({ className, children }: { className: string; children: ReactNode }) => {
   const { onToggleTheme } = useContext(ThemeContext);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   /**
    * @description function change theme
