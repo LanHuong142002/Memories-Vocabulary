@@ -10,6 +10,19 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    backgrounds: {
+      default: 'twitter',
+      values: [
+        {
+          name: 'light',
+          value: '#fff',
+        },
+        {
+          name: 'dark',
+          value: '#1a1b1e',
+        },
+      ],
+    },
   },
 };
 
