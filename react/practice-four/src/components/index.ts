@@ -7,3 +7,4 @@ export * from './Notification';
 export * from './ProcessBar';
 export * from './ToggleTheme';
 export * from './Typography';
+export * from './ErrorBoundary';
