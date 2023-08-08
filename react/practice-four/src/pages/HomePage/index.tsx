@@ -8,10 +8,13 @@ import './index.css';
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, Topic, Typography } from '@components';
+import { Button, Input, Spinner, Topic, Typography } from '@components';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@constants';
 
 export const HomePage = () => {
-  const { topics, onAddNewTopic } = useContext(DictionaryContext);
+  const navigate = useNavigate();
+  const { topics, isLoading, onAddNewTopic, onOpenTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
 
@@ -31,28 +34,39 @@ export const HomePage = () => {
     setTopicValue(event.target.value);
   };
 
-  const handleOpenTopic = () => {
-    // TODO: feature open topic
+  const handleOpenTopic = (id?: string) => {
+    onOpenTopic(id!);
+    navigate(ROUTES.TESTING);
   };
 
   return (
-    <Wrapper className='home'>
-      <div className='description'>
-        <Typography size='xl'>Add & Select Topic</Typography>
-        <Typography color='secondary' size='xs'>
-          Please choose a topic or create a new topic
-        </Typography>
-      </div>
+    <Wrapper
+      className='home'
+      childrenTitle={
+        <>
+          <Typography size='xl'>Add & Select Topic</Typography>
+          <Typography color='secondary' size='xs'>
+            Please choose a topic or create a new topic
+          </Typography>
+        </>
+      }
+    >
       <div className='topics'>
-        {topics.map(({ id, name, vocabularies }) => (
-          <Topic
-            key={`topic-${id}`}
-            name={name}
-            quantity={vocabularies!.length}
-            onClick={handleOpenTopic}
-          />
-        ))}
-        <Topic variant='selected' name='Add Topic' isAddNew={true} onClick={handleOpenOverlay} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            {topics.map(({ id, name, vocabularies }) => (
+              <Topic
+                id={id!}
+                key={`topic-${id}`}
+                name={name}
+                quantity={vocabularies!.length}
+                onClick={handleOpenTopic}
+              />
+            ))}
+          </>
+        )}
       </div>
 
       {isOpenOverlay && (
