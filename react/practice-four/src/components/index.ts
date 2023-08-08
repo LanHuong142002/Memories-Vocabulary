@@ -11,3 +11,6 @@ export * from './Table/TableRow';
 export * from './Notification';
 export * from './TableVocabulary';
 export * from './TableVocabulary/TableRowVocabulary';
+export * from './ProcessBar';
+export * from './ToggleTheme';
+export * from './Typography';

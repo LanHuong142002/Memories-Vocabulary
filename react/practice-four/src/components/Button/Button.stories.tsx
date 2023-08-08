@@ -8,6 +8,10 @@ const meta: Meta<typeof Button> = {
   component: Button,
   argTypes: {
     onClick: { action: 'clicked' },
+    variant: {
+      control: { type: 'radio' },
+      options: ['primary', 'secondary'],
+    },
     size: {
       control: { type: 'radio' },
       options: ['xs', 's', 'm'],
@@ -26,6 +30,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
+    variant: 'primary',
     label: 'Submit',
     size: 'xs',
   },
@@ -33,6 +38,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
+    variant: 'primary',
     label: 'Back to Vocabulary List',
     size: 's',
     isDisabled: true,

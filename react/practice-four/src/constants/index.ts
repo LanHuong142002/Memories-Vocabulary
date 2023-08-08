@@ -1,2 +1,1 @@
-export * from './vocabulary';
 export * from './statusProcess';
