@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 
-import { Topic } from '..';
+// Components
+import { Topic } from '@components';
 
 describe('Test topic component', () => {
   const handleClick = jest.fn();

@@ -9,7 +9,7 @@ interface TableProps {
   children: ReactNode;
 }
 
-export const Table = memo(
+const Table = memo(
   ({ hasBorderCell = false, children, theme = 'light' }: TableProps): ReactElement => (
     <table
       className={`table-wrapper table-wrapper-${theme} ${hasBorderCell ? 'table-cell-border' : ''}`}
@@ -18,3 +18,5 @@ export const Table = memo(
     </table>
   ),
 );
+
+export default Table;

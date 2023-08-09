@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 
-import { ToggleTheme } from '..';
+// Components
+import { ToggleTheme } from '@components';
 
 describe('Test toggle theme component', () => {
   const handleOnChange = jest.fn();

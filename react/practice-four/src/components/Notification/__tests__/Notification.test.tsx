@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { Notification } from '..';
+// Components
+import { Notification } from '@components';
 
 describe('Test notification component', () => {
   const defaultProps = {

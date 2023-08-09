@@ -10,7 +10,7 @@ import './index.css';
 import { Wrapper } from '@layouts';
 import { Button, Input, Topic, Typography } from '@components';
 
-export const HomePage = () => {
+const HomePage = () => {
   const { topics, onAddNewTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -77,3 +77,5 @@ export const HomePage = () => {
     </Wrapper>
   );
 };
+
+export default HomePage;
