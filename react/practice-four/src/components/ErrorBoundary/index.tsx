@@ -9,7 +9,7 @@ interface State {
   hasError: boolean;
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -30,3 +30,5 @@ export class ErrorBoundary extends Component<Props, State> {
     return children;
   }
 }
+
+export default ErrorBoundary;

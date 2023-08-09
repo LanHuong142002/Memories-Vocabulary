@@ -4,6 +4,8 @@ interface TableBodyProps {
   children: ReactNode;
 }
 
-export const TableBody = memo(
+const TableBody = memo(
   ({ children }: TableBodyProps): ReactElement => <tbody className='table-body'>{children}</tbody>,
 );
+
+export default TableBody;

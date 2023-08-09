@@ -5,7 +5,7 @@ import { RouteObject } from 'react-router-dom';
 import { ROUTES } from '@constants';
 
 // Pages
-const HomePage = lazy(() => import('@pages').then((module) => ({ default: module.HomePage })));
+const HomePage = lazy(() => import('@pages/HomePage'));
 
 export const Routers: RouteObject[] = [
   {

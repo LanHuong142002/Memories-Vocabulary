@@ -4,6 +4,8 @@ import { ReactNode, useContext } from 'react';
 import { ThemeContext } from '@contexts';
 
 // Styles
+
+// Styles
 import './index.css';
 
 interface TypographyProps {
@@ -14,7 +16,7 @@ interface TypographyProps {
   children: ReactNode;
 }
 
-export const Typography = ({
+const Typography = ({
   size = 'xs',
   color = 'primary',
   tagName: TagName = 'p',
@@ -30,3 +32,5 @@ export const Typography = ({
     </TagName>
   );
 };
+
+export default Typography;

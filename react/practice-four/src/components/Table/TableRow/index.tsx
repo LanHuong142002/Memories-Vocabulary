@@ -8,8 +8,10 @@ interface TableRowProps {
   size?: 's' | 'm';
 }
 
-export const TableRow = memo(
+const TableRow = memo(
   ({ children, size = 'm' }: TableRowProps): ReactElement => (
     <tr className={`table-row table-row-${size}`}>{children}</tr>
   ),
 );
+
+export default TableRow;

@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
-import { Label } from '..';
+
+// Components
+import { Label } from '@components';
 
 describe('Test label component', () => {
   it('Should render label component', () => {

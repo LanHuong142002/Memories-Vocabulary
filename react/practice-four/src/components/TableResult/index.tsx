@@ -6,12 +6,12 @@ import { memo } from 'react';
 // Components
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
 
-export interface TableResultProps {
+interface TableResultProps {
   theme?: 'light' | 'dark';
   result: VocabularyResult[];
 }
 
-export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
+const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
   <Table theme={theme} hasBorderCell={true}>
     <TableHeader>
       <TableRow>
@@ -46,3 +46,5 @@ export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) 
     </TableBody>
   </Table>
 ));
+
+export default TableResult;
