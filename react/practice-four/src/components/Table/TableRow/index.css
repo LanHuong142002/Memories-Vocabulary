@@ -1,0 +1,43 @@
+.table-row {
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-black-500);
+  color: var(--color-black-200);
+  font-size: var(--font-size-xs);
+}
+
+.table-wrapper-dark .table-row {
+  color: var(--color-white-200);
+}
+
+.table-row.table-row-s {
+  height: 30px;
+}
+
+.table-row.table-row-m {
+  height: 42px;
+}
+
+.table-row:nth-child(even) {
+  background-color: transparent;
+}
+
+.table-row:nth-child(even):hover,
+.table-row:nth-child(odd) {
+  background-color: var(--color-white-500);
+}
+
+.table-cell-border .table-row:nth-child(odd) {
+  background-color: transparent;
+}
+.table-cell-border .table-row:hover {
+  background-color: var(--color-white-300);
+}
+
+/* Use class table-wrapper-dark that can 
+  be changed based on the theme passed from the table component */
+.table-wrapper-dark .table-row:nth-child(even):hover,
+.table-wrapper-dark .table-row:nth-child(odd) {
+  background-color: var(--color-black-300);
+}
