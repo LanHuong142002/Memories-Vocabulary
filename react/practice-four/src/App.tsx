@@ -14,7 +14,7 @@ export const App = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <main className={`container ${theme ? `container-${theme}` : ''}`}>
+    <main className={`container ${theme}`}>
       <Suspense fallback={<Spinner />}>
         <Routes>
           {Routers.map(({ path, element }) => (
