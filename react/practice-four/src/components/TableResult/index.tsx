@@ -36,7 +36,7 @@ export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) 
       {result.map(({ answer, isSuccess, native, translation }, index) => (
         <TableRowResult
           key={`table-result-${index}`}
-          order={index + 1}
+          order={`${index + 1}`}
           answer={answer}
           isSuccess={isSuccess}
           native={native}

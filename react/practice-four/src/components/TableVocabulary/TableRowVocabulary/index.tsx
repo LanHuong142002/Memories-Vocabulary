@@ -7,13 +7,13 @@ import { Vocabulary } from '@interfaces';
 import { Button, TableCell, TableRow } from '@components';
 
 export interface TableRowVocabularyProps extends Vocabulary {
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 export const TableRowVocabulary = memo(
   ({ id, english, vietnamese, onClick }: TableRowVocabularyProps) => {
     const handleOnClick = () => {
-      onClick(id);
+      onClick(id!);
     };
 
     return (

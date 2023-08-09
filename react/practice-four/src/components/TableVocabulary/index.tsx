@@ -16,7 +16,7 @@ import {
 export interface TableVocabularyProps {
   theme?: 'light' | 'dark';
   vocabularies: Vocabulary[];
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 export const TableVocabulary = memo(
