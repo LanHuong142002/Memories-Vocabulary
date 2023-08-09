@@ -1,14 +1,18 @@
 import { useState, ChangeEvent } from 'react';
 
-import './index.css';
-
-import { Button, Input, Typography } from '@components';
+// Interfaces
 import { Vocabulary } from '@interfaces';
+
+// Components
+import { Button, Input, Typography } from '@components';
 import { Wrapper } from '@layouts';
+
+// Styles
+import './index.css';
 
 interface Translation extends Pick<Vocabulary, 'english' | 'vietnamese'> {}
 
-export const TestingPage = () => {
+const VocabularyPage = () => {
   const [translation, setTranslation] = useState<Translation>({
     english: '',
     vietnamese: '',
@@ -55,3 +59,5 @@ export const TestingPage = () => {
     </Wrapper>
   );
 };
+
+export default VocabularyPage;

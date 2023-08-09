@@ -12,7 +12,7 @@ import { Button, Input, Spinner, Topic, Typography } from '@components';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@constants';
 
-export const HomePage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const { topics, isLoading, onAddNewTopic, onOpenTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
@@ -91,3 +91,5 @@ export const HomePage = () => {
     </Wrapper>
   );
 };
+
+export default HomePage;

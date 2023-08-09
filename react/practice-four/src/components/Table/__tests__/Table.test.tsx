@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { Table } from '..';
+// Components
+import { Table } from '@components';
 
 describe('Test table component', () => {
   it('Should render table component with border', () => {

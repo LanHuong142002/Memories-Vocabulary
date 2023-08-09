@@ -4,7 +4,7 @@ import { memo } from 'react';
 // Styles
 import './index.css';
 
-export interface TopicProps {
+interface TopicProps {
   id: string;
   isAddNew?: boolean;
   quantity?: number;
@@ -13,7 +13,7 @@ export interface TopicProps {
   onClick: (id?: string) => void;
 }
 
-export const Topic = memo(
+const Topic = memo(
   ({ id, isAddNew = false, quantity = 0, name, variant = 'default', onClick }: TopicProps) => {
     const handleOncLick = () => {
       onClick(id);
@@ -29,3 +29,5 @@ export const Topic = memo(
     );
   },
 );
+
+export default Topic;

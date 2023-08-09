@@ -3,7 +3,7 @@ import { ChangeEvent, memo } from 'react';
 // Styles
 import './index.css';
 
-export interface InputProps {
+interface InputProps {
   value: string;
   title?: string;
   placeholder?: string;
@@ -13,7 +13,7 @@ export interface InputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input = memo(
+const Input = memo(
   ({ placeholder, title, value, name, error, onChange, variant = 'primary' }: InputProps) => (
     <div
       className={`input-wrapper input-${variant} ${
@@ -36,3 +36,5 @@ export const Input = memo(
     </div>
   ),
 );
+
+export default Input;

@@ -5,10 +5,8 @@ import { RouteObject } from 'react-router-dom';
 import { ROUTES } from '@constants';
 
 // Pages
-const HomePage = lazy(() => import('@pages').then((module) => ({ default: module.HomePage })));
-const TestingPage = lazy(() =>
-  import('@pages').then((module) => ({ default: module.TestingPage })),
-);
+const HomePage = lazy(() => import('@pages/HomePage'));
+const VocabularyPage = lazy(() => import('@pages/VocabularyPage'));
 
 export const Routers: RouteObject[] = [
   {
@@ -16,7 +14,7 @@ export const Routers: RouteObject[] = [
     element: <HomePage />,
   },
   {
-    path: ROUTES.TESTING,
-    element: <TestingPage />,
+    path: ROUTES.VOCABULARY,
+    element: <VocabularyPage />,
   },
 ];

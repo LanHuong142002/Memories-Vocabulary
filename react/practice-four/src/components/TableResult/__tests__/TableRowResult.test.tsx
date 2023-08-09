@@ -1,9 +1,11 @@
 import { render } from '@testing-library/react';
-import { mockResult } from '@mocks';
 import { ReactNode } from 'react';
 
+// Mocks
+import { mockResult } from '@mocks';
+
 // Components
-import { TableRowResult } from '../TableRowResult';
+import { TableRowResult } from '@components';
 
 describe('Test table row result component', () => {
   const Component = ({ children }: { children: ReactNode }) => (
