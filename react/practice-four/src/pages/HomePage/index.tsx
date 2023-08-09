@@ -5,7 +5,7 @@ import { Topic, Typography } from '@components';
 // Styles
 import './index.css';
 
-export const HomePage = () => {
+const HomePage = () => {
   const handleAddNewTopic = () => {
     // TODO: feature add new topic
   };
@@ -17,7 +17,7 @@ export const HomePage = () => {
   return (
     <Wrapper className='home'>
       <div className='description'>
-        <Typography size='xl'>Add & Select Topic</Typography>
+        <Typography size='xl'>Add &amp; Select Topic</Typography>
         <Typography color='secondary' size='xs'>
           Please choose a topic or create a new topic
         </Typography>
@@ -29,3 +29,5 @@ export const HomePage = () => {
     </Wrapper>
   );
 };
+
+export default HomePage;

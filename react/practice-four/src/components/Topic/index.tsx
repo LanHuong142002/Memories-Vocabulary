@@ -4,7 +4,7 @@ import { memo } from 'react';
 // Styles
 import './index.css';
 
-export interface TopicProps {
+interface TopicProps {
   isAddNew?: boolean;
   quantity?: number;
   name: string;
@@ -12,7 +12,7 @@ export interface TopicProps {
   onClick: () => void;
 }
 
-export const Topic = memo(
+const Topic = memo(
   ({ isAddNew = false, quantity = 0, name, variant = 'default', onClick }: TopicProps) => (
     <div className={`topic topic-${variant}`} onClick={onClick}>
       <span>{`${name} ${quantity > 0 ? `(${quantity})` : ''}`}</span>
@@ -22,3 +22,5 @@ export const Topic = memo(
     </div>
   ),
 );
+
+export default Topic;

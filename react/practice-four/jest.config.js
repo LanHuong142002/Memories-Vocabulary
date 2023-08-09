@@ -5,7 +5,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: 'coverage', // Custom folder name contain reports
   moduleNameMapper: {
-    '^@test-utils': '<rootDir>/test-utils/$1',
+    '^@mocks(.*)$': '<rootDir>src/mocks/$1',
     '^@constants(.*)$': '<rootDir>src/constants/$1',
     '^@assets(.*)$': '<rootDir>src/assets/$1',
     '^@components(.*)$': '<rootDir>src/components/$1',

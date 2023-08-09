@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
-import { Typography } from '..';
+
+// Components
+import { Typography } from '@components';
 
 describe('Test typography component', () => {
   it('Should render typography component', () => {
