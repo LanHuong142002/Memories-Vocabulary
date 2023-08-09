@@ -48,6 +48,15 @@
   /* Button colors */
   --button-primary-color: var(--color-orange-100);
 
+  /* Notification colors */
+  --notification-bg-color: var(--color-white-400);
+  --notification-text-color: var(--color-black-200);
+
+  /* Table colors */
+  --table-text-color-primary: var(--color-black-200);
+  --table-text-color-secondary: var(--color-black-200);
+  --table-bg-color: var(--color-white-500);
+
   /* Text colors */
   --text-default-color: var(--color-black-200);
   --text-primary-color: var(--color-black-100);
@@ -80,17 +89,6 @@
   /* Fonts */
   --font-primary: HelveticaNeue;
   --font-default: Helvetica, Arial, sans-serif;
-}
-
-:root .light {
-  /* Notification colors */
-  --notification-bg-color: var(--color-white-400);
-  --notification-text-color: var(--color-black-200);
-
-  /* Table colors */
-  --table-text-color-primary: var(--color-black-200);
-  --table-text-color-secondary: var(--color-black-200);
-  --table-bg-color: var(--color-white-500);
 }
 
 :root .dark {
