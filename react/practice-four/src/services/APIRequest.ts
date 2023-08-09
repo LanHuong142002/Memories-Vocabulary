@@ -54,7 +54,7 @@ export const putData = async <T>(item: T, endpoint: string, id: string): Promise
  * @returns {T} data
  */
 export const deleteData = async <T>(endpoint: string, id: string): Promise<T> => {
-  const response = await axios.put<T>(`${URL.BASE}${endpoint}/${id}`);
+  const response = await axios.delete<T>(`${URL.BASE}${endpoint}/${id}`);
 
   return response.data;
 };
