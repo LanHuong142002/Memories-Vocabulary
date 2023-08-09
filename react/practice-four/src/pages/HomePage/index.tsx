@@ -8,15 +8,16 @@ import './index.css';
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, Topic, Typography } from '@components';
+import { Button, Input, Spinner, Topic, Typography } from '@components';
 
 const HomePage = () => {
-  const { topics, onAddNewTopic } = useContext(DictionaryContext);
+  const { isLoading, topics, onAddNewTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
 
   const handleOpenOverlay = () => {
     setIsOpenOverlay((prev) => !prev);
+    setTopicValue('');
   };
 
   const handleAddNewTopic = () => {
@@ -36,23 +37,39 @@ const HomePage = () => {
   };
 
   return (
-    <Wrapper className='home'>
-      <div className='description'>
-        <Typography size='xl'>Add &amp; Select Topic</Typography>
-        <Typography color='secondary' size='xs'>
-          Please choose a topic or create a new topic
-        </Typography>
-      </div>
+    <Wrapper
+      className='home'
+      childrenTitle={
+        <>
+          <Typography size='xl'>Add &amp; Select Topic</Typography>
+          <Typography color='secondary' size='xs'>
+            Please choose a topic or create a new topic
+          </Typography>
+        </>
+      }
+    >
       <div className='topics'>
-        {topics.map(({ id, name, vocabularies }) => (
-          <Topic
-            key={`topic-${id}`}
-            name={name}
-            quantity={vocabularies!.length}
-            onClick={handleOpenTopic}
-          />
-        ))}
-        <Topic variant='selected' name='Add Topic' isAddNew={true} onClick={handleOpenOverlay} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            {topics.map(({ id, name, vocabularies }) => (
+              <Topic
+                id={id!}
+                key={`topic-${id}`}
+                name={name}
+                quantity={vocabularies!.length}
+                onClick={handleOpenTopic}
+              />
+            ))}
+            <Topic
+              variant='selected'
+              name='Add Topic'
+              isAddNew={true}
+              onClick={handleOpenOverlay}
+            />
+          </>
+        )}
       </div>
 
       {isOpenOverlay && (

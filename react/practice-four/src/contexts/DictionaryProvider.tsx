@@ -4,6 +4,7 @@ import { getData, postData } from '@services';
 import { URL } from '@constants';
 
 interface DictionaryType {
+  isLoading: boolean;
   topics: TopicType[];
   errorMessage: string;
   onAddNewTopic: (topic: Topic) => void;
@@ -14,8 +15,10 @@ export const DictionaryContext = createContext<DictionaryType>({} as DictionaryT
 export function DictionaryProvider({ children }: { children: ReactNode }) {
   const [topics, setTopics] = useState<TopicType[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleAddNewTopic = useCallback(async (topic: Topic) => {
+    setIsLoading(true);
     try {
       const response = await postData(topic, URL.TOPIC);
 
@@ -24,10 +27,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       const { message } = error as Error;
       setErrorMessage(message);
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    const fetchTopics = async () => {
+    const getTopics = async () => {
+      setIsLoading(true);
       try {
         const response = await getData<TopicType[]>(URL.TOPIC);
         setTopics(response);
@@ -35,13 +40,14 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         const { message } = error as Error;
         setErrorMessage(message);
       }
+      setIsLoading(false);
     };
-    fetchTopics();
+    getTopics();
   }, []);
 
   const value = useMemo(
-    () => ({ topics, errorMessage, onAddNewTopic: handleAddNewTopic }),
-    [topics, errorMessage, handleAddNewTopic],
+    () => ({ isLoading, topics, errorMessage, onAddNewTopic: handleAddNewTopic }),
+    [isLoading, topics, errorMessage, handleAddNewTopic],
   );
 
   return <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>;

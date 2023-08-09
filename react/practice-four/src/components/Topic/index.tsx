@@ -5,7 +5,7 @@ import { memo } from 'react';
 import './index.css';
 
 interface TopicProps {
-  id: string;
+  id?: string;
   isAddNew?: boolean;
   quantity?: number;
   name: string;
