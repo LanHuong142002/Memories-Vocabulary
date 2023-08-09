@@ -7,8 +7,8 @@ export interface ButtonProps {
   isDisabled?: boolean;
   label?: string;
   type?: 'button' | 'submit';
-  variant?: 'primary' | 'secondary';
-  size?: 'xs' | 's' | 'm';
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'xs' | 's' | 'm' | 'xxl';
   onClick: () => void;
   children?: ReactNode;
 }
