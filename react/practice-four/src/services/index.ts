@@ -1,1 +1,1 @@
-export * from './fetchAPI';
+export * from './APIRequest';
