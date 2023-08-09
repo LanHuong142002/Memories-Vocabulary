@@ -7,13 +7,6 @@ import { ToggleTheme, ToggleThemeProps } from '@components';
 const meta: Meta<typeof ToggleTheme> = {
   title: 'PracticeFour/ToggleTheme',
   component: ToggleTheme,
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 const Template: StoryFn<ToggleThemeProps> = () => {

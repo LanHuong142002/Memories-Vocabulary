@@ -17,13 +17,6 @@ const meta: Meta<typeof Button> = {
       options: ['xs', 's', 'm'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Button>;
