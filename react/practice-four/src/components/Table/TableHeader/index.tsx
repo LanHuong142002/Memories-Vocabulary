@@ -7,10 +7,12 @@ interface TableHeaderProps {
   children: ReactNode;
 }
 
-export const TableHeader = memo(
+const TableHeader = memo(
   ({ children }: TableHeaderProps): ReactElement => (
     <thead className='table-header' data-testid='table-header'>
       {children}
     </thead>
   ),
 );
+
+export default TableHeader;

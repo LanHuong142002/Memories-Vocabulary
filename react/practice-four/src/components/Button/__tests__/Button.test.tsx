@@ -1,5 +1,7 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
-import { Button } from '..';
+
+// Components
+import { Button } from '@components';
 
 describe('Test button component', () => {
   afterEach(() => {

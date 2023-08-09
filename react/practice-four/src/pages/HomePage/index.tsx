@@ -1,2 +1,4 @@
 // TODO: define home page
-export const HomePage = () => <div>Home Page</div>;
+const HomePage = () => <div>Home Page</div>;
+
+export default HomePage;

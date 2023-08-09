@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
-import { TableVocabulary } from '..';
+
+// Components
+import { TableVocabulary } from '@components';
 
 describe('Test table vocabulary component', () => {
   const handleOnClick = jest.fn();

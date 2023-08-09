@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+
+// Styles
 import './index.css';
 
 interface TypographyProps {
@@ -9,7 +11,7 @@ interface TypographyProps {
   children: ReactNode;
 }
 
-export const Typography = ({
+const Typography = ({
   theme = 'light',
   size = 'xs',
   color = 'primary',
@@ -22,3 +24,5 @@ export const Typography = ({
     {children}
   </TagName>
 );
+
+export default Typography;

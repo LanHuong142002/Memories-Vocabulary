@@ -10,7 +10,7 @@ interface TableRowResultProps extends VocabularyResult {
   order: number;
 }
 
-export const TableRowResult = memo(
+const TableRowResult = memo(
   ({ isSuccess, order, native, translation, answer }: TableRowResultProps) => (
     <>
       <TableRow>
@@ -34,3 +34,5 @@ export const TableRowResult = memo(
     </>
   ),
 );
+
+export default TableRowResult;

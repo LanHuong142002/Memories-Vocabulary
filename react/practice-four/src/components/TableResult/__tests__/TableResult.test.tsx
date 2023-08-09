@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { mockTableResult } from '@mocks';
 
 // Components
-import { TableResult } from '..';
+import { TableResult } from '@components';
 
 describe('Should test table result component', () => {
   it('Should render table result component', () => {
