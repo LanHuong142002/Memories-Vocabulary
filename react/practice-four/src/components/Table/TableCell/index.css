@@ -1,0 +1,28 @@
+.table-cell {
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: break-word;
+  padding: 8px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+.table-cell-border .table-cell {
+  border: 1px solid var(--color-black-500);
+}
+
+.table-cell-success {
+  background-color: var(--color-green-200);
+}
+
+/* Use class table-wrapper-dark that can 
+  be changed based on the theme passed from the table component */
+.table-wrapper-dark .table-cell-success,
+.table-wrapper-dark .table-cell-failed {
+  color: var(--color-black-400);
+}
+
+.table-cell-failed {
+  background-color: var(--color-red-500);
+}
