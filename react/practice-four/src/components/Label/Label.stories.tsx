@@ -12,13 +12,6 @@ const meta: Meta<typeof Label> = {
       options: ['success', 'failed', 'normal'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Label>;
