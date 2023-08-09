@@ -56,7 +56,7 @@ describe('Should test fetch API', () => {
       data: MOCK_TOPIC,
     });
 
-    const response = await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
+    const response = await putData<Topic>(MOCK_TOPIC, 'endpoint');
 
     expect(response).toEqual(MOCK_TOPIC);
   });
@@ -66,7 +66,7 @@ describe('Should test fetch API', () => {
     (axios.put as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
-      await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
+      await putData<Topic>(MOCK_TOPIC, 'endpoint');
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
       return error;
