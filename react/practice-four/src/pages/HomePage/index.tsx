@@ -1,33 +1,59 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
 
-// Styles
-import './index.css';
+// Helpers
+import { validation } from '@helpers';
+
+// Hooks
+import { useDebounce } from '@hooks';
 
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Spinner, Topic, Typography } from '@components';
 
+// Styles
+import './index.css';
+
 const HomePage = () => {
   const { isLoading, topics, onAddNewTopic } = useContext(DictionaryContext);
+  const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
+  const debouncedValue = useDebounce<string>(topicValue, 700);
 
+  /**
+   * @description function show hide overlay add new
+   */
   const handleOpenOverlay = () => {
     setIsOpenOverlay((prev) => !prev);
     setTopicValue('');
+    setErrors([]);
   };
 
+  /**
+   * @description function add new topic
+   */
   const handleAddNewTopic = () => {
-    onAddNewTopic({
-      name: topicValue,
-      vocabularies: [],
-    });
-    handleOpenOverlay();
+    const listError = validation(topicValue);
+
+    if (listError.length) {
+      setErrors(listError);
+    } else {
+      onAddNewTopic({
+        name: topicValue,
+        vocabularies: [],
+      });
+      handleOpenOverlay();
+    }
   };
 
+  /**
+   * @description function get value from input
+   *
+   * @param {Event} event of input element
+   */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTopicValue(event.target.value);
   };
@@ -35,6 +61,11 @@ const HomePage = () => {
   const handleOpenTopic = () => {
     // TODO: feature open topic
   };
+
+  useEffect(() => {
+    const listError = validation(debouncedValue);
+    setErrors(listError);
+  }, [debouncedValue]);
 
   return (
     <Wrapper
@@ -84,6 +115,7 @@ const HomePage = () => {
               variant='primary'
               placeholder='Topic Name'
               onChange={handleOnChange}
+              errors={errors}
             />
             <Button size='m' onClick={handleAddNewTopic}>
               Done
