@@ -9,7 +9,7 @@ interface ProcessBarProps {
   totalStep: number;
 }
 
-export const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
+const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
   const limitStep = step > totalStep ? totalStep : step;
   const percent = (limitStep / totalStep) * 100;
 
@@ -24,3 +24,5 @@ export const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
     </div>
   );
 };
+
+export default ProcessBar;

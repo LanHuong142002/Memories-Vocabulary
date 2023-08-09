@@ -8,7 +8,8 @@ interface TableCellProps {
   color?: 'success' | 'failed';
   children?: ReactNode;
 }
-export const TableCell = memo(
+
+const TableCell = memo(
   ({
     rowspan,
     colspan,
@@ -26,3 +27,5 @@ export const TableCell = memo(
     </TagName>
   ),
 );
+
+export default TableCell;

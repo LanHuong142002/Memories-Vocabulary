@@ -1,6 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
-import { TableRowVocabulary } from '@components';
 import { ReactNode } from 'react';
+
+// Components
+import { TableRowVocabulary } from '@components';
 
 describe('Test table row vocabulary component', () => {
   const defaultProps = {
