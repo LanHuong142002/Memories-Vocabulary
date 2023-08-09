@@ -6,14 +6,6 @@ import { ProcessBar } from '@components';
 const meta: Meta<typeof ProcessBar> = {
   title: 'PracticeFour/ProcessBar',
   component: ProcessBar,
-
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof ProcessBar>;
