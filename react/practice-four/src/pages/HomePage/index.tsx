@@ -44,7 +44,7 @@ export const HomePage = () => {
       className='home'
       childrenTitle={
         <>
-          <Typography size='xl'>Add & Select Topic</Typography>
+          <Typography size='xl'>Add &amp; Select Topic</Typography>
           <Typography color='secondary' size='xs'>
             Please choose a topic or create a new topic
           </Typography>

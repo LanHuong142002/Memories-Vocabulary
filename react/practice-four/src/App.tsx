@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 export const App = () => (
   <main className='container'>
     <DictionaryProvider>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner variant='primary' />}>
         <Routes>
           {Routers.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
