@@ -14,12 +14,13 @@ import { ROUTES } from '@constants';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { topics, isLoading, onAddNewTopic, onOpenTopic } = useContext(DictionaryContext);
+  const { isLoading, topics, onAddNewTopic, onOpenTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
 
   const handleOpenOverlay = () => {
     setIsOpenOverlay((prev) => !prev);
+    setTopicValue('');
   };
 
   const handleAddNewTopic = () => {
@@ -65,6 +66,12 @@ const HomePage = () => {
                 onClick={handleOpenTopic}
               />
             ))}
+            <Topic
+              variant='selected'
+              name='Add Topic'
+              isAddNew={true}
+              onClick={handleOpenOverlay}
+            />
           </>
         )}
       </div>

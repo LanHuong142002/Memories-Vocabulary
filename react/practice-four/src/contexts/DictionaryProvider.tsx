@@ -21,6 +21,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleAddNewTopic = useCallback(async (topic: Topic) => {
+    setIsLoading(true);
     try {
       const response = await postData(topic, URL.TOPIC);
 
@@ -29,6 +30,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       const { message } = error as Error;
       setErrorMessage(message);
     }
+    setIsLoading(false);
   }, []);
 
   const handleOpenTopic = useCallback(
@@ -42,7 +44,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   console.log(vocabularies);
 
   useEffect(() => {
-    const fetchTopics = async () => {
+    const getTopics = async () => {
       setIsLoading(true);
       try {
         const response = await getData<TopicType[]>(URL.TOPIC);
@@ -53,15 +55,15 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       }
       setIsLoading(false);
     };
-    fetchTopics();
+    getTopics();
   }, []);
 
   const value = useMemo(
     () => ({
+      isLoading,
       errorMessage,
       topics,
       vocabularies,
-      isLoading,
       onAddNewTopic: handleAddNewTopic,
       onOpenTopic: handleOpenTopic,
     }),
