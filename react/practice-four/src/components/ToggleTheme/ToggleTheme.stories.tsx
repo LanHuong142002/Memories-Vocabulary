@@ -17,7 +17,7 @@ const meta: Meta<typeof ToggleTheme> = {
 };
 
 const Template: StoryFn<ToggleThemeProps> = () => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   const handleToggleTheme = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.currentTarget;
