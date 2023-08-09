@@ -6,20 +6,6 @@ import { TableVocabulary } from '@components';
 const meta: Meta<typeof TableVocabulary> = {
   title: 'PracticeFour/TableVocabulary',
   component: TableVocabulary,
-  argTypes: {
-    onClick: { action: 'clicked' },
-    theme: {
-      control: { type: 'radio' },
-      options: ['dark', 'light'],
-    },
-  },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 const mockData = [
@@ -49,7 +35,6 @@ type Story = StoryObj<typeof TableVocabulary>;
 
 export const Default: Story = {
   args: {
-    theme: 'light',
     vocabularies: mockData,
   },
 };

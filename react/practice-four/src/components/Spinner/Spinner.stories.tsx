@@ -13,13 +13,6 @@ const meta: Meta<typeof Spinner> = {
       options: ['xs', 's', 'm'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Spinner>;
