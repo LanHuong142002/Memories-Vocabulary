@@ -1,18 +1,20 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useContext } from 'react';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
 // Components
-import { Button, Input, Typography } from '@components';
+import { Button, Input, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
 
 // Styles
 import './index.css';
+import { DictionaryContext } from '@contexts';
 
 interface Translation extends Pick<Vocabulary, 'english' | 'vietnamese'> {}
 
 const VocabularyPage = () => {
+  const { vocabularies } = useContext(DictionaryContext);
   const [translation, setTranslation] = useState<Translation>({
     english: '',
     vietnamese: '',
@@ -25,6 +27,8 @@ const VocabularyPage = () => {
   };
 
   const handleAddNewVocabulary = () => {};
+
+  const handleDeleteVocabulary = () => {};
 
   return (
     <Wrapper
@@ -56,6 +60,7 @@ const VocabularyPage = () => {
         />
         <Button type='submit' onClick={handleAddNewVocabulary} label='Add' />
       </form>
+      <TableVocabulary vocabularies={vocabularies} onClick={handleDeleteVocabulary} />
     </Wrapper>
   );
 };

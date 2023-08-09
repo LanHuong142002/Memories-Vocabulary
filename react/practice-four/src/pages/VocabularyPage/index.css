@@ -1,5 +1,5 @@
 .wrapper-testing-page .form-add-new-vocabulary {
-  height: 46px;
+  height: max-content;
   width: fit-content;
   margin: auto;
   padding: 20px 0;
@@ -14,9 +14,10 @@
   width: 100%;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1000px) {
   .wrapper-testing-page .form-add-new-vocabulary {
     flex-direction: row;
+    height: 46px;
   }
 
   .wrapper-testing-page .form-add-new-vocabulary > button {
