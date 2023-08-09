@@ -25,14 +25,10 @@
   align-items: center;
 }
 
-.wrapper-box.wrapper-box-dark {
-  background-color: var(--background-secondary-color);
-}
-
 .wrapper-box {
   width: 55%;
   border-radius: 4px;
   padding: 50px;
   box-shadow: 0 2px 8px var(--color-opacity-primary);
-  background-color: var(--color-white-100);
+  background-color: var(--background-secondary-color);
 }
