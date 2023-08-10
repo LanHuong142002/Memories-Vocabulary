@@ -7,7 +7,6 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  useState,
 } from 'react';
 
 // Services
@@ -17,7 +16,7 @@ import { getData, postData } from '@services';
 import { TOPIC_ACTIONS, URL } from '@constants';
 
 // Interfaces
-import { Topic, Vocabulary } from '@interfaces';
+import { Topic } from '@interfaces';
 
 // Stores
 import { ActionTopics, initialTopicState, topicReducer } from '@stores';
@@ -26,9 +25,7 @@ interface DictionaryType {
   isLoadingTopic: boolean;
   errorsTopic: string;
   topics: Topic[];
-  vocabularies: Vocabulary[];
   onAddTopic: (topic: Topic) => void;
-  onOpenTopic: (id: string) => void;
   topicDispatch: Dispatch<ActionTopics>;
 }
 
@@ -36,7 +33,6 @@ export const DictionaryContext = createContext<DictionaryType>({} as DictionaryT
 
 export function DictionaryProvider({ children }: { children: ReactNode }) {
   const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
-  const [vocabularies, setVocabularies] = useState<Vocabulary[]>([]);
   const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = topicState;
 
   const handleAddTopic = useCallback(
@@ -61,15 +57,6 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
           },
         });
       }
-    },
-    [topics],
-  );
-
-  const handleOpenTopic = useCallback(
-    (id: string) => {
-      const topic = topics.find((topic) => topic.id === id);
-      setVocabularies(topic!.vocabularies!);
-      console.log(topic);
     },
     [topics],
   );
@@ -104,13 +91,11 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     () => ({
       isLoadingTopic,
       errorsTopic,
-      vocabularies,
       topics: topics,
       onAddTopic: handleAddTopic,
-      onOpenTopic: handleOpenTopic,
       topicDispatch,
     }),
-    [isLoadingTopic, errorsTopic, vocabularies, topics, handleAddTopic, handleOpenTopic],
+    [isLoadingTopic, errorsTopic, topics, handleAddTopic],
   );
 
   return <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>;
