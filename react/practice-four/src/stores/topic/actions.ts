@@ -18,4 +18,4 @@ export type PostTopic = {
   };
 };
 
-export type actionTopics = GetTopics | PostTopic;
+export type ActionTopics = GetTopics | PostTopic;
