@@ -27,26 +27,17 @@
 }
 
 .typography-color-primary {
-  color: var(--color-black-200);
+  color: var(--text-default-color);
 }
 
 .typography-color-secondary {
-  color: var(--color-black-400);
-}
-
-.typography-color-secondary {
-  color: var(--color-black-400);
+  color: var(--text-tertiary-color);
 }
 
 .typography-color-tertiary {
   color: var(--color-black-100);
 }
 
-.typography-color-primary.typography-dark {
-  color: var(--color-white-100);
-}
-
-.typography-color-secondary.typography-dark,
 .typography-color-secondary.typography-tertiary {
   color: var(--color-black-500);
 }

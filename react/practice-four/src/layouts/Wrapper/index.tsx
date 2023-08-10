@@ -1,10 +1,13 @@
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, ReactNode, useCallback, useContext, useState } from 'react';
 
-// Styles
-import './index.css';
+// Contexts
+import { ThemeContext } from '@contexts';
 
 // Components
 import { Button, ToggleTheme } from '@components';
+
+// Styles
+import './index.css';
 
 export const Wrapper = ({
   className,
@@ -15,6 +18,7 @@ export const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
+  const { onToggleTheme } = useContext(ThemeContext);
   const [toggle, setToggle] = useState<boolean>(false);
 
   /**
@@ -22,10 +26,14 @@ export const Wrapper = ({
    *
    * @param {Event} event of input element
    */
-  const handleToggleTheme = (event: ChangeEvent<HTMLInputElement>) => {
-    const { checked } = event.currentTarget;
-    setToggle(checked);
-  };
+  const handleToggleTheme = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { checked } = event.currentTarget;
+      setToggle(checked);
+      onToggleTheme(checked);
+    },
+    [onToggleTheme],
+  );
 
   const handleBackToHome = () => {
     // TODO: handle back to home page

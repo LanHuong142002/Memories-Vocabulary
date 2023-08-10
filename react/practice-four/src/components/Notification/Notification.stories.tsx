@@ -17,11 +17,4 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = {
-  args: {
-    title: 'Something wrong',
-    description: 'error',
-  },
-};
-
 export default meta;

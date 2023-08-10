@@ -16,7 +16,7 @@ describe('Test notification component', () => {
   });
 
   it('Should render notification dark component', () => {
-    const { container } = render(<Notification theme='dark' {...defaultProps} />);
+    const { container } = render(<Notification {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
