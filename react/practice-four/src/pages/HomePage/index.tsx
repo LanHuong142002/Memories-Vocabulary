@@ -22,7 +22,7 @@ import './index.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isLoading, topics, onAddNewTopic, onOpenTopic } = useContext(DictionaryContext);
+  const { isLoading, topics, onAddTopic, onOpenTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -46,7 +46,8 @@ const HomePage = () => {
     if (listError.length) {
       setErrors(listError);
     } else {
-      onAddNewTopic({
+      onAddTopic({
+        id: '1',
         name: topicValue,
         vocabularies: [],
       });
@@ -92,10 +93,10 @@ const HomePage = () => {
           <>
             {topics.map(({ id, name, vocabularies }) => (
               <Topic
-                id={id!}
+                id={id}
                 key={`topic-${id}`}
                 name={name}
-                quantity={vocabularies!.length}
+                quantity={vocabularies?.length || 0}
                 onClick={handleOpenTopic}
               />
             ))}

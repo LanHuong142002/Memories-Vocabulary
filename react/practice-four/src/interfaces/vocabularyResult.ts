@@ -1,5 +1,5 @@
 export interface VocabularyResult {
-  id?: string;
+  id: string;
   isSuccess: boolean;
   native: string;
   translation: string;
