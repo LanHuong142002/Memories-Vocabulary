@@ -36,7 +36,6 @@
 }
 
 .input-wrapper.input-secondary > span {
-  width: max-content;
   padding: 0 5px;
   color: var(--color-black-300);
   position: absolute;
