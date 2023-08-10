@@ -1,11 +1,11 @@
 .notification {
-  padding: 15px 10px;
-  background-color: var(--color-white-100);
   width: 300px;
+  padding: 15px 10px;
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-regular);
-  color: var(--color-black-200);
+  color: var(--notification-text-color);
   border-radius: 4px;
+  background-color: var(--notification-bg-color);
 }
 
 .notification .title {
@@ -15,11 +15,6 @@
 .notification .description {
   padding-top: 5px;
   font-size: var(--font-size-xxs);
-}
-
-.notification.notification-dark {
-  background-color: var(--color-black-300);
-  color: var(--color-white-100);
 }
 
 @media screen and (min-width: 600px) {

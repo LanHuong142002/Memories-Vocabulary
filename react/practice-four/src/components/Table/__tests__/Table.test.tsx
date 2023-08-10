@@ -31,7 +31,7 @@ describe('Test table component', () => {
 
   it('Should render table component without border', () => {
     const { getByTestId } = render(
-      <Table theme='dark'>
+      <Table>
         <thead data-testid='table-header'>
           <tr>
             <th>table header</th>
