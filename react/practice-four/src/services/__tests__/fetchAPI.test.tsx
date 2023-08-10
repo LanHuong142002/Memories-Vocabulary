@@ -71,7 +71,7 @@ describe('Should test fetch API', () => {
   });
 
   it('should return value when call deleteData success', async () => {
-    (axios.put as jest.Mock).mockResolvedValue({
+    (axios.delete as jest.Mock).mockResolvedValue({
       data: [],
     });
 
