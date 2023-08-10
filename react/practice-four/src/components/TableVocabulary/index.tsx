@@ -16,7 +16,7 @@ import {
 interface TableVocabularyProps {
   theme?: 'light' | 'dark';
   vocabularies: Vocabulary[];
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 const TableVocabulary = memo(({ theme = 'light', vocabularies, onClick }: TableVocabularyProps) => (
