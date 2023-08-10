@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { Table } from '..';
+// Components
+import { Table } from '@components';
 
 describe('Test table component', () => {
   it('Should render table component with border', () => {
@@ -30,7 +31,7 @@ describe('Test table component', () => {
 
   it('Should render table component without border', () => {
     const { getByTestId } = render(
-      <Table theme='dark'>
+      <Table>
         <thead data-testid='table-header'>
           <tr>
             <th>table header</th>

@@ -1,5 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
-import { Pagination } from '..';
+
+// Components
+import { Pagination } from '@components';
 
 describe('Test pagination component', () => {
   const defaultProps = {

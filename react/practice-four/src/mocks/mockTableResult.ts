@@ -1,21 +1,24 @@
 export const mockTableResult = [
   {
+    id: '1',
     isSuccess: true,
-    no: 1,
+    order: '1',
     native: 'pen',
     translation: 'cay but',
     answer: 'cay but',
   },
   {
+    id: '2',
     isSuccess: false,
-    no: 2,
+    order: '2',
     native: 'book',
     translation: 'quyen sach',
     answer: 'cuon sach',
   },
   {
+    id: '3',
     isSuccess: true,
-    no: 3,
+    order: '3',
     native: 'notebook',
     translation: 'quyen vo',
     answer: 'quyen vo',
@@ -23,8 +26,9 @@ export const mockTableResult = [
 ];
 
 export const mockResult = {
+  id: '4',
   isSuccess: true,
-  no: 1,
+  order: '1',
   native: 'pen',
   translation: 'cay but',
   answer: 'cay but',

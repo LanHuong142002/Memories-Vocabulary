@@ -1,5 +1,6 @@
 export interface Vocabulary {
-  id: number;
+  id: string;
   english: string;
   vietnamese: string;
+  topicId?: string;
 }

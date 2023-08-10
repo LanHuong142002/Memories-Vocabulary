@@ -3,26 +3,28 @@ import { ReactNode, memo } from 'react';
 // Styles
 import './index.css';
 
-export interface ButtonProps {
+interface ButtonProps {
   isDisabled?: boolean;
   label?: string;
-  variant?: 'primary' | 'secondary';
-  size?: 'xs' | 's' | 'm';
+  type?: 'button' | 'submit';
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'xs' | 's' | 'm' | 'xxl';
   onClick: () => void;
   children?: ReactNode;
 }
 
-export const Button = memo(
+const Button = memo(
   ({
     isDisabled = false,
     label,
+    type = 'button',
     size = 's',
     variant = 'primary',
     onClick,
     children,
   }: ButtonProps) => (
     <button
-      type='button'
+      type={type}
       className={`btn btn-size-${size} btn-${variant}`}
       onClick={onClick}
       disabled={isDisabled}
@@ -31,3 +33,5 @@ export const Button = memo(
     </button>
   ),
 );
+
+export default Button;

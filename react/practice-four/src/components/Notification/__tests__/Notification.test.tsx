@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { Notification } from '..';
+// Components
+import { Notification } from '@components';
 
 describe('Test notification component', () => {
   const defaultProps = {
@@ -15,7 +16,7 @@ describe('Test notification component', () => {
   });
 
   it('Should render notification dark component', () => {
-    const { container } = render(<Notification theme='dark' {...defaultProps} />);
+    const { container } = render(<Notification {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });

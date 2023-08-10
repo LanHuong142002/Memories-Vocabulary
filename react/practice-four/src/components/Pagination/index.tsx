@@ -13,7 +13,7 @@ interface PaginationProps {
   onPrev: () => void;
 }
 
-export const Pagination = memo(({ onFirstList, onLastList, onNext, onPrev }: PaginationProps) => (
+const Pagination = memo(({ onFirstList, onLastList, onNext, onPrev }: PaginationProps) => (
   <div className='pagination'>
     <Button variant='secondary' label='&laquo;' onClick={onFirstList} />
     <Button variant='secondary' label='&lt;' onClick={onPrev} />
@@ -21,3 +21,5 @@ export const Pagination = memo(({ onFirstList, onLastList, onNext, onPrev }: Pag
     <Button variant='secondary' label='&raquo;' onClick={onLastList} />
   </div>
 ));
+
+export default Pagination;

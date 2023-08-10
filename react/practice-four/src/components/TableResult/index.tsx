@@ -6,13 +6,12 @@ import { memo } from 'react';
 // Components
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
 
-export interface TableResultProps {
-  theme?: 'light' | 'dark';
+interface TableResultProps {
   result: VocabularyResult[];
 }
 
-export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
-  <Table theme={theme} hasBorderCell={true}>
+const TableResult = memo(({ result }: TableResultProps) => (
+  <Table hasBorderCell={true}>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th' rowspan={2}>
@@ -33,10 +32,11 @@ export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) 
       </TableRow>
     </TableHeader>
     <TableBody>
-      {result.map(({ answer, isSuccess, native, translation }, index) => (
+      {result.map(({ id, answer, isSuccess, native, translation }, index) => (
         <TableRowResult
+          id={id}
           key={`table-result-${index}`}
-          order={index + 1}
+          order={`${index + 1}`}
           answer={answer}
           isSuccess={isSuccess}
           native={native}
@@ -46,3 +46,5 @@ export const TableResult = memo(({ result, theme = 'light' }: TableResultProps) 
     </TableBody>
   </Table>
 ));
+
+export default TableResult;

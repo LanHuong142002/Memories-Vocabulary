@@ -3,10 +3,3 @@
   border-bottom: 2px solid var(--color-black-500);
   font-weight: var(--font-weight-bold);
 }
-
-.table-wrapper-dark .table-header > .table-row:nth-child(1),
-.table-wrapper-dark .table-header > .table-row:nth-child(2):hover,
-.table-header > .table-row:nth-child(1):hover,
-.table-header > .table-row:nth-child(2):hover {
-  background-color: transparent;
-}

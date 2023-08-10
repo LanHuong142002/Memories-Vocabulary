@@ -40,13 +40,23 @@
   --color-opacity-quaternary: rgba(255, 255, 255, 0.8);
 
   --process-bar-opacity: rgba(255, 255, 255, 0.15);
+  --overlay-opacity: rgba(255, 255, 255, 0.5);
 
   /* Background colors */
-  --background-primary-color: #1a1b1e;
-  --background-secondary-color: #25262b;
+  --background-primary-color: var(--color-white-200);
+  --background-secondary-color: var(--color-white-100);
 
   /* Button colors */
   --button-primary-color: var(--color-orange-100);
+
+  /* Notification colors */
+  --notification-bg-color: var(--color-white-400);
+  --notification-text-color: var(--color-black-200);
+
+  /* Table colors */
+  --table-text-color-primary: var(--color-black-200);
+  --table-text-color-secondary: var(--color-black-200);
+  --table-bg-color: var(--color-white-500);
 
   /* Text colors */
   --text-default-color: var(--color-black-200);
@@ -80,4 +90,21 @@
   /* Fonts */
   --font-primary: HelveticaNeue;
   --font-default: Helvetica, Arial, sans-serif;
+}
+
+:root .dark {
+  --background-primary-color: #1a1b1e;
+  --background-secondary-color: #25262b;
+
+  --text-default-color: var(--color-white-100);
+  --text-tertiary-color: var(--color-black-500);
+
+  /* Notification colors */
+  --notification-bg-color: var(--color-black-300);
+  --notification-text-color: var(--color-white-100);
+
+  /* Table colors */
+  --table-text-color-primary: var(--color-white-100);
+  --table-text-color-secondary: var(--color-black-400);
+  --table-bg-color: var(--color-black-300);
 }

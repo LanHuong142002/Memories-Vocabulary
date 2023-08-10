@@ -7,17 +7,10 @@ import { ToggleTheme, ToggleThemeProps } from '@components';
 const meta: Meta<typeof ToggleTheme> = {
   title: 'PracticeFour/ToggleTheme',
   component: ToggleTheme,
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 const Template: StoryFn<ToggleThemeProps> = () => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   const handleToggleTheme = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.currentTarget;
