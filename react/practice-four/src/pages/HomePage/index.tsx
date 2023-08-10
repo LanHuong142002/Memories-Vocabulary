@@ -17,7 +17,7 @@ import { Button, Input, Spinner, Topic, Typography } from '@components';
 import './index.css';
 
 const HomePage = () => {
-  const { isLoading, topics, onAddTopic } = useContext(DictionaryContext);
+  const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const HomePage = () => {
       }
     >
       <div className='topics'>
-        {isLoading ? (
+        {isLoadingTopic ? (
           <Spinner />
         ) : (
           <>

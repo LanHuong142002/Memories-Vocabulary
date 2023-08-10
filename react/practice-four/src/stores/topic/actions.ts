@@ -18,4 +18,15 @@ export type PostTopic = {
   };
 };
 
-export type ActionTopics = GetTopics | PostTopic;
+export type PendingTopic = {
+  type: typeof TOPIC_ACTIONS.PENDING;
+};
+
+export type FailedTopic = {
+  type: typeof TOPIC_ACTIONS.FAILED;
+  payload: {
+    errors: string;
+  };
+};
+
+export type ActionTopics = GetTopics | PostTopic | PendingTopic | FailedTopic;
