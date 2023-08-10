@@ -69,6 +69,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     (id: string) => {
       const topic = topics.find((topic) => topic.id === id);
       setVocabularies(topic!.vocabularies!);
+      console.log(topic);
     },
     [topics],
   );
