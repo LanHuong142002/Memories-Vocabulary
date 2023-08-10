@@ -5,6 +5,7 @@
   border-bottom: 1px solid var(--color-black-500);
   color: var(--table-text-color-primary);
   font-size: var(--font-size-xxs);
+  line-height: 20px;
 }
 
 .table-row.table-row-s {
