@@ -4,7 +4,7 @@ import { Typography } from '@components';
 // Styles
 import './index.css';
 
-export const ErrorPage = () => (
+const ErrorPage = () => (
   <div className='container'>
     <div className='error-content'>
       <Typography size='xxl'>404</Typography>
@@ -14,3 +14,5 @@ export const ErrorPage = () => (
     </div>
   </div>
 );
+
+export default ErrorPage;

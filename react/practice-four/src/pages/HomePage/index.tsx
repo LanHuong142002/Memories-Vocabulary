@@ -5,7 +5,7 @@ import { Topic, Typography } from '@components';
 // Styles
 import './index.css';
 
-export const HomePage = () => {
+const HomePage = () => {
   const handleAddNewTopic = () => {
     // TODO: feature add new topic
   };
@@ -29,3 +29,5 @@ export const HomePage = () => {
     </Wrapper>
   );
 };
+
+export default HomePage;

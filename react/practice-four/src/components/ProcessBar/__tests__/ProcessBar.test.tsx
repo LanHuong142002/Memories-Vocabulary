@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
-import { ProcessBar } from '..';
+
+// Components
+import { ProcessBar } from '@components';
 
 describe('Test process bar component', () => {
   it('Should render process bar component', () => {
