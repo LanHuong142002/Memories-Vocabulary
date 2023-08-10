@@ -13,13 +13,6 @@ const meta: Meta<typeof Topic> = {
       options: ['default', 'selected'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Topic>;

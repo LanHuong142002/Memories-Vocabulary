@@ -22,7 +22,7 @@ import './index.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isLoading, topics, onAddTopic, onOpenTopic } = useContext(DictionaryContext);
+  const { isLoadingTopic, topics, onAddTopic, onOpenTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -87,7 +87,7 @@ const HomePage = () => {
       }
     >
       <div className='topics'>
-        {isLoading ? (
+        {isLoadingTopic ? (
           <Spinner />
         ) : (
           <>

@@ -13,13 +13,6 @@ const meta: Meta<typeof Input> = {
       options: ['primary', 'secondary', 'tertiary'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Input>;

@@ -1,18 +1,32 @@
-import { ACTIONS_TOPIC } from '@constants';
+// Constants
+import { TOPIC_ACTIONS } from '@constants';
+
+// Interfaces
 import { Topic } from '@interfaces';
 
 export type GetTopics = {
-  type: typeof ACTIONS_TOPIC.GET;
+  type: typeof TOPIC_ACTIONS.GET;
   payload: {
     topics: Topic[];
   };
 };
 
 export type PostTopic = {
-  type: typeof ACTIONS_TOPIC.POST;
+  type: typeof TOPIC_ACTIONS.POST;
   payload: {
     topics: Topic[];
   };
 };
 
-export type TopicActions = GetTopics | PostTopic;
+export type PendingTopic = {
+  type: typeof TOPIC_ACTIONS.PENDING;
+};
+
+export type FailedTopic = {
+  type: typeof TOPIC_ACTIONS.FAILED;
+  payload: {
+    errors: string;
+  };
+};
+
+export type ActionTopics = GetTopics | PostTopic | PendingTopic | FailedTopic;

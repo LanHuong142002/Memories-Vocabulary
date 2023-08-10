@@ -7,12 +7,11 @@ import { memo } from 'react';
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
 
 interface TableResultProps {
-  theme?: 'light' | 'dark';
   result: VocabularyResult[];
 }
 
-const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
-  <Table theme={theme} hasBorderCell={true}>
+const TableResult = memo(({ result }: TableResultProps) => (
+  <Table hasBorderCell={true}>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th' rowspan={2}>
@@ -33,8 +32,9 @@ const TableResult = memo(({ result, theme = 'light' }: TableResultProps) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {result.map(({ answer, isSuccess, native, translation }, index) => (
+      {result.map(({ id, answer, isSuccess, native, translation }, index) => (
         <TableRowResult
+          id={id}
           key={`table-result-${index}`}
           order={`${index + 1}`}
           answer={answer}
