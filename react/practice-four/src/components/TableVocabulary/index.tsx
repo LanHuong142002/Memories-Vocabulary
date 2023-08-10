@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
   TableRowVocabulary,
+  Typography,
 } from '@components';
 
 export interface TableVocabularyProps {
@@ -29,15 +30,31 @@ const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) =
       </TableRow>
     </TableHeader>
     <TableBody>
-      {vocabularies.map(({ id, english, vietnamese }) => (
-        <TableRowVocabulary
-          key={`table-vocabulary-${id}`}
-          english={english}
-          vietnamese={vietnamese}
-          id={id}
-          onClick={onClick}
-        />
-      ))}
+      {vocabularies.length > 0 ? (
+        <>
+          {vocabularies.map(({ id, english, vietnamese }) => (
+            <TableRowVocabulary
+              key={`table-vocabulary-${id}`}
+              english={english}
+              vietnamese={vietnamese}
+              id={id}
+              onClick={onClick}
+            />
+          ))}
+        </>
+      ) : (
+        <TableRow>
+          <TableCell colspan={4}>
+            <Typography color='secondary' size='xs'>
+              Fill All Filed At Above And Press{' '}
+              <Typography className='highlight' tagName='span'>
+                ENTER
+              </Typography>{' '}
+              key or button Add
+            </Typography>
+          </TableCell>
+        </TableRow>
+      )}
     </TableBody>
   </Table>
 ));
