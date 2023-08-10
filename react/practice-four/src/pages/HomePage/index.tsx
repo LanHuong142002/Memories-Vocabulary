@@ -3,15 +3,15 @@ import { ChangeEvent, useContext, useState } from 'react';
 // Contexts
 import { DictionaryContext } from '@contexts';
 
-// Styles
-import './index.css';
-
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Spinner, Topic, Typography } from '@components';
 
+// Styles
+import './index.css';
+
 const HomePage = () => {
-  const { isLoading, topics, onAddNewTopic } = useContext(DictionaryContext);
+  const { isLoading, topics, onAddTopic } = useContext(DictionaryContext);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
 
@@ -21,7 +21,8 @@ const HomePage = () => {
   };
 
   const handleAddNewTopic = () => {
-    onAddNewTopic({
+    onAddTopic({
+      id: '1',
       name: topicValue,
       vocabularies: [],
     });
@@ -55,10 +56,10 @@ const HomePage = () => {
           <>
             {topics.map(({ id, name, vocabularies }) => (
               <Topic
-                id={id!}
+                id={id}
                 key={`topic-${id}`}
                 name={name}
-                quantity={vocabularies!.length}
+                quantity={vocabularies?.length || 0}
                 onClick={handleOpenTopic}
               />
             ))}

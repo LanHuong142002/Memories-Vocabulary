@@ -1,13 +1,20 @@
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
-import { Topic, Topic as TopicType } from '@interfaces';
+import { AxiosError } from 'axios';
+
+// Services
 import { getData, postData } from '@services';
+
+// Constants
 import { URL } from '@constants';
+
+// Interfaces
+import { Topic, Topic as TopicType } from '@interfaces';
 
 interface DictionaryType {
   isLoading: boolean;
   topics: TopicType[];
   errorMessage: string;
-  onAddNewTopic: (topic: Topic) => void;
+  onAddTopic: (topic: Topic) => void;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -17,14 +24,14 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleAddNewTopic = useCallback(async (topic: Topic) => {
+  const handleAddTopic = useCallback(async (topic: Topic) => {
     setIsLoading(true);
     try {
       const response = await postData(topic, URL.TOPIC);
 
       setTopics((prev) => [...prev, response]);
     } catch (error) {
-      const { message } = error as Error;
+      const { message } = error as AxiosError;
       setErrorMessage(message);
     }
     setIsLoading(false);
@@ -37,7 +44,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         const response = await getData<TopicType[]>(URL.TOPIC);
         setTopics(response);
       } catch (error) {
-        const { message } = error as Error;
+        const { message } = error as AxiosError;
         setErrorMessage(message);
       }
       setIsLoading(false);
@@ -46,8 +53,8 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ isLoading, topics, errorMessage, onAddNewTopic: handleAddNewTopic }),
-    [isLoading, topics, errorMessage, handleAddNewTopic],
+    () => ({ isLoading, topics, errorMessage, onAddTopic: handleAddTopic }),
+    [isLoading, topics, errorMessage, handleAddTopic],
   );
 
   return <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>;
