@@ -2,10 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
 import { TableVocabulary } from '@components';
+import { TableVocabularyProps } from '.';
 
-const meta: Meta<typeof TableVocabulary> = {
+const meta: Meta<TableVocabularyProps> = {
   title: 'PracticeFour/TableVocabulary',
   component: TableVocabulary,
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
 };
 
 const mockData = [
