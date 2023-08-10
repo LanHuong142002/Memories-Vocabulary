@@ -1,43 +1,76 @@
-import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
-import { Topic, Topic as TopicType } from '@interfaces';
+import { AxiosError } from 'axios';
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
+
+// Services
 import { getData, postData } from '@services';
-import { URL } from '@constants';
+
+// Constants
+import { ACTIONS_TOPIC, URL } from '@constants';
+
+// Interfaces
+import { Topic, Topic as TopicType } from '@interfaces';
+
+// Stores
+import { TopicActions, initialTopicState, topicReducer } from '@stores';
 
 interface DictionaryType {
   isLoading: boolean;
-  topics: TopicType[];
   errorMessage: string;
-  onAddNewTopic: (topic: Topic) => void;
+  topics: TopicType[];
+  onAddTopic: (topic: Topic) => void;
+  topicDispatch: Dispatch<TopicActions>;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
 
 export function DictionaryProvider({ children }: { children: ReactNode }) {
-  const [topics, setTopics] = useState<TopicType[]>([]);
+  const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleAddNewTopic = useCallback(async (topic: Topic) => {
-    setIsLoading(true);
-    try {
-      const response = await postData(topic, URL.TOPIC);
+  const handleAddTopic = useCallback(
+    async (topic: Topic) => {
+      setIsLoading(true);
+      try {
+        const response = await postData(topic, URL.TOPIC);
 
-      setTopics((prev) => [...prev, response]);
-    } catch (error) {
-      const { message } = error as Error;
-      setErrorMessage(message);
-    }
-    setIsLoading(false);
-  }, []);
+        topicDispatch({
+          type: ACTIONS_TOPIC.POST,
+          payload: {
+            topics: [...topicState.topics, response],
+          },
+        });
+      } catch (error) {
+        const { message } = error as AxiosError;
+        setErrorMessage(message);
+      }
+      setIsLoading(false);
+    },
+    [topicState.topics],
+  );
 
   useEffect(() => {
     const getTopics = async () => {
       setIsLoading(true);
       try {
         const response = await getData<TopicType[]>(URL.TOPIC);
-        setTopics(response);
+        topicDispatch({
+          type: ACTIONS_TOPIC.GET,
+          payload: {
+            topics: response,
+          },
+        });
       } catch (error) {
-        const { message } = error as Error;
+        const { message } = error as AxiosError;
         setErrorMessage(message);
       }
       setIsLoading(false);
@@ -46,8 +79,14 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ isLoading, topics, errorMessage, onAddNewTopic: handleAddNewTopic }),
-    [isLoading, topics, errorMessage, handleAddNewTopic],
+    () => ({
+      isLoading,
+      errorMessage,
+      topics: topicState.topics,
+      onAddTopic: handleAddTopic,
+      topicDispatch,
+    }),
+    [isLoading, errorMessage, topicState.topics, handleAddTopic, topicDispatch],
   );
 
   return <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>;

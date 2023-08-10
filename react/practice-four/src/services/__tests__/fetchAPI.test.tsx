@@ -1,6 +1,6 @@
 import { Vocabulary, Topic } from '@interfaces';
 import { MOCK_VOCABULARIES, MOCK_TOPIC } from '@mocks';
-import { getData, postData, putData } from '@services';
+import { deleteData, getData, postData, putData } from '@services';
 import axios from 'axios';
 
 jest.mock('axios');
@@ -18,14 +18,13 @@ describe('Should test fetch API', () => {
   });
 
   it('Should return value when call getData failed', async () => {
-    const errorMessage = 'Failed to fetch data';
+    const errorMessage = 'Failed to get data';
     (axios.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
       await getData<Vocabulary[]>('endpoint');
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
-      return error;
     }
   });
 
@@ -47,7 +46,6 @@ describe('Should test fetch API', () => {
       await postData<Topic>(MOCK_TOPIC, 'endpoint');
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
-      return error;
     }
   });
 
@@ -56,20 +54,40 @@ describe('Should test fetch API', () => {
       data: MOCK_TOPIC,
     });
 
-    const response = await putData<Topic>(MOCK_TOPIC, 'endpoint');
+    const response = await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
 
     expect(response).toEqual(MOCK_TOPIC);
   });
 
   it('should return error message when call putData failed', async () => {
-    const errorMessage = 'Failed to post data';
+    const errorMessage = 'Failed to put data';
     (axios.put as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
-      await putData<Topic>(MOCK_TOPIC, 'endpoint');
+      await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
-      return error;
+    }
+  });
+
+  it('should return value when call deleteData success', async () => {
+    (axios.delete as jest.Mock).mockResolvedValue({
+      data: [],
+    });
+
+    const response = await deleteData<string>('endpoint', '1');
+
+    expect(response).toEqual([]);
+  });
+
+  it('should return error message when call deleteData failed', async () => {
+    const errorMessage = 'Failed to delete data';
+    (axios.delete as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+    try {
+      await deleteData<string>('endpoint', '1');
+    } catch (error) {
+      expect((error as { message: string }).message).toBe(errorMessage);
     }
   });
 });
