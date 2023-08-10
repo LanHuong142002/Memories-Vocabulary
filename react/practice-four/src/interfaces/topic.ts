@@ -1,7 +1,7 @@
 import { Vocabulary } from '@interfaces';
 
 export interface Topic {
-  id?: string;
+  id: string;
   name: string;
   vocabularies?: Vocabulary[];
 }
