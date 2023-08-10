@@ -1,4 +1,6 @@
 export const TOPIC_ACTIONS = {
+  PENDING: 'request_topics_pending',
+  FAILED: 'request_topics_failed',
   GET: 'get_topics',
   POST: 'post_topic',
 };
