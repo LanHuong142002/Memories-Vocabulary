@@ -9,7 +9,15 @@ import { Button, ToggleTheme } from '@components';
 // Styles
 import './index.css';
 
-export const Wrapper = ({ className, children }: { className: string; children: ReactNode }) => {
+export const Wrapper = ({
+  className,
+  children,
+  childrenTitle,
+}: {
+  className: string;
+  children: ReactNode;
+  childrenTitle: ReactNode;
+}) => {
   const { onToggleTheme } = useContext(ThemeContext);
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -40,7 +48,10 @@ export const Wrapper = ({ className, children }: { className: string; children: 
         </Button>
       </div>
       <div className='wrapper-content'>
-        <div className='wrapper-box'>{children}</div>
+        <div className='wrapper-box'>
+          <div className='description'>{childrenTitle}</div>
+          {children}
+        </div>
       </div>
     </div>
   );

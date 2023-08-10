@@ -4,9 +4,9 @@ import { ReactElement, memo } from 'react';
 import './index.css';
 
 const Spinner = memo(
-  (): ReactElement => (
-    <div className='spinner-wrapper'>
-      <div className='spinner'></div>
+  ({ variant }: { variant?: 'primary' }): ReactElement => (
+    <div className={`spinner-wrapper${variant ? `-${variant}` : ''}`}>
+      <div className='spinner' />
     </div>
   ),
 );

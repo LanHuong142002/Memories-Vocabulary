@@ -32,10 +32,11 @@ const TableResult = memo(({ result }: TableResultProps) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {result.map(({ answer, isSuccess, native, translation }, index) => (
+      {result.map(({ id, answer, isSuccess, native, translation }, index) => (
         <TableRowResult
+          id={id}
           key={`table-result-${index}`}
-          order={index + 1}
+          order={`${index + 1}`}
           answer={answer}
           isSuccess={isSuccess}
           native={native}

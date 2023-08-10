@@ -10,7 +10,7 @@ interface InputProps {
   error?: string;
   name?: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
-  onChange: (event: ChangeEvent) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = memo(

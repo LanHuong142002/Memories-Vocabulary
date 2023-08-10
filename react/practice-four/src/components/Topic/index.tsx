@@ -5,22 +5,29 @@ import { memo } from 'react';
 import './index.css';
 
 interface TopicProps {
+  id: string;
   isAddNew?: boolean;
   quantity?: number;
   name: string;
   variant?: 'default' | 'selected';
-  onClick: () => void;
+  onClick: (id?: string) => void;
 }
 
 const Topic = memo(
-  ({ isAddNew = false, quantity = 0, name, variant = 'default', onClick }: TopicProps) => (
-    <div className={`topic topic-${variant}`} onClick={onClick}>
-      <span>{`${name} ${quantity > 0 ? `(${quantity})` : ''}`}</span>
-      <div className='topic-icon'>
-        <span>{isAddNew ? '\u002b' : '\u2714'}</span>
+  ({ id, isAddNew = false, quantity = 0, name, variant = 'default', onClick }: TopicProps) => {
+    const handleOncLick = () => {
+      onClick(id);
+    };
+
+    return (
+      <div className={`topic topic-${variant}`} onClick={handleOncLick}>
+        <span>{`${name} ${quantity > 0 ? `(${quantity})` : ''}`}</span>
+        <div className='topic-icon'>
+          <span>{isAddNew ? '\u002b' : '\u2714'}</span>
+        </div>
       </div>
-    </div>
-  ),
+    );
+  },
 );
 
 export default Topic;

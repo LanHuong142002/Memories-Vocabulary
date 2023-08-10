@@ -40,6 +40,7 @@
   --color-opacity-quaternary: rgba(255, 255, 255, 0.8);
 
   --process-bar-opacity: rgba(255, 255, 255, 0.15);
+  --overlay-opacity: rgba(255, 255, 255, 0.5);
 
   /* Background colors */
   --background-primary-color: var(--color-white-200);

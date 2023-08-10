@@ -19,6 +19,7 @@ module.exports = {
     '^@types(.*)$': '<rootDir>src/types/$1',
     '^@themes(.*)$': '<rootDir>src/themes/$1',
     '^@utils(.*)$': '<rootDir>src/utils/$1',
+    '^@mocks(.*)$': '<rootDir>src/mocks/$1',
   },
   transform: {
     '^.+\\.ts?$': 'ts-jest',
@@ -27,6 +28,8 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!.storybook/main.ts',
+    '!.storybook/preview.tsx',
     '!**/*.stories.tsx',
     '!**/*.config.ts',
     '!**/node_modules/**',
@@ -35,5 +38,6 @@ module.exports = {
     '!**/types/**',
     '!**/styles/**',
     '!src/main.tsx',
+    '!src/assets/index.ts',
   ],
 };

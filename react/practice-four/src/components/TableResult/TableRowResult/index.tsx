@@ -7,7 +7,7 @@ import { VocabularyResult } from '@interfaces';
 import { TableCell, TableRow } from '@components';
 
 interface TableRowResultProps extends VocabularyResult {
-  order: number;
+  order: string;
 }
 
 const TableRowResult = memo(

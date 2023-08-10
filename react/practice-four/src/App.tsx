@@ -15,7 +15,7 @@ export const App = () => {
 
   return (
     <main className={`container ${theme}`}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner variant='primary' />}>
         <Routes>
           {Routers.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />

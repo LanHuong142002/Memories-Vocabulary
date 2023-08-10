@@ -7,6 +7,7 @@ describe('Test topic component', () => {
   const handleClick = jest.fn();
 
   const defaultProps = {
+    id: '1',
     name: 'School',
     onClick: handleClick,
   };

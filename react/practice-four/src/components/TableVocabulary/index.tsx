@@ -15,7 +15,7 @@ import {
 
 export interface TableVocabularyProps {
   vocabularies: Vocabulary[];
-  onClick: (id: number) => void;
+  onClick: (id: string) => void;
 }
 
 const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) => (

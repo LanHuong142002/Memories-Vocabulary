@@ -32,3 +32,19 @@
   box-shadow: 0 2px 8px var(--color-opacity-primary);
   background-color: var(--background-secondary-color);
 }
+
+.wrapper-box .description {
+  line-height: 20px;
+  text-align: center;
+}
+
+.wrapper-box .description > p {
+  padding-bottom: 10px;
+}
+
+.wrapper-box .description span {
+  padding: 3px;
+  border-radius: 3px;
+  background-color: var(--color-yellow-100);
+  border: 1px solid var(--color-yellow-200);
+}
