@@ -8,8 +8,10 @@ interface LabelProps {
   color: 'success' | 'failed' | 'normal';
 }
 
-export const Label = memo(({ name, color }: LabelProps) => (
+const Label = memo(({ name, color }: LabelProps) => (
   <div className={`label label-${color}`}>
     <span>{name}</span>
   </div>
 ));
+
+export default Label;

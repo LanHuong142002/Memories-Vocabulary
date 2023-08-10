@@ -3,7 +3,7 @@ import { ReactNode, memo } from 'react';
 // Styles
 import './index.css';
 
-export interface ButtonProps {
+interface ButtonProps {
   isDisabled?: boolean;
   label?: string;
   variant?: 'primary' | 'secondary';
@@ -12,7 +12,7 @@ export interface ButtonProps {
   children?: ReactNode;
 }
 
-export const Button = memo(
+const Button = memo(
   ({
     isDisabled = false,
     label,
@@ -31,3 +31,5 @@ export const Button = memo(
     </button>
   ),
 );
+
+export default Button;

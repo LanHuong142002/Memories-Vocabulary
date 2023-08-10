@@ -1,6 +1,10 @@
 import { render } from '@testing-library/react';
-import { TableRowResult } from '../TableRowResult';
+
+// Mocks
 import { mockResult } from '@mocks';
+
+// Components
+import { TableRowResult } from '@components';
 
 describe('Test table row result component', () => {
   it('Should render table row result', () => {
