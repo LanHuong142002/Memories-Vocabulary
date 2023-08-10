@@ -13,14 +13,13 @@ import {
   TableRowVocabulary,
 } from '@components';
 
-interface TableVocabularyProps {
-  theme?: 'light' | 'dark';
+export interface TableVocabularyProps {
   vocabularies: Vocabulary[];
   onClick: (id: string) => void;
 }
 
-const TableVocabulary = memo(({ theme = 'light', vocabularies, onClick }: TableVocabularyProps) => (
-  <Table theme={theme}>
+const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) => (
+  <Table>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th'>No.</TableCell>
