@@ -11,10 +11,6 @@ const meta: Meta<typeof Typography> = {
       control: { type: 'radio' },
       options: ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'],
     },
-    theme: {
-      control: { type: 'radio' },
-      options: ['light', 'dark'],
-    },
     color: {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'tertiary'],
@@ -24,13 +20,6 @@ const meta: Meta<typeof Typography> = {
       options: ['p', 'span'],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ margin: '10px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 type Story = StoryObj<typeof Typography>;
@@ -38,7 +27,6 @@ type Story = StoryObj<typeof Typography>;
 export const Default: Story = {
   args: {
     children: 'lorem',
-    theme: 'light',
     color: 'primary',
     tagName: 'p',
     size: 'xs',
