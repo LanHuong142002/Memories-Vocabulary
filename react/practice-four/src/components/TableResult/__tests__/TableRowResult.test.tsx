@@ -18,6 +18,7 @@ describe('Test table row result component', () => {
     const { container, getAllByText, getByText } = render(
       <Component>
         <TableRowResult
+          id='1'
           answer={mockResult.answer}
           order={'1'}
           isSuccess={mockResult.isSuccess}
@@ -36,6 +37,7 @@ describe('Test table row result component', () => {
     const { container, getAllByText } = render(
       <Component>
         <TableRowResult
+          id='1'
           answer={mockResult.answer}
           order={'1'}
           isSuccess={false}

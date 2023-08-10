@@ -6,7 +6,7 @@ import { Typography } from '@components';
 describe('Test typography component', () => {
   it('Should render typography component', () => {
     const { container, getByText } = render(
-      <Typography theme='light' color='primary' tagName='p' size='xs'>
+      <Typography color='primary' tagName='p' size='xs'>
         Lorem
       </Typography>,
     );

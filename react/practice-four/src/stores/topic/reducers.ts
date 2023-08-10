@@ -1,6 +1,11 @@
-import { ACTIONS_TOPIC } from '@constants';
+// Interface
 import { Topic } from '@interfaces';
-import { TopicActions } from './actions';
+
+// Stores
+import { ActionTopics } from '@stores';
+
+// Constants
+import { TOPIC_ACTIONS } from '@constants';
 
 export interface TopicsState {
   topics: Topic[];
@@ -19,16 +24,16 @@ export const initialTopicState: TopicsState = {
  */
 export const topicReducer = (
   state: TopicsState = initialTopicState,
-  actions: TopicActions,
+  actions: ActionTopics,
 ): TopicsState => {
   switch (actions.type) {
-    case ACTIONS_TOPIC.GET:
+    case TOPIC_ACTIONS.GET:
       return {
         ...state,
         topics: actions.payload.topics,
       };
 
-    case ACTIONS_TOPIC.POST:
+    case TOPIC_ACTIONS.POST:
       return {
         ...state,
         topics: actions.payload.topics,

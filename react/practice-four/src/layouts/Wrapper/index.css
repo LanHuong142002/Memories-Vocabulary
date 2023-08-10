@@ -18,7 +18,8 @@
 }
 
 .wrapper-content {
-  height: calc(100% - 70px);
+  min-height: calc(100% - 70px - 120px);
+  padding: 60px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +31,7 @@
   border-radius: 4px;
   padding: 50px;
   box-shadow: 0 2px 8px var(--color-opacity-primary);
-  background-color: var(--color-white-100);
+  background-color: var(--background-secondary-color);
 }
 
 .wrapper-box .description {

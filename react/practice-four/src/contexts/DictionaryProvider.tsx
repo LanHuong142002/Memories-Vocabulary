@@ -14,20 +14,20 @@ import {
 import { getData, postData } from '@services';
 
 // Constants
-import { ACTIONS_TOPIC, URL } from '@constants';
+import { TOPIC_ACTIONS, URL } from '@constants';
 
 // Interfaces
 import { Topic, Topic as TopicType } from '@interfaces';
 
 // Stores
-import { TopicActions, initialTopicState, topicReducer } from '@stores';
+import { ActionTopics, initialTopicState, topicReducer } from '@stores';
 
 interface DictionaryType {
   isLoading: boolean;
   errorMessage: string;
   topics: TopicType[];
   onAddTopic: (topic: Topic) => void;
-  topicDispatch: Dispatch<TopicActions>;
+  topicDispatch: Dispatch<ActionTopics>;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -44,7 +44,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         const response = await postData(topic, URL.TOPIC);
 
         topicDispatch({
-          type: ACTIONS_TOPIC.POST,
+          type: TOPIC_ACTIONS.POST,
           payload: {
             topics: [...topicState.topics, response],
           },
@@ -64,7 +64,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       try {
         const response = await getData<TopicType[]>(URL.TOPIC);
         topicDispatch({
-          type: ACTIONS_TOPIC.GET,
+          type: TOPIC_ACTIONS.GET,
           payload: {
             topics: response,
           },

@@ -28,6 +28,8 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!.storybook/main.ts',
+    '!.storybook/preview.tsx',
     '!**/*.stories.tsx',
     '!**/*.config.ts',
     '!**/node_modules/**',
@@ -36,5 +38,6 @@ module.exports = {
     '!**/types/**',
     '!**/styles/**',
     '!src/main.tsx',
+    '!src/assets/index.ts',
   ],
 };

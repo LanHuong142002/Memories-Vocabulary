@@ -4,8 +4,9 @@ import { ChangeEvent, memo } from 'react';
 import './index.css';
 
 interface InputProps {
-  placeholder: string;
   value: string;
+  title?: string;
+  placeholder?: string;
   errors?: string[];
   name?: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
@@ -13,13 +14,13 @@ interface InputProps {
 }
 
 const Input = memo(
-  ({ placeholder, value, name, errors, onChange, variant = 'primary' }: InputProps) => (
+  ({ placeholder, title, value, name, errors, onChange, variant = 'primary' }: InputProps) => (
     <div
       className={`input-wrapper input-${variant} ${
         value && (errors?.length ? 'input-error' : 'input-success')
       }`}
     >
-      {variant !== 'primary' && <span className={errors ? 'title-error' : ''}>Title</span>}
+      {variant !== 'primary' && <span className={errors ? 'title-error' : ''}>{title}</span>}
       <input
         className={`input input-${variant}`}
         placeholder={placeholder}
