@@ -16,7 +16,7 @@ import { getData, postData } from '@services';
 import { TOPIC_ACTIONS, URL } from '@constants';
 
 // Interfaces
-import { Topic, Topic as TopicType } from '@interfaces';
+import { Topic } from '@interfaces';
 
 // Stores
 import { ActionTopics, initialTopicState, topicReducer } from '@stores';
@@ -24,7 +24,7 @@ import { ActionTopics, initialTopicState, topicReducer } from '@stores';
 interface DictionaryType {
   isLoadingTopic: boolean;
   errorsTopic: string;
-  topics: TopicType[];
+  topics: Topic[];
   onAddTopic: (topic: Topic) => void;
   topicDispatch: Dispatch<ActionTopics>;
 }
@@ -67,7 +67,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         type: TOPIC_ACTIONS.PENDING,
       });
       try {
-        const response = await getData<TopicType[]>(URL.TOPIC);
+        const response = await getData<Topic[]>(URL.TOPIC);
         topicDispatch({
           type: TOPIC_ACTIONS.GET,
           payload: {
