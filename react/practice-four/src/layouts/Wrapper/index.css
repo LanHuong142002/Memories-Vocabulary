@@ -18,7 +18,8 @@
 }
 
 .wrapper-content {
-  height: max-content;
+  min-height: calc(100vh - 70px - 120px);
+  padding: 60px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
