@@ -41,7 +41,7 @@ const HomePage = () => {
    * @description function add new topic
    */
   const handleAddNewTopic = () => {
-    const listError = validation(topicValue);
+    const listError = validation(topicValue, true);
 
     if (listError.length) {
       setErrors(listError);
@@ -74,7 +74,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    const listError = validation(debouncedValue);
+    const listError = validation(debouncedValue, true);
     setErrors(listError);
   }, [debouncedValue]);
 

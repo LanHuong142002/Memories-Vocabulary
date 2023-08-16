@@ -32,12 +32,13 @@ const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) =
     <TableBody>
       {vocabularies.length > 0 ? (
         <>
-          {vocabularies.map(({ id, english, vietnamese }) => (
+          {vocabularies.map(({ id, english, vietnamese }, index) => (
             <TableRowVocabulary
-              key={`table-vocabulary-${id}`}
+              key={`table-vocabulary-${index}`}
+              id={id}
+              order={index + 1}
               english={english}
               vietnamese={vietnamese}
-              id={id}
               onClick={onClick}
             />
           ))}

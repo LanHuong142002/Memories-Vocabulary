@@ -4,17 +4,11 @@ import { useState, ChangeEvent, useEffect, useContext } from 'react';
 // Contexts
 import { DictionaryContext } from '@contexts';
 
-// Hooks
-import { useDebounce } from '@hooks';
-
 // Helpers
 import { validation } from '@helpers';
 
 // Constants
 import { ROUTES } from '@constants';
-
-// Interfaces
-import { Vocabulary } from '@interfaces';
 
 // Components
 import { Button, Input, TableVocabulary, Typography } from '@components';
@@ -23,30 +17,35 @@ import { Wrapper } from '@layouts';
 // Styles
 import './index.css';
 
-interface Translation extends Pick<Vocabulary, 'english' | 'vietnamese'> {}
-
 const VocabularyPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { onGetVocabularies, onAddVocabulary, onDeleteVocabulary, vocabularies } =
     useContext(DictionaryContext);
-  const [errorsEng, setErrorsEng] = useState<string[]>([]);
-  const [errorsViet, setErrorsViet] = useState<string[]>([]);
-  const [translation, setTranslation] = useState<Translation>({
-    english: '',
-    vietnamese: '',
-  });
-  const debouncedValue = useDebounce<Translation>(translation, 700);
+  const [valueENG, setValueENG] = useState<string>('');
+  const [errorsENG, setErrorsENG] = useState<string[]>([]);
+
+  const [valueVIE, setValueVIE] = useState<string>('');
+  const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
 
   /**
-   * @description function onchange to get value from input
+   * @description function onchange to get value from input english
    *
    * @param {Event} event of inputs
    */
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const handleOnChangeENG = (event: ChangeEvent<HTMLInputElement>) => {
+    setValueENG(event.target.value);
+    setErrorsENG(validation(event.target.value));
+  };
 
-    setTranslation({ ...translation, [name]: value });
+  /**
+   * @description function onchange to get value from input vietnamese
+   *
+   * @param {Event} event of inputs
+   */
+  const handleOnChangeVIE = (event: ChangeEvent<HTMLInputElement>) => {
+    setValueVIE(event.target.value);
+    setErrorsVIE(validation(event.target.value));
   };
 
   /**
@@ -56,14 +55,21 @@ const VocabularyPage = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onAddVocabulary(id!, {
-      id: '',
-      ...translation,
-    });
-    setTranslation({
-      english: '',
-      vietnamese: '',
-    });
+    const listErrorVIE = validation(valueVIE);
+    const listErrorENG = validation(valueENG);
+    setErrorsVIE(listErrorVIE);
+    setErrorsENG(listErrorENG);
+
+    if (!listErrorVIE.length && !listErrorENG.length) {
+      onAddVocabulary(id!, {
+        id: '',
+        vietnamese: valueVIE,
+        english: valueENG,
+      });
+
+      setValueVIE('');
+      setValueENG('');
+    }
   };
 
   /**
@@ -83,14 +89,6 @@ const VocabularyPage = () => {
     }
   }, [id, navigate, onGetVocabularies]);
 
-  useEffect(() => {
-    const listErrorEng = validation(debouncedValue.english);
-    setErrorsEng(listErrorEng);
-
-    const listErrorViet = validation(debouncedValue.vietnamese);
-    setErrorsViet(listErrorViet);
-  }, [debouncedValue.english, debouncedValue.vietnamese]);
-
   return (
     <Wrapper
       className='vocabularies'
@@ -108,17 +106,17 @@ const VocabularyPage = () => {
         <Input
           title='English (Native)'
           variant='secondary'
-          onChange={handleOnChange}
-          value={translation.english}
-          errors={errorsEng}
+          onChange={handleOnChangeENG}
+          value={valueENG}
+          errors={errorsENG}
           name='english'
         />
         <Input
           title='In Vietnamese'
           variant='secondary'
-          onChange={handleOnChange}
-          value={translation.vietnamese}
-          errors={errorsViet}
+          onChange={handleOnChangeVIE}
+          value={valueVIE}
+          errors={errorsVIE}
           name='vietnamese'
         />
         <Button type='submit' label='Add' />
