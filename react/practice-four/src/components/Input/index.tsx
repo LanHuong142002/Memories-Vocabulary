@@ -20,7 +20,9 @@ const Input = memo(
         value && (errors?.length ? 'input-error' : 'input-success')
       }`}
     >
-      {variant !== 'primary' && <span className={errors ? 'title-error' : ''}>{title}</span>}
+      {variant !== 'primary' && (
+        <span className={errors && errors.length > 0 ? 'title-error' : ''}>{title}</span>
+      )}
       <input
         className={`input input-${variant}`}
         placeholder={placeholder}
