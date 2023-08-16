@@ -80,7 +80,8 @@
 }
 
 .input-wrapper.input-tertiary > span {
-  padding: 0 5px;
+  font-size: var(--font-size-xs);
+  padding: 0 8px;
 }
 
 .input-wrapper.input-tertiary.input-error {
@@ -113,6 +114,7 @@
   height: 35px;
   width: 80%;
   outline: none;
+  font-size: var(--font-size-s);
   background-color: transparent;
 }
 

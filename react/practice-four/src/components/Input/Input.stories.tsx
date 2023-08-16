@@ -35,6 +35,7 @@ export const Tertiary: Story = {
   args: {
     placeholder: 'Enter name...',
     variant: 'tertiary',
+    title: 'Vietnamese',
   },
 };
 
