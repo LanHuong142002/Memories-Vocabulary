@@ -22,7 +22,7 @@ import './index.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { isLoadingTopic, topics, onAddTopic, onOpenTopic } = useContext(DictionaryContext);
+  const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -65,8 +65,7 @@ const HomePage = () => {
   };
 
   const handleOpenTopic = (id?: string) => {
-    onOpenTopic(id!);
-    navigate(ROUTES.TESTING);
+    navigate(`${ROUTES.TESTING}/${id}`);
   };
 
   useEffect(() => {

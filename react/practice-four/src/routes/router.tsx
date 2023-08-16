@@ -14,7 +14,7 @@ export const Routers: RouteObject[] = [
     element: <HomePage />,
   },
   {
-    path: ROUTES.TESTING,
+    path: `${ROUTES.TESTING}/:id`,
     element: <VocabularyPage />,
   },
 ];
