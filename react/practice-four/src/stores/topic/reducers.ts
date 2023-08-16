@@ -2,7 +2,7 @@
 import { Topic } from '@interfaces';
 
 // Stores
-import { ActionTopics, FailedTopic, GetTopics } from '@stores';
+import { ActionTopics } from '@stores';
 
 // Constants
 import { TOPIC_ACTIONS } from '@constants';
@@ -37,22 +37,16 @@ export const topicReducer = (
         ...state,
         isLoading: true,
       };
-    case TOPIC_ACTIONS.GET:
+    case TOPIC_ACTIONS.REQUEST:
       return {
         ...state,
-        topics: (actions as GetTopics).payload.topics,
-        isLoading: false,
-      };
-    case TOPIC_ACTIONS.POST:
-      return {
-        ...state,
-        topics: (actions as GetTopics).payload.topics,
+        topics: actions.payload.topics,
         isLoading: false,
       };
     case TOPIC_ACTIONS.FAILED:
       return {
         ...state,
-        errors: (actions as FailedTopic).payload.errors,
+        errors: actions.payload.errors,
         isLoading: false,
       };
     default:
