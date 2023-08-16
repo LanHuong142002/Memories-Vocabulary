@@ -10,6 +10,11 @@
   justify-content: center;
 }
 
+.wrapper-vocabularies-page .form-add-new-vocabulary,
+.wrapper-vocabularies-page .form-add-new-vocabulary .input-wrapper {
+  width: 100%;
+}
+
 .wrapper-vocabularies-page .form-add-new-vocabulary > button {
   width: 100%;
 }
@@ -19,14 +24,26 @@
   text-align: center;
 }
 
-@media screen and (min-width: 1000px) {
+.wrapper-vocabularies-page .actions-wrapper button {
+  width: 100%;
+}
+
+@media screen and (min-width: 600px) {
   .wrapper-vocabularies-page .form-add-new-vocabulary {
     flex-direction: row;
     height: 46px;
   }
 
+  .wrapper-vocabularies-page .form-add-new-vocabulary .input-wrapper {
+    width: 170px;
+  }
+
   .wrapper-vocabularies-page .form-add-new-vocabulary > button {
     height: 100%;
+    width: fit-content;
+  }
+
+  .wrapper-vocabularies-page .actions-wrapper button {
     width: fit-content;
   }
 }
