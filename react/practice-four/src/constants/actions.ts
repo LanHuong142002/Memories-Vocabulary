@@ -5,7 +5,7 @@ export enum TOPIC_ACTIONS {
 }
 
 export enum VOCABULARY_ACTIONS {
-  REQUEST = 'request_topics',
+  REQUEST = 'delete_vocabularies',
   DELETE = 'delete_vocabulary',
   PENDING = 'request_pending',
   FAILED = 'request_failed',
