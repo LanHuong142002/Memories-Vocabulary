@@ -74,8 +74,10 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    const listError = validation(debouncedValue, true);
-    setErrors(listError);
+    if (debouncedValue) {
+      const listError = validation(debouncedValue, true);
+      setErrors(listError);
+    }
   }, [debouncedValue]);
 
   return (
