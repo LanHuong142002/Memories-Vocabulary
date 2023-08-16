@@ -57,10 +57,12 @@ export const Wrapper = ({
   return (
     <div className={`wrapper wrapper-${className}-page`}>
       <WrapperHeader />
-      <div className='wrapper-content'>
+      <div className='wrapper-container'>
         <div className='wrapper-box'>
-          <MemoizedTitle>{childrenTitle}</MemoizedTitle>
-          {children}
+          <div className='wrapper-content'>
+            <MemoizedTitle>{childrenTitle}</MemoizedTitle>
+            {children}
+          </div>
         </div>
       </div>
     </div>
