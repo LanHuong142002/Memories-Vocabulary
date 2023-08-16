@@ -4,6 +4,12 @@ import { useState, ChangeEvent, useEffect, useContext } from 'react';
 // Contexts
 import { DictionaryContext } from '@contexts';
 
+// Hooks
+import { useDebounce } from '@hooks';
+
+// Helpers
+import { validation } from '@helpers';
+
 // Constants
 import { ROUTES } from '@constants';
 
@@ -22,11 +28,15 @@ interface Translation extends Pick<Vocabulary, 'english' | 'vietnamese'> {}
 const VocabularyPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { onGetVocabularies, vocabularies } = useContext(DictionaryContext);
+  const { onGetVocabularies, onAddVocabulary, onDeleteVocabulary, vocabularies } =
+    useContext(DictionaryContext);
+  const [errorsEng, setErrorsEng] = useState<string[]>([]);
+  const [errorsViet, setErrorsViet] = useState<string[]>([]);
   const [translation, setTranslation] = useState<Translation>({
     english: '',
     vietnamese: '',
   });
+  const debouncedValue = useDebounce<Translation>(translation, 700);
 
   /**
    * @description function onchange to get value from input
@@ -39,9 +49,31 @@ const VocabularyPage = () => {
     setTranslation({ ...translation, [name]: value });
   };
 
-  const handleAddNewVocabulary = () => {};
+  /**
+   * @description function add new vocabulary
+   *
+   * @param {Event} event is event of form
+   */
+  const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onAddVocabulary(id!, {
+      id: '',
+      ...translation,
+    });
+    setTranslation({
+      english: '',
+      vietnamese: '',
+    });
+  };
 
-  const handleDeleteVocabulary = () => {};
+  /**
+   * @description function delete a vocabulary
+   *
+   * @param {string} vocabularyId is id of vocabulary which is selected
+   */
+  const handleDeleteVocabulary = (vocabularyId: string) => {
+    onDeleteVocabulary(id!, vocabularyId);
+  };
 
   useEffect(() => {
     if (id) {
@@ -51,9 +83,17 @@ const VocabularyPage = () => {
     }
   }, [id, navigate, onGetVocabularies]);
 
+  useEffect(() => {
+    const listErrorEng = validation(debouncedValue.english);
+    setErrorsEng(listErrorEng);
+
+    const listErrorViet = validation(debouncedValue.vietnamese);
+    setErrorsViet(listErrorViet);
+  }, [debouncedValue.english, debouncedValue.vietnamese]);
+
   return (
     <Wrapper
-      className='testing'
+      className='vocabularies'
       childrenTitle={
         <>
           <Typography size='xl'>Make Vocabulary with Translation</Typography>
@@ -64,22 +104,24 @@ const VocabularyPage = () => {
         </>
       }
     >
-      <form action='' className='form-add-new-vocabulary'>
+      <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'
           variant='secondary'
           onChange={handleOnChange}
-          value=''
+          value={translation.english}
+          errors={errorsEng}
           name='english'
         />
         <Input
           title='In Vietnamese'
           variant='secondary'
           onChange={handleOnChange}
-          value=''
+          value={translation.vietnamese}
+          errors={errorsViet}
           name='vietnamese'
         />
-        <Button type='submit' onClick={handleAddNewVocabulary} label='Add' />
+        <Button type='submit' label='Add' />
       </form>
       <TableVocabulary vocabularies={vocabularies} onClick={handleDeleteVocabulary} />
     </Wrapper>
