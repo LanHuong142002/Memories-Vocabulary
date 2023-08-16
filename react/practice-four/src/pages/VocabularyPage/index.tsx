@@ -1,4 +1,11 @@
-import { useState, ChangeEvent } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState, ChangeEvent, useEffect, useContext } from 'react';
+
+// Contexts
+import { DictionaryContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
@@ -13,11 +20,19 @@ import './index.css';
 interface Translation extends Pick<Vocabulary, 'english' | 'vietnamese'> {}
 
 const VocabularyPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { onGetVocabularies, vocabularies } = useContext(DictionaryContext);
   const [translation, setTranslation] = useState<Translation>({
     english: '',
     vietnamese: '',
   });
 
+  /**
+   * @description function onchange to get value from input
+   *
+   * @param {Event} event of inputs
+   */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -27,6 +42,14 @@ const VocabularyPage = () => {
   const handleAddNewVocabulary = () => {};
 
   const handleDeleteVocabulary = () => {};
+
+  useEffect(() => {
+    if (id) {
+      onGetVocabularies(id);
+    } else {
+      navigate(ROUTES.HOME);
+    }
+  }, [id, navigate, onGetVocabularies]);
 
   return (
     <Wrapper
@@ -58,8 +81,7 @@ const VocabularyPage = () => {
         />
         <Button type='submit' onClick={handleAddNewVocabulary} label='Add' />
       </form>
-      {/* TODO: show list vocabulary */}
-      <TableVocabulary vocabularies={[]} onClick={handleDeleteVocabulary} />
+      <TableVocabulary vocabularies={vocabularies} onClick={handleDeleteVocabulary} />
     </Wrapper>
   );
 };

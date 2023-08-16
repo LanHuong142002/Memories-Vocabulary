@@ -5,9 +5,7 @@ export enum TOPIC_ACTIONS {
 }
 
 export enum VOCABULARY_ACTIONS {
-  GET = 'get_vocabularies',
-  POST = 'post_vocabulary',
-  PUT = 'put_vocabulary',
+  REQUEST = 'request_topics',
   DELETE = 'delete_vocabulary',
   PENDING = 'request_pending',
   FAILED = 'request_failed',
