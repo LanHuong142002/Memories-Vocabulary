@@ -11,7 +11,7 @@ interface TableResultProps {
 }
 
 const TableResult = memo(({ result }: TableResultProps) => (
-  <Table hasBorderCell={true}>
+  <Table className='result' hasBorderCell={true}>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th' rowspan={2}>
