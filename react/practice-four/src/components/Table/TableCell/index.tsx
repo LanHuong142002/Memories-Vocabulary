@@ -4,6 +4,7 @@ import './index.css';
 interface TableCellProps {
   rowspan?: number;
   colspan?: number;
+  className?: string;
   tagName?: 'th' | 'td';
   color?: 'success' | 'failed';
   children?: ReactNode;
@@ -13,12 +14,13 @@ const TableCell = memo(
   ({
     rowspan,
     colspan,
-    children,
-    tagName: TagName = 'td',
+    className,
     color,
+    tagName: TagName = 'td',
+    children,
   }: TableCellProps): ReactElement => (
     <TagName
-      className={`table-cell table-cell-${color ? color : ''}`}
+      className={`table-cell table-cell-${color ? color : ''} ${className ? className : ''}`}
       data-testid='table-cell'
       rowSpan={rowspan}
       colSpan={colspan}
