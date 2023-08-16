@@ -7,6 +7,10 @@
   padding: 25px 0 15px 0;
 }
 
+.wrapper-home-page .topics .topic {
+  width: 100%;
+}
+
 .overlay {
   height: 100%;
   position: fixed;
@@ -47,4 +51,10 @@
 
 .overlay .overlay-content > button {
   width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .wrapper-home-page .topics .topic {
+    width: 150px;
+  }
 }
