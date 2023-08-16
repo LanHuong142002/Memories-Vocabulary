@@ -79,6 +79,8 @@ const VocabularyPage = () => {
     }
   };
 
+  const handleStartTest = () => {};
+
   /**
    * @description function delete a vocabulary
    *
@@ -153,7 +155,12 @@ const VocabularyPage = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        <Button label='Start Test' size='m' isDisabled={!(vocabularies.length >= 5)} />
+        <Button
+          label='Start Test'
+          size='m'
+          isDisabled={!(vocabularies.length >= 5)}
+          onClick={handleStartTest}
+        />
       </div>
     </Wrapper>
   );

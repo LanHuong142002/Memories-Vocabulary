@@ -1,8 +1,11 @@
-import { Button, Input, ProcessBar, Typography } from '@components';
-import { Wrapper } from '@layouts';
-
-import './index.css';
 import { ChangeEvent, useState } from 'react';
+
+// Components
+import { Wrapper } from '@layouts';
+import { Button, Input, ProcessBar, Typography } from '@components';
+
+// Styles
+import './index.css';
 
 const TestingPage = () => {
   const [value, setValue] = useState<string>('');
