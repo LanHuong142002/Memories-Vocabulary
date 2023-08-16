@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useCallback, useContext, useState } from 'react';
+import { ChangeEvent, ReactNode, memo, useCallback, useContext, useState } from 'react';
 
 // Contexts
 import { ThemeContext } from '@contexts';
@@ -39,14 +39,18 @@ export const Wrapper = ({
     // TODO: handle back to home page
   };
 
+  const WrapperHeader = memo(() => (
+    <div className='wrapper-header'>
+      <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
+      <Button variant='primary' size='xs' onClick={handleBackToHome}>
+        Back to Home
+      </Button>
+    </div>
+  ));
+
   return (
     <div className={`wrapper wrapper-${className}-page`}>
-      <div className='wrapper-header'>
-        <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-        <Button variant='primary' size='xs' onClick={handleBackToHome}>
-          Back to Home
-        </Button>
-      </div>
+      <WrapperHeader />
       <div className='wrapper-content'>
         <div className='wrapper-box'>
           <div className='description'>{childrenTitle}</div>
