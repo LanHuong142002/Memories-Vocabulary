@@ -9,7 +9,7 @@ interface ButtonProps {
   type?: 'button' | 'submit';
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'xs' | 's' | 'm' | 'xxl';
-  onClick: () => void;
+  onClick?: () => void;
   children?: ReactNode;
 }
 

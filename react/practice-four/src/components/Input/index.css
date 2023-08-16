@@ -11,6 +11,7 @@
 }
 
 .input-primary > input {
+  box-sizing: border-box;
   text-align: center;
   border: none;
   font-size: var(--font-size-l);
