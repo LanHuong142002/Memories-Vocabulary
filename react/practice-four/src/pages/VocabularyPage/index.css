@@ -1,4 +1,4 @@
-.wrapper-testing-page .form-add-new-vocabulary {
+.wrapper-vocabularies-page .form-add-new-vocabulary {
   height: max-content;
   width: fit-content;
   margin: auto;
@@ -10,17 +10,17 @@
   justify-content: center;
 }
 
-.wrapper-testing-page .form-add-new-vocabulary > button {
+.wrapper-vocabularies-page .form-add-new-vocabulary > button {
   width: 100%;
 }
 
 @media screen and (min-width: 1000px) {
-  .wrapper-testing-page .form-add-new-vocabulary {
+  .wrapper-vocabularies-page .form-add-new-vocabulary {
     flex-direction: row;
     height: 46px;
   }
 
-  .wrapper-testing-page .form-add-new-vocabulary > button {
+  .wrapper-vocabularies-page .form-add-new-vocabulary > button {
     height: 100%;
     width: fit-content;
   }

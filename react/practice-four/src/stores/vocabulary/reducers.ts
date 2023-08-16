@@ -49,6 +49,7 @@ export const vocabularyReducer = (
         vocabularies: state.vocabularies.filter(
           (vocab) => vocab.id !== actions.payload.vocabularyId,
         ),
+        isLoading: false,
       };
     case VOCABULARY_ACTIONS.FAILED:
       return {

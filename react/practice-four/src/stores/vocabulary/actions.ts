@@ -15,7 +15,6 @@ export type DeleteVocabularies = {
   type: VOCABULARY_ACTIONS.DELETE;
   payload: {
     vocabularyId: string;
-    vocabularies: Vocabulary[];
   };
 };
 

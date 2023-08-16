@@ -64,6 +64,11 @@ const HomePage = () => {
     setTopicValue(event.target.value);
   };
 
+  /**
+   * @description function handle open topic with vocabularies
+   *
+   * @param {string} id is id of topic
+   */
   const handleOpenTopic = (id?: string) => {
     navigate(`${ROUTES.TESTING}/${id}`);
   };
