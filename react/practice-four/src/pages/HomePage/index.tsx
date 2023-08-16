@@ -71,7 +71,7 @@ const HomePage = () => {
    */
   const handleOpenTopic = useCallback(
     (id?: string) => {
-      navigate(`${ROUTES.TESTING}/${id}`);
+      navigate(`${ROUTES.VOCABULARY}/${id}`);
     },
     [navigate],
   );
