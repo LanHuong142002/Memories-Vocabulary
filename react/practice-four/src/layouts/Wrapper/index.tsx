@@ -1,7 +1,11 @@
+import { Link } from 'react-router-dom';
 import { ChangeEvent, ReactNode, memo, useCallback, useContext, useState } from 'react';
 
 // Contexts
 import { ThemeContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
 
 // Components
 import { Button, ToggleTheme } from '@components';
@@ -35,17 +39,19 @@ export const Wrapper = ({
     [onToggleTheme],
   );
 
-  const handleBackToHome = () => {
-    // TODO: handle back to home page
-  };
-
   const WrapperHeader = memo(() => (
     <div className='wrapper-header'>
       <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-      <Button variant='primary' size='xs' onClick={handleBackToHome}>
-        Back to Home
-      </Button>
+      <Link to={ROUTES.HOME}>
+        <Button variant='primary' size='xs'>
+          Back to Home
+        </Button>
+      </Link>
     </div>
+  ));
+
+  const MemoizedTitle = memo(({ children }: { children: ReactNode }) => (
+    <div className='description'>{children}</div>
   ));
 
   return (
@@ -53,7 +59,7 @@ export const Wrapper = ({
       <WrapperHeader />
       <div className='wrapper-content'>
         <div className='wrapper-box'>
-          <div className='description'>{childrenTitle}</div>
+          <MemoizedTitle>{childrenTitle}</MemoizedTitle>
           {children}
         </div>
       </div>

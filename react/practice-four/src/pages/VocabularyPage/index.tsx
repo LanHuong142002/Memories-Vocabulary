@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, ChangeEvent, useEffect, useContext, memo, useCallback } from 'react';
+import { useState, ChangeEvent, useEffect, useContext, useCallback } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -115,18 +115,19 @@ const VocabularyPage = () => {
     }
   }, [debouncedValueENG]);
 
-  const VocabulariesTitle = memo(() => (
-    <>
-      <Typography size='xl'>Make Vocabulary with Translation</Typography>
-      <Typography color='secondary' size='xs'>
-        Add <Typography tagName='span'>(Min 5)</Typography> word of ENGLISH and Translate it into
-        VIETNAMESE.
-      </Typography>
-    </>
-  ));
-
   return (
-    <Wrapper className='vocabularies' childrenTitle={<VocabulariesTitle />}>
+    <Wrapper
+      className='vocabularies'
+      childrenTitle={
+        <>
+          <Typography size='xl'>Make Vocabulary with Translation</Typography>
+          <Typography color='secondary' size='xs'>
+            Add <Typography tagName='span'>(Min 5)</Typography> word of ENGLISH and Translate it
+            into VIETNAMESE.
+          </Typography>
+        </>
+      }
+    >
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'

@@ -13,6 +13,7 @@
   box-sizing: border-box;
 }
 
+.wrapper .wrapper-header a,
 .wrapper .wrapper-header button {
   height: 100%;
 }

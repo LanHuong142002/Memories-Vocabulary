@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -31,11 +31,11 @@ const HomePage = () => {
   /**
    * @description function show hide overlay add new
    */
-  const handleOpenOverlay = () => {
+  const handleOpenOverlay = useCallback(() => {
     setIsOpenOverlay((prev) => !prev);
     setTopicValue('');
     setErrors([]);
-  };
+  }, []);
 
   /**
    * @description function add new topic
@@ -69,9 +69,12 @@ const HomePage = () => {
    *
    * @param {string} id is id of topic
    */
-  const handleOpenTopic = (id?: string) => {
-    navigate(`${ROUTES.TESTING}/${id}`);
-  };
+  const handleOpenTopic = useCallback(
+    (id?: string) => {
+      navigate(`${ROUTES.TESTING}/${id}`);
+    },
+    [navigate],
+  );
 
   useEffect(() => {
     if (debouncedValue) {
