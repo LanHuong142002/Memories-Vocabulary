@@ -32,18 +32,21 @@ export const vocabularyReducer = (
   actions: ActionVocabularies,
 ): VocabularyState => {
   switch (actions.type) {
-    case VOCABULARY_ACTIONS.PENDING:
+    case VOCABULARY_ACTIONS.ADD_REQUEST:
+    case VOCABULARY_ACTIONS.GET_REQUEST:
+    case VOCABULARY_ACTIONS.DELETE_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case VOCABULARY_ACTIONS.REQUEST:
+    case VOCABULARY_ACTIONS.ADD_SUCCESS:
+    case VOCABULARY_ACTIONS.GET_SUCCESS:
       return {
         ...state,
         vocabularies: actions.payload.vocabularies,
         isLoading: false,
       };
-    case VOCABULARY_ACTIONS.DELETE:
+    case VOCABULARY_ACTIONS.DELETE_SUCCESS:
       return {
         ...state,
         vocabularies: state.vocabularies.filter(
@@ -51,7 +54,9 @@ export const vocabularyReducer = (
         ),
         isLoading: false,
       };
-    case VOCABULARY_ACTIONS.FAILED:
+    case VOCABULARY_ACTIONS.ADD_FAILURE:
+    case VOCABULARY_ACTIONS.GET_FAILURE:
+    case VOCABULARY_ACTIONS.DELETE_FAILURE:
       return {
         ...state,
         errors: actions.payload.errors,
