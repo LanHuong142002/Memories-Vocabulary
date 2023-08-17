@@ -23,7 +23,7 @@ import './index.css';
 const TestingPage = () => {
   const navigate = useNavigate();
   const { quizzes, onSetQuiz } = useContext(DictionaryContext);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[] | undefined>(undefined);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string | null>(value, 700);
