@@ -33,7 +33,7 @@ const TestingPage = () => {
       <form onSubmit={handleSubmit} className='testing-content'>
         <ProcessBar step={1} totalStep={6} />
         <Typography color='primary' size='m' textAlign='center'>
-          {'Translate this "A" word in English, into Vietnamese:'}
+          Translate this &quot;A&quot; word in English, into Vietnamese:
         </Typography>
         <Input
           variant='tertiary'
