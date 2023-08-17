@@ -99,9 +99,8 @@ const TestingPage = () => {
       <form onSubmit={handleSubmit} className='testing-content'>
         <ProcessBar step={step + 1} totalStep={quizzes.length} />
         <Typography color='primary' size='m' textAlign='center'>
-          {`Translate this "${
-            quizzes.length > 0 && quizzes[step].english
-          }" word in English, into Vietnamese:`}
+          Translate this &quot;{quizzes.length > 0 && quizzes[step].english}&quot; word in English,
+          into Vietnamese:
         </Typography>
         <Input
           variant='tertiary'

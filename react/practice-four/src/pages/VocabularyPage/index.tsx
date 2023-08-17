@@ -63,16 +63,19 @@ const VocabularyPage = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const listErrorVIE = validation(valueVIE!);
-    const listErrorENG = validation(valueENG!);
+    const valueInputENG = (event.target[0] as HTMLInputElement).value;
+    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
+
+    const listErrorVIE = validation(valueInputVIE);
+    const listErrorENG = validation(valueInputENG);
     setErrorsVIE(listErrorVIE);
     setErrorsENG(listErrorENG);
 
     if (!listErrorVIE.length && !listErrorENG.length) {
       onAddVocabulary(id!, {
         id: '',
-        vietnamese: valueVIE!,
-        english: valueENG!,
+        vietnamese: valueInputVIE,
+        english: valueInputENG,
       });
 
       setValueVIE('');
