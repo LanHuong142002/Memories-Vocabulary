@@ -4,22 +4,46 @@ import { TOPIC_ACTIONS } from '@constants';
 // Interfaces
 import { Topic } from '@interfaces';
 
-export type RequestTopics = {
-  type: TOPIC_ACTIONS.REQUEST;
+export type AddTopicsRequest = {
+  type: TOPIC_ACTIONS.ADD_REQUEST;
+};
+
+export type AddTopicsSuccess = {
+  type: TOPIC_ACTIONS.ADD_SUCCESS;
   payload: {
     topics: Topic[];
   };
 };
 
-export type PendingTopic = {
-  type: TOPIC_ACTIONS.PENDING;
-};
-
-export type FailedTopic = {
-  type: TOPIC_ACTIONS.FAILED;
+export type AddTopicsFailure = {
+  type: TOPIC_ACTIONS.ADD_FAILURE;
   payload: {
     errors: string;
   };
 };
 
-export type ActionTopics = RequestTopics | PendingTopic | FailedTopic;
+export type GetTopicsFailure = {
+  type: TOPIC_ACTIONS.GET_FAILURE;
+  payload: {
+    errors: string;
+  };
+};
+
+export type GetTopicsSuccess = {
+  type: TOPIC_ACTIONS.GET_SUCCESS;
+  payload: {
+    topics: Topic[];
+  };
+};
+
+export type GetTopicsRequest = {
+  type: TOPIC_ACTIONS.GET_REQUEST;
+};
+
+export type ActionTopics =
+  | AddTopicsRequest
+  | AddTopicsSuccess
+  | AddTopicsFailure
+  | GetTopicsFailure
+  | GetTopicsSuccess
+  | GetTopicsRequest;
