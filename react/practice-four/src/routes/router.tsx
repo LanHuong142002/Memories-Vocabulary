@@ -20,11 +20,11 @@ export const Routers: RouteObject[] = [
     element: <VocabularyPage />,
   },
   {
-    path: `${ROUTES.TESTING}`,
+    path: `${ROUTES.TESTING}/:id`,
     element: <TestingPage />,
   },
   {
-    path: `${ROUTES.RESULT}`,
+    path: `${ROUTES.RESULT}/:id`,
     element: <ResultPage />,
   },
 ];

@@ -16,7 +16,7 @@ import { deleteData, getData, postData } from '@services';
 import { TOPIC_ACTIONS, URL, VOCABULARY_ACTIONS } from '@constants';
 
 // Interfaces
-import { Topic, Vocabulary } from '@interfaces';
+import { Topic, Vocabulary, VocabularyResult } from '@interfaces';
 
 // Stores
 import {
@@ -26,9 +26,6 @@ import {
   vocabularyReducer,
 } from '@stores';
 
-interface Quiz extends Vocabulary {
-  answer?: string;
-}
 interface DictionaryType {
   isLoadingTopic: boolean;
   isLoadingVocabulary: boolean;
@@ -36,13 +33,13 @@ interface DictionaryType {
   errorsVocabulary: string;
   topics: Topic[];
   vocabularies: Vocabulary[];
-  quizzes: Quiz[];
+  quizzes: VocabularyResult[];
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
   onGetVocabularies: (id: string) => Promise<void>;
   onRandomQuizzes: () => void;
-  onSetQuiz: (listQuiz: Quiz[]) => void;
+  onSetQuiz: (listQuiz: VocabularyResult[]) => void;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -59,7 +56,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     errors: errorsVocabulary,
     vocabularies,
   } = vocabularyState;
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
 
   /**
    * @description function handle random array quizzes
@@ -71,7 +68,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   /**
    * @description function set quiz
    */
-  const handleSetQuiz = useCallback((listQuiz: Quiz[]) => {
+  const handleSetQuiz = useCallback((listQuiz: VocabularyResult[]) => {
     setQuizzes(listQuiz);
   }, []);
 

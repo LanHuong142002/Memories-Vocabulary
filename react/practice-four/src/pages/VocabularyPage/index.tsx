@@ -88,7 +88,7 @@ const VocabularyPage = () => {
    */
   const handleStartTest = () => {
     onRandomQuizzes();
-    navigate(ROUTES.TESTING);
+    navigate(`${ROUTES.TESTING}/${id}`);
   };
 
   /**

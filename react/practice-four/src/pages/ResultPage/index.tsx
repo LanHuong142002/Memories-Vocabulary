@@ -1,11 +1,22 @@
-import { Label, Typography } from '@components';
-import { DictionaryContext } from '@contexts';
-import { Wrapper } from '@layouts';
 import { useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
+// Contexts
+import { DictionaryContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
+
+// Layouts
+import { Wrapper } from '@layouts';
+import { Button, Label, TableResult, Typography } from '@components';
+
+// Styles
+import './index.css';
 
 const ResultPage = () => {
+  const { id } = useParams();
   const { quizzes } = useContext(DictionaryContext);
-  console.log(quizzes);
 
   return (
     <Wrapper
@@ -13,17 +24,22 @@ const ResultPage = () => {
       childrenTitle={
         <>
           <Typography size='xl'>Quiz Result</Typography>
-          <div>
+          <div className='total'>
             <Label color='normal' name='60% percentage' />
           </div>
-          <div>
+          <div className='answers'>
             <Label color='success' name='3 Right' />
             <Label color='failed' name='2 Wrong' />
           </div>
         </>
       }
     >
-      123
+      <div className='table-box'>
+        <TableResult result={quizzes} />
+        <Link to={`${ROUTES.VOCABULARY}/${id}`}>
+          <Button size='s' label='Back to Vocabulary List' />
+        </Link>
+      </div>
     </Wrapper>
   );
 };

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 // Contexts
@@ -21,6 +21,7 @@ import { Button, Input, ProcessBar, Typography } from '@components';
 import './index.css';
 
 const TestingPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const { quizzes, onSetQuiz } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[] | undefined>(undefined);
@@ -33,7 +34,7 @@ const TestingPage = () => {
    */
   const handleSetStep = () => {
     if (step === quizzes.length - 1) {
-      navigate(ROUTES.RESULT);
+      navigate(`${ROUTES.RESULT}/${id}`);
     } else {
       setStep((prev) => prev + 1);
       setValue('');
