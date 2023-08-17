@@ -1,5 +1,13 @@
 import { AxiosError } from 'axios';
-import { ReactNode, createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 
 // Services
 import { deleteData, getData, postData } from '@services';
@@ -18,6 +26,9 @@ import {
   vocabularyReducer,
 } from '@stores';
 
+interface Quiz extends Vocabulary {
+  answer?: string;
+}
 interface DictionaryType {
   isLoadingTopic: boolean;
   isLoadingVocabulary: boolean;
@@ -25,10 +36,13 @@ interface DictionaryType {
   errorsVocabulary: string;
   topics: Topic[];
   vocabularies: Vocabulary[];
+  quizzes: Quiz[];
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
   onGetVocabularies: (id: string) => Promise<void>;
+  onRandomQuizzes: () => void;
+  onSetQuiz: (listQuiz: Quiz[]) => void;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -45,6 +59,15 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     errors: errorsVocabulary,
     vocabularies,
   } = vocabularyState;
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+
+  const handleRandomQuiz = useCallback(() => {
+    setQuizzes([...vocabularies].sort(() => Math.random() - 0.5));
+  }, [vocabularies]);
+
+  const handleSetQuiz = useCallback((listQuiz: Quiz[]) => {
+    setQuizzes(listQuiz);
+  }, []);
 
   /**
    * @description handles the add a new topic.
@@ -206,10 +229,13 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       errorsVocabulary,
       topics,
       vocabularies,
+      quizzes,
       onAddTopic: handleAddTopic,
       onAddVocabulary: handleAddVocabulary,
       onGetVocabularies: handleGetVocabularies,
       onDeleteVocabulary: handleDeleteVocabulary,
+      onRandomQuizzes: handleRandomQuiz,
+      onSetQuiz: handleSetQuiz,
     }),
     [
       isLoadingTopic,
@@ -218,10 +244,13 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       errorsVocabulary,
       topics,
       vocabularies,
+      quizzes,
       handleAddTopic,
       handleAddVocabulary,
       handleGetVocabularies,
       handleDeleteVocabulary,
+      handleRandomQuiz,
+      handleSetQuiz,
     ],
   );
 

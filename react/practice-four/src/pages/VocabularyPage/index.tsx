@@ -25,10 +25,11 @@ const VocabularyPage = () => {
   const navigate = useNavigate();
   const {
     isLoadingVocabulary,
+    vocabularies,
     onGetVocabularies,
     onAddVocabulary,
     onDeleteVocabulary,
-    vocabularies,
+    onRandomQuizzes,
   } = useContext(DictionaryContext);
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);
@@ -79,7 +80,10 @@ const VocabularyPage = () => {
     }
   };
 
-  const handleStartTest = () => {};
+  const handleStartTest = () => {
+    onRandomQuizzes();
+    navigate(ROUTES.TESTING);
+  };
 
   /**
    * @description function delete a vocabulary
