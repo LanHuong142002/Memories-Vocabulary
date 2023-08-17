@@ -17,8 +17,8 @@ const Input = memo(
   ({ placeholder, title, value, name, errors, onChange, variant = 'primary' }: InputProps) => (
     <div
       className={`input-wrapper input-${variant} ${
-        value && (errors?.length ? 'input-error' : 'input-success')
-      }`}
+        errors && errors.length > 0 ? 'input-error' : ''
+      } ${value && (errors && errors.length <= 0 ? 'input-success' : '')}`}
     >
       {variant !== 'primary' && (
         <span className={errors && errors.length > 0 ? 'title-error' : ''}>{title}</span>

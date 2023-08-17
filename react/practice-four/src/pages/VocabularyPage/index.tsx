@@ -80,6 +80,9 @@ const VocabularyPage = () => {
     }
   };
 
+  /**
+   * @description function handle start testing with vocabularies of topic
+   */
   const handleStartTest = () => {
     onRandomQuizzes();
     navigate(ROUTES.TESTING);

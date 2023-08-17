@@ -61,10 +61,16 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   } = vocabularyState;
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
+  /**
+   * @description function handle random array quizzes
+   */
   const handleRandomQuiz = useCallback(() => {
     setQuizzes([...vocabularies].sort(() => Math.random() - 0.5));
   }, [vocabularies]);
 
+  /**
+   * @description function set quiz
+   */
   const handleSetQuiz = useCallback((listQuiz: Quiz[]) => {
     setQuizzes(listQuiz);
   }, []);
