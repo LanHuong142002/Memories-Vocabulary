@@ -54,12 +54,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   const handleAddTopic = useCallback(
     async (topic: Topic): Promise<void> => {
       topicDispatch({
-        type: TOPIC_ACTIONS.PENDING,
+        type: TOPIC_ACTIONS.ADD_REQUEST,
       });
       try {
         const response = await postData(topic, URL.TOPIC);
         topicDispatch({
-          type: TOPIC_ACTIONS.REQUEST,
+          type: TOPIC_ACTIONS.ADD_SUCCESS,
           payload: {
             topics: [...topics, response],
           },
@@ -67,7 +67,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         const { message } = error as AxiosError;
         topicDispatch({
-          type: TOPIC_ACTIONS.FAILED,
+          type: TOPIC_ACTIONS.ADD_FAILURE,
           payload: {
             errors: message,
           },
@@ -84,13 +84,13 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
    */
   const handleGetVocabularies = useCallback(async (id: string): Promise<void> => {
     vocabularyDispatch({
-      type: VOCABULARY_ACTIONS.PENDING,
+      type: VOCABULARY_ACTIONS.GET_REQUEST,
     });
     try {
       const response = await getData<Vocabulary[]>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
 
       vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.REQUEST,
+        type: VOCABULARY_ACTIONS.GET_SUCCESS,
         payload: {
           vocabularies: response,
         },
@@ -98,7 +98,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       const { message } = error as AxiosError;
       vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.FAILED,
+        type: VOCABULARY_ACTIONS.GET_FAILURE,
         payload: {
           errors: message,
         },
@@ -175,12 +175,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const getTopics = async () => {
       topicDispatch({
-        type: TOPIC_ACTIONS.PENDING,
+        type: TOPIC_ACTIONS.GET_REQUEST,
       });
       try {
         const response = await getData<Topic[]>(URL.TOPIC);
         topicDispatch({
-          type: TOPIC_ACTIONS.REQUEST,
+          type: TOPIC_ACTIONS.GET_SUCCESS,
           payload: {
             topics: response,
           },
@@ -188,7 +188,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         const { message } = error as AxiosError;
         topicDispatch({
-          type: TOPIC_ACTIONS.FAILED,
+          type: TOPIC_ACTIONS.GET_FAILURE,
           payload: {
             errors: message,
           },
