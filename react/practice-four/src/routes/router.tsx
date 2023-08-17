@@ -8,6 +8,7 @@ import { ROUTES } from '@constants';
 const HomePage = lazy(() => import('@pages/HomePage'));
 const VocabularyPage = lazy(() => import('@pages/VocabularyPage'));
 const TestingPage = lazy(() => import('@pages/TestingPage'));
+const ResultPage = lazy(() => import('@pages/ResultPage'));
 
 export const Routers: RouteObject[] = [
   {
@@ -21,5 +22,9 @@ export const Routers: RouteObject[] = [
   {
     path: `${ROUTES.TESTING}`,
     element: <TestingPage />,
+  },
+  {
+    path: `${ROUTES.RESULT}`,
+    element: <ResultPage />,
   },
 ];
