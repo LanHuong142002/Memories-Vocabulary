@@ -23,7 +23,7 @@ import './index.css';
 const TestingPage = () => {
   const navigate = useNavigate();
   const { quizzes, onSetQuiz } = useContext(DictionaryContext);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[] | undefined>(undefined);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string | null>(value, 700);
@@ -99,9 +99,8 @@ const TestingPage = () => {
       <form onSubmit={handleSubmit} className='testing-content'>
         <ProcessBar step={step + 1} totalStep={quizzes.length} />
         <Typography color='primary' size='m' textAlign='center'>
-          {`Translate this "${
-            quizzes.length > 0 && quizzes[step].english
-          }" word in English, into Vietnamese:`}
+          Translate this &quot;{quizzes.length > 0 && quizzes[step].english}&quot; word in English,
+          into Vietnamese:
         </Typography>
         <Input
           variant='tertiary'
