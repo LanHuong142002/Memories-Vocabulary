@@ -20,6 +20,7 @@ module.exports = {
     '^@themes(.*)$': '<rootDir>src/themes/$1',
     '^@utils(.*)$': '<rootDir>src/utils/$1',
     '^@mocks(.*)$': '<rootDir>src/mocks/$1',
+    '^@stores(.*)$': '<rootDir>src/stores/$1',
   },
   transform: {
     '^.+\\.ts?$': 'ts-jest',

@@ -13,7 +13,7 @@ import { StatusProcess } from '@interfaces';
  *
  * @returns {number} - The calculated step level with potential surplus addition.
  */
-const calculateEachStep = (
+export const calculateEachStep = (
   surplus: number,
   stepLevel: number,
   defaultSurplus: 0.75 | 0.25 | 0.5,
@@ -27,7 +27,7 @@ const calculateEachStep = (
  * @param {number} step - The current step within the total steps.
  * @param {number} totalStep - The total number of steps.
  *
- * @returns {string | undefined} - The status level: very-low | low | medium | high
+ * @returns {string} - The status level: very-low | low | medium | high
  */
 export const calculateStepLevel = (step: number, totalStep: number): StatusProcess => {
   // divide the sum of the steps and take the integer part
@@ -49,9 +49,7 @@ export const calculateStepLevel = (step: number, totalStep: number): StatusProce
       return STATUS_PROCESS.MEDIUM;
     case step <= high + medium + low + veryLow:
       return STATUS_PROCESS.HIGH;
-    case step > totalStep:
-      return STATUS_PROCESS.HIGH;
     default:
-      return STATUS_PROCESS.VERY_LOW;
+      return STATUS_PROCESS.HIGH;
   }
 };
