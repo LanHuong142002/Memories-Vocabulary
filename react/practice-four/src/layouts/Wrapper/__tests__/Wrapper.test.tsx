@@ -17,7 +17,7 @@ const mockThemeContext = {
   onToggleTheme: handleToggleTheme,
 } as ThemeProviderProps;
 
-const HomePageComponent = () => (
+const WrapperComponent = () => (
   <BrowserRouter>
     <ThemeContext.Provider value={mockThemeContext}>
       <Wrapper className='testing' childrenTitle={<p>Title</p>}>
@@ -29,13 +29,13 @@ const HomePageComponent = () => (
 
 describe('Test Wrapper component', () => {
   it('Should render Wrapper component', () => {
-    const { container } = render(<HomePageComponent />);
+    const { container } = render(<WrapperComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    const { getByRole } = render(<HomePageComponent />);
+    const { getByRole } = render(<WrapperComponent />);
 
     const button = getByRole('button');
     const checkbox = getByRole('checkbox') as HTMLInputElement;
@@ -48,7 +48,7 @@ describe('Test Wrapper component', () => {
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    const { getByRole, getByText } = render(<HomePageComponent />);
+    const { getByRole, getByText } = render(<WrapperComponent />);
 
     const button = getByRole('button');
 
