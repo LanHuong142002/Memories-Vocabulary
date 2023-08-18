@@ -86,10 +86,10 @@ const VocabularyPage = () => {
   /**
    * @description function handle start testing with vocabularies of topic
    */
-  const handleStartTest = () => {
+  const handleStartTest = useCallback(() => {
     onRandomQuizzes();
-    navigate(ROUTES.TESTING);
-  };
+    navigate(`${ROUTES.TESTING}/${id}`);
+  }, [id, navigate, onRandomQuizzes]);
 
   /**
    * @description function delete a vocabulary
