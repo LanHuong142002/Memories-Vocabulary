@@ -80,9 +80,9 @@ const TestingPage = () => {
 
   useEffect(() => {
     if (!(quizzes.length > 0)) {
-      navigate(-1);
+      navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
-  }, [navigate, quizzes]);
+  }, [id, navigate, quizzes]);
 
   return (
     <Wrapper
