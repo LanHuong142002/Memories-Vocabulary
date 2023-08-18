@@ -17,6 +17,9 @@ import './index.css';
 const ResultPage = () => {
   const { id } = useParams();
   const { quizzes } = useContext(DictionaryContext);
+  const totalCorrectQuizzes = quizzes.filter((quiz) => quiz.answer === quiz.vietnamese).length;
+  const percent = Math.round((totalCorrectQuizzes / quizzes.length) * 100);
+  const wrongAnswers = quizzes.length - totalCorrectQuizzes;
 
   return (
     <Wrapper
@@ -25,11 +28,11 @@ const ResultPage = () => {
         <>
           <Typography size='xl'>Quiz Result</Typography>
           <div className='total'>
-            <Label color='normal' name='60% percentage' />
+            <Label color='normal' name={`${percent}% percentage`} />
           </div>
           <div className='answers'>
-            <Label color='success' name='3 Right' />
-            <Label color='failed' name='2 Wrong' />
+            <Label color='success' name={`${totalCorrectQuizzes} Right`} />
+            <Label color='failed' name={`${wrongAnswers} Wrong`} />
           </div>
         </>
       }
