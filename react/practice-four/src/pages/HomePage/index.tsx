@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
 
 // Helpers
 import { validation } from '@helpers';
@@ -17,6 +21,7 @@ import { Button, Input, Spinner, Topic, Typography } from '@components';
 import './index.css';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
@@ -59,8 +64,13 @@ const HomePage = () => {
     setTopicValue(event.target.value);
   };
 
-  const handleOpenTopic = () => {
-    // TODO: feature open topic
+  /**
+   * @description function handle open topic with vocabularies
+   *
+   * @param {string} id is id of topic
+   */
+  const handleOpenTopic = (id?: string) => {
+    navigate(`${ROUTES.TESTING}/${id}`);
   };
 
   useEffect(() => {
