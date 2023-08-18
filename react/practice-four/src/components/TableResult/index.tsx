@@ -6,6 +6,9 @@ import { memo } from 'react';
 // Components
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
 
+// Styles
+import './index.css';
+
 interface TableResultProps {
   result: VocabularyResult[];
 }
