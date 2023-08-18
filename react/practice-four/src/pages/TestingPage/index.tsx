@@ -1,5 +1,5 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams, useParams } from 'react-router-dom';
+import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -28,18 +28,36 @@ const TestingPage = () => {
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string | null>(value, 700);
+  const quizValue = useMemo(
+    () =>
+      quizzes.length > 0 &&
+      `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
+    [quizzes, step],
+  );
+
+  const buttonValue = useMemo(
+    () =>
+      step + 1 === quizzes.length ? (
+        'Submit Answers'
+      ) : (
+        <>
+          Next <span className='icon-next' />
+        </>
+      ),
+    [quizzes.length, step],
+  );
 
   /**
    * @description function handle step testing
    */
-  const handleSetStep = () => {
+  const handleSetStep = useCallback(() => {
     if (step === quizzes.length - 1) {
       navigate(`${ROUTES.RESULT}/${id}`);
     } else {
       setStep((prev) => prev + 1);
       setValue('');
     }
-  };
+  }, [id, navigate, quizzes.length, step]);
 
   /**
    * @description function handle onchange of input
@@ -54,21 +72,24 @@ const TestingPage = () => {
    *
    * @param {Event} event is event of form element
    */
-  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const listError = validation(value);
-    setErrors(listError);
+  const handleSubmit = useCallback(
+    (event: ChangeEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const listError = validation(value);
+      setErrors(listError);
 
-    if (!listError.length) {
-      const answersArr = [...quizzes];
-      answersArr[step] = {
-        ...quizzes[step],
-        answer: value,
-      };
-      onSetQuiz(answersArr);
-      handleSetStep();
-    }
-  };
+      if (!listError.length) {
+        const answersArr = [...quizzes];
+        answersArr[step] = {
+          ...quizzes[step],
+          answer: value,
+        };
+        onSetQuiz(answersArr);
+        handleSetStep();
+      }
+    },
+    [handleSetStep, onSetQuiz, quizzes, step, value],
+  );
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -100,8 +121,7 @@ const TestingPage = () => {
       <form onSubmit={handleSubmit} className='testing-content'>
         <ProcessBar step={step + 1} totalStep={quizzes.length} />
         <Typography color='primary' size='m' textAlign='center'>
-          Translate this &quot;{quizzes.length > 0 && quizzes[step].english}&quot; word in English,
-          into Vietnamese:
+          {quizValue}
         </Typography>
         <Input
           variant='tertiary'
@@ -113,13 +133,7 @@ const TestingPage = () => {
         />
         <div className='testing-actions'>
           <Button type='submit' size='xs'>
-            {step + 1 === quizzes.length ? (
-              'Submit Answers'
-            ) : (
-              <>
-                Next <span className='icon-next' />
-              </>
-            )}
+            {buttonValue}
           </Button>
         </div>
       </form>
