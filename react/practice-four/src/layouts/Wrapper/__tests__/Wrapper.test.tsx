@@ -1,6 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { ReactNode } from 'react';
 
 // Contexts
 import { ThemeContext, ThemeProviderProps } from '@contexts';
@@ -18,39 +17,25 @@ const mockThemeContext = {
   onToggleTheme: handleToggleTheme,
 } as ThemeProviderProps;
 
-const MockProvider = ({
-  children,
-  value = mockThemeContext,
-}: {
-  children: ReactNode;
-  value?: ThemeProviderProps;
-}) => (
+const HomePageComponent = () => (
   <BrowserRouter>
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+    <ThemeContext.Provider value={mockThemeContext}>
+      <Wrapper className='testing' childrenTitle={<p>Title</p>}>
+        <p>Wrapper body</p>
+      </Wrapper>
+    </ThemeContext.Provider>
   </BrowserRouter>
 );
 
 describe('Test Wrapper component', () => {
   it('Should render Wrapper component', () => {
-    const { container } = render(
-      <MockProvider>
-        <Wrapper className='testing' childrenTitle={<p>Title</p>}>
-          <p>Wrapper body</p>
-        </Wrapper>
-      </MockProvider>,
-    );
+    const { container } = render(<HomePageComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    const { getByRole } = render(
-      <MockProvider>
-        <Wrapper className='testing' childrenTitle={<p>Title</p>}>
-          <p>Wrapper body</p>
-        </Wrapper>
-      </MockProvider>,
-    );
+    const { getByRole } = render(<HomePageComponent />);
 
     const button = getByRole('button');
     const checkbox = getByRole('checkbox') as HTMLInputElement;
@@ -63,13 +48,7 @@ describe('Test Wrapper component', () => {
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    const { getByRole, getByText } = render(
-      <MockProvider>
-        <Wrapper className='testing' childrenTitle={<p>Title</p>}>
-          <p>Wrapper body</p>
-        </Wrapper>
-      </MockProvider>,
-    );
+    const { getByRole, getByText } = render(<HomePageComponent />);
 
     const button = getByRole('button');
 
