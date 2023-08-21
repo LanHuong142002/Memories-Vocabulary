@@ -7,7 +7,6 @@ const meta: Meta<typeof Spinner> = {
   title: 'PracticeFour/Spinner',
   component: Spinner,
   argTypes: {
-    onClick: { action: 'clicked' },
     size: {
       control: { type: 'radio' },
       options: ['xs', 's', 'm'],

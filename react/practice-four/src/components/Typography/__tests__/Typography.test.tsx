@@ -16,7 +16,7 @@ describe('Test typography component', () => {
   });
 
   it('Should render typography default component', () => {
-    const { container, getByText } = render(<Typography>Lorem</Typography>);
+    const { container, getByText } = render(<Typography className='highlight'>Lorem</Typography>);
 
     expect(container).toBeInTheDocument();
     expect(getByText('Lorem').textContent).toBe('Lorem');

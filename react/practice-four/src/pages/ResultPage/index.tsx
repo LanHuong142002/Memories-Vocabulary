@@ -1,5 +1,5 @@
-import { useContext, useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useContext, useEffect, useMemo } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -16,6 +16,7 @@ import './index.css';
 
 const ResultPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { quizzes, vocabularies } = useContext(DictionaryContext);
   const result = useMemo(
     () =>
@@ -37,6 +38,12 @@ const ResultPage = () => {
     () => Math.round((totalCorrectQuizzes / quizzes.length) * 100),
     [quizzes.length, totalCorrectQuizzes],
   );
+
+  useEffect(() => {
+    if (!(quizzes.length > 0)) {
+      navigate(`${ROUTES.VOCABULARY}/${id}`);
+    }
+  }, [id, navigate, quizzes]);
 
   return (
     <Wrapper
