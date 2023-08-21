@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts

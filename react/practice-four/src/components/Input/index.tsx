@@ -42,6 +42,7 @@ const Input = memo(
         onChange={onChange}
         data-testid={dataTestId}
       />
+
       {errors && errors.length >= 0 && (
         <>
           {errors.map((error) => (

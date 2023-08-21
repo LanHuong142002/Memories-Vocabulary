@@ -1,6 +1,7 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
+import * as reactRouter from 'react-router-dom';
 
 // Contexts
 import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
@@ -10,12 +11,11 @@ import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
 // Components
 import { VocabularyPage } from '@pages';
+import { MESSAGE_ERRORS } from '@constants';
 
+jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useParams: jest.fn(() => ({
-    id: '1',
-  })),
 }));
 
 const mockDictionaryContext = {
@@ -81,6 +81,25 @@ describe('Test Vocabulary Page', () => {
     expect(inputVIE).toHaveValue('');
   });
 
+  it('Should render error message when typing number to input', () => {
+    const { getByTestId, getAllByText } = render(
+      <VocabularyComponent>
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+
+    const inputENG = getByTestId('input-english');
+    const inputVIE = getByTestId('input-vietnamese');
+
+    act(() => {
+      fireEvent.change(inputENG, { target: { value: '2' } });
+      fireEvent.change(inputVIE, { target: { value: '2' } });
+      jest.runAllTimers();
+    });
+
+    expect(getAllByText(MESSAGE_ERRORS.ALPHABETS).length).toBe(2);
+  });
+
   it('Should call onRandomQuizzes when handleStartTest is called', () => {
     const { getByRole } = render(
       <VocabularyComponent
@@ -104,6 +123,19 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should call onDeleteVocabulary with the correct vocabularyId when handleDeleteVocabulary is called', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+    const { getByRole } = render(
+      <VocabularyComponent>
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+    const deleteBtn = getByRole('button', { name: 'X' });
+    fireEvent.click(deleteBtn);
+  });
+
+  it('Should call onDeleteVocabulary with the correct vocabularyId when handleDeleteVocabulary is called', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '' });
+
     const { getByRole } = render(
       <VocabularyComponent>
         <VocabularyPage />

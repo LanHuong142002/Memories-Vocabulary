@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
 
@@ -14,6 +14,7 @@ import { MESSAGE_ERRORS } from '@constants';
 // Components
 import { HomePage } from '@pages';
 
+jest.useFakeTimers();
 const mockDictionaryContext = {
   isLoadingTopic: false,
   isLoadingVocabulary: false,
@@ -127,5 +128,22 @@ describe('Test Home Page', () => {
     fireEvent.click(topic);
 
     expect(titleHome).not.toBeInTheDocument();
+  });
+
+  it('render error message when typing number to input', () => {
+    const { getByText, getByPlaceholderText } = render(
+      <HomePageComponent>
+        <HomePage />
+      </HomePageComponent>,
+    );
+    const topic = getByText('Add Topic');
+    fireEvent.click(topic);
+    const input = getByPlaceholderText('Topic Name');
+    act(() => {
+      fireEvent.change(input, { target: { value: '2' } });
+      jest.runAllTimers();
+    });
+
+    expect(getByText(MESSAGE_ERRORS.ALPHABETS)).toBeInTheDocument();
   });
 });
