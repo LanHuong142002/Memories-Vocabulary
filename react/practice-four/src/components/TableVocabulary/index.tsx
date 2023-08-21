@@ -14,13 +14,16 @@ import {
   Typography,
 } from '@components';
 
+// Styles
+import './index.css';
+
 export interface TableVocabularyProps {
   vocabularies: Vocabulary[];
   onClick: (id: string) => void;
 }
 
 const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) => (
-  <Table>
+  <Table className='vocabularies'>
     <TableHeader>
       <TableRow>
         <TableCell tagName='th'>No.</TableCell>
