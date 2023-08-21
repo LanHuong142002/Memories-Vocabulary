@@ -1,5 +1,5 @@
 import { ChangeEvent, memo } from 'react';
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 // Styles
 import './index.css';
@@ -45,7 +45,7 @@ const Input = memo(
       {errors && errors.length >= 0 && (
         <>
           {errors.map((error) => (
-            <div key={randomUUID()} className='error-wrapper'>
+            <div key={uuidv4()} className='error-wrapper'>
               <span className='error'>{error}</span>
             </div>
           ))}

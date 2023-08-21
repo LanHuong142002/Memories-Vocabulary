@@ -26,9 +26,11 @@ describe('Test input component', () => {
   });
 
   it('Should render input secondary component with error', () => {
-    const { container } = render(<Input variant='secondary' errors={[]} {...defaultProps} />);
+    const { getByText } = render(
+      <Input variant='secondary' errors={['errors']} {...defaultProps} />,
+    );
 
-    expect(container).toBeInTheDocument();
+    expect(getByText('errors')).toBeInTheDocument();
   });
 
   it('should call the onChange function when the input value changes', () => {
