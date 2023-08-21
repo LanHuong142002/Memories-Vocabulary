@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, ChangeEvent, useEffect, useContext, useCallback } from 'react';
+import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -36,6 +36,7 @@ const VocabularyPage = () => {
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
+  const isDisabledButton = useMemo(() => !(vocabularies.length >= 5), [vocabularies.length]);
 
   /**
    * @description function onchange to get value from input english
@@ -158,7 +159,7 @@ const VocabularyPage = () => {
         <Button
           label='Start Test'
           size='m'
-          isDisabled={!(vocabularies.length >= 5)}
+          isDisabled={isDisabledButton}
           onClick={handleStartTest}
         />
       </div>
