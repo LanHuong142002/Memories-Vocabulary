@@ -6,7 +6,7 @@ import { Table } from '@components';
 describe('Test table component', () => {
   it('Should render table component with border', () => {
     const { getByTestId } = render(
-      <Table hasBorderCell={true}>
+      <Table hasBorderCell={true} className='test'>
         <thead data-testid='table-header'>
           <tr>
             <th>table header</th>
@@ -31,7 +31,7 @@ describe('Test table component', () => {
 
   it('Should render table component without border', () => {
     const { getByTestId } = render(
-      <Table>
+      <Table className='test'>
         <thead data-testid='table-header'>
           <tr>
             <th>table header</th>
