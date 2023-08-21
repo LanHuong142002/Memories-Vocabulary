@@ -6,8 +6,17 @@ import { ReactNode } from 'react';
 import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
 
 // Mocks
-import { MOCK_TOPICS, MOCK_VOCABULARIES } from '@mocks';
+import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
+
+// Components
 import { VocabularyPage } from '@pages';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: jest.fn(() => ({
+    id: '1',
+  })),
+}));
 
 const mockDictionaryContext = {
   isLoadingTopic: false,
@@ -25,7 +34,7 @@ const mockDictionaryContext = {
   onSetQuiz: jest.fn(),
 };
 
-const HomePageComponent = ({
+const VocabularyComponent = ({
   children,
   value = mockDictionaryContext,
 }: {
@@ -40,11 +49,11 @@ const HomePageComponent = ({
 );
 
 describe('Test Vocabulary Page', () => {
-  it('Should render Home page', () => {
+  it('Should render Vocabulary page', () => {
     const { container } = render(
-      <HomePageComponent>
+      <VocabularyComponent>
         <VocabularyPage />
-      </HomePageComponent>,
+      </VocabularyComponent>,
     );
 
     expect(container).toBeInTheDocument();
@@ -52,9 +61,9 @@ describe('Test Vocabulary Page', () => {
 
   it('Should Add new vocabulary when enter in two input', () => {
     const { getByTestId, getByText } = render(
-      <HomePageComponent>
+      <VocabularyComponent>
         <VocabularyPage />
-      </HomePageComponent>,
+      </VocabularyComponent>,
     );
 
     const inputENG = getByTestId('input-english');
@@ -74,20 +83,31 @@ describe('Test Vocabulary Page', () => {
 
   it('Should call onRandomQuizzes when handleStartTest is called', () => {
     const { getByRole } = render(
-      <HomePageComponent>
+      <VocabularyComponent
+        value={{
+          ...mockDictionaryContext,
+          vocabularies: [
+            MOCK_VOCABULARY,
+            MOCK_VOCABULARY,
+            MOCK_VOCABULARY,
+            MOCK_VOCABULARY,
+            MOCK_VOCABULARY,
+          ],
+        }}
+      >
         <VocabularyPage />
-      </HomePageComponent>,
+      </VocabularyComponent>,
     );
-    const startTestBtn = getByRole('button', { name: /start test/i });
+    const startTestBtn = getByRole('button', { name: 'Start Test' });
 
     fireEvent.click(startTestBtn);
   });
 
   it('Should call onDeleteVocabulary with the correct vocabularyId when handleDeleteVocabulary is called', () => {
     const { getByRole } = render(
-      <HomePageComponent>
+      <VocabularyComponent>
         <VocabularyPage />
-      </HomePageComponent>,
+      </VocabularyComponent>,
     );
     const deleteBtn = getByRole('button', { name: 'X' });
     fireEvent.click(deleteBtn);
