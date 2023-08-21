@@ -26,7 +26,7 @@ describe('Test input component', () => {
   });
 
   it('Should render input secondary component with error', () => {
-    const { container } = render(<Input variant='secondary' error='error' {...defaultProps} />);
+    const { container } = render(<Input variant='secondary' errors={[]} {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
@@ -46,7 +46,7 @@ describe('Test input component', () => {
   it('should call the onChange function when the input secondary value changes', () => {
     const handleChange = jest.fn();
     const { getByPlaceholderText } = render(
-      <Input variant='primary' error='error' {...defaultProps} onChange={handleChange} />,
+      <Input variant='primary' errors={[]} {...defaultProps} onChange={handleChange} />,
     );
 
     const inputElement = getByPlaceholderText('Enter name...');
