@@ -26,7 +26,7 @@ import {
   vocabularyReducer,
 } from '@stores';
 
-interface DictionaryType {
+export interface DictionaryType {
   isLoadingTopic: boolean;
   isLoadingVocabulary: boolean;
   errorsTopic: string;

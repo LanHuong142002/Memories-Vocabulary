@@ -8,7 +8,7 @@ import { getItems, setItems } from '@helpers';
 // Constants
 import { STORAGE_KEYS } from '@constants';
 
-interface ThemeProviderProps {
+export interface ThemeProviderProps {
   theme: 'light' | 'dark';
   onToggleTheme: (value: boolean) => void;
 }
