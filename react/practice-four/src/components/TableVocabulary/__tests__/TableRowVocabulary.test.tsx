@@ -6,6 +6,7 @@ import { TableRowVocabulary } from '@components';
 
 describe('Test table row vocabulary component', () => {
   const defaultProps = {
+    order: 1,
     id: '1',
     english: 'pen',
     vietnamese: 'cay but',

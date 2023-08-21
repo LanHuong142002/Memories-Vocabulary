@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@components';
 
+// Styles
 import './index.css';
 
 export interface TableVocabularyProps {

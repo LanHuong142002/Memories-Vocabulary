@@ -1,0 +1,7 @@
+.table-wrapper-result .table-body .table-row:nth-child(odd) {
+  background-color: transparent;
+}
+
+.table-wrapper-result .table-body .table-row:nth-child(odd):hover {
+  background-color: var(--table-bg-color);
+}

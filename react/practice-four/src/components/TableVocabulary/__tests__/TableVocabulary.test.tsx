@@ -33,12 +33,20 @@ describe('Test table vocabulary component', () => {
 
   it('Should render table vocabulary with list vocabularies', () => {
     const { container, getAllByRole, getByText } = render(
-      <TableVocabulary {...defaultValue} onClick={handleOnClick} />,
+      <TableVocabulary isLoading={false} {...defaultValue} onClick={handleOnClick} />,
     );
 
     expect(container).toBeInTheDocument();
     expect(getAllByRole('cell').length).toBe(16);
     expect(getAllByRole('row').length).toBe(5);
     expect(getByText('book')).toBeInTheDocument();
+  });
+
+  it('Should render loading when isLoading is true', () => {
+    const { container } = render(
+      <TableVocabulary isLoading={true} {...defaultValue} onClick={handleOnClick} />,
+    );
+
+    expect(container).toBeInTheDocument();
   });
 });
