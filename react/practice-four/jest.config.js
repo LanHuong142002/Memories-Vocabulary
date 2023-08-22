@@ -30,7 +30,8 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
-    '!src/interfaces/index.ts',
+    '!src/interfaces/**',
+    '!src/routes/**',
     '!.storybook/main.ts',
     '!.storybook/preview.tsx',
     '!**/*.stories.tsx',
