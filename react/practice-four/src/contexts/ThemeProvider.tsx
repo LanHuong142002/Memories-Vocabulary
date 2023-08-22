@@ -25,7 +25,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const initialize = useCallback(() => {
-    const themeColor = getItems<string>(STORAGE_KEYS.THEME) as 'light' | 'dark';
+    const themeColor = getItems<'light' | 'dark'>(STORAGE_KEYS.THEME);
     setIsInitialized(true);
 
     if (themeColor) {
