@@ -63,6 +63,7 @@ const VocabularyPage = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const listErrorVIE = validation(valueVIE!);
     const listErrorENG = validation(valueENG!);
     setErrorsVIE(listErrorVIE);
@@ -89,7 +90,9 @@ const VocabularyPage = () => {
    */
   const handleDeleteVocabulary = useCallback(
     (vocabularyId: string) => {
-      onDeleteVocabulary(id!, vocabularyId);
+      if (id) {
+        onDeleteVocabulary(id, vocabularyId);
+      }
     },
     [id, onDeleteVocabulary],
   );
