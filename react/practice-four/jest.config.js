@@ -1,7 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: ['@testing-library/jest-dom'],
   collectCoverage: true,
   coverageDirectory: 'coverage', // Custom folder name contain reports
   moduleNameMapper: {
@@ -20,6 +20,8 @@ module.exports = {
     '^@themes(.*)$': '<rootDir>src/themes/$1',
     '^@utils(.*)$': '<rootDir>src/utils/$1',
     '^@mocks(.*)$': '<rootDir>src/mocks/$1',
+    '^@stores(.*)$': '<rootDir>src/stores/$1',
+    uuid: require.resolve('uuid'),
   },
   transform: {
     '^.+\\.ts?$': 'ts-jest',
