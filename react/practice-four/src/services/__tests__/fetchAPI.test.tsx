@@ -1,7 +1,13 @@
-import { Vocabulary, Topic } from '@interfaces';
-import { MOCK_VOCABULARIES, MOCK_TOPIC } from '@mocks';
-import { deleteData, getData, postData, putData } from '@services';
 import axios from 'axios';
+
+// Interfaces
+import { Vocabulary, Topic } from '@interfaces';
+
+// Mocks
+import { MOCK_VOCABULARIES, MOCK_TOPIC } from '@mocks';
+
+// Services
+import { deleteData, getData, postData, putData } from '@services';
 
 jest.mock('axios');
 
@@ -10,7 +16,6 @@ describe('Should test fetch API', () => {
     (axios.get as jest.Mock).mockResolvedValue({
       data: MOCK_VOCABULARIES,
     });
-
     const response = await getData<Vocabulary[]>('endpoint');
 
     expect(response).toEqual(MOCK_VOCABULARIES);

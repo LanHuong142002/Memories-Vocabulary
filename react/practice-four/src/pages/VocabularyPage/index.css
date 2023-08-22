@@ -10,6 +10,10 @@
   justify-content: center;
 }
 
+.wrapper-vocabularies-page .pagination {
+  padding-top: 20px;
+}
+
 .wrapper-vocabularies-page .form-add-new-vocabulary,
 .wrapper-vocabularies-page .form-add-new-vocabulary .input-wrapper {
   width: 100%;

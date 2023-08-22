@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, ChangeEvent, useEffect, useContext, useCallback } from 'react';
+import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
@@ -14,7 +14,7 @@ import { validation } from '@helpers';
 import { ROUTES } from '@constants';
 
 // Components
-import { Button, Input, TableVocabulary, Typography } from '@components';
+import { Button, Input, Pagination, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
 
 // Styles
@@ -31,12 +31,17 @@ const VocabularyPage = () => {
     onDeleteVocabulary,
     onRandomQuizzes,
   } = useContext(DictionaryContext);
+  const [pages, setPages] = useState<number>(1);
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);
   const [valueVIE, setValueVIE] = useState<string>('');
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
+  const isDisabledButton = useMemo(
+    () => !(vocabularies.length >= 5) && pages === 1,
+    [vocabularies.length, pages],
+  );
 
   /**
    * @description function onchange to get value from input english
@@ -105,11 +110,30 @@ const VocabularyPage = () => {
 
   useEffect(() => {
     if (id) {
-      onGetVocabularies(id);
+      onGetVocabularies(id, pages);
     } else {
       navigate(ROUTES.HOME);
     }
-  }, [id, navigate, onGetVocabularies]);
+  }, [id, navigate, onGetVocabularies, pages]);
+  /**
+   * @description function handle pagination next
+   */
+  const handleNext = () => {
+    setPages((prev) => prev + 1);
+  };
+
+  /**
+   * @description function handle prev pagination prev
+   */
+  const handlePrev = () => {
+    setPages((prev) => {
+      if (prev <= 0) {
+        return 1;
+      }
+
+      return prev - 1;
+    });
+  };
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -126,6 +150,16 @@ const VocabularyPage = () => {
       setErrorsENG(listErrorENG);
     }
   }, [debouncedValueENG]);
+
+  /**
+   * Check that if not belong to pages 1 and don't have vocabularies
+   * it will keep pagination in the last page
+   */
+  useEffect(() => {
+    if (vocabularies.length === 0 && pages !== 1) {
+      setPages(pages - 1);
+    }
+  }, [pages, vocabularies.length]);
 
   return (
     <Wrapper
@@ -166,11 +200,12 @@ const VocabularyPage = () => {
         vocabularies={vocabularies}
         onClick={handleDeleteVocabulary}
       />
+      <Pagination onPrev={handlePrev} onNext={handleNext} />
       <div className='actions-wrapper'>
         <Button
           label='Start Test'
           size='m'
-          isDisabled={!(vocabularies.length >= 5)}
+          isDisabled={isDisabledButton}
           onClick={handleStartTest}
         />
       </div>

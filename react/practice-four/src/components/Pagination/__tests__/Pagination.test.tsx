@@ -5,8 +5,6 @@ import { Pagination } from '@components';
 
 describe('Test pagination component', () => {
   const defaultProps = {
-    onFirstList: jest.fn(),
-    onLastList: jest.fn(),
     onNext: jest.fn(),
     onPrev: jest.fn(),
   };
@@ -20,26 +18,16 @@ describe('Test pagination component', () => {
   it('Should call onClick when click 4 buttons in pagination component', () => {
     const { getByRole } = render(<Pagination {...defaultProps} />);
 
-    const buttonFirst = getByRole('button', {
-      name: /«/,
-    });
-    const buttonLast = getByRole('button', {
+    const buttonNext = getByRole('button', {
       name: /»/,
     });
-    const buttonNext = getByRole('button', {
-      name: />/,
-    });
     const buttonPrev = getByRole('button', {
-      name: /</,
+      name: /«/,
     });
 
-    fireEvent.click(buttonFirst);
-    fireEvent.click(buttonLast);
     fireEvent.click(buttonNext);
     fireEvent.click(buttonPrev);
 
-    expect(defaultProps.onFirstList).toBeCalled();
-    expect(defaultProps.onLastList).toBeCalled();
     expect(defaultProps.onNext).toBeCalled();
     expect(defaultProps.onPrev).toBeCalled();
   });

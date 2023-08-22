@@ -9,9 +9,11 @@ import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
 // Mocks
 import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
+// Constants
+import { MESSAGE_ERRORS } from '@constants';
+
 // Components
 import { VocabularyPage } from '@pages';
-import { MESSAGE_ERRORS } from '@constants';
 
 jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
@@ -143,5 +145,54 @@ describe('Test Vocabulary Page', () => {
     );
     const deleteBtn = getByRole('button', { name: 'X' });
     fireEvent.click(deleteBtn);
+  });
+
+  it('Should click button next and prev pagination', () => {
+    const { getByRole } = render(
+      <VocabularyComponent>
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+    const buttonNext = getByRole('button', {
+      name: /»/,
+    });
+    const buttonPrev = getByRole('button', {
+      name: /«/,
+    });
+
+    fireEvent.click(buttonNext);
+    fireEvent.click(buttonPrev);
+  });
+
+  it('Should click prev two times and let state return 1', () => {
+    const { getByRole } = render(
+      <VocabularyComponent>
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+    const buttonPrev = getByRole('button', {
+      name: /«/,
+    });
+
+    fireEvent.click(buttonPrev);
+    fireEvent.click(buttonPrev);
+  });
+
+  it('Should return prev page when pages != 1', () => {
+    const { getByRole } = render(
+      <VocabularyComponent
+        value={{
+          ...mockDictionaryContext,
+          vocabularies: [],
+        }}
+      >
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+    const buttonPrev = getByRole('button', {
+      name: /»/,
+    });
+
+    fireEvent.click(buttonPrev);
   });
 });

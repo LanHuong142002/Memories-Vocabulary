@@ -38,7 +38,7 @@ export interface DictionaryType {
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
-  onGetVocabularies: (id: string) => Promise<void>;
+  onGetVocabularies: (id: string, page: number) => Promise<void>;
   onRandomQuizzes: () => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
 }
@@ -109,12 +109,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
    *
    * @param {string} id is the id of the topic.
    */
-  const handleGetVocabularies = useCallback(async (id: string): Promise<void> => {
+  const handleGetVocabularies = useCallback(async (id: string, page: number): Promise<void> => {
     vocabularyDispatch({
       type: VOCABULARY_ACTIONS.GET_REQUEST,
     });
     try {
-      const response = await getData<Vocabulary[]>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
+      const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
 
       vocabularyDispatch({
         type: VOCABULARY_ACTIONS.GET_SUCCESS,
@@ -207,7 +207,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       type: TOPIC_ACTIONS.GET_REQUEST,
     });
     try {
-      const response = await getData<Topic[]>(URL.TOPIC);
+      const response = await getData<Topic>(URL.TOPIC);
       topicDispatch({
         type: TOPIC_ACTIONS.GET_SUCCESS,
         payload: {

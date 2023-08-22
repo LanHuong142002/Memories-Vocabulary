@@ -74,7 +74,9 @@ describe('Test DictionaryProvider', () => {
 
     const MockChildren = () => {
       const { vocabularies, onGetVocabularies } = useContext(DictionaryContext);
-      return <MockSuccessComponent items={vocabularies} onClick={() => onGetVocabularies('1')} />;
+      return (
+        <MockSuccessComponent items={vocabularies} onClick={() => onGetVocabularies('1', 1)} />
+      );
     };
 
     const { getAllByTestId, getByTestId } = render(
@@ -98,7 +100,7 @@ describe('Test DictionaryProvider', () => {
     const MockChildren = () => {
       const { errorsVocabulary, onGetVocabularies } = useContext(DictionaryContext);
       return (
-        <MockFailureComponent error={errorsVocabulary} onClick={() => onGetVocabularies('1')} />
+        <MockFailureComponent error={errorsVocabulary} onClick={() => onGetVocabularies('1', 1)} />
       );
     };
     const { getByText, getByTestId } = render(

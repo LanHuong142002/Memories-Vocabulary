@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Constants
-import { URL } from '@constants';
+import { URL as linkURL } from '@constants';
 
 /**
  * @description function get all data
@@ -10,8 +10,18 @@ import { URL } from '@constants';
  *
  * @returns {T} data
  */
-export const getData = async <T>(endpoint: string): Promise<T> => {
-  const response = await axios.get<T>(`${URL.BASE}${endpoint}`);
+export const getData = async <T>(
+  endpoint: string,
+  page?: number,
+  limit: number = 10,
+): Promise<T[]> => {
+  let url: string | URL = `${linkURL.BASE}${endpoint}`;
+  if (page) {
+    url = new URL(`${linkURL.BASE}${endpoint}`);
+    url.searchParams.append('page', `${page}`);
+    url.searchParams.append('limit', `${limit}`);
+  }
+  const response = await axios.get<T[]>(url.toString());
 
   return response.data;
 };
@@ -25,7 +35,7 @@ export const getData = async <T>(endpoint: string): Promise<T> => {
  * @returns {T} data
  */
 export const postData = async <T>(item: T, endpoint: string): Promise<T> => {
-  const response = await axios.post<T>(`${URL.BASE}${endpoint}`, item);
+  const response = await axios.post<T>(`${linkURL.BASE}${endpoint}`, item);
 
   return response.data;
 };
@@ -40,7 +50,7 @@ export const postData = async <T>(item: T, endpoint: string): Promise<T> => {
  * @returns {T} data
  */
 export const putData = async <T>(item: T, endpoint: string, id: string): Promise<T> => {
-  const response = await axios.put<T>(`${URL.BASE}${endpoint}/${id}`, item);
+  const response = await axios.put<T>(`${linkURL.BASE}${endpoint}/${id}`, item);
 
   return response.data;
 };
@@ -54,7 +64,7 @@ export const putData = async <T>(item: T, endpoint: string, id: string): Promise
  * @returns {T} data
  */
 export const deleteData = async <T>(endpoint: string, id: string): Promise<T> => {
-  const response = await axios.delete<T>(`${URL.BASE}${endpoint}/${id}`);
+  const response = await axios.delete<T>(`${linkURL.BASE}${endpoint}/${id}`);
 
   return response.data;
 };
