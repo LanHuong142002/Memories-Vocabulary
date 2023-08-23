@@ -1,7 +1,8 @@
+import { memo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 // Interfaces
 import { VocabularyResult } from '@interfaces';
-
-import { memo } from 'react';
 
 // Components
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRowResult } from '@components';
@@ -38,7 +39,7 @@ const TableResult = memo(({ result }: TableResultProps) => (
       {result.map(({ id, answer, english, vietnamese }, index) => (
         <TableRowResult
           id={id}
-          key={`table-result-${index}`}
+          key={`table-result-${uuidv4()}`}
           order={`${index + 1}`}
           answer={answer}
           isSuccess={!!(answer === vietnamese)}

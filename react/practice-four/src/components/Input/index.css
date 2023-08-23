@@ -27,7 +27,7 @@
 }
 
 .input-primary input::placeholder {
-  color: var(--color-black-400);
+  color: var(--text-tertiary-color);
 }
 
 /* input secondary */
