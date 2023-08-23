@@ -1,8 +1,8 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 // Contexts
-import { ThemeContext, ThemeProviderProps } from '@contexts';
+import { DictionaryContext, DictionaryType, ThemeContext, ThemeProviderProps } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -11,6 +11,7 @@ import { ROUTES } from '@constants';
 import { Wrapper } from '@layouts';
 
 const handleToggleTheme = jest.fn();
+jest.useFakeTimers();
 
 const mockThemeContext = {
   theme: 'light',
@@ -55,5 +56,18 @@ describe('Test Wrapper component', () => {
     fireEvent.click(button);
 
     expect(getByText('Back to Home').closest('a')).toHaveAttribute('href', ROUTES.HOME);
+  });
+
+  it('Should render notification when have any error', () => {
+    const { getByText } = render(
+      <DictionaryContext.Provider value={{ errorsTopic: 'Error' } as DictionaryType}>
+        <WrapperComponent />
+      </DictionaryContext.Provider>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+      expect(getByText('Error')).toBeInTheDocument();
+    });
   });
 });
