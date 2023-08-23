@@ -69,13 +69,6 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   }, [vocabularies]);
 
   /**
-   * @description function set quiz
-   */
-  const handleSetQuiz = useCallback((listQuiz: Quiz[]) => {
-    setQuizzes(listQuiz);
-  }, []);
-
-  /**
    * @description handles the add a new topic.
    *
    * @param {Topic} topic is the topic object to be added.
@@ -241,7 +234,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       onGetVocabularies: handleGetVocabularies,
       onDeleteVocabulary: handleDeleteVocabulary,
       onRandomQuizzes: handleRandomQuiz,
-      onSetQuiz: handleSetQuiz,
+      onSetQuiz: setQuizzes,
     }),
     [
       isLoadingTopic,
@@ -256,7 +249,6 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       handleGetVocabularies,
       handleDeleteVocabulary,
       handleRandomQuiz,
-      handleSetQuiz,
     ],
   );
 
