@@ -34,6 +34,7 @@ export interface DictionaryType {
   topics: Topic[];
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
+  onGetTopic?: () => Promise<void>;
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
@@ -191,31 +192,35 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => {
-    const getTopics = async () => {
+  /**
+   * @description function get topics
+   */
+  const getTopics = useCallback(async () => {
+    topicDispatch({
+      type: TOPIC_ACTIONS.GET_REQUEST,
+    });
+    try {
+      const response = await getData<Topic[]>(URL.TOPIC);
       topicDispatch({
-        type: TOPIC_ACTIONS.GET_REQUEST,
+        type: TOPIC_ACTIONS.GET_SUCCESS,
+        payload: {
+          topics: response,
+        },
       });
-      try {
-        const response = await getData<Topic[]>(URL.TOPIC);
-        topicDispatch({
-          type: TOPIC_ACTIONS.GET_SUCCESS,
-          payload: {
-            topics: response,
-          },
-        });
-      } catch (error) {
-        const { message } = error as AxiosError;
-        topicDispatch({
-          type: TOPIC_ACTIONS.GET_FAILURE,
-          payload: {
-            errors: message,
-          },
-        });
-      }
-    };
-    getTopics();
+    } catch (error) {
+      const { message } = error as AxiosError;
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    getTopics();
+  }, [getTopics]);
 
   const value = useMemo(
     () => ({
@@ -232,6 +237,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       onDeleteVocabulary: handleDeleteVocabulary,
       onRandomQuizzes: handleRandomQuiz,
       onSetQuiz: setQuizzes,
+      onGetTopic: getTopics,
     }),
     [
       isLoadingTopic,
@@ -246,6 +252,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       handleGetVocabularies,
       handleDeleteVocabulary,
       handleRandomQuiz,
+      getTopics,
     ],
   );
 
