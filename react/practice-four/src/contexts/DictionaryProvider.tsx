@@ -29,6 +29,7 @@ import {
 export interface DictionaryType {
   isLoadingTopic: boolean;
   isLoadingVocabulary: boolean;
+  isLoading?: boolean;
   errorsTopic: string;
   errorsVocabulary: string;
   topics: Topic[];
@@ -39,7 +40,7 @@ export interface DictionaryType {
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
   onGetVocabularies: (id: string, page: number) => Promise<void>;
-  onRandomQuizzes: () => void;
+  onRandomQuizzes: (id: string) => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
 }
 
@@ -58,13 +59,35 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     vocabularies,
   } = vocabularyState;
   const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /**
    * @description function handle random array quizzes
+   *
+   * @param {string} id is id of topic which is selected
    */
-  const handleRandomQuiz = useCallback(() => {
-    setQuizzes([...vocabularies].sort(() => Math.random() - 0.5));
-  }, [vocabularies]);
+  const handleRandomQuiz = useCallback(async (id: string) => {
+    setIsLoading(true);
+    try {
+      const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.GET_SUCCESS,
+        payload: {
+          vocabularies: response,
+        },
+      });
+      setQuizzes([...response].sort(() => Math.random() - 0.5));
+    } catch (error) {
+      const { message } = error as AxiosError;
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+    setIsLoading(false);
+  }, []);
 
   /**
    * @description handles the add a new topic.
@@ -138,15 +161,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         type: VOCABULARY_ACTIONS.ADD_REQUEST,
       });
       try {
-        const response = await postData<Vocabulary>(
-          vocabulary,
-          `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
-        );
+        await postData<Vocabulary>(vocabulary, `${URL.TOPIC}/${id}${URL.VOCABULARY}`);
 
         vocabularyDispatch({
           type: VOCABULARY_ACTIONS.ADD_SUCCESS,
           payload: {
-            vocabularies: [...vocabularies, response],
+            vocabularies: vocabularies,
           },
         });
       } catch (error) {
@@ -224,6 +244,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
+      isLoading,
       isLoadingTopic,
       isLoadingVocabulary,
       errorsTopic,
@@ -240,6 +261,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       onGetTopic: getTopics,
     }),
     [
+      isLoading,
       isLoadingTopic,
       isLoadingVocabulary,
       errorsTopic,

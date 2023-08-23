@@ -92,8 +92,10 @@ const VocabularyPage = () => {
    * @description function handle start testing with vocabularies of topic
    */
   const handleStartTest = useCallback(() => {
-    onRandomQuizzes();
-    navigate(`${ROUTES.TESTING}/${id}`);
+    if (id) {
+      onRandomQuizzes(id);
+      navigate(`${ROUTES.TESTING}/${id}`);
+    }
   }, [id, navigate, onRandomQuizzes]);
 
   /**
@@ -110,32 +112,27 @@ const VocabularyPage = () => {
     [id, onDeleteVocabulary],
   );
 
-  useEffect(() => {
-    if (id) {
-      onGetVocabularies(id, pages);
+  /**
+   * @description function handle next pagination
+   */
+  const handleNext = useCallback(() => {
+    if (vocabularies.length === 0 && pages !== 1) {
+      setPages((prev) => prev);
     } else {
-      navigate(ROUTES.HOME);
+      setPages((prev) => prev + 1);
     }
-  }, [id, navigate, onGetVocabularies, pages]);
-  /**
-   * @description function handle pagination next
-   */
-  const handleNext = () => {
-    setPages((prev) => prev + 1);
-  };
+  }, [pages, vocabularies]);
 
   /**
-   * @description function handle prev pagination prev
+   * @description function handle prev pagination
    */
-  const handlePrev = () => {
-    setPages((prev) => {
-      if (prev <= 0) {
-        return 1;
-      }
-
-      return prev - 1;
-    });
-  };
+  const handlePrev = useCallback(() => {
+    if (pages <= 1) {
+      setPages(1);
+    } else {
+      setPages((prev) => prev - 1);
+    }
+  }, [pages]);
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -153,15 +150,14 @@ const VocabularyPage = () => {
     }
   }, [debouncedValueENG]);
 
-  /**
-   * Check that if not belong to pages 1 and don't have vocabularies
-   * it will keep pagination in the last page
-   */
+  // get vocabularies with the id of topic selected
   useEffect(() => {
-    if (vocabularies.length === 0 && pages !== 1) {
-      setPages(pages - 1);
+    if (id) {
+      onGetVocabularies(id, pages);
+    } else {
+      navigate(ROUTES.HOME);
     }
-  }, [pages, vocabularies.length]);
+  }, [id, navigate, onGetVocabularies, pages]);
 
   return (
     <Wrapper

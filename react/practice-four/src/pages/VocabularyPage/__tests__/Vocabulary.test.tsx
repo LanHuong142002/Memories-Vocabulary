@@ -62,6 +62,8 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should Add new vocabulary when enter in two input', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+
     const { getByTestId, getByText } = render(
       <VocabularyComponent>
         <VocabularyPage />
@@ -148,6 +150,8 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should click button next and prev pagination', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+
     const { getByRole } = render(
       <VocabularyComponent>
         <VocabularyPage />
@@ -165,15 +169,25 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should click prev two times and let state return 1', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '2' });
     const { getByRole } = render(
-      <VocabularyComponent>
+      <VocabularyComponent
+        value={{
+          ...mockDictionaryContext,
+          vocabularies: [],
+        }}
+      >
         <VocabularyPage />
       </VocabularyComponent>,
     );
     const buttonPrev = getByRole('button', {
       name: /«/,
     });
+    const buttonNext = getByRole('button', {
+      name: /»/,
+    });
 
+    fireEvent.click(buttonNext);
     fireEvent.click(buttonPrev);
     fireEvent.click(buttonPrev);
   });

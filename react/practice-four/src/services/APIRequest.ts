@@ -13,7 +13,7 @@ import { URL as linkURL } from '@constants';
 export const getData = async <T>(
   endpoint: string,
   page?: number,
-  limit: number = 10,
+  limit: number = 20,
 ): Promise<T[]> => {
   let url: string | URL = `${linkURL.BASE}${endpoint}`;
   if (page) {
