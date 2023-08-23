@@ -4,9 +4,9 @@ import { render } from '@testing-library/react';
 import { TableVocabulary } from '@components';
 
 describe('Test table vocabulary component', () => {
-  const handleOnClick = jest.fn();
-
   const defaultValue = {
+    onClick: jest.fn(),
+    isLoading: false,
     vocabularies: [
       {
         id: '1',
@@ -32,9 +32,7 @@ describe('Test table vocabulary component', () => {
   };
 
   it('Should render table vocabulary with list vocabularies', () => {
-    const { container, getAllByRole, getByText } = render(
-      <TableVocabulary isLoading={false} {...defaultValue} onClick={handleOnClick} />,
-    );
+    const { container, getAllByRole, getByText } = render(<TableVocabulary {...defaultValue} />);
 
     expect(container).toBeInTheDocument();
     expect(getAllByRole('cell').length).toBe(16);
@@ -43,9 +41,7 @@ describe('Test table vocabulary component', () => {
   });
 
   it('Should render loading when isLoading is true', () => {
-    const { container } = render(
-      <TableVocabulary isLoading={true} {...defaultValue} onClick={handleOnClick} />,
-    );
+    const { container } = render(<TableVocabulary {...defaultValue} isLoading={true} />);
 
     expect(container).toBeInTheDocument();
   });
