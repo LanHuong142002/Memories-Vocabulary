@@ -39,9 +39,10 @@ export interface DictionaryType {
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
-  onGetVocabularies: (id: string, page: number) => Promise<void>;
+  onGetVocabularies: (id: string) => Promise<void>;
   onRandomQuizzes: (id: string) => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
+  onLoadMore: (id: string, page: number) => Promise<number | undefined>;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -60,6 +61,35 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
   } = vocabularyState;
   const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleLoadMore = useCallback(
+    async (id: string, page: number): Promise<number | undefined> => {
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.GET_REQUEST,
+      });
+      try {
+        const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
+
+        vocabularyDispatch({
+          type: VOCABULARY_ACTIONS.GET_SUCCESS,
+          payload: {
+            vocabularies: [...vocabularies, ...response],
+          },
+        });
+
+        return response.length;
+      } catch (error) {
+        const { message } = error as AxiosError;
+        vocabularyDispatch({
+          type: VOCABULARY_ACTIONS.GET_FAILURE,
+          payload: {
+            errors: message,
+          },
+        });
+      }
+    },
+    [vocabularies],
+  );
 
   /**
    * @description function handle random array quizzes
@@ -125,12 +155,12 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
    *
    * @param {string} id is the id of the topic.
    */
-  const handleGetVocabularies = useCallback(async (id: string, page: number): Promise<void> => {
+  const handleGetVocabularies = useCallback(async (id: string): Promise<void> => {
     vocabularyDispatch({
       type: VOCABULARY_ACTIONS.GET_REQUEST,
     });
     try {
-      const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
+      const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, 1);
 
       vocabularyDispatch({
         type: VOCABULARY_ACTIONS.GET_SUCCESS,
@@ -259,6 +289,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       onRandomQuizzes: handleRandomQuiz,
       onSetQuiz: setQuizzes,
       onGetTopic: getTopics,
+      onLoadMore: handleLoadMore,
     }),
     [
       isLoading,
@@ -275,6 +306,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       handleDeleteVocabulary,
       handleRandomQuiz,
       getTopics,
+      handleLoadMore,
     ],
   );
 

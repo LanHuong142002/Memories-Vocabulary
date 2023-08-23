@@ -14,7 +14,7 @@ import { validation } from '@helpers';
 import { ROUTES } from '@constants';
 
 // Components
-import { Button, Input, Pagination, TableVocabulary, Typography } from '@components';
+import { Button, Input, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
 
 // Styles
@@ -30,6 +30,7 @@ const VocabularyPage = () => {
     onAddVocabulary,
     onDeleteVocabulary,
     onRandomQuizzes,
+    onLoadMore,
   } = useContext(DictionaryContext);
   const [pages, setPages] = useState<number>(1);
   const [valueENG, setValueENG] = useState<string>('');
@@ -38,7 +39,8 @@ const VocabularyPage = () => {
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
-  const isDisabledButton = useMemo(
+  const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
+  const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies.length >= 5) && pages === 1,
     [vocabularies.length, pages],
   );
@@ -112,27 +114,14 @@ const VocabularyPage = () => {
     [id, onDeleteVocabulary],
   );
 
-  /**
-   * @description function handle next pagination
-   */
-  const handleNext = useCallback(() => {
-    if (vocabularies.length === 0 && pages !== 1) {
-      setPages((prev) => prev);
-    } else {
-      setPages((prev) => prev + 1);
-    }
-  }, [pages, vocabularies]);
+  const handleLoadMore = async () => {
+    setPages((prev) => prev + 1);
+    const lengthOfData = await onLoadMore(id!, pages + 1);
 
-  /**
-   * @description function handle prev pagination
-   */
-  const handlePrev = useCallback(() => {
-    if (pages <= 1) {
-      setPages(1);
-    } else {
-      setPages((prev) => prev - 1);
+    if (lengthOfData && lengthOfData < 10) {
+      setIsDisabledButtonLoadMore(true);
     }
-  }, [pages]);
+  };
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -153,11 +142,11 @@ const VocabularyPage = () => {
   // get vocabularies with the id of topic selected
   useEffect(() => {
     if (id) {
-      onGetVocabularies(id, pages);
+      onGetVocabularies(id);
     } else {
       navigate(ROUTES.HOME);
     }
-  }, [id, navigate, onGetVocabularies, pages]);
+  }, [id, navigate, onGetVocabularies]);
 
   return (
     <Wrapper
@@ -198,12 +187,12 @@ const VocabularyPage = () => {
         vocabularies={vocabularies}
         onClick={handleDeleteVocabulary}
       />
-      <Pagination onPrev={handlePrev} onNext={handleNext} />
       <div className='actions-wrapper'>
+        <Button label='Load More' onClick={handleLoadMore} isDisabled={isDisabledButtonLoadMore} />
         <Button
           label='Start Test'
           size='m'
-          isDisabled={isDisabledButton}
+          isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />
       </div>
