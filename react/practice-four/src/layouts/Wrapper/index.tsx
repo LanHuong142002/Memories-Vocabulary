@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom';
-import { ChangeEvent, ReactNode, memo, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactNode,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 // Contexts
 import { DictionaryContext, ThemeContext } from '@contexts';
@@ -26,6 +35,11 @@ export const Wrapper = ({
   const { errorsTopic, errorsVocabulary } = useContext(DictionaryContext);
   const [toggle, setToggle] = useState<boolean>(theme === 'light' ? false : true);
   const [showNotification, setShowNotification] = useState<boolean>(true);
+  const hasNotification = useMemo(
+    () => showNotification && (errorsTopic || errorsVocabulary),
+    [errorsTopic, errorsVocabulary, showNotification],
+  );
+
   /**
    * @description function change theme
    *
@@ -76,7 +90,7 @@ export const Wrapper = ({
           </div>
         </div>
       </div>
-      {showNotification && (errorsTopic || errorsVocabulary) && (
+      {hasNotification && (
         <Notification description={errorsTopic || errorsVocabulary} title='Something went wrong!' />
       )}
     </div>
