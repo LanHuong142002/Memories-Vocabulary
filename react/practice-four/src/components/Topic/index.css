@@ -10,6 +10,14 @@
   cursor: pointer;
 }
 
+.topic-default:hover {
+  background-color: var(--color-white-400);
+}
+
+.topic-selected:hover {
+  opacity: 0.7;
+}
+
 .topic-default {
   background-color: var(--color-opacity-tertiary);
   border: 2px solid var(--color-opacity-secondary);
@@ -40,11 +48,6 @@
 .topic-selected .topic-icon {
   color: var(--text-secondary-color);
   background-color: var(--color-orange-100);
-}
-
-.topic-default:hover .topic-icon {
-  color: var(--color-white-100);
-  background-color: var(--color-white-400);
 }
 
 .topic .topic-icon span,

@@ -50,7 +50,7 @@
   --button-primary-color: var(--color-orange-100);
 
   /* Notification colors */
-  --notification-bg-color: var(--color-white-400);
+  --notification-bg-color: var(--color-white-100);
   --notification-text-color: var(--color-black-200);
 
   /* Table colors */

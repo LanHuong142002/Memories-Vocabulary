@@ -103,7 +103,9 @@ const VocabularyPage = () => {
    */
   const handleDeleteVocabulary = useCallback(
     (vocabularyId: string) => {
-      onDeleteVocabulary(id!, vocabularyId);
+      if (id) {
+        onDeleteVocabulary(id, vocabularyId);
+      }
     },
     [id, onDeleteVocabulary],
   );
