@@ -16,7 +16,7 @@ describe('Should test fetch API', () => {
     (axios.get as jest.Mock).mockResolvedValue({
       data: MOCK_VOCABULARIES,
     });
-    const response = await getData<Vocabulary[]>('endpoint');
+    const response = await getData<Vocabulary[]>('/post', 1);
 
     expect(response).toEqual(MOCK_VOCABULARIES);
     expect(response.length).toBe(1);
