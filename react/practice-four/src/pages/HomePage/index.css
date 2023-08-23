@@ -31,6 +31,7 @@
 }
 
 .overlay .overlay-content {
+  margin-top: 100px;
   min-width: 300px;
   height: fit-content;
   position: absolute;
@@ -56,5 +57,9 @@
 @media screen and (min-width: 600px) {
   .wrapper-home-page .topics .topic {
     width: 150px;
+  }
+
+  .overlay .overlay-content {
+    margin-top: 0;
   }
 }

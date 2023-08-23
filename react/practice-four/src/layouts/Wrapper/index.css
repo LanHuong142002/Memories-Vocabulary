@@ -1,5 +1,12 @@
 .wrapper {
+  position: relative;
   height: 100%;
+}
+
+.wrapper .notification {
+  position: absolute;
+  right: 30px;
+  bottom: 40px;
 }
 
 .wrapper .wrapper-header {

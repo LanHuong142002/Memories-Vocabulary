@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
  *
  * @returns value
  */
-export const useDebounce = <T>(value: T | null = null, delay: number): T | null => {
+export const useDebounce = <T>(value: T | null, delay: number): T | null => {
   const [debouncedValue, setDebouncedValue] = useState<T | null>(value);
 
   useEffect(() => {

@@ -151,6 +151,7 @@ const VocabularyPage = () => {
           value={valueENG!}
           errors={errorsENG}
           name='english'
+          dataTestId='input-english'
         />
         <Input
           title='In Vietnamese'
@@ -159,6 +160,7 @@ const VocabularyPage = () => {
           value={valueVIE!}
           errors={errorsVIE}
           name='vietnamese'
+          dataTestId='input-vietnamese'
         />
         <Button type='submit' label='Add' />
       </form>
