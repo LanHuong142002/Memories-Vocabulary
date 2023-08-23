@@ -7,9 +7,7 @@ const meta: Meta<typeof Pagination> = {
   title: 'PracticeFour/Pagination',
   component: Pagination,
   argTypes: {
-    onFirstList: { action: 'clicked' },
     onPrev: { action: 'clicked' },
-    onLastList: { action: 'clicked' },
     onNext: { action: 'clicked' },
   },
   decorators: [

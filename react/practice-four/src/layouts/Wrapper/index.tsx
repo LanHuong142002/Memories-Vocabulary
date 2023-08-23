@@ -1,14 +1,23 @@
 import { Link } from 'react-router-dom';
-import { ChangeEvent, ReactNode, memo, useCallback, useContext, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactNode,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 // Contexts
-import { ThemeContext } from '@contexts';
+import { DictionaryContext, ThemeContext } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
 
 // Components
-import { Button, ToggleTheme } from '@components';
+import { Button, Notification, ToggleTheme } from '@components';
 
 // Styles
 import './index.css';
@@ -22,8 +31,14 @@ export const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
-  const { onToggleTheme } = useContext(ThemeContext);
-  const [toggle, setToggle] = useState<boolean>(false);
+  const { onToggleTheme, theme } = useContext(ThemeContext);
+  const { errorsTopic, errorsVocabulary } = useContext(DictionaryContext);
+  const [toggle, setToggle] = useState<boolean>(theme === 'light' ? false : true);
+  const [showNotification, setShowNotification] = useState<boolean>(true);
+  const hasNotification = useMemo(
+    () => showNotification && (errorsTopic || errorsVocabulary),
+    [errorsTopic, errorsVocabulary, showNotification],
+  );
 
   /**
    * @description function change theme
@@ -54,6 +69,16 @@ export const Wrapper = ({
     <div className='description'>{children}</div>
   ));
 
+  useEffect(() => {
+    if (errorsTopic || errorsVocabulary) {
+      const timeout = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [errorsTopic, errorsVocabulary]);
+
   return (
     <div className={`wrapper wrapper-${className}-page`}>
       <WrapperHeader />
@@ -65,6 +90,9 @@ export const Wrapper = ({
           </div>
         </div>
       </div>
+      {hasNotification && (
+        <Notification description={errorsTopic || errorsVocabulary} title='Something went wrong!' />
+      )}
     </div>
   );
 };

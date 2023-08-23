@@ -8,7 +8,7 @@ import { getItems, setItems } from '@helpers';
 // Constants
 import { STORAGE_KEYS } from '@constants';
 
-interface ThemeProviderProps {
+export interface ThemeProviderProps {
   theme: 'light' | 'dark';
   onToggleTheme: (value: boolean) => void;
 }
@@ -25,13 +25,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const initialize = useCallback(() => {
-    const themeColor = getItems<string>(STORAGE_KEYS.THEME);
+    const themeColor = getItems<'light' | 'dark'>(STORAGE_KEYS.THEME);
     setIsInitialized(true);
 
     if (themeColor) {
-      setTheme(theme);
+      setTheme(themeColor);
     }
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
     if (!isInitialized) {

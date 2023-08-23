@@ -1,4 +1,5 @@
 import { ChangeEvent, memo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Styles
 import './index.css';
@@ -6,6 +7,7 @@ import './index.css';
 interface InputProps {
   value: string;
   title?: string;
+  dataTestId?: string;
   placeholder?: string;
   errors?: string[];
   name?: string;
@@ -14,10 +16,19 @@ interface InputProps {
 }
 
 const Input = memo(
-  ({ placeholder, title, value, name, errors, onChange, variant = 'primary' }: InputProps) => (
+  ({
+    placeholder,
+    title,
+    value,
+    name,
+    errors,
+    dataTestId,
+    variant = 'primary',
+    onChange,
+  }: InputProps) => (
     <div
       className={`input-wrapper input-${variant} ${
-        value && (errors?.length ? 'input-error' : 'input-success')
+        errors ? (errors.length > 0 ? 'input-error' : 'input-success') : ''
       }`}
     >
       {variant !== 'primary' && (
@@ -29,11 +40,12 @@ const Input = memo(
         value={value}
         name={name}
         onChange={onChange}
+        data-testid={dataTestId}
       />
       {errors && errors.length >= 0 && (
         <>
           {errors.map((error) => (
-            <div key={crypto.randomUUID()} className='error-wrapper'>
+            <div key={uuidv4()} className='error-wrapper'>
               <span className='error'>{error}</span>
             </div>
           ))}

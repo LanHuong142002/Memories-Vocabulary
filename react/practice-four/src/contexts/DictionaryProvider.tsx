@@ -1,5 +1,13 @@
 import { AxiosError } from 'axios';
-import { ReactNode, createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 
 // Services
 import { deleteData, getData, postData } from '@services';
@@ -8,7 +16,7 @@ import { deleteData, getData, postData } from '@services';
 import { TOPIC_ACTIONS, URL, VOCABULARY_ACTIONS } from '@constants';
 
 // Interfaces
-import { Topic, Vocabulary } from '@interfaces';
+import { Topic, Vocabulary, VocabularyResult } from '@interfaces';
 
 // Stores
 import {
@@ -18,17 +26,21 @@ import {
   vocabularyReducer,
 } from '@stores';
 
-interface DictionaryType {
+export interface DictionaryType {
   isLoadingTopic: boolean;
   isLoadingVocabulary: boolean;
   errorsTopic: string;
   errorsVocabulary: string;
   topics: Topic[];
   vocabularies: Vocabulary[];
+  quizzes: VocabularyResult[];
+  onGetTopic?: () => Promise<void>;
   onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
   onGetVocabularies: (id: string) => Promise<void>;
+  onRandomQuizzes: () => void;
+  onSetQuiz: (listQuiz: VocabularyResult[]) => void;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -45,6 +57,14 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     errors: errorsVocabulary,
     vocabularies,
   } = vocabularyState;
+  const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
+
+  /**
+   * @description function handle random array quizzes
+   */
+  const handleRandomQuiz = useCallback(() => {
+    setQuizzes([...vocabularies].sort(() => Math.random() - 0.5));
+  }, [vocabularies]);
 
   /**
    * @description handles the add a new topic.
@@ -172,31 +192,35 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => {
-    const getTopics = async () => {
+  /**
+   * @description function get topics
+   */
+  const getTopics = useCallback(async () => {
+    topicDispatch({
+      type: TOPIC_ACTIONS.GET_REQUEST,
+    });
+    try {
+      const response = await getData<Topic[]>(URL.TOPIC);
       topicDispatch({
-        type: TOPIC_ACTIONS.GET_REQUEST,
+        type: TOPIC_ACTIONS.GET_SUCCESS,
+        payload: {
+          topics: response,
+        },
       });
-      try {
-        const response = await getData<Topic[]>(URL.TOPIC);
-        topicDispatch({
-          type: TOPIC_ACTIONS.GET_SUCCESS,
-          payload: {
-            topics: response,
-          },
-        });
-      } catch (error) {
-        const { message } = error as AxiosError;
-        topicDispatch({
-          type: TOPIC_ACTIONS.GET_FAILURE,
-          payload: {
-            errors: message,
-          },
-        });
-      }
-    };
-    getTopics();
+    } catch (error) {
+      const { message } = error as AxiosError;
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    getTopics();
+  }, [getTopics]);
 
   const value = useMemo(
     () => ({
@@ -206,10 +230,14 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       errorsVocabulary,
       topics,
       vocabularies,
+      quizzes,
       onAddTopic: handleAddTopic,
       onAddVocabulary: handleAddVocabulary,
       onGetVocabularies: handleGetVocabularies,
       onDeleteVocabulary: handleDeleteVocabulary,
+      onRandomQuizzes: handleRandomQuiz,
+      onSetQuiz: setQuizzes,
+      onGetTopic: getTopics,
     }),
     [
       isLoadingTopic,
@@ -218,10 +246,13 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       errorsVocabulary,
       topics,
       vocabularies,
+      quizzes,
       handleAddTopic,
       handleAddVocabulary,
       handleGetVocabularies,
       handleDeleteVocabulary,
+      handleRandomQuiz,
+      getTopics,
     ],
   );
 

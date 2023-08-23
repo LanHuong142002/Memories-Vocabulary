@@ -25,10 +25,11 @@ const VocabularyPage = () => {
   const navigate = useNavigate();
   const {
     isLoadingVocabulary,
+    vocabularies,
     onGetVocabularies,
     onAddVocabulary,
     onDeleteVocabulary,
-    vocabularies,
+    onRandomQuizzes,
   } = useContext(DictionaryContext);
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);
@@ -63,17 +64,19 @@ const VocabularyPage = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const valueInputENG = (event.target[0] as HTMLInputElement).value;
+    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
 
-    const listErrorVIE = validation(valueVIE!);
-    const listErrorENG = validation(valueENG!);
+    const listErrorVIE = validation(valueInputVIE);
+    const listErrorENG = validation(valueInputENG);
     setErrorsVIE(listErrorVIE);
     setErrorsENG(listErrorENG);
 
     if (!listErrorVIE.length && !listErrorENG.length) {
       onAddVocabulary(id!, {
         id: '',
-        vietnamese: valueVIE!,
-        english: valueENG!,
+        vietnamese: valueInputVIE,
+        english: valueInputENG,
       });
 
       setValueVIE('');
@@ -81,7 +84,13 @@ const VocabularyPage = () => {
     }
   };
 
-  const handleStartTest = () => {};
+  /**
+   * @description function handle start testing with vocabularies of topic
+   */
+  const handleStartTest = useCallback(() => {
+    onRandomQuizzes();
+    navigate(`${ROUTES.TESTING}/${id}`);
+  }, [id, navigate, onRandomQuizzes]);
 
   /**
    * @description function delete a vocabulary
@@ -142,6 +151,7 @@ const VocabularyPage = () => {
           value={valueENG!}
           errors={errorsENG}
           name='english'
+          dataTestId='input-english'
         />
         <Input
           title='In Vietnamese'
@@ -150,6 +160,7 @@ const VocabularyPage = () => {
           value={valueVIE!}
           errors={errorsVIE}
           name='vietnamese'
+          dataTestId='input-vietnamese'
         />
         <Button type='submit' label='Add' />
       </form>

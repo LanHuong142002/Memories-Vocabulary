@@ -22,8 +22,8 @@ describe('Test table row result component', () => {
           answer={mockResult.answer}
           order={'1'}
           isSuccess={mockResult.isSuccess}
-          native={mockResult.native}
-          translation={mockResult.translation}
+          english={mockResult.english}
+          vietnamese={mockResult.vietnamese}
         />
       </Component>,
     );
@@ -41,8 +41,8 @@ describe('Test table row result component', () => {
           answer={mockResult.answer}
           order={'1'}
           isSuccess={false}
-          native={mockResult.native}
-          translation={mockResult.translation}
+          english={mockResult.english}
+          vietnamese={mockResult.vietnamese}
         />
       </Component>,
     );
