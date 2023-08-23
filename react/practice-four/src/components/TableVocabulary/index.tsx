@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
@@ -47,7 +48,7 @@ const TableVocabulary = memo(({ isLoading, vocabularies, onClick }: TableVocabul
             <>
               {vocabularies.map(({ id, english, vietnamese }, index) => (
                 <TableRowVocabulary
-                  key={`table-vocabulary-${index}`}
+                  key={`table-vocabulary-${uuidv4()}`}
                   id={id}
                   order={index + 1}
                   english={english}
