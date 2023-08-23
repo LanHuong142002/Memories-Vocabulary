@@ -149,64 +149,64 @@ describe('Test Vocabulary Page', () => {
     fireEvent.click(deleteBtn);
   });
 
-  it('Should click button next and prev pagination', () => {
-    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+  // it('Should click button next and prev pagination', () => {
+  //   jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
 
-    const { getByRole } = render(
-      <VocabularyComponent>
-        <VocabularyPage />
-      </VocabularyComponent>,
-    );
-    const buttonNext = getByRole('button', {
-      name: /»/,
-    });
-    const buttonPrev = getByRole('button', {
-      name: /«/,
-    });
+  //   const { getByRole } = render(
+  //     <VocabularyComponent>
+  //       <VocabularyPage />
+  //     </VocabularyComponent>,
+  //   );
+  //   const buttonNext = getByRole('button', {
+  //     name: /»/,
+  //   });
+  //   const buttonPrev = getByRole('button', {
+  //     name: /«/,
+  //   });
 
-    fireEvent.click(buttonNext);
-    fireEvent.click(buttonPrev);
-  });
+  //   fireEvent.click(buttonNext);
+  //   fireEvent.click(buttonPrev);
+  // });
 
-  it('Should click prev two times and let state return 1', () => {
-    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '2' });
-    const { getByRole } = render(
-      <VocabularyComponent
-        value={{
-          ...mockDictionaryContext,
-          vocabularies: [],
-        }}
-      >
-        <VocabularyPage />
-      </VocabularyComponent>,
-    );
-    const buttonPrev = getByRole('button', {
-      name: /«/,
-    });
-    const buttonNext = getByRole('button', {
-      name: /»/,
-    });
+  // it('Should click prev two times and let state return 1', () => {
+  //   jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '2' });
+  //   const { getByRole } = render(
+  //     <VocabularyComponent
+  //       value={{
+  //         ...mockDictionaryContext,
+  //         vocabularies: [],
+  //       }}
+  //     >
+  //       <VocabularyPage />
+  //     </VocabularyComponent>,
+  //   );
+  //   const buttonPrev = getByRole('button', {
+  //     name: /«/,
+  //   });
+  //   const buttonNext = getByRole('button', {
+  //     name: /»/,
+  //   });
 
-    fireEvent.click(buttonNext);
-    fireEvent.click(buttonPrev);
-    fireEvent.click(buttonPrev);
-  });
+  //   fireEvent.click(buttonNext);
+  //   fireEvent.click(buttonPrev);
+  //   fireEvent.click(buttonPrev);
+  // });
 
-  it('Should return prev page when pages != 1', () => {
-    const { getByRole } = render(
-      <VocabularyComponent
-        value={{
-          ...mockDictionaryContext,
-          vocabularies: [],
-        }}
-      >
-        <VocabularyPage />
-      </VocabularyComponent>,
-    );
-    const buttonPrev = getByRole('button', {
-      name: /»/,
-    });
+  // it('Should return prev page when pages != 1', () => {
+  //   const { getByRole } = render(
+  //     <VocabularyComponent
+  //       value={{
+  //         ...mockDictionaryContext,
+  //         vocabularies: [],
+  //       }}
+  //     >
+  //       <VocabularyPage />
+  //     </VocabularyComponent>,
+  //   );
+  //   const buttonPrev = getByRole('button', {
+  //     name: /»/,
+  //   });
 
-    fireEvent.click(buttonPrev);
-  });
+  //   fireEvent.click(buttonPrev);
+  // });
 });

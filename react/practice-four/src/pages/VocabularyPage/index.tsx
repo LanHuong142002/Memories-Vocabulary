@@ -116,10 +116,12 @@ const VocabularyPage = () => {
 
   const handleLoadMore = async () => {
     setPages((prev) => prev + 1);
-    const lengthOfData = await onLoadMore(id!, pages + 1);
+    if (onLoadMore && id) {
+      const lengthOfData = await onLoadMore(id, pages + 1);
 
-    if (lengthOfData && lengthOfData < 10) {
-      setIsDisabledButtonLoadMore(true);
+      if (lengthOfData && lengthOfData < 10) {
+        setIsDisabledButtonLoadMore(true);
+      }
     }
   };
 

@@ -42,7 +42,7 @@ export interface DictionaryType {
   onGetVocabularies: (id: string) => Promise<void>;
   onRandomQuizzes: (id: string) => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
-  onLoadMore: (id: string, page: number) => Promise<number | undefined>;
+  onLoadMore?: (id: string, page: number) => Promise<number | undefined>;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);

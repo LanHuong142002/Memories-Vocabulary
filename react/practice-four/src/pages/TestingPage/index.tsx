@@ -100,7 +100,7 @@ const TestingPage = () => {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (vocabularies.length <= 0) {
+    if (!vocabularies.length) {
       navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
   }, [id, navigate, vocabularies]);
