@@ -6,6 +6,7 @@ import { Vocabulary } from '@interfaces';
 
 // Components
 import {
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -19,11 +20,12 @@ import {
 import './index.css';
 
 export interface TableVocabularyProps {
+  isLoading: boolean;
   vocabularies: Vocabulary[];
   onClick: (id: string) => void;
 }
 
-const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) => (
+const TableVocabulary = memo(({ isLoading, vocabularies, onClick }: TableVocabularyProps) => (
   <Table className='vocabularies'>
     <TableHeader>
       <TableRow>
@@ -34,30 +36,41 @@ const TableVocabulary = memo(({ vocabularies, onClick }: TableVocabularyProps) =
       </TableRow>
     </TableHeader>
     <TableBody>
-      {vocabularies.length > 0 ? (
-        <>
-          {vocabularies.map(({ id, english, vietnamese }) => (
-            <TableRowVocabulary
-              key={`table-vocabulary-${uuidv4()}`}
-              english={english}
-              vietnamese={vietnamese}
-              id={id}
-              onClick={onClick}
-            />
-          ))}
-        </>
-      ) : (
+      {isLoading ? (
         <TableRow>
-          <TableCell colspan={4}>
-            <Typography color='secondary' size='xs'>
-              Fill All Filed At Above And Press{' '}
-              <Typography className='highlight' tagName='span'>
-                ENTER
-              </Typography>{' '}
-              key or button Add
-            </Typography>
+          <TableCell className='cell-loading' colspan={4}>
+            <Spinner size='s' />
           </TableCell>
         </TableRow>
+      ) : (
+        <>
+          {vocabularies.length > 0 ? (
+            <>
+              {vocabularies.map(({ id, english, vietnamese }, index) => (
+                <TableRowVocabulary
+                  key={`table-vocabulary-${uuidv4()}`}
+                  id={id}
+                  order={index + 1}
+                  english={english}
+                  vietnamese={vietnamese}
+                  onClick={onClick}
+                />
+              ))}
+            </>
+          ) : (
+            <TableRow>
+              <TableCell colspan={4}>
+                <Typography color='secondary' size='xs'>
+                  Fill All Filed At Above And Press{' '}
+                  <Typography className='highlight' tagName='span'>
+                    ENTER
+                  </Typography>{' '}
+                  key or button Add
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
+        </>
       )}
     </TableBody>
   </Table>

@@ -1,16 +1,8 @@
 import { AxiosError } from 'axios';
-import {
-  Dispatch,
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { ReactNode, createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 
 // Services
-import { getData, postData } from '@services';
+import { deleteData, getData, postData } from '@services';
 
 // Constants
 import { TOPIC_ACTIONS, URL, VOCABULARY_ACTIONS } from '@constants';
@@ -20,8 +12,6 @@ import { Topic, Vocabulary } from '@interfaces';
 
 // Stores
 import {
-  ActionTopics,
-  ActionVocabularies,
   initialTopicState,
   initialVocabularyState,
   topicReducer,
@@ -35,10 +25,10 @@ interface DictionaryType {
   errorsVocabulary: string;
   topics: Topic[];
   vocabularies: Vocabulary[];
-  onAddTopic: (topic: Topic) => void;
-  onGetVocabularies: (id: string) => void;
-  topicDispatch: Dispatch<ActionTopics>;
-  vocabularyDispatch: Dispatch<ActionVocabularies>;
+  onAddTopic: (topic: Topic) => Promise<void>;
+  onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
+  onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
+  onGetVocabularies: (id: string) => Promise<void>;
 }
 
 export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
@@ -62,7 +52,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
    * @param {Topic} topic is the topic object to be added.
    */
   const handleAddTopic = useCallback(
-    async (topic: Topic) => {
+    async (topic: Topic): Promise<void> => {
       topicDispatch({
         type: TOPIC_ACTIONS.ADD_REQUEST,
       });
@@ -92,7 +82,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
    *
    * @param {string} id is the id of the topic.
    */
-  const handleGetVocabularies = useCallback(async (id: string) => {
+  const handleGetVocabularies = useCallback(async (id: string): Promise<void> => {
     vocabularyDispatch({
       type: VOCABULARY_ACTIONS.GET_REQUEST,
     });
@@ -109,6 +99,72 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       const { message } = error as AxiosError;
       vocabularyDispatch({
         type: VOCABULARY_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+  }, []);
+
+  /**
+   * @description function handles the addition of a new vocabulary for a specific topic.
+   *
+   * @param {string} id is the ID of the topic to which the vocabulary will be added.
+   * @param {Vocabulary} vocabulary is the vocabulary object to be added.
+   */
+  const handleAddVocabulary = useCallback(
+    async (id: string, vocabulary: Vocabulary): Promise<void> => {
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.ADD_REQUEST,
+      });
+      try {
+        const response = await postData<Vocabulary>(
+          vocabulary,
+          `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
+        );
+
+        vocabularyDispatch({
+          type: VOCABULARY_ACTIONS.ADD_SUCCESS,
+          payload: {
+            vocabularies: [...vocabularies, response],
+          },
+        });
+      } catch (error) {
+        const { message } = error as AxiosError;
+        vocabularyDispatch({
+          type: VOCABULARY_ACTIONS.ADD_FAILURE,
+          payload: {
+            errors: message,
+          },
+        });
+      }
+    },
+    [vocabularies],
+  );
+
+  /**
+   * @description function handles the deletion of a vocabulary from a specific topic.
+   *
+   * @param {string} topicId is the ID of the topic from which the vocabulary will be deleted.
+   * @param {string} id is the ID of the vocabulary to be deleted.
+   */
+  const handleDeleteVocabulary = useCallback(async (topicId: string, id: string): Promise<void> => {
+    vocabularyDispatch({
+      type: VOCABULARY_ACTIONS.DELETE_REQUEST,
+    });
+    try {
+      await deleteData<Vocabulary>(`${URL.TOPIC}/${topicId}${URL.VOCABULARY}`, id);
+
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.DELETE_SUCCESS,
+        payload: {
+          vocabularyId: id,
+        },
+      });
+    } catch (error) {
+      const { message } = error as AxiosError;
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.DELETE_FAILURE,
         payload: {
           errors: message,
         },
@@ -151,9 +207,9 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       topics,
       vocabularies,
       onAddTopic: handleAddTopic,
+      onAddVocabulary: handleAddVocabulary,
       onGetVocabularies: handleGetVocabularies,
-      topicDispatch,
-      vocabularyDispatch,
+      onDeleteVocabulary: handleDeleteVocabulary,
     }),
     [
       isLoadingTopic,
@@ -163,7 +219,9 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       topics,
       vocabularies,
       handleAddTopic,
+      handleAddVocabulary,
       handleGetVocabularies,
+      handleDeleteVocabulary,
     ],
   );
 
