@@ -1,7 +1,6 @@
-export interface VocabularyResult {
-  id: string;
-  isSuccess: boolean;
-  native: string;
-  translation: string;
-  answer: string;
+import { Vocabulary } from './vocabulary';
+
+export interface VocabularyResult extends Vocabulary {
+  isSuccess?: boolean;
+  answer?: string;
 }

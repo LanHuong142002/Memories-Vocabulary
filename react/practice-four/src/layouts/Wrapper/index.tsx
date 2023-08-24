@@ -1,10 +1,23 @@
-import { ChangeEvent, ReactNode, memo, useCallback, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  ChangeEvent,
+  ReactNode,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 // Contexts
-import { ThemeContext } from '@contexts';
+import { DictionaryContext, ThemeContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
 
 // Components
-import { Button, ToggleTheme } from '@components';
+import { Button, Notification, ToggleTheme } from '@components';
 
 // Styles
 import './index.css';
@@ -18,8 +31,14 @@ export const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
-  const { onToggleTheme } = useContext(ThemeContext);
-  const [toggle, setToggle] = useState<boolean>(false);
+  const { onToggleTheme, theme } = useContext(ThemeContext);
+  const { errorsTopic, errorsVocabulary } = useContext(DictionaryContext);
+  const [toggle, setToggle] = useState<boolean>(theme === 'light' ? false : true);
+  const [showNotification, setShowNotification] = useState<boolean>(true);
+  const hasNotification = useMemo(
+    () => showNotification && (errorsTopic || errorsVocabulary),
+    [errorsTopic, errorsVocabulary, showNotification],
+  );
 
   /**
    * @description function change theme
@@ -35,28 +54,45 @@ export const Wrapper = ({
     [onToggleTheme],
   );
 
-  const handleBackToHome = () => {
-    // TODO: handle back to home page
-  };
-
   const WrapperHeader = memo(() => (
     <div className='wrapper-header'>
       <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-      <Button variant='primary' size='xs' onClick={handleBackToHome}>
-        Back to Home
-      </Button>
+      <Link to={ROUTES.HOME}>
+        <Button variant='primary' size='xs'>
+          Back to Home
+        </Button>
+      </Link>
     </div>
   ));
+
+  const MemoizedTitle = memo(({ children }: { children: ReactNode }) => (
+    <div className='description'>{children}</div>
+  ));
+
+  useEffect(() => {
+    if (errorsTopic || errorsVocabulary) {
+      const timeout = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [errorsTopic, errorsVocabulary]);
 
   return (
     <div className={`wrapper wrapper-${className}-page`}>
       <WrapperHeader />
-      <div className='wrapper-content'>
+      <div className='wrapper-container'>
         <div className='wrapper-box'>
-          <div className='description'>{childrenTitle}</div>
-          {children}
+          <div className='wrapper-content'>
+            <MemoizedTitle>{childrenTitle}</MemoizedTitle>
+            {children}
+          </div>
         </div>
       </div>
+      {hasNotification && (
+        <Notification description={errorsTopic || errorsVocabulary} title='Something went wrong!' />
+      )}
     </div>
   );
 };

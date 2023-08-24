@@ -23,10 +23,11 @@ export const isMatchRegex = (regex: RegExp, value: string): boolean => regex.tes
  * @description Validates a given value against specific rules.
  *
  * @param {string} value - The value to be validated.
+ * @param {boolean} isLength to check if the validation check length or not
  *
  * @returns {string[]} errors - An array of error messages.
  */
-export const validation = (value: string): string[] => {
+export const validation = (value: string, isLength: boolean = false): string[] => {
   const errors: string[] = [];
 
   // Check if the value is empty
@@ -34,7 +35,7 @@ export const validation = (value: string): string[] => {
     errors.push(MESSAGE_ERRORS.REQUIRED);
   } else {
     // Check if the value length is less than 3
-    if (value.length < 3) {
+    if (value.length < 3 && isLength) {
       errors.push(MESSAGE_ERRORS.MIN_LENGTH);
     }
 

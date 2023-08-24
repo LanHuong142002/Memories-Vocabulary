@@ -1,0 +1,50 @@
+.wrapper-testing-page .testing-questions {
+  font-weight: var(--font-weight-bold);
+}
+
+.wrapper-testing-page .testing-content {
+  width: 100%;
+}
+
+.wrapper-testing-page .testing-spinner-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.testing-content .process-wrapper {
+  width: 100%;
+  margin: 20px 0 30px 0;
+}
+
+.testing-content .process-wrapper .process {
+  width: 100%;
+}
+
+.testing-content .input-wrapper {
+  margin: 20px 0;
+}
+
+.testing-actions {
+  text-align: end;
+  padding-bottom: 25px;
+}
+
+.testing-actions button {
+  width: 100%;
+}
+
+.testing-actions button > .icon-next {
+  padding: 4px;
+  display: inline-block;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: var(--color-white-100);
+  transform: rotate(-45deg);
+  margin-left: 5px;
+}
+
+@media screen and (min-width: 600px) {
+  .testing-actions button {
+    width: fit-content;
+  }
+}

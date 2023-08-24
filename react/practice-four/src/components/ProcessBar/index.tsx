@@ -3,13 +3,14 @@ import { calculateStepLevel } from '@helpers';
 
 // Styles
 import './index.css';
+import { memo } from 'react';
 
 interface ProcessBarProps {
   step: number;
   totalStep: number;
 }
 
-const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
+const ProcessBar = memo(({ step, totalStep }: ProcessBarProps) => {
   const limitStep = step > totalStep ? totalStep : step;
   const percent = (limitStep / totalStep) * 100;
 
@@ -23,6 +24,6 @@ const ProcessBar = ({ step, totalStep }: ProcessBarProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProcessBar;

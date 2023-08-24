@@ -1,7 +1,12 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
 // Contexts
 import { DictionaryContext } from '@contexts';
+
+// Constants
+import { ROUTES } from '@constants';
 
 // Helpers
 import { validation } from '@helpers';
@@ -17,6 +22,7 @@ import { Button, Input, Spinner, Topic, Typography } from '@components';
 import './index.css';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
@@ -26,17 +32,17 @@ const HomePage = () => {
   /**
    * @description function show hide overlay add new
    */
-  const handleOpenOverlay = () => {
+  const handleOpenOverlay = useCallback(() => {
     setIsOpenOverlay((prev) => !prev);
     setTopicValue('');
     setErrors([]);
-  };
+  }, []);
 
   /**
    * @description function add new topic
    */
   const handleAddNewTopic = () => {
-    const listError = validation(topicValue);
+    const listError = validation(topicValue, true);
 
     if (listError.length) {
       setErrors(listError);
@@ -59,13 +65,23 @@ const HomePage = () => {
     setTopicValue(event.target.value);
   };
 
-  const handleOpenTopic = () => {
-    // TODO: feature open topic
-  };
+  /**
+   * @description function handle open topic with vocabularies
+   *
+   * @param {string} id is id of topic
+   */
+  const handleOpenTopic = useCallback(
+    (id?: string) => {
+      navigate(`${ROUTES.VOCABULARY}/${id}`);
+    },
+    [navigate],
+  );
 
   useEffect(() => {
-    const listError = validation(debouncedValue);
-    setErrors(listError);
+    if (debouncedValue) {
+      const listError = validation(debouncedValue, true);
+      setErrors(listError);
+    }
   }, [debouncedValue]);
 
   return (
@@ -88,7 +104,7 @@ const HomePage = () => {
             {topics.map(({ id, name, vocabularies }) => (
               <Topic
                 id={id}
-                key={`topic-${id}`}
+                key={`topic-${uuidv4()}`}
                 name={name}
                 quantity={vocabularies?.length || 0}
                 onClick={handleOpenTopic}

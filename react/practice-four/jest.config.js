@@ -20,6 +20,8 @@ module.exports = {
     '^@themes(.*)$': '<rootDir>src/themes/$1',
     '^@utils(.*)$': '<rootDir>src/utils/$1',
     '^@mocks(.*)$': '<rootDir>src/mocks/$1',
+    '^@stores(.*)$': '<rootDir>src/stores/$1',
+    uuid: require.resolve('uuid'),
   },
   transform: {
     '^.+\\.ts?$': 'ts-jest',
@@ -28,6 +30,8 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!src/interfaces/**',
+    '!src/routes/**',
     '!.storybook/main.ts',
     '!.storybook/preview.tsx',
     '!**/*.stories.tsx',

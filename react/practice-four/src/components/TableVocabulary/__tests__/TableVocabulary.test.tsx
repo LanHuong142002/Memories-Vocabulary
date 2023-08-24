@@ -4,9 +4,9 @@ import { render } from '@testing-library/react';
 import { TableVocabulary } from '@components';
 
 describe('Test table vocabulary component', () => {
-  const handleOnClick = jest.fn();
-
   const defaultValue = {
+    onClick: jest.fn(),
+    isLoading: false,
     vocabularies: [
       {
         id: '1',
@@ -32,13 +32,23 @@ describe('Test table vocabulary component', () => {
   };
 
   it('Should render table vocabulary with list vocabularies', () => {
-    const { container, getAllByRole, getByText } = render(
-      <TableVocabulary {...defaultValue} onClick={handleOnClick} />,
-    );
+    const { container, getAllByRole, getByText } = render(<TableVocabulary {...defaultValue} />);
 
     expect(container).toBeInTheDocument();
     expect(getAllByRole('cell').length).toBe(16);
     expect(getAllByRole('row').length).toBe(5);
     expect(getByText('book')).toBeInTheDocument();
+  });
+
+  it('Should render loading when isLoading is true', () => {
+    const { container } = render(<TableVocabulary {...defaultValue} isLoading={true} />);
+
+    expect(container).toBeInTheDocument();
+  });
+
+  it('Should render row message when table is empty ', () => {
+    const { container } = render(<TableVocabulary {...defaultValue} vocabularies={[]} />);
+
+    expect(container).toBeInTheDocument();
   });
 });
