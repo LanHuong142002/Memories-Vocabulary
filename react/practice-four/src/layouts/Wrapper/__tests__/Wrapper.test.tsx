@@ -49,7 +49,15 @@ describe('Test Wrapper component', () => {
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    const { getByRole, getByText } = render(<WrapperComponent />);
+    const { getByRole, getByText } = render(
+      <BrowserRouter>
+        <ThemeContext.Provider value={{ ...mockThemeContext, theme: 'dark' }}>
+          <Wrapper className='testing' childrenTitle={<p>Title</p>}>
+            <p>Wrapper body</p>
+          </Wrapper>
+        </ThemeContext.Provider>
+      </BrowserRouter>,
+    );
 
     const button = getByRole('button');
 
@@ -58,9 +66,22 @@ describe('Test Wrapper component', () => {
     expect(getByText('Back to Home').closest('a')).toHaveAttribute('href', ROUTES.HOME);
   });
 
-  it('Should render notification when have any error', () => {
+  it('Should render notification when have any error from topics', () => {
     const { getByText } = render(
       <DictionaryContext.Provider value={{ errorsTopic: 'Error' } as DictionaryType}>
+        <WrapperComponent />
+      </DictionaryContext.Provider>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+      expect(getByText('Error')).toBeInTheDocument();
+    });
+  });
+
+  it('Should render notification when have any error from vocabulary', () => {
+    const { getByText } = render(
+      <DictionaryContext.Provider value={{ errorsVocabulary: 'Error' } as DictionaryType}>
         <WrapperComponent />
       </DictionaryContext.Provider>,
     );
