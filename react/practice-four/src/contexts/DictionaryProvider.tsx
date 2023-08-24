@@ -273,7 +273,7 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     getTopics();
-  }, [getTopics]);
+  }, [getTopics, isLoadingVocabulary]);
 
   const value = useMemo(
     () => ({
