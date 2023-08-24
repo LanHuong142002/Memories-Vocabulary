@@ -1,9 +1,0 @@
-.pagination {
-  display: flex;
-  gap: 10px;
-}
-
-.pagination button {
-  text-align: center;
-  vertical-align: middle;
-}
