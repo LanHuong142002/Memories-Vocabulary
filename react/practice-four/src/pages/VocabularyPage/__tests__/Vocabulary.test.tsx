@@ -34,6 +34,7 @@ const mockDictionaryContext = {
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
+  onLoadMore: jest.fn(),
 };
 
 const VocabularyComponent = ({
