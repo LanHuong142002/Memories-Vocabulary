@@ -9,7 +9,7 @@ interface InputProps {
   title?: string;
   dataTestId?: string;
   placeholder?: string;
-  errors?: string[];
+  errors?: string[] | null;
   name?: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;

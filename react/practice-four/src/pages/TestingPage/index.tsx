@@ -15,7 +15,7 @@ import { validation } from '@helpers';
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, ProcessBar, Typography } from '@components';
+import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 
 // Styles
 import './index.css';
@@ -23,8 +23,8 @@ import './index.css';
 const TestingPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { quizzes, onSetQuiz } = useContext(DictionaryContext);
-  const [errors, setErrors] = useState<string[] | undefined>(undefined);
+  const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(DictionaryContext);
+  const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string | null>(value, 700);
@@ -85,6 +85,7 @@ const TestingPage = () => {
           answer: value,
         };
         onSetQuiz(answersArr);
+        setErrors(null);
         handleSetStep();
       }
     },
@@ -100,10 +101,10 @@ const TestingPage = () => {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (!quizzes.length) {
+    if (!vocabularies.length) {
       navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
-  }, [id, navigate, quizzes]);
+  }, [id, navigate, vocabularies]);
 
   return (
     <Wrapper
@@ -118,25 +119,31 @@ const TestingPage = () => {
         </>
       }
     >
-      <form onSubmit={handleSubmit} className='testing-content'>
-        <ProcessBar step={step + 1} totalStep={quizzes.length} />
-        <Typography color='primary' size='m' textAlign='center'>
-          {quizValue}
-        </Typography>
-        <Input
-          variant='tertiary'
-          value={value}
-          onChange={handleOnChange}
-          errors={errors}
-          title='Vietnamese'
-          placeholder='Type your answer here'
-        />
-        <div className='testing-actions'>
-          <Button type='submit' size='xs'>
-            {buttonValue}
-          </Button>
+      {isLoading ? (
+        <div className='testing-spinner-wrapper'>
+          <Spinner />
         </div>
-      </form>
+      ) : (
+        <form onSubmit={handleSubmit} className='testing-content'>
+          <ProcessBar step={step + 1} totalStep={quizzes.length} />
+          <Typography color='primary' size='m' textAlign='center'>
+            {quizValue}
+          </Typography>
+          <Input
+            variant='tertiary'
+            value={value}
+            onChange={handleOnChange}
+            errors={errors}
+            title='Vietnamese'
+            placeholder='Type your answer here'
+          />
+          <div className='testing-actions'>
+            <Button type='submit' size='xs'>
+              {buttonValue}
+            </Button>
+          </div>
+        </form>
+      )}
     </Wrapper>
   );
 };

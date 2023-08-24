@@ -128,4 +128,24 @@ describe('Test Testing Page', () => {
 
     expect(getByText('0 of 0')).toBeInTheDocument();
   });
+
+  it('Should show loading when isLoading is true', () => {
+    const { container } = render(
+      <TestingComponent value={{ ...mockDictionaryContext, isLoading: true }}>
+        <TestingPage />
+      </TestingComponent>,
+    );
+
+    expect(container).toBeInTheDocument();
+  });
+
+  it('Should navigate to vocabulary page when dont have any vocabularies', () => {
+    const { container } = render(
+      <TestingComponent value={{ ...mockDictionaryContext, vocabularies: [] }}>
+        <TestingPage />
+      </TestingComponent>,
+    );
+
+    expect(container).toBeInTheDocument();
+  });
 });

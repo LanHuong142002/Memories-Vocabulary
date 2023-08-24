@@ -9,9 +9,11 @@ import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
 // Mocks
 import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
+// Constants
+import { MESSAGE_ERRORS } from '@constants';
+
 // Components
 import { VocabularyPage } from '@pages';
-import { MESSAGE_ERRORS } from '@constants';
 
 jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
@@ -32,6 +34,7 @@ const mockDictionaryContext = {
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
+  onLoadMore: jest.fn(),
 };
 
 const VocabularyComponent = ({
@@ -49,6 +52,10 @@ const VocabularyComponent = ({
 );
 
 describe('Test Vocabulary Page', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Should render Vocabulary page', () => {
     const { container } = render(
       <VocabularyComponent>
@@ -60,6 +67,8 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should Add new vocabulary when enter in two input', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+
     const { getByTestId, getByText } = render(
       <VocabularyComponent>
         <VocabularyPage />
@@ -143,5 +152,20 @@ describe('Test Vocabulary Page', () => {
     );
     const deleteBtn = getByRole('button', { name: 'X' });
     fireEvent.click(deleteBtn);
+  });
+
+  it('Should click button load more', () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '5' });
+
+    const { getByRole } = render(
+      <VocabularyComponent>
+        <VocabularyPage />
+      </VocabularyComponent>,
+    );
+    const buttonLoadMore = getByRole('button', {
+      name: 'Load More',
+    });
+
+    fireEvent.click(buttonLoadMore);
   });
 });
