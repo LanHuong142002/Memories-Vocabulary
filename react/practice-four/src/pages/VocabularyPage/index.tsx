@@ -116,7 +116,7 @@ const VocabularyPage = () => {
     [id, onDeleteVocabulary],
   );
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
     setPages((prev) => prev + 1);
     if (onLoadMore && id) {
       const lengthOfData = (await onLoadMore(id, pages + 1))!;
@@ -125,7 +125,7 @@ const VocabularyPage = () => {
         setIsDisabledButtonLoadMore(true);
       }
     }
-  };
+  }, [id, onLoadMore, pages]);
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
