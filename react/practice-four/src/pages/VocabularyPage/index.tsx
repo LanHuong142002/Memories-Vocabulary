@@ -30,14 +30,22 @@ const VocabularyPage = () => {
     onAddVocabulary,
     onDeleteVocabulary,
     onRandomQuizzes,
+    onLoadMore,
   } = useContext(DictionaryContext);
+  const [pages, setPages] = useState<number>(1);
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);
   const [valueVIE, setValueVIE] = useState<string>('');
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
-  const isDisabledButton = useMemo(() => !(vocabularies.length >= 5), [vocabularies.length]);
+  const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(
+    !(vocabularies.length >= 5) && pages === 1,
+  );
+  const isDisabledButtonStartTest = useMemo(
+    () => !(vocabularies.length >= 5) && pages === 1,
+    [vocabularies.length, pages],
+  );
 
   /**
    * @description function onchange to get value from input english
@@ -88,8 +96,10 @@ const VocabularyPage = () => {
    * @description function handle start testing with vocabularies of topic
    */
   const handleStartTest = useCallback(() => {
-    onRandomQuizzes();
-    navigate(`${ROUTES.TESTING}/${id}`);
+    if (id) {
+      onRandomQuizzes(id);
+      navigate(`${ROUTES.TESTING}/${id}`);
+    }
   }, [id, navigate, onRandomQuizzes]);
 
   /**
@@ -106,13 +116,16 @@ const VocabularyPage = () => {
     [id, onDeleteVocabulary],
   );
 
-  useEffect(() => {
-    if (id) {
-      onGetVocabularies(id);
-    } else {
-      navigate(ROUTES.HOME);
+  const handleLoadMore = async () => {
+    setPages((prev) => prev + 1);
+    if (onLoadMore && id) {
+      const lengthOfData = (await onLoadMore(id, pages + 1))!;
+
+      if (lengthOfData < 20 && lengthOfData === 0) {
+        setIsDisabledButtonLoadMore(true);
+      }
     }
-  }, [id, navigate, onGetVocabularies]);
+  };
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -129,6 +142,15 @@ const VocabularyPage = () => {
       setErrorsENG(listErrorENG);
     }
   }, [debouncedValueENG]);
+
+  // get vocabularies with the id of topic selected
+  useEffect(() => {
+    if (id) {
+      onGetVocabularies(id);
+    } else {
+      navigate(ROUTES.HOME);
+    }
+  }, [id, navigate, onGetVocabularies]);
 
   return (
     <Wrapper
@@ -172,10 +194,11 @@ const VocabularyPage = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
+        <Button label='Load More' onClick={handleLoadMore} isDisabled={isDisabledButtonLoadMore} />
         <Button
           label='Start Test'
           size='m'
-          isDisabled={isDisabledButton}
+          isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />
       </div>

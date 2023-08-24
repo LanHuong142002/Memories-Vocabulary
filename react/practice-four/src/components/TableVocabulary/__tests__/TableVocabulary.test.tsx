@@ -47,9 +47,7 @@ describe('Test table vocabulary component', () => {
   });
 
   it('Should render row message when table is empty ', () => {
-    const { container } = render(
-      <TableVocabulary isLoading={false} vocabularies={[]} onClick={handleOnClick} />,
-    );
+    const { container } = render(<TableVocabulary {...defaultValue} vocabularies={[]} />);
 
     expect(container).toBeInTheDocument();
   });
