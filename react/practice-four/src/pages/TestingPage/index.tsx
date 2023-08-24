@@ -24,7 +24,7 @@ const TestingPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(DictionaryContext);
-  const [errors, setErrors] = useState<string[] | undefined>(undefined);
+  const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string | null>(value, 700);
@@ -85,6 +85,7 @@ const TestingPage = () => {
           answer: value,
         };
         onSetQuiz(answersArr);
+        setErrors(null);
         handleSetStep();
       }
     },

@@ -191,12 +191,15 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
         type: VOCABULARY_ACTIONS.ADD_REQUEST,
       });
       try {
-        await postData<Vocabulary>(vocabulary, `${URL.TOPIC}/${id}${URL.VOCABULARY}`);
+        const response = await postData<Vocabulary>(
+          vocabulary,
+          `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
+        );
 
         vocabularyDispatch({
           type: VOCABULARY_ACTIONS.ADD_SUCCESS,
           payload: {
-            vocabularies: vocabularies,
+            vocabularies: [...vocabularies, response],
           },
         });
       } catch (error) {
