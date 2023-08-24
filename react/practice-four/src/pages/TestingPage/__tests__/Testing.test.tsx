@@ -138,4 +138,14 @@ describe('Test Testing Page', () => {
 
     expect(container).toBeInTheDocument();
   });
+
+  it('Should navigate to vocabulary page when dont have any vocabularies', () => {
+    const { container } = render(
+      <TestingComponent value={{ ...mockDictionaryContext, vocabularies: [] }}>
+        <TestingPage />
+      </TestingComponent>,
+    );
+
+    expect(container).toBeInTheDocument();
+  });
 });

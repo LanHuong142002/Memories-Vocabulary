@@ -334,4 +334,58 @@ describe('Test DictionaryProvider', () => {
 
     expect(getByText('Error')).toBeInTheDocument();
   });
+
+  // Load More
+  it('Should call random quiz success and set quiz when click the button', () => {
+    const mock = jest.spyOn(services, 'getData');
+    mock.mockResolvedValue(MOCK_VOCABULARIES);
+
+    const MockChildren = () => {
+      const { onLoadMore } = useContext(DictionaryContext);
+      return (
+        <button onClick={() => onLoadMore!('1', 1)} data-testid='load-more'>
+          Load More
+        </button>
+      );
+    };
+
+    const { getByTestId } = render(
+      <DictionaryProvider>
+        <MockChildren />
+      </DictionaryProvider>,
+    );
+    const button = getByTestId('load-more');
+    act(() => {
+      fireEvent.click(button);
+    });
+  });
+
+  it('Should call function delete vocabulary failure', async () => {
+    const mock = jest.spyOn(services, 'getData');
+    mock.mockRejectedValue(new Error('Error'));
+
+    const MockChildren = () => {
+      const { onLoadMore, errorsVocabulary } = useContext(DictionaryContext);
+      return (
+        <>
+          <p>{errorsVocabulary}</p>
+          <button onClick={() => onLoadMore!('1', 1)} data-testid='load-more'>
+            Load More
+          </button>
+        </>
+      );
+    };
+
+    const { getByTestId, getByText } = render(
+      <DictionaryProvider>
+        <MockChildren />
+      </DictionaryProvider>,
+    );
+    const buttonRandom = getByTestId('load-more');
+    await act(() => {
+      fireEvent.click(buttonRandom);
+    });
+
+    expect(getByText('Error')).toBeInTheDocument();
+  });
 });
