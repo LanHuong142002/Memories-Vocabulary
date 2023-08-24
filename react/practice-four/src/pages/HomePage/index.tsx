@@ -133,6 +133,7 @@ const HomePage = () => {
               placeholder='Topic Name'
               onChange={handleOnChange}
               errors={errors}
+              ariaLabel='enter topic'
             />
             <Button size='m' onClick={handleAddNewTopic}>
               Done

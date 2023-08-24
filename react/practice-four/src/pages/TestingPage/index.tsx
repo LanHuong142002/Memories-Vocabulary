@@ -130,6 +130,7 @@ const TestingPage = () => {
           errors={errors}
           title='Vietnamese'
           placeholder='Type your answer here'
+          ariaLabel='Enter your answer'
         />
         <div className='testing-actions'>
           <Button type='submit' size='xs'>
