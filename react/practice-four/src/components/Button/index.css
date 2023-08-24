@@ -15,8 +15,9 @@
 }
 
 .btn.btn-secondary {
-  width: 25px;
   height: 25px;
+  vertical-align: middle;
+  text-align: center;
   color: var(--button-primary-color);
   background-color: transparent;
   border: 2px solid var(--button-primary-color);
