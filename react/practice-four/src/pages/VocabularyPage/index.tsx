@@ -39,9 +39,7 @@ const VocabularyPage = () => {
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
-  const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(
-    !(vocabularies.length >= 5) && pages === 1,
-  );
+  const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies.length >= 5) && pages === 1,
     [vocabularies.length, pages],
@@ -194,7 +192,11 @@ const VocabularyPage = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        <Button label='Load More' onClick={handleLoadMore} isDisabled={isDisabledButtonLoadMore} />
+        <Button
+          label='Load More'
+          onClick={handleLoadMore}
+          isDisabled={vocabularies.length < 20 || isDisabledButtonLoadMore}
+        />
         <Button
           label='Start Test'
           size='m'
