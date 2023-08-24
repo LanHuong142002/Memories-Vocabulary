@@ -174,6 +174,7 @@ const VocabularyPage = () => {
           errors={errorsENG}
           name='english'
           dataTestId='input-english'
+          ariaLabel='enter english'
         />
         <Input
           title='In Vietnamese'
@@ -183,6 +184,7 @@ const VocabularyPage = () => {
           errors={errorsVIE}
           name='vietnamese'
           dataTestId='input-vietnamese'
+          ariaLabel='enter vietnamese'
         />
         <Button type='submit' label='Add' />
       </form>

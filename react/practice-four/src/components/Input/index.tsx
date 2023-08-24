@@ -6,6 +6,7 @@ import './index.css';
 
 interface InputProps {
   value: string;
+  ariaLabel?: string;
   title?: string;
   dataTestId?: string;
   placeholder?: string;
@@ -18,6 +19,7 @@ interface InputProps {
 const Input = memo(
   ({
     placeholder,
+    ariaLabel,
     title,
     value,
     name,
@@ -41,6 +43,7 @@ const Input = memo(
         name={name}
         onChange={onChange}
         data-testid={dataTestId}
+        aria-label={ariaLabel}
       />
       {errors && errors.length >= 0 && (
         <>
