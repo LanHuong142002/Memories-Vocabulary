@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
 // Contexts
-import { DictionaryContext } from '@contexts';
+import { TopicContext } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -23,7 +23,7 @@ import './index.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
+  const { isLoadingTopic, topics, onAddTopic } = useContext(TopicContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);

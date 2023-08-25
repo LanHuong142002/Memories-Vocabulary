@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import { MESSAGE_ERRORS } from '@constants';
 
 // Contexts
-import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
+import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
 import { MOCK_TOPICS, MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
@@ -15,7 +15,7 @@ import { MOCK_TOPICS, MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@m
 import { Testing } from '@pages';
 
 jest.useFakeTimers();
-const mockDictionaryContext = {
+const mockVocabularyContext = {
   isLoadingTopic: false,
   isLoadingVocabulary: false,
   errorsTopic: '',
@@ -33,14 +33,14 @@ const mockDictionaryContext = {
 
 const TestingComponent = ({
   children,
-  value = mockDictionaryContext,
+  value = mockVocabularyContext,
 }: {
   children: ReactNode;
-  value?: DictionaryType;
+  value?: VocabularyContextType;
 }) => (
   <BrowserRouter>
     <ThemeProvider>
-      <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>
+      <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>
     </ThemeProvider>
   </BrowserRouter>
 );
@@ -59,7 +59,7 @@ describe('Test Testing Page', () => {
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
     const { getByText } = render(
-      <TestingComponent value={{ ...mockDictionaryContext, quizzes: [MOC_RESULT] }}>
+      <TestingComponent value={{ ...mockVocabularyContext, quizzes: [MOC_RESULT] }}>
         <Testing />
       </TestingComponent>,
     );
@@ -121,7 +121,7 @@ describe('Test Testing Page', () => {
 
   it('Should back to Vocabulary list when quizzes not exist', () => {
     const { getByText } = render(
-      <TestingComponent value={{ ...mockDictionaryContext, quizzes: [] }}>
+      <TestingComponent value={{ ...mockVocabularyContext, quizzes: [] }}>
         <Testing />
       </TestingComponent>,
     );
@@ -131,7 +131,7 @@ describe('Test Testing Page', () => {
 
   it('Should show loading when isLoading is true', () => {
     const { container } = render(
-      <TestingComponent value={{ ...mockDictionaryContext, isLoading: true }}>
+      <TestingComponent value={{ ...mockVocabularyContext, isLoading: true }}>
         <Testing />
       </TestingComponent>,
     );
@@ -141,7 +141,7 @@ describe('Test Testing Page', () => {
 
   it('Should navigate to vocabulary page when dont have any vocabularies', () => {
     const { container } = render(
-      <TestingComponent value={{ ...mockDictionaryContext, vocabularies: [] }}>
+      <TestingComponent value={{ ...mockVocabularyContext, vocabularies: [] }}>
         <Testing />
       </TestingComponent>,
     );

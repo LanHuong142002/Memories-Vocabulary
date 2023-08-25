@@ -1,42 +1,24 @@
 import { AxiosError } from 'axios';
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useCallback, useMemo, useReducer, useState } from 'react';
 
 // Services
 import { deleteData, getData, postData } from '@services';
 
 // Constants
-import { TOPIC_ACTIONS, URL, VOCABULARY_ACTIONS } from '@constants';
+import { URL, VOCABULARY_ACTIONS } from '@constants';
 
 // Interfaces
-import { Topic, Vocabulary, VocabularyResult } from '@interfaces';
+import { Vocabulary, VocabularyResult } from '@interfaces';
 
 // Stores
-import {
-  initialTopicState,
-  initialVocabularyState,
-  topicReducer,
-  vocabularyReducer,
-} from '@stores';
+import { initialVocabularyState, vocabularyReducer } from '@stores';
 
-export interface DictionaryType {
-  isLoadingTopic: boolean;
+export interface VocabularyContextType {
   isLoadingVocabulary: boolean;
   isLoading?: boolean;
-  errorsTopic: string;
   errorsVocabulary: string;
-  topics: Topic[];
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
-  onGetTopic?: () => Promise<void>;
-  onAddTopic: (topic: Topic) => Promise<void>;
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
   onDeleteVocabulary: (topicId: string, id: string) => Promise<void>;
   onGetVocabularies: (id: string) => Promise<void>;
@@ -45,15 +27,13 @@ export interface DictionaryType {
   onLoadMore?: (id: string, page: number) => Promise<number | undefined>;
 }
 
-export const DictionaryContext = createContext<DictionaryType>({} as DictionaryType);
+export const VocabularyContext = createContext<VocabularyContextType>({} as VocabularyContextType);
 
-export function DictionaryProvider({ children }: { children: ReactNode }) {
-  const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
+export function VocabularyProvider({ children }: { children: ReactNode }) {
   const [vocabularyState, vocabularyDispatch] = useReducer(
     vocabularyReducer,
     initialVocabularyState,
   );
-  const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = topicState;
   const {
     isLoading: isLoadingVocabulary,
     errors: errorsVocabulary,
@@ -118,37 +98,6 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     }
     setIsLoading(false);
   }, []);
-
-  /**
-   * @description handles the add a new topic.
-   *
-   * @param {Topic} topic is the topic object to be added.
-   */
-  const handleAddTopic = useCallback(
-    async (topic: Topic): Promise<void> => {
-      topicDispatch({
-        type: TOPIC_ACTIONS.ADD_REQUEST,
-      });
-      try {
-        const response = await postData(topic, URL.TOPIC);
-        topicDispatch({
-          type: TOPIC_ACTIONS.ADD_SUCCESS,
-          payload: {
-            topics: [...topics, response],
-          },
-        });
-      } catch (error) {
-        const { message } = error as AxiosError;
-        topicDispatch({
-          type: TOPIC_ACTIONS.ADD_FAILURE,
-          payload: {
-            errors: message,
-          },
-        });
-      }
-    },
-    [topics],
-  );
 
   /**
    * @description Fetches vocabularies associated with a specific topic.
@@ -245,73 +194,33 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  /**
-   * @description function get topics
-   */
-  const getTopics = useCallback(async () => {
-    topicDispatch({
-      type: TOPIC_ACTIONS.GET_REQUEST,
-    });
-    try {
-      const response = await getData<Topic>(URL.TOPIC);
-      topicDispatch({
-        type: TOPIC_ACTIONS.GET_SUCCESS,
-        payload: {
-          topics: response,
-        },
-      });
-    } catch (error) {
-      const { message } = error as AxiosError;
-      topicDispatch({
-        type: TOPIC_ACTIONS.GET_FAILURE,
-        payload: {
-          errors: message,
-        },
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    getTopics();
-  }, [getTopics, isLoadingVocabulary]);
-
   const value = useMemo(
     () => ({
       isLoading,
-      isLoadingTopic,
       isLoadingVocabulary,
-      errorsTopic,
       errorsVocabulary,
-      topics,
       vocabularies,
       quizzes,
-      onAddTopic: handleAddTopic,
       onAddVocabulary: handleAddVocabulary,
       onGetVocabularies: handleGetVocabularies,
       onDeleteVocabulary: handleDeleteVocabulary,
       onRandomQuizzes: handleRandomQuiz,
       onSetQuiz: setQuizzes,
-      onGetTopic: getTopics,
       onLoadMore: handleLoadMore,
     }),
     [
       isLoading,
-      isLoadingTopic,
       isLoadingVocabulary,
-      errorsTopic,
       errorsVocabulary,
-      topics,
       vocabularies,
       quizzes,
-      handleAddTopic,
       handleAddVocabulary,
       handleGetVocabularies,
       handleDeleteVocabulary,
       handleRandomQuiz,
-      getTopics,
       handleLoadMore,
     ],
   );
 
-  return <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>;
+  return <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>;
 }

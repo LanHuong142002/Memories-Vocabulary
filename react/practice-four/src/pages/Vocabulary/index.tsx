@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
 
 // Contexts
-import { DictionaryContext } from '@contexts';
+import { VocabularyContext } from '@contexts';
 
 // Hooks
 import { useDebounce } from '@hooks';
@@ -31,7 +31,7 @@ const Vocabulary = () => {
     onDeleteVocabulary,
     onRandomQuizzes,
     onLoadMore,
-  } = useContext(DictionaryContext);
+  } = useContext(VocabularyContext);
   const [pages, setPages] = useState<number>(1);
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);

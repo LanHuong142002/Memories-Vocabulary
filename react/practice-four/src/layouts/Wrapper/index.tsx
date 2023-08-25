@@ -11,7 +11,7 @@ import {
 } from 'react';
 
 // Contexts
-import { DictionaryContext, ThemeContext } from '@contexts';
+import { VocabularyContext, ThemeContext, TopicContext } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -32,7 +32,8 @@ export const Wrapper = ({
   childrenTitle: ReactNode;
 }) => {
   const { onToggleTheme, theme } = useContext(ThemeContext);
-  const { errorsTopic, errorsVocabulary } = useContext(DictionaryContext);
+  const { errorsVocabulary } = useContext(VocabularyContext);
+  const { errorsTopic } = useContext(TopicContext);
   const [toggle, setToggle] = useState<boolean>(theme === 'light' ? false : true);
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const hasNotification = useMemo(

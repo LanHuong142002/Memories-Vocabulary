@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import * as reactRouter from 'react-router-dom';
 
 // Contexts
-import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
+import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
 import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
@@ -20,7 +20,7 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
 }));
 
-const mockDictionaryContext = {
+const mockVocabularyContext = {
   isLoadingTopic: false,
   isLoadingVocabulary: false,
   errorsTopic: '',
@@ -39,14 +39,14 @@ const mockDictionaryContext = {
 
 const VocabularyComponent = ({
   children,
-  value = mockDictionaryContext,
+  value = mockVocabularyContext,
 }: {
   children: ReactNode;
-  value?: DictionaryType;
+  value?: VocabularyContextType;
 }) => (
   <BrowserRouter>
     <ThemeProvider>
-      <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>
+      <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>
     </ThemeProvider>
   </BrowserRouter>
 );
@@ -113,7 +113,7 @@ describe('Test Vocabulary Page', () => {
     const { getByRole } = render(
       <VocabularyComponent
         value={{
-          ...mockDictionaryContext,
+          ...mockVocabularyContext,
           vocabularies: [
             MOCK_VOCABULARY,
             MOCK_VOCABULARY,
@@ -158,9 +158,18 @@ describe('Test Vocabulary Page', () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '5' });
 
     const { getByRole } = render(
-      <VocabularyComponent>
-        <Vocabulary />
-      </VocabularyComponent>,
+      <BrowserRouter>
+        <ThemeProvider>
+          <VocabularyContext.Provider
+            value={{
+              ...mockVocabularyContext,
+              vocabularies: [...Array.from({ length: 20 }, () => MOCK_VOCABULARY)],
+            }}
+          >
+            <Vocabulary />
+          </VocabularyContext.Provider>
+        </ThemeProvider>
+      </BrowserRouter>,
     );
     const buttonLoadMore = getByRole('button', {
       name: 'Load More',

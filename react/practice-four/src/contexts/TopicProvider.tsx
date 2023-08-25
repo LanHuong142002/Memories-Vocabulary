@@ -1,0 +1,99 @@
+import { AxiosError } from 'axios';
+import { ReactNode, createContext, useCallback, useMemo, useReducer } from 'react';
+
+// Services
+import { getData, postData } from '@services';
+
+// Constants
+import { TOPIC_ACTIONS, URL } from '@constants';
+
+// Interfaces
+import { Topic } from '@interfaces';
+
+// Stores
+import { initialTopicState, topicReducer } from '@stores';
+
+export interface TopicContextType {
+  isLoadingTopic: boolean;
+  errorsTopic: string;
+  topics: Topic[];
+  onGetTopic?: () => Promise<void>;
+  onAddTopic: (topic: Topic) => Promise<void>;
+}
+
+export const TopicContext = createContext<TopicContextType>({} as TopicContextType);
+
+export function TopicProvider({ children }: { children: ReactNode }) {
+  const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
+  const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = topicState;
+
+  /**
+   * @description handles the add a new topic.
+   *
+   * @param {Topic} topic is the topic object to be added.
+   */
+  const handleAddTopic = useCallback(
+    async (topic: Topic): Promise<void> => {
+      topicDispatch({
+        type: TOPIC_ACTIONS.ADD_REQUEST,
+      });
+      try {
+        const response = await postData(topic, URL.TOPIC);
+        topicDispatch({
+          type: TOPIC_ACTIONS.ADD_SUCCESS,
+          payload: {
+            topics: [...topics, response],
+          },
+        });
+      } catch (error) {
+        const { message } = error as AxiosError;
+        topicDispatch({
+          type: TOPIC_ACTIONS.ADD_FAILURE,
+          payload: {
+            errors: message,
+          },
+        });
+      }
+    },
+    [topics],
+  );
+
+  /**
+   * @description function get topics
+   */
+  const getTopics = useCallback(async () => {
+    topicDispatch({
+      type: TOPIC_ACTIONS.GET_REQUEST,
+    });
+    try {
+      const response = await getData<Topic>(URL.TOPIC);
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_SUCCESS,
+        payload: {
+          topics: response,
+        },
+      });
+    } catch (error) {
+      const { message } = error as AxiosError;
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      isLoadingTopic,
+      errorsTopic,
+      topics,
+      onAddTopic: handleAddTopic,
+      onGetTopic: getTopics,
+    }),
+    [isLoadingTopic, errorsTopic, topics, handleAddTopic, getTopics],
+  );
+
+  return <TopicContext.Provider value={value}>{children}</TopicContext.Provider>;
+}
