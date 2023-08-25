@@ -45,4 +45,14 @@ describe('Test table row vocabulary component', () => {
 
     expect(handleOnClick).toBeCalled();
   });
+
+  it('Should not render anything when isLoading is true', () => {
+    const { container } = render(
+      <Component>
+        <TableRowVocabulary {...defaultProps} isLoading={true} />
+      </Component>,
+    );
+
+    expect(container).toBeInTheDocument();
+  });
 });

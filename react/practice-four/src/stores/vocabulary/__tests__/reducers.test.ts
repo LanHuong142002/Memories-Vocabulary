@@ -14,6 +14,19 @@ describe('Test vocabulary reducer', () => {
     expect(initialState).toEqual(initialVocabularyState);
   });
 
+  it('Should handle get vocabularies success', () => {
+    const state = vocabularyReducer(initialVocabularyState, {
+      type: VOCABULARY_ACTIONS.GET_SUCCESS,
+      payload: {
+        vocabularies: MOCK_VOCABULARIES,
+      },
+    });
+
+    expect(state.isLoading).toBe(false);
+    expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
+  });
+
+  // ADD
   it('Should handle add vocabulary request', () => {
     const state = vocabularyReducer(initialVocabularyState, {
       type: VOCABULARY_ACTIONS.ADD_REQUEST,
@@ -34,6 +47,20 @@ describe('Test vocabulary reducer', () => {
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
   });
 
+  it('Should handle add vocabulary failure', () => {
+    const error = 'Something went wrong!';
+    const state = vocabularyReducer(initialVocabularyState, {
+      type: VOCABULARY_ACTIONS.ADD_FAILURE,
+      payload: {
+        errors: error,
+      },
+    });
+
+    expect(state.isLoadingAdd).toBe(false);
+    expect(state.errors).toBe(error);
+  });
+
+  // DELETE
   it('Should handle delete vocabulary success', () => {
     const state = vocabularyReducer(
       {
@@ -50,18 +77,5 @@ describe('Test vocabulary reducer', () => {
 
     expect(state.deletingById.isLoadingDelete).toBe(false);
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length - 1);
-  });
-
-  it('Should handle add vocabulary failure', () => {
-    const error = 'Something went wrong!';
-    const state = vocabularyReducer(initialVocabularyState, {
-      type: VOCABULARY_ACTIONS.ADD_FAILURE,
-      payload: {
-        errors: error,
-      },
-    });
-
-    expect(state.isLoadingAdd).toBe(false);
-    expect(state.errors).toBe(error);
   });
 });
