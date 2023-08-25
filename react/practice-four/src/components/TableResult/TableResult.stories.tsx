@@ -9,6 +9,7 @@ import { MOC_TABLE_RESULT } from '@mocks';
 const meta: Meta<typeof TableResult> = {
   title: 'PracticeFour/TableResult',
   component: TableResult,
+  tags: ['autodocs'],
 };
 
 type Story = StoryObj<typeof TableResult>;
