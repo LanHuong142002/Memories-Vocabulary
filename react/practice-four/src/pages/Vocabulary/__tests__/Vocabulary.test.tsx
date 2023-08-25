@@ -21,8 +21,15 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const mockVocabularyContext = {
-  isLoadingVocabulary: false,
+  isLoadingVocabularies: false,
+  isLoadingLoadMore: false,
+  isLoadingAdd: false,
+  isLoadingQuizzes: false,
   errorsVocabulary: '',
+  deletingById: {
+    id: '',
+    isLoadingDelete: false,
+  },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: [],
   onDeleteVocabulary: jest.fn(),

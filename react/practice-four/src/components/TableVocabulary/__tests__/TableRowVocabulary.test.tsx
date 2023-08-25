@@ -10,6 +10,7 @@ describe('Test table row vocabulary component', () => {
     id: '1',
     english: 'pen',
     vietnamese: 'cay but',
+    isLoading: false,
     onClick: jest.fn(),
   };
 

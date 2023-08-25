@@ -16,8 +16,15 @@ import { Testing } from '@pages';
 
 jest.useFakeTimers();
 const mockVocabularyContext = {
-  isLoadingVocabulary: false,
+  isLoadingVocabularies: false,
+  isLoadingLoadMore: false,
+  isLoadingAdd: false,
+  isLoadingQuizzes: false,
   errorsVocabulary: '',
+  deletingById: {
+    id: '',
+    isLoadingDelete: false,
+  },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: MOC_TABLE_RESULT,
   onDeleteVocabulary: jest.fn(),
@@ -128,7 +135,7 @@ describe('Test Testing Page', () => {
 
   it('Should show loading when isLoading is true', () => {
     const { container } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, isLoading: true }}>
+      <TestingComponent value={{ ...mockVocabularyContext, isLoadingQuizzes: true }}>
         <Testing />
       </TestingComponent>,
     );

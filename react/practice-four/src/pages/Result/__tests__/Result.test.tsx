@@ -12,8 +12,15 @@ import { MOCK_VOCABULARIES, MOC_TABLE_RESULT } from '@mocks';
 import { Result } from '@pages';
 
 const mockVocabularyContext = {
-  isLoadingVocabulary: false,
+  isLoadingVocabularies: false,
+  isLoadingLoadMore: false,
+  isLoadingAdd: false,
+  isLoadingQuizzes: false,
   errorsVocabulary: '',
+  deletingById: {
+    id: '',
+    isLoadingDelete: false,
+  },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: MOC_TABLE_RESULT,
   onDeleteVocabulary: jest.fn(),
