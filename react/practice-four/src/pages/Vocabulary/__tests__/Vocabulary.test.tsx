@@ -7,7 +7,7 @@ import * as reactRouter from 'react-router-dom';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
+import { MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
 // Constants
 import { MESSAGE_ERRORS } from '@constants';
@@ -21,16 +21,12 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const mockVocabularyContext = {
-  isLoadingTopic: false,
   isLoadingVocabulary: false,
-  errorsTopic: '',
   errorsVocabulary: '',
-  topics: MOCK_TOPICS,
   vocabularies: MOCK_VOCABULARIES,
   quizzes: [],
-  onAddTopic: jest.fn(),
-  onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),
+  onAddVocabulary: jest.fn(),
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
