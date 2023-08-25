@@ -2,7 +2,7 @@
 import { TOPIC_ACTIONS } from '@constants';
 
 // Mocks
-import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
+import { MOCK_TOPICS } from '@mocks';
 
 // Stores
 import { topicReducer, initialTopicState, ActionTopics } from '@stores';
@@ -14,19 +14,6 @@ describe('Test topic reducer', () => {
     expect(initialState).toEqual(initialTopicState);
   });
 
-  it('Should handle get topics success', () => {
-    const state = topicReducer(initialTopicState, {
-      type: TOPIC_ACTIONS.GET_SUCCESS,
-      payload: {
-        topics: MOCK_TOPICS,
-      },
-    });
-
-    expect(state.isLoading).toBe(false);
-    expect(state.topics.length).toBe(MOCK_TOPICS.length);
-  });
-
-  // ADD
   it('Should handle add topic request', () => {
     const state = topicReducer(initialTopicState, {
       type: TOPIC_ACTIONS.ADD_REQUEST,
@@ -39,7 +26,7 @@ describe('Test topic reducer', () => {
     const state = topicReducer(initialTopicState, {
       type: TOPIC_ACTIONS.ADD_SUCCESS,
       payload: {
-        topic: MOCK_TOPIC,
+        topics: MOCK_TOPICS,
       },
     });
 

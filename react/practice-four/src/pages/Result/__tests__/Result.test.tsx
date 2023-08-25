@@ -6,27 +6,30 @@ import { ReactNode } from 'react';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_TOPICS, MOC_TABLE_RESULT } from '@mocks';
 
 // Components
 import { Result } from '@pages';
 
-const mockVocabularyContext = {
+const mockDictionaryContext = {
+  isLoadingTopic: false,
   isLoadingVocabulary: false,
+  errorsTopic: '',
   errorsVocabulary: '',
-  vocabularies: MOCK_VOCABULARIES,
+  topics: MOCK_TOPICS,
+  vocabularies: MOC_TABLE_RESULT,
   quizzes: MOC_TABLE_RESULT,
-  onDeleteVocabulary: jest.fn(),
+  onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
+  onDeleteVocabulary: jest.fn(),
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
-  onLoadMore: jest.fn(),
 };
 
 const ResultComponent = ({
   children,
-  value = mockVocabularyContext,
+  value = mockDictionaryContext,
 }: {
   children: ReactNode;
   value?: VocabularyContextType;
@@ -51,7 +54,7 @@ describe('Test Result component', () => {
 
   it('Should navigate to vocabulary list when quizzes length less than 0', () => {
     const { container } = render(
-      <ResultComponent value={{ ...mockVocabularyContext, quizzes: [] }}>
+      <ResultComponent value={{ ...mockDictionaryContext, quizzes: [] }}>
         <Result />
       </ResultComponent>,
     );
