@@ -6,6 +6,7 @@ import './index.css';
 interface ButtonProps {
   isDisabled?: boolean;
   label?: string;
+  className?: string;
   type?: 'button' | 'submit';
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'xs' | 's' | 'm' | 'xxl';
@@ -17,6 +18,7 @@ const Button = memo(
   ({
     isDisabled = false,
     label,
+    className,
     type = 'button',
     size = 's',
     variant = 'primary',
@@ -25,7 +27,7 @@ const Button = memo(
   }: ButtonProps) => (
     <button
       type={type}
-      className={`btn btn-size-${size} btn-${variant}`}
+      className={`btn btn-size-${size} btn-${variant} ${className ? className : ''}`}
       onClick={onClick}
       disabled={isDisabled}
     >

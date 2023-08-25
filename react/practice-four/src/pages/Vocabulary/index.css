@@ -32,14 +32,14 @@
   text-align: center;
 }
 
-.wrapper-vocabularies-page .actions-wrapper > button:first-child {
+.wrapper-vocabularies-page .actions-wrapper .button-load-more {
   padding: 0;
   color: var(--color-orange-100);
   background-color: transparent;
   text-decoration: underline;
 }
 
-.wrapper-vocabularies-page .actions-wrapper > button:hover:first-child {
+.wrapper-vocabularies-page .actions-wrapper > .button-load-more:hover {
   opacity: 0.7;
 }
 
