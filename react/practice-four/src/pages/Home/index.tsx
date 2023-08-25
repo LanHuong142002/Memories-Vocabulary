@@ -23,7 +23,7 @@ import './index.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { isLoadingTopic, topics, onAddTopic } = useContext(TopicContext);
+  const { isLoadingTopic, topics, onAddTopic, onGetTopics } = useContext(TopicContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -84,6 +84,10 @@ const Home = () => {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    onGetTopics();
+  }, [onGetTopics]);
+
   return (
     <Wrapper
       className='home'
@@ -101,12 +105,12 @@ const Home = () => {
           <Spinner />
         ) : (
           <>
-            {topics.map(({ id, name, vocabularies }) => (
+            {topics.map(({ id, name, vocabularyCount }) => (
               <Topic
                 id={id}
                 key={`topic-${uuidv4()}`}
                 name={name}
-                quantity={vocabularies?.length || 0}
+                quantity={vocabularyCount || 0}
                 onClick={handleOpenTopic}
               />
             ))}
