@@ -43,8 +43,8 @@ describe('Test TopicProvider', () => {
     mock.mockResolvedValue(MOCK_TOPICS);
 
     const MockChildren = () => {
-      const { topics, onGetTopic } = useContext(TopicContext);
-      return <MockSuccessComponent items={topics} onClick={onGetTopic!} />;
+      const { topics, onGetTopics } = useContext(TopicContext);
+      return <MockSuccessComponent items={topics} onClick={onGetTopics} />;
     };
 
     const { getAllByTestId, getByTestId } = render(

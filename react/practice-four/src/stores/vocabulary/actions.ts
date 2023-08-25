@@ -12,7 +12,7 @@ export type AddVocabularyRequest = {
 export type AddVocabularySuccess = {
   type: VOCABULARY_ACTIONS.ADD_SUCCESS;
   payload: {
-    vocabularies: Vocabulary[];
+    vocabulary: Vocabulary;
   };
 };
 
@@ -26,6 +26,9 @@ export type AddVocabularyFailure = {
 // DELETE
 export type DeleteVocabularyRequest = {
   type: VOCABULARY_ACTIONS.DELETE_REQUEST;
+  payload: {
+    vocabularyId: string;
+  };
 };
 
 export type DeleteVocabularySuccess = {
@@ -39,6 +42,7 @@ export type DeleteVocabularyFailure = {
   type: VOCABULARY_ACTIONS.DELETE_FAILURE;
   payload: {
     errors: string;
+    vocabularyId: string;
   };
 };
 
@@ -57,6 +61,10 @@ export type GetVocabulariesSuccess = {
   };
 };
 
+export type GetMoreVocabulariesRequest = {
+  type: VOCABULARY_ACTIONS.GET_MORE_REQUEST;
+};
+
 export type GetVocabulariesRequest = {
   type: VOCABULARY_ACTIONS.GET_REQUEST;
 };
@@ -70,4 +78,5 @@ export type ActionVocabularies =
   | DeleteVocabularyFailure
   | GetVocabulariesFailure
   | GetVocabulariesSuccess
-  | GetVocabulariesRequest;
+  | GetVocabulariesRequest
+  | GetMoreVocabulariesRequest;

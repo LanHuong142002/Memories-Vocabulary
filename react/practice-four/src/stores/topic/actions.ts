@@ -11,7 +11,7 @@ export type AddTopicsRequest = {
 export type AddTopicsSuccess = {
   type: TOPIC_ACTIONS.ADD_SUCCESS;
   payload: {
-    topics: Topic[];
+    topic: Topic;
   };
 };
 

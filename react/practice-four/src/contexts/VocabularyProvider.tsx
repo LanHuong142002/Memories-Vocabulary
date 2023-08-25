@@ -14,9 +14,15 @@ import { Vocabulary, VocabularyResult } from '@interfaces';
 import { initialVocabularyState, vocabularyReducer } from '@stores';
 
 export interface VocabularyContextType {
-  isLoadingVocabulary: boolean;
-  isLoading?: boolean;
+  isLoadingVocabularies: boolean;
+  isLoadingLoadMore: boolean;
+  isLoadingAdd: boolean;
+  isLoadingQuizzes?: boolean;
   errorsVocabulary: string;
+  deletingById: {
+    id: string;
+    isLoadingDelete: boolean;
+  };
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
   onAddVocabulary: (id: string, vocabulary: Vocabulary) => Promise<void>;
@@ -24,7 +30,7 @@ export interface VocabularyContextType {
   onGetVocabularies: (id: string) => Promise<void>;
   onRandomQuizzes: (id: string) => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
-  onLoadMore?: (id: string, page: number) => Promise<number | undefined>;
+  onLoadMore: (id: string, page: number) => Promise<number | undefined>;
 }
 
 export const VocabularyContext = createContext<VocabularyContextType>({} as VocabularyContextType);
@@ -35,17 +41,20 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     initialVocabularyState,
   );
   const {
-    isLoading: isLoadingVocabulary,
+    isLoadingAdd,
+    deletingById,
+    isLoadingLoadMore,
+    isLoading: isLoadingVocabularies,
     errors: errorsVocabulary,
     vocabularies,
   } = vocabularyState;
   const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingQuizzes, setIsLoadingQuizzes] = useState<boolean>(false);
 
   const handleLoadMore = useCallback(
     async (id: string, page: number): Promise<number | undefined> => {
       vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.GET_REQUEST,
+        type: VOCABULARY_ACTIONS.GET_MORE_REQUEST,
       });
       try {
         const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
@@ -77,14 +86,11 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
    * @param {string} id is id of topic which is selected
    */
   const handleRandomQuiz = useCallback(async (id: string) => {
-    setIsLoading(true);
+    setIsLoadingQuizzes(true);
     try {
       const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
       vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.GET_SUCCESS,
-        payload: {
-          vocabularies: response,
-        },
+        type: VOCABULARY_ACTIONS.GET_MORE_REQUEST,
       });
       setQuizzes([...response].sort(() => Math.random() - 0.5));
     } catch (error) {
@@ -96,7 +102,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         },
       });
     }
-    setIsLoading(false);
+    setIsLoadingQuizzes(false);
   }, []);
 
   /**
@@ -148,7 +154,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         vocabularyDispatch({
           type: VOCABULARY_ACTIONS.ADD_SUCCESS,
           payload: {
-            vocabularies: [...vocabularies, response],
+            vocabulary: response,
           },
         });
       } catch (error) {
@@ -161,7 +167,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         });
       }
     },
-    [vocabularies],
+    [],
   );
 
   /**
@@ -173,6 +179,9 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
   const handleDeleteVocabulary = useCallback(async (topicId: string, id: string): Promise<void> => {
     vocabularyDispatch({
       type: VOCABULARY_ACTIONS.DELETE_REQUEST,
+      payload: {
+        vocabularyId: id,
+      },
     });
     try {
       await deleteData<Vocabulary>(`${URL.TOPIC}/${topicId}${URL.VOCABULARY}`, id);
@@ -189,6 +198,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         type: VOCABULARY_ACTIONS.DELETE_FAILURE,
         payload: {
           errors: message,
+          vocabularyId: id,
         },
       });
     }
@@ -196,8 +206,11 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      isLoading,
-      isLoadingVocabulary,
+      isLoadingAdd,
+      isLoadingQuizzes,
+      deletingById,
+      isLoadingLoadMore,
+      isLoadingVocabularies,
       errorsVocabulary,
       vocabularies,
       quizzes,
@@ -209,9 +222,12 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onLoadMore: handleLoadMore,
     }),
     [
-      isLoading,
-      isLoadingVocabulary,
+      isLoadingAdd,
+      isLoadingVocabularies,
+      deletingById,
+      isLoadingLoadMore,
       errorsVocabulary,
+      isLoadingQuizzes,
       vocabularies,
       quizzes,
       handleAddVocabulary,

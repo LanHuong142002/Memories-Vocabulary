@@ -39,6 +39,11 @@ export const topicReducer = (
         isLoading: true,
       };
     case TOPIC_ACTIONS.ADD_SUCCESS:
+      return {
+        ...state,
+        topics: [...state.topics, actions.payload.topic],
+        isLoading: false,
+      };
     case TOPIC_ACTIONS.GET_SUCCESS:
       return {
         ...state,
