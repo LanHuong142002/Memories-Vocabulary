@@ -15,13 +15,11 @@ export const getData = async <T>(
   page?: number,
   limit: number = 20,
 ): Promise<T[]> => {
-  let url: string | URL = `${linkURL.BASE}${endpoint}`;
-  if (page) {
-    url = new URL(`${linkURL.BASE}${endpoint}`);
-    url.searchParams.append('page', `${page}`);
-    url.searchParams.append('limit', `${limit}`);
-  }
-  const response = await axios.get<T[]>(url.toString());
+  const params = {
+    page: page?.toString(),
+    limit: limit.toString(),
+  };
+  const response = await axios.get<T[]>(`${linkURL.BASE}${endpoint}`, { params });
 
   return response.data;
 };
