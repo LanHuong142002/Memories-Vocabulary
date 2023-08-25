@@ -14,7 +14,7 @@ import { Button, Label, TableResult, Typography } from '@components';
 // Styles
 import './index.css';
 
-const ResultPage = () => {
+const Result = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { quizzes, vocabularies } = useContext(DictionaryContext);
@@ -71,4 +71,4 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+export default Result;

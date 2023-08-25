@@ -20,7 +20,7 @@ import { Wrapper } from '@layouts';
 // Styles
 import './index.css';
 
-const VocabularyPage = () => {
+const Vocabulary = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -208,4 +208,4 @@ const VocabularyPage = () => {
   );
 };
 
-export default VocabularyPage;
+export default Vocabulary;

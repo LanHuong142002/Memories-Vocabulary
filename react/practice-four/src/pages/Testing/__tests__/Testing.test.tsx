@@ -9,10 +9,10 @@ import { MESSAGE_ERRORS } from '@constants';
 import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
 
 // Mocks
-import { MOCK_TOPICS, MOCK_VOCABULARIES, mockResult, mockTableResult } from '@mocks';
+import { MOCK_TOPICS, MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
 
 // Components
-import { TestingPage } from '@pages';
+import { Testing } from '@pages';
 
 jest.useFakeTimers();
 const mockDictionaryContext = {
@@ -22,7 +22,7 @@ const mockDictionaryContext = {
   errorsVocabulary: '',
   topics: MOCK_TOPICS,
   vocabularies: MOCK_VOCABULARIES,
-  quizzes: mockTableResult,
+  quizzes: MOC_TABLE_RESULT,
   onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),
@@ -49,18 +49,18 @@ describe('Test Testing Page', () => {
   it('Should render Testing page', () => {
     const { container, getByText } = render(
       <TestingComponent>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
     expect(container).toBeInTheDocument();
-    expect(getByText(`1 of ${mockTableResult.length}`)).toBeInTheDocument();
+    expect(getByText(`1 of ${MOC_TABLE_RESULT.length}`)).toBeInTheDocument();
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
     const { getByText } = render(
-      <TestingComponent value={{ ...mockDictionaryContext, quizzes: [mockResult] }}>
-        <TestingPage />
+      <TestingComponent value={{ ...mockDictionaryContext, quizzes: [MOC_RESULT] }}>
+        <Testing />
       </TestingComponent>,
     );
 
@@ -70,7 +70,7 @@ describe('Test Testing Page', () => {
   it('Should render error required when click button Next', () => {
     const { getByRole, getByText } = render(
       <TestingComponent>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
@@ -85,7 +85,7 @@ describe('Test Testing Page', () => {
   it('Enter value to input and click button submit', () => {
     const { getByRole, getByText } = render(
       <TestingComponent>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
@@ -106,7 +106,7 @@ describe('Test Testing Page', () => {
   it('Should render error message when typing number to input', () => {
     const { getByRole, getByText } = render(
       <TestingComponent>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
@@ -122,7 +122,7 @@ describe('Test Testing Page', () => {
   it('Should back to Vocabulary list when quizzes not exist', () => {
     const { getByText } = render(
       <TestingComponent value={{ ...mockDictionaryContext, quizzes: [] }}>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
@@ -132,7 +132,7 @@ describe('Test Testing Page', () => {
   it('Should show loading when isLoading is true', () => {
     const { container } = render(
       <TestingComponent value={{ ...mockDictionaryContext, isLoading: true }}>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 
@@ -142,7 +142,7 @@ describe('Test Testing Page', () => {
   it('Should navigate to vocabulary page when dont have any vocabularies', () => {
     const { container } = render(
       <TestingComponent value={{ ...mockDictionaryContext, vocabularies: [] }}>
-        <TestingPage />
+        <Testing />
       </TestingComponent>,
     );
 

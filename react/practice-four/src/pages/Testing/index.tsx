@@ -20,7 +20,7 @@ import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 // Styles
 import './index.css';
 
-const TestingPage = () => {
+const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(DictionaryContext);
@@ -149,4 +149,4 @@ const TestingPage = () => {
   );
 };
 
-export default TestingPage;
+export default Testing;

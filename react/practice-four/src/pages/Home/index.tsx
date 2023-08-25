@@ -21,7 +21,7 @@ import { Button, Input, Spinner, Topic, Typography } from '@components';
 // Styles
 import './index.css';
 
-const HomePage = () => {
+const Home = () => {
   const navigate = useNavigate();
   const { isLoadingTopic, topics, onAddTopic } = useContext(DictionaryContext);
   const [errors, setErrors] = useState<string[]>([]);
@@ -145,4 +145,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

@@ -5,26 +5,26 @@ import { RouteObject } from 'react-router-dom';
 import { ROUTES } from '@constants';
 
 // Pages
-const HomePage = lazy(() => import('@pages/HomePage'));
-const VocabularyPage = lazy(() => import('@pages/VocabularyPage'));
-const TestingPage = lazy(() => import('@pages/TestingPage'));
-const ResultPage = lazy(() => import('@pages/ResultPage'));
+const Home = lazy(() => import('@pages/Home'));
+const Vocabulary = lazy(() => import('@pages/Vocabulary'));
+const Testing = lazy(() => import('@pages/Testing'));
+const Result = lazy(() => import('@pages/Result'));
 
 export const Routers: RouteObject[] = [
   {
     path: ROUTES.HOME,
-    element: <HomePage />,
+    element: <Home />,
   },
   {
     path: `${ROUTES.VOCABULARY}/:id`,
-    element: <VocabularyPage />,
+    element: <Vocabulary />,
   },
   {
     path: `${ROUTES.TESTING}/:id`,
-    element: <TestingPage />,
+    element: <Testing />,
   },
   {
     path: `${ROUTES.RESULT}/:id`,
-    element: <ResultPage />,
+    element: <Result />,
   },
 ];

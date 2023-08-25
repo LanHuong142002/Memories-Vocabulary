@@ -6,10 +6,10 @@ import { ReactNode } from 'react';
 import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
 
 // Mocks
-import { MOCK_TOPICS, mockTableResult } from '@mocks';
+import { MOCK_TOPICS, MOC_TABLE_RESULT } from '@mocks';
 
 // Components
-import { ResultPage } from '@pages';
+import { Result } from '@pages';
 
 const mockDictionaryContext = {
   isLoadingTopic: false,
@@ -17,8 +17,8 @@ const mockDictionaryContext = {
   errorsTopic: '',
   errorsVocabulary: '',
   topics: MOCK_TOPICS,
-  vocabularies: mockTableResult,
-  quizzes: mockTableResult,
+  vocabularies: MOC_TABLE_RESULT,
+  quizzes: MOC_TABLE_RESULT,
   onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),
@@ -45,7 +45,7 @@ describe('Test Result component', () => {
   it('Should render Result component', () => {
     const { container } = render(
       <ResultComponent>
-        <ResultPage />
+        <Result />
       </ResultComponent>,
     );
 
@@ -55,7 +55,7 @@ describe('Test Result component', () => {
   it('Should navigate to vocabulary list when quizzes length less than 0', () => {
     const { container } = render(
       <ResultComponent value={{ ...mockDictionaryContext, quizzes: [] }}>
-        <ResultPage />
+        <Result />
       </ResultComponent>,
     );
 

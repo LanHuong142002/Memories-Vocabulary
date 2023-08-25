@@ -1,5 +1,5 @@
-export { default as HomePage } from './HomePage';
-export { default as ErrorPage } from './ErrorPage';
-export { default as VocabularyPage } from './VocabularyPage';
-export { default as TestingPage } from './TestingPage';
-export { default as ResultPage } from './ResultPage';
+export { default as Home } from './Home';
+export { default as Error } from './Error';
+export { default as Vocabulary } from './Vocabulary';
+export { default as Testing } from './Testing';
+export { default as Result } from './Result';
