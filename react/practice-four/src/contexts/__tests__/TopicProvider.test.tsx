@@ -1,107 +1,99 @@
-import { useContext } from 'react';
-import { act, cleanup, fireEvent, render } from '@testing-library/react';
+import { AxiosError } from 'axios';
+import { ReactNode, createContext, useCallback, useMemo, useReducer } from 'react';
 
-// Contexts
-import { TopicContext, TopicProvider } from '@contexts';
+// Services
+import { getData, postData } from '@services';
+
+// Constants
+import { TOPIC_ACTIONS, URL } from '@constants';
 
 // Interfaces
 import { Topic } from '@interfaces';
 
-// Mocks
-import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
+// Stores
+import { initialTopicState, topicReducer } from '@stores';
 
-// Services
-import * as services from '@services';
+export interface TopicContextType {
+  isLoadingTopic: boolean;
+  errorsTopic: string;
+  topics: Topic[];
+  onGetTopic?: () => Promise<void>;
+  onAddTopic: (topic: Topic) => Promise<void>;
+}
 
-jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
-const MockSuccessComponent = ({ items, onClick }: { items: Topic[]; onClick: () => void }) => (
-  <div>
-    <div data-testid='items'>
-      {items.map((item, index) => (
-        <p key={`item-${index}`}>{item.id}</p>
-      ))}
-    </div>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
+export const TopicContext = createContext<TopicContextType>({} as TopicContextType);
 
-const MockFailureComponent = ({ error, onClick }: { error: string; onClick: () => void }) => (
-  <div>
-    <p>{error}</p>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
+export function TopicProvider({ children }: { children: ReactNode }) {
+  const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
+  const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = topicState;
 
-describe('Test TopicProvider', () => {
-  afterEach(() => {
-    cleanup();
-  });
+  /**
+   * @description handles the add a new topic.
+   *
+   * @param {Topic} topic is the topic object to be added.
+   */
+  const handleAddTopic = useCallback(
+    async (topic: Topic): Promise<void> => {
+      topicDispatch({
+        type: TOPIC_ACTIONS.ADD_REQUEST,
+      });
+      try {
+        const response = await postData(topic, URL.TOPIC);
+        topicDispatch({
+          type: TOPIC_ACTIONS.ADD_SUCCESS,
+          payload: {
+            topics: [...topics, response],
+          },
+        });
+      } catch (error) {
+        const { message } = error as AxiosError;
+        topicDispatch({
+          type: TOPIC_ACTIONS.ADD_FAILURE,
+          payload: {
+            errors: message,
+          },
+        });
+      }
+    },
+    [topics],
+  );
 
-  // Get Topic
-  it('Should call function get topics success', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_TOPICS);
-
-    const MockChildren = () => {
-      const { topics, onGetTopics } = useContext(TopicContext);
-      return <MockSuccessComponent items={topics} onClick={onGetTopics} />;
-    };
-
-    const { getAllByTestId, getByTestId } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
-    const button = getByTestId('button-action');
-    act(() => {
-      fireEvent.click(button);
+  /**
+   * @description function get topics
+   */
+  const getTopics = useCallback(async () => {
+    topicDispatch({
+      type: TOPIC_ACTIONS.GET_REQUEST,
     });
+    try {
+      const response = await getData<Topic>(URL.TOPIC);
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_SUCCESS,
+        payload: {
+          topics: response,
+        },
+      });
+    } catch (error) {
+      const { message } = error as AxiosError;
+      topicDispatch({
+        type: TOPIC_ACTIONS.GET_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+  }, []);
 
-    expect(getAllByTestId('items').length).toBe(MOCK_TOPICS.length);
-  });
+  const value = useMemo(
+    () => ({
+      isLoadingTopic,
+      errorsTopic,
+      topics,
+      onAddTopic: handleAddTopic,
+      onGetTopic: getTopics,
+    }),
+    [isLoadingTopic, errorsTopic, topics, handleAddTopic, getTopics],
+  );
 
-  // Add Topic
-  it('Should call function add new topic success', () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockResolvedValue(MOCK_TOPIC);
-
-    const MockChildren = () => {
-      const { onAddTopic, topics } = useContext(TopicContext);
-      return <MockSuccessComponent items={topics} onClick={() => onAddTopic(MOCK_TOPIC)} />;
-    };
-
-    const { getByTestId, getAllByTestId } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
-    const button = getByTestId('button-action');
-    const topics = getAllByTestId('items');
-    act(() => {
-      fireEvent.click(button);
-    });
-
-    expect(topics.length).toBe(1);
-  });
-
-  it('Should call function add new topic failure', async () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockRejectedValue(new Error('Error'));
-
-    const MockChildren = () => {
-      const { errorsTopic, onAddTopic } = useContext(TopicContext);
-      return <MockFailureComponent error={errorsTopic} onClick={() => onAddTopic(MOCK_TOPIC)} />;
-    };
-    const { getByTestId, getByText } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
-    const button = getByTestId('button-action');
-    await act(() => {
-      fireEvent.click(button);
-    });
-
-    expect(getByText('Error')).toBeInTheDocument();
-  });
-});
+  return <TopicContext.Provider value={value}>{children}</TopicContext.Provider>;
+}

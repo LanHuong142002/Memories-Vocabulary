@@ -17,11 +17,18 @@ import { Home } from '@pages';
 jest.useFakeTimers();
 const mockTopicContext = {
   isLoadingTopic: false,
+  isLoadingVocabulary: false,
   errorsTopic: '',
+  errorsVocabulary: '',
   topics: MOCK_TOPICS,
+  vocabularies: [],
   quizzes: [],
   onAddTopic: jest.fn(),
-  onGetTopics: jest.fn(),
+  onAddVocabulary: jest.fn(),
+  onDeleteVocabulary: jest.fn(),
+  onGetVocabularies: jest.fn(),
+  onRandomQuizzes: jest.fn(),
+  onSetQuiz: jest.fn(),
 };
 
 const HomePageComponent = ({
