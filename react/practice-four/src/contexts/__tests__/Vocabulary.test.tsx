@@ -2,10 +2,10 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { useContext } from 'react';
 
 /// Contexts
-import { DictionaryContext, DictionaryProvider } from '@contexts';
+import { VocabularyContext, VocabularyProvider } from '@contexts';
 
 // Mocks
-import { MOCK_TOPIC, MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
+import { MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
 // Services
 import * as services from '@services';
@@ -39,32 +39,9 @@ const MockFailureComponent = ({ error, onClick }: { error: string; onClick: () =
   </div>
 );
 
-describe('Test DictionaryProvider', () => {
+describe('Test VocabularyProvider', () => {
   afterEach(() => {
     cleanup();
-  });
-
-  // Get Topic
-  it('Should call function get topics success', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_TOPICS);
-
-    const MockChildren = () => {
-      const { topics, onGetTopic } = useContext(DictionaryContext);
-      return <MockSuccessComponent items={topics} onClick={onGetTopic!} />;
-    };
-
-    const { getAllByTestId, getByTestId } = render(
-      <DictionaryProvider>
-        <MockChildren />
-      </DictionaryProvider>,
-    );
-    const button = getByTestId('button-action');
-    act(() => {
-      fireEvent.click(button);
-    });
-
-    expect(getAllByTestId('items').length).toBe(MOCK_TOPICS.length);
   });
 
   // Get Vocabularies
@@ -73,14 +50,14 @@ describe('Test DictionaryProvider', () => {
     mock.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
-      const { vocabularies, onGetVocabularies } = useContext(DictionaryContext);
+      const { vocabularies, onGetVocabularies } = useContext(VocabularyContext);
       return <MockSuccessComponent items={vocabularies} onClick={() => onGetVocabularies('1')} />;
     };
 
     const { getAllByTestId, getByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
 
@@ -96,60 +73,15 @@ describe('Test DictionaryProvider', () => {
     mock.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
-      const { errorsVocabulary, onGetVocabularies } = useContext(DictionaryContext);
+      const { errorsVocabulary, onGetVocabularies } = useContext(VocabularyContext);
       return (
         <MockFailureComponent error={errorsVocabulary} onClick={() => onGetVocabularies('1')} />
       );
     };
     const { getByText, getByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
-    );
-    const button = getByTestId('button-action');
-    await act(() => {
-      fireEvent.click(button);
-    });
-
-    expect(getByText('Error')).toBeInTheDocument();
-  });
-
-  // Add Topic
-  it('Should call function add new topic success', () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockResolvedValue(MOCK_TOPIC);
-
-    const MockChildren = () => {
-      const { onAddTopic, topics } = useContext(DictionaryContext);
-      return <MockSuccessComponent items={topics} onClick={() => onAddTopic(MOCK_TOPIC)} />;
-    };
-
-    const { getByTestId, getAllByTestId } = render(
-      <DictionaryProvider>
-        <MockChildren />
-      </DictionaryProvider>,
-    );
-    const button = getByTestId('button-action');
-    const topics = getAllByTestId('items');
-    act(() => {
-      fireEvent.click(button);
-    });
-
-    expect(topics.length).toBe(1);
-  });
-
-  it('Should call function add new topic failure', async () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockRejectedValue(new Error('Error'));
-
-    const MockChildren = () => {
-      const { errorsTopic, onAddTopic } = useContext(DictionaryContext);
-      return <MockFailureComponent error={errorsTopic} onClick={() => onAddTopic(MOCK_TOPIC)} />;
-    };
-    const { getByTestId, getByText } = render(
-      <DictionaryProvider>
-        <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
     await act(() => {
@@ -165,7 +97,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
-      const { errorsVocabulary, onAddVocabulary } = useContext(DictionaryContext);
+      const { errorsVocabulary, onAddVocabulary } = useContext(VocabularyContext);
       return (
         <MockFailureComponent
           error={errorsVocabulary}
@@ -174,9 +106,9 @@ describe('Test DictionaryProvider', () => {
       );
     };
     const { getByTestId, getByText } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
     await act(() => {
@@ -191,7 +123,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockResolvedValue(MOCK_VOCABULARY);
 
     const MockChildren = () => {
-      const { onAddVocabulary, vocabularies } = useContext(DictionaryContext);
+      const { onAddVocabulary, vocabularies } = useContext(VocabularyContext);
       return (
         <MockSuccessComponent
           items={vocabularies}
@@ -201,9 +133,9 @@ describe('Test DictionaryProvider', () => {
     };
 
     const { getByTestId, getAllByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
@@ -220,7 +152,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
-      const { errorsVocabulary, onDeleteVocabulary } = useContext(DictionaryContext);
+      const { errorsVocabulary, onDeleteVocabulary } = useContext(VocabularyContext);
       return (
         <MockFailureComponent
           error={errorsVocabulary}
@@ -229,9 +161,9 @@ describe('Test DictionaryProvider', () => {
       );
     };
     const { getByTestId, getByText } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
 
@@ -247,16 +179,16 @@ describe('Test DictionaryProvider', () => {
     mock.mockResolvedValue(MOCK_VOCABULARY);
 
     const MockChildren = () => {
-      const { onDeleteVocabulary, vocabularies } = useContext(DictionaryContext);
+      const { onDeleteVocabulary, vocabularies } = useContext(VocabularyContext);
       return (
         <MockSuccessComponent items={vocabularies} onClick={() => onDeleteVocabulary('1', '1')} />
       );
     };
 
     const { getByTestId, getAllByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
@@ -273,7 +205,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
-      const { onRandomQuizzes, onSetQuiz, quizzes } = useContext(DictionaryContext);
+      const { onRandomQuizzes, onSetQuiz, quizzes } = useContext(VocabularyContext);
       return (
         <>
           {quizzes.map((item, index) => (
@@ -292,9 +224,9 @@ describe('Test DictionaryProvider', () => {
     };
 
     const { getByTestId, getAllByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const buttonRandom = getByTestId('button-random');
     const buttonSetQuiz = getByTestId('button-set-quiz');
@@ -311,7 +243,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
-      const { onRandomQuizzes, errorsVocabulary } = useContext(DictionaryContext);
+      const { onRandomQuizzes, errorsVocabulary } = useContext(VocabularyContext);
       return (
         <>
           <p>{errorsVocabulary}</p>
@@ -323,9 +255,9 @@ describe('Test DictionaryProvider', () => {
     };
 
     const { getByTestId, getByText } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const buttonRandom = getByTestId('button-random');
     await act(() => {
@@ -341,7 +273,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
-      const { onLoadMore } = useContext(DictionaryContext);
+      const { onLoadMore } = useContext(VocabularyContext);
       return (
         <button onClick={() => onLoadMore!('1', 1)} data-testid='load-more'>
           Load More
@@ -350,9 +282,9 @@ describe('Test DictionaryProvider', () => {
     };
 
     const { getByTestId } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const button = getByTestId('load-more');
     act(() => {
@@ -365,7 +297,7 @@ describe('Test DictionaryProvider', () => {
     mock.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
-      const { onLoadMore, errorsVocabulary } = useContext(DictionaryContext);
+      const { onLoadMore, errorsVocabulary } = useContext(VocabularyContext);
       return (
         <>
           <p>{errorsVocabulary}</p>
@@ -377,9 +309,9 @@ describe('Test DictionaryProvider', () => {
     };
 
     const { getByTestId, getByText } = render(
-      <DictionaryProvider>
+      <VocabularyProvider>
         <MockChildren />
-      </DictionaryProvider>,
+      </VocabularyProvider>,
     );
     const buttonRandom = getByTestId('load-more');
     await act(() => {

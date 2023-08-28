@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ThemeContext } from '@contexts';
 
 // Contexts
-import { DictionaryProvider } from '@contexts';
+import { TopicProvider, VocabularyProvider } from '@contexts';
 
 // Routes
 import { Routers } from '@routes';
@@ -18,15 +18,17 @@ export const App = () => {
 
   return (
     <main className={`container ${theme}`}>
-      <DictionaryProvider>
-        <Suspense fallback={<Spinner variant='primary' />}>
-          <Routes>
-            {Routers.map(({ path, element }) => (
-              <Route key={path} path={path} element={element} />
-            ))}
-          </Routes>
-        </Suspense>
-      </DictionaryProvider>
+      <TopicProvider>
+        <VocabularyProvider>
+          <Suspense fallback={<Spinner variant='primary' />}>
+            <Routes>
+              {Routers.map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+            </Routes>
+          </Suspense>
+        </VocabularyProvider>
+      </TopicProvider>
     </main>
   );
 };

@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
 
 // Contexts
-import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
+import { ThemeProvider, TopicContext, TopicContextType } from '@contexts';
 
 // Mocks
 import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
@@ -15,7 +15,7 @@ import { MESSAGE_ERRORS } from '@constants';
 import { Home } from '@pages';
 
 jest.useFakeTimers();
-const mockDictionaryContext = {
+const mockTopicContext = {
   isLoadingTopic: false,
   isLoadingVocabulary: false,
   errorsTopic: '',
@@ -33,14 +33,14 @@ const mockDictionaryContext = {
 
 const HomePageComponent = ({
   children,
-  value = mockDictionaryContext,
+  value = mockTopicContext,
 }: {
   children: ReactNode;
-  value?: DictionaryType;
+  value?: TopicContextType;
 }) => (
   <BrowserRouter>
     <ThemeProvider>
-      <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>
+      <TopicContext.Provider value={value}>{children}</TopicContext.Provider>
     </ThemeProvider>
   </BrowserRouter>
 );
@@ -71,7 +71,7 @@ describe('Test Home Page', () => {
 
   it('Should show loading when isLoadingTopic is true', () => {
     const { container } = render(
-      <HomePageComponent value={{ ...mockDictionaryContext, isLoadingTopic: true }}>
+      <HomePageComponent value={{ ...mockTopicContext, isLoadingTopic: true }}>
         <Home />
       </HomePageComponent>,
     );

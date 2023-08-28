@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
 
 // Contexts
-import { DictionaryContext, DictionaryType, ThemeProvider } from '@contexts';
+import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
 import { MOCK_TOPICS, MOC_TABLE_RESULT } from '@mocks';
@@ -32,11 +32,11 @@ const ResultComponent = ({
   value = mockDictionaryContext,
 }: {
   children: ReactNode;
-  value?: DictionaryType;
+  value?: VocabularyContextType;
 }) => (
   <BrowserRouter>
     <ThemeProvider>
-      <DictionaryContext.Provider value={value}>{children}</DictionaryContext.Provider>
+      <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>
     </ThemeProvider>
   </BrowserRouter>
 );

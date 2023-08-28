@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // Contexts
-import { DictionaryContext } from '@contexts';
+import { VocabularyContext } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -17,7 +17,7 @@ import './index.css';
 const Result = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { quizzes, vocabularies } = useContext(DictionaryContext);
+  const { quizzes, vocabularies } = useContext(VocabularyContext);
   const result = useMemo(
     () =>
       vocabularies.map((vocab) => {

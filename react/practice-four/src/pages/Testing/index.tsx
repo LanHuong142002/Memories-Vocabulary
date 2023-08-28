@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts
-import { DictionaryContext } from '@contexts';
+import { VocabularyContext } from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -23,7 +23,7 @@ import './index.css';
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(DictionaryContext);
+  const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(VocabularyContext);
   const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');

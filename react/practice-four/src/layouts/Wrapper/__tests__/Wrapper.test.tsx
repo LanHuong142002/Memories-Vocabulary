@@ -2,7 +2,14 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 // Contexts
-import { DictionaryContext, DictionaryType, ThemeContext, ThemeProviderProps } from '@contexts';
+import {
+  ThemeContext,
+  ThemeProviderProps,
+  TopicContext,
+  TopicContextType,
+  VocabularyContext,
+  VocabularyContextType,
+} from '@contexts';
 
 // Constants
 import { ROUTES } from '@constants';
@@ -68,9 +75,9 @@ describe('Test Wrapper component', () => {
 
   it('Should render notification when have any error from topics', () => {
     const { getByText } = render(
-      <DictionaryContext.Provider value={{ errorsTopic: 'Error' } as DictionaryType}>
+      <TopicContext.Provider value={{ errorsTopic: 'Error' } as TopicContextType}>
         <WrapperComponent />
-      </DictionaryContext.Provider>,
+      </TopicContext.Provider>,
     );
 
     act(() => {
@@ -81,9 +88,9 @@ describe('Test Wrapper component', () => {
 
   it('Should render notification when have any error from vocabulary', () => {
     const { getByText } = render(
-      <DictionaryContext.Provider value={{ errorsVocabulary: 'Error' } as DictionaryType}>
+      <VocabularyContext.Provider value={{ errorsVocabulary: 'Error' } as VocabularyContextType}>
         <WrapperComponent />
-      </DictionaryContext.Provider>,
+      </VocabularyContext.Provider>,
     );
 
     act(() => {
