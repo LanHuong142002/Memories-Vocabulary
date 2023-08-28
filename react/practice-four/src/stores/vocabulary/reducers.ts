@@ -11,7 +11,7 @@ export interface VocabularyState {
   isLoading: boolean;
   isAdding: boolean;
   deletingById: {
-    string?: boolean;
+    [id: string]: boolean;
   };
   isLoadingLoadMore: boolean;
   errors: string;

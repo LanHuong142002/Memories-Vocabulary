@@ -20,7 +20,7 @@ export interface VocabularyContextType {
   isLoadingQuizzes?: boolean;
   errorsVocabulary: string;
   deletingById: {
-    string?: boolean;
+    [id: string]: boolean;
   };
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];

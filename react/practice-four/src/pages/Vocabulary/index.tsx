@@ -26,7 +26,7 @@ const Vocabulary = () => {
   const {
     isLoadingVocabularies,
     isLoadingLoadMore,
-    isLoadingAdd,
+    isAdding,
     deletingById,
     vocabularies,
     onGetVocabularies,
@@ -191,7 +191,7 @@ const Vocabulary = () => {
       <TableVocabulary
         isLoading={isLoadingVocabularies}
         isLoadingLoadMore={isLoadingLoadMore}
-        isLoadingAdd={isLoadingAdd}
+        isAdding={isAdding}
         deletingById={deletingById}
         vocabularies={vocabularies}
         onClick={handleDeleteVocabulary}
