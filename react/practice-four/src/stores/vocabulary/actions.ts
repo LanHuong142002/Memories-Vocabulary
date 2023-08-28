@@ -65,6 +65,13 @@ export type GetMoreVocabulariesRequest = {
   type: VOCABULARY_ACTIONS.GET_MORE_REQUEST;
 };
 
+export type GetMoreVocabulariesSuccess = {
+  type: VOCABULARY_ACTIONS.GET_MORE_SUCCESS;
+  payload: {
+    vocabularies: Vocabulary[];
+  };
+};
+
 export type GetVocabulariesRequest = {
   type: VOCABULARY_ACTIONS.GET_REQUEST;
 };
@@ -79,4 +86,5 @@ export type ActionVocabularies =
   | GetVocabulariesFailure
   | GetVocabulariesSuccess
   | GetVocabulariesRequest
-  | GetMoreVocabulariesRequest;
+  | GetMoreVocabulariesRequest
+  | GetMoreVocabulariesSuccess;

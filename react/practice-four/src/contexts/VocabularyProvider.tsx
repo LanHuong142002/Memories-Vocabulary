@@ -59,9 +59,9 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
 
         vocabularyDispatch({
-          type: VOCABULARY_ACTIONS.GET_SUCCESS,
+          type: VOCABULARY_ACTIONS.GET_MORE_SUCCESS,
           payload: {
-            vocabularies: [...vocabularies, ...response],
+            vocabularies: response,
           },
         });
 
@@ -76,7 +76,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         });
       }
     },
-    [vocabularies],
+    [],
   );
 
   /**

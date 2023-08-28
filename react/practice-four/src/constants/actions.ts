@@ -19,6 +19,7 @@ export enum VOCABULARY_ACTIONS {
   // GET
   GET_REQUEST = 'get_vocabularies_request',
   GET_MORE_REQUEST = 'get_more_vocabularies_request',
+  GET_MORE_SUCCESS = 'get_more_vocabularies_success',
   GET_SUCCESS = 'get_vocabularies_success',
   GET_FAILURE = 'get_vocabularies_failure',
 

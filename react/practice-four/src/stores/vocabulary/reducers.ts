@@ -40,6 +40,7 @@ export const vocabularyReducer = (
   actions: ActionVocabularies,
 ): VocabularyState => {
   switch (actions.type) {
+    // Request
     case VOCABULARY_ACTIONS.ADD_REQUEST:
       return {
         ...state,
@@ -62,6 +63,7 @@ export const vocabularyReducer = (
           [actions.payload.vocabularyId]: true,
         },
       };
+    // Success
     case VOCABULARY_ACTIONS.ADD_SUCCESS:
       return {
         ...state,
@@ -75,6 +77,13 @@ export const vocabularyReducer = (
         isLoading: false,
         isLoadingLoadMore: false,
       };
+    case VOCABULARY_ACTIONS.GET_MORE_SUCCESS:
+      return {
+        ...state,
+        vocabularies: [...state.vocabularies, ...actions.payload.vocabularies],
+        isLoading: false,
+        isLoadingLoadMore: false,
+      };
     case VOCABULARY_ACTIONS.DELETE_SUCCESS:
       return {
         ...state,
@@ -85,6 +94,7 @@ export const vocabularyReducer = (
           [actions.payload.vocabularyId]: false,
         },
       };
+    // Failure
     case VOCABULARY_ACTIONS.ADD_FAILURE:
     case VOCABULARY_ACTIONS.GET_FAILURE:
       return {
