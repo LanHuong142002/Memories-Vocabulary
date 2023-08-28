@@ -6,6 +6,7 @@ import { Button } from '@components';
 const meta: Meta<typeof Button> = {
   title: 'PracticeFour/Button',
   component: Button,
+  tags: ['autodocs'],
   argTypes: {
     onClick: { action: 'clicked' },
     variant: {

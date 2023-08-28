@@ -6,6 +6,7 @@ import { Notification } from '@components';
 const meta: Meta<typeof Notification> = {
   title: 'PracticeFour/Notification',
   component: Notification,
+  tags: ['autodocs'],
 };
 
 type Story = StoryObj<typeof Notification>;

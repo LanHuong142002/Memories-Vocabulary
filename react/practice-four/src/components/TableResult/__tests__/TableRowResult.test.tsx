@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { ReactNode } from 'react';
 
 // Mocks
-import { mockResult } from '@mocks';
+import { MOC_RESULT } from '@mocks';
 
 // Components
 import { TableRowResult } from '@components';
@@ -19,11 +19,11 @@ describe('Test table row result component', () => {
       <Component>
         <TableRowResult
           id='1'
-          answer={mockResult.answer}
+          answer={MOC_RESULT.answer}
           order={'1'}
-          isSuccess={mockResult.isSuccess}
-          english={mockResult.english}
-          vietnamese={mockResult.vietnamese}
+          isSuccess={MOC_RESULT.isSuccess}
+          english={MOC_RESULT.english}
+          vietnamese={MOC_RESULT.vietnamese}
         />
       </Component>,
     );
@@ -38,11 +38,11 @@ describe('Test table row result component', () => {
       <Component>
         <TableRowResult
           id='1'
-          answer={mockResult.answer}
+          answer={MOC_RESULT.answer}
           order={'1'}
           isSuccess={false}
-          english={mockResult.english}
-          vietnamese={mockResult.vietnamese}
+          english={MOC_RESULT.english}
+          vietnamese={MOC_RESULT.vietnamese}
         />
       </Component>,
     );

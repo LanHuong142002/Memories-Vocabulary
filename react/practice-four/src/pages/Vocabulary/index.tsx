@@ -20,7 +20,7 @@ import { Wrapper } from '@layouts';
 // Styles
 import './index.css';
 
-const VocabularyPage = () => {
+const Vocabulary = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -192,11 +192,14 @@ const VocabularyPage = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        <Button
-          label='Load More'
-          onClick={handleLoadMore}
-          isDisabled={vocabularies.length < 20 || isDisabledButtonLoadMore}
-        />
+        {!(vocabularies.length < 20) && (
+          <Button
+            className='button-load-more'
+            label='Load More'
+            onClick={handleLoadMore}
+            isDisabled={isDisabledButtonLoadMore}
+          />
+        )}
         <Button
           label='Start Test'
           size='m'
@@ -208,4 +211,4 @@ const VocabularyPage = () => {
   );
 };
 
-export default VocabularyPage;
+export default Vocabulary;

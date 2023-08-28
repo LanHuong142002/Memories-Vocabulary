@@ -6,6 +6,7 @@ import { Label } from '@components';
 const meta: Meta<typeof Label> = {
   title: 'PracticeFour/Label',
   component: Label,
+  tags: ['autodocs'],
   argTypes: {
     color: {
       control: { type: 'radio' },

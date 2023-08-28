@@ -1,4 +1,4 @@
-export const mockTableResult = [
+export const MOC_TABLE_RESULT = [
   {
     id: '1',
     isSuccess: true,
@@ -25,7 +25,7 @@ export const mockTableResult = [
   },
 ];
 
-export const mockResult = {
+export const MOC_RESULT = {
   id: '4',
   isSuccess: true,
   order: 1,

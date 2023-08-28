@@ -6,6 +6,7 @@ import { Spinner } from '@components';
 const meta: Meta<typeof Spinner> = {
   title: 'PracticeFour/Spinner',
   component: Spinner,
+  tags: ['autodocs'],
   argTypes: {
     size: {
       control: { type: 'radio' },

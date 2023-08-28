@@ -13,7 +13,7 @@ import { MOCK_TOPICS, MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 import { MESSAGE_ERRORS } from '@constants';
 
 // Components
-import { VocabularyPage } from '@pages';
+import { Vocabulary } from '@pages';
 
 jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
@@ -59,7 +59,7 @@ describe('Test Vocabulary Page', () => {
   it('Should render Vocabulary page', () => {
     const { container } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
 
@@ -71,7 +71,7 @@ describe('Test Vocabulary Page', () => {
 
     const { getByTestId, getByText } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
 
@@ -93,7 +93,7 @@ describe('Test Vocabulary Page', () => {
   it('Should render error message when typing number to input', () => {
     const { getByTestId, getAllByText } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
 
@@ -123,7 +123,7 @@ describe('Test Vocabulary Page', () => {
           ],
         }}
       >
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
     const startTestBtn = getByRole('button', { name: 'Start Test' });
@@ -135,7 +135,7 @@ describe('Test Vocabulary Page', () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
     const { getByRole } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
     const deleteBtn = getByRole('button', { name: 'X' });
@@ -147,7 +147,7 @@ describe('Test Vocabulary Page', () => {
 
     const { getByRole } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
     const deleteBtn = getByRole('button', { name: 'X' });
@@ -159,7 +159,7 @@ describe('Test Vocabulary Page', () => {
 
     const { getByRole } = render(
       <VocabularyComponent>
-        <VocabularyPage />
+        <Vocabulary />
       </VocabularyComponent>,
     );
     const buttonLoadMore = getByRole('button', {

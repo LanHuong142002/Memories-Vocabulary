@@ -6,6 +6,7 @@ import { ProcessBar } from '@components';
 const meta: Meta<typeof ProcessBar> = {
   title: 'PracticeFour/ProcessBar',
   component: ProcessBar,
+  tags: ['autodocs'],
 };
 
 type Story = StoryObj<typeof ProcessBar>;

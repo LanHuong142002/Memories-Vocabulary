@@ -12,7 +12,7 @@ import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
 import { MESSAGE_ERRORS } from '@constants';
 
 // Components
-import { HomePage } from '@pages';
+import { Home } from '@pages';
 
 jest.useFakeTimers();
 const mockDictionaryContext = {
@@ -49,7 +49,7 @@ describe('Test Home Page', () => {
   it('Should render Home page', () => {
     const { container } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
 
@@ -59,7 +59,7 @@ describe('Test Home Page', () => {
   it('Should render overlay add new topic when click to button Add Topic', () => {
     const { getByText } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
     const buttonAddTopic = getByText('Add Topic');
@@ -72,7 +72,7 @@ describe('Test Home Page', () => {
   it('Should show loading when isLoadingTopic is true', () => {
     const { container } = render(
       <HomePageComponent value={{ ...mockDictionaryContext, isLoadingTopic: true }}>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
     const topics = container.querySelectorAll('.topic');
@@ -83,7 +83,7 @@ describe('Test Home Page', () => {
   it('Should Add new topic when enter the new topic', () => {
     const { getByText, getByPlaceholderText } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
 
@@ -101,7 +101,7 @@ describe('Test Home Page', () => {
   it('Should show error message when enter wrong value with click to Done button', () => {
     const { getByText, getByPlaceholderText } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
 
@@ -119,7 +119,7 @@ describe('Test Home Page', () => {
   it('Should open new topic', () => {
     const { getByText } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
 
@@ -133,7 +133,7 @@ describe('Test Home Page', () => {
   it('render error message when typing number to input', () => {
     const { getByText, getByPlaceholderText } = render(
       <HomePageComponent>
-        <HomePage />
+        <Home />
       </HomePageComponent>,
     );
     const topic = getByText('Add Topic');

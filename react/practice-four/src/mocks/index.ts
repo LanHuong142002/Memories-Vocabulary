@@ -1,2 +1,3 @@
-export * from './mockData';
-export * from './mockTableResult';
+export * from './vocabulary';
+export * from './topic';
+export * from './tableResult';
