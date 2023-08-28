@@ -7,6 +7,7 @@ import { TableVocabularyProps } from '.';
 const meta: Meta<TableVocabularyProps> = {
   title: 'PracticeFour/TableVocabulary',
   component: TableVocabulary,
+  tags: ['autodocs'],
   argTypes: {
     onClick: { action: 'clicked' },
   },

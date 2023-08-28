@@ -6,6 +6,7 @@ import { Input } from '@components';
 const meta: Meta<typeof Input> = {
   title: 'PracticeFour/Input',
   component: Input,
+  tags: ['autodocs'],
   argTypes: {
     onChange: { action: 'changed' },
     variant: {
