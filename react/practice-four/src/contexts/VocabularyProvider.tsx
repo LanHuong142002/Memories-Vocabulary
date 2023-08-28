@@ -15,7 +15,7 @@ import { initialVocabularyState, vocabularyReducer } from '@stores';
 
 export interface VocabularyContextType {
   isLoadingVocabularies: boolean;
-  isLoadingLoadMore: boolean;
+  isLoadingMore: boolean;
   isAdding: boolean;
   isLoadingQuizzes?: boolean;
   errorsVocabulary: string;
@@ -42,7 +42,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
   const {
     isAdding,
     deletingById,
-    isLoadingLoadMore,
+    isLoadingMore,
     isLoading: isLoadingVocabularies,
     errors: errorsVocabulary,
     vocabularies,
@@ -206,7 +206,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       isLoadingVocabularies,
       isAdding,
       deletingById,
-      isLoadingLoadMore,
+      isLoadingMore,
       isLoadingQuizzes,
       errorsVocabulary,
       vocabularies,
@@ -222,7 +222,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       isLoadingVocabularies,
       isAdding,
       deletingById,
-      isLoadingLoadMore,
+      isLoadingMore,
       isLoadingQuizzes,
       errorsVocabulary,
       vocabularies,
