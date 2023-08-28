@@ -49,7 +49,7 @@ const Home = () => {
       setErrors(listError);
     } else {
       onAddTopic({
-        id: '1',
+        id: '', // id when posting, the MockAPI side will support generating the id
         name: topicValue,
         vocabularies: [],
       });
