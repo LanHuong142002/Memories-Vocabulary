@@ -21,11 +21,10 @@ import './index.css';
 
 export interface TableVocabularyProps {
   isLoading: boolean;
-  isLoadingAdd: boolean;
+  isAdding: boolean;
   isLoadingLoadMore: boolean;
   deletingById: {
-    id: string;
-    isLoadingDelete: boolean;
+    [id: string]: boolean;
   };
   vocabularies: Vocabulary[];
   onClick: (id: string) => void;
@@ -34,7 +33,7 @@ export interface TableVocabularyProps {
 const TableVocabulary = memo(
   ({
     isLoading,
-    isLoadingAdd,
+    isAdding,
     isLoadingLoadMore,
     deletingById,
     vocabularies,
@@ -62,7 +61,7 @@ const TableVocabulary = memo(
               <>
                 {vocabularies.map(({ id, english, vietnamese }, index) => (
                   <TableRowVocabulary
-                    isLoading={deletingById.id === id ? deletingById.isLoadingDelete : false}
+                    isLoading={deletingById[id]}
                     key={`table-vocabulary-${uuidv4()}`}
                     id={id}
                     order={index + 1}
@@ -71,7 +70,7 @@ const TableVocabulary = memo(
                     onClick={onClick}
                   />
                 ))}
-                {(isLoadingAdd || isLoadingLoadMore) && (
+                {(isAdding || isLoadingLoadMore) && (
                   <TableRow>
                     <TableCell className='cell-loading' colspan={4}>
                       <Spinner size='s' />
