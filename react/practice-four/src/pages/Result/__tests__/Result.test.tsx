@@ -14,12 +14,11 @@ import { Result } from '@pages';
 const mockVocabularyContext = {
   isLoadingVocabularies: false,
   isLoadingLoadMore: false,
-  isLoadingAdd: false,
+  isAdding: false,
   isLoadingQuizzes: false,
   errorsVocabulary: '',
   deletingById: {
-    id: '',
-    isLoadingDelete: false,
+    5: false,
   },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: MOC_TABLE_RESULT,

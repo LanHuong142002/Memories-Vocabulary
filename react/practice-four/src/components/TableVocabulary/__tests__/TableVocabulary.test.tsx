@@ -7,11 +7,10 @@ describe('Test table vocabulary component', () => {
   const defaultValue = {
     onClick: jest.fn(),
     isLoading: false,
-    isLoadingAdd: false,
+    isAdding: false,
     isLoadingLoadMore: false,
     deletingById: {
-      id: '1',
-      isLoadingDelete: false,
+      5: false,
     },
     vocabularies: [
       {

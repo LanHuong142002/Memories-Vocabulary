@@ -26,13 +26,25 @@ describe('Test vocabulary reducer', () => {
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
   });
 
+  it('Should handle get more vocabularies success', () => {
+    const state = vocabularyReducer(initialVocabularyState, {
+      type: VOCABULARY_ACTIONS.GET_MORE_SUCCESS,
+      payload: {
+        vocabularies: MOCK_VOCABULARIES,
+      },
+    });
+
+    expect(state.isLoadingLoadMore).toBe(false);
+    expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
+  });
+
   // ADD
   it('Should handle add vocabulary request', () => {
     const state = vocabularyReducer(initialVocabularyState, {
       type: VOCABULARY_ACTIONS.ADD_REQUEST,
     });
 
-    expect(state.isLoadingAdd).toBe(true);
+    expect(state.isAdding).toBe(true);
   });
 
   it('Should handle add vocabulary success', () => {
@@ -43,7 +55,7 @@ describe('Test vocabulary reducer', () => {
       },
     });
 
-    expect(state.isLoadingAdd).toBe(false);
+    expect(state.isAdding).toBe(false);
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
   });
 
@@ -56,7 +68,7 @@ describe('Test vocabulary reducer', () => {
       },
     });
 
-    expect(state.isLoadingAdd).toBe(false);
+    expect(state.isAdding).toBe(false);
     expect(state.errors).toBe(error);
   });
 
@@ -75,7 +87,6 @@ describe('Test vocabulary reducer', () => {
       },
     );
 
-    expect(state.deletingById.isLoadingDelete).toBe(false);
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length - 1);
   });
 });

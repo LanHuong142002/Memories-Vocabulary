@@ -60,6 +60,28 @@ describe('Test TopicProvider', () => {
     expect(getAllByTestId('items').length).toBe(MOCK_TOPICS.length);
   });
 
+  it('Should call function get topics failure', async () => {
+    const mock = jest.spyOn(services, 'getData');
+    mock.mockRejectedValue(new Error('Error'));
+
+    const MockChildren = () => {
+      const { errorsTopic, onGetTopics } = useContext(TopicContext);
+      return <MockFailureComponent error={errorsTopic} onClick={onGetTopics} />;
+    };
+
+    const { getByTestId, getByText } = render(
+      <TopicProvider>
+        <MockChildren />
+      </TopicProvider>,
+    );
+    const button = getByTestId('button-action');
+    await act(() => {
+      fireEvent.click(button);
+    });
+
+    expect(getByText('Error')).toBeInTheDocument();
+  });
+
   // Add Topic
   it('Should call function add new topic success', () => {
     const mock = jest.spyOn(services, 'postData');
