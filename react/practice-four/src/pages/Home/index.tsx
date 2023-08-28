@@ -41,7 +41,8 @@ const Home = () => {
   /**
    * @description function add new topic
    */
-  const handleAddNewTopic = () => {
+  const handleAddNewTopic = (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const listError = validation(topicValue, true);
 
     if (listError.length) {
@@ -129,7 +130,7 @@ const Home = () => {
           <Button variant='tertiary' size='xxl' onClick={handleOpenOverlay}>
             &Chi;
           </Button>
-          <div className='overlay-content'>
+          <form onSubmit={handleAddNewTopic} className='overlay-content'>
             <Typography size='xxl'>Add New Topic</Typography>
             <Input
               value={topicValue}
@@ -139,10 +140,10 @@ const Home = () => {
               errors={errors}
               ariaLabel='enter topic'
             />
-            <Button size='m' onClick={handleAddNewTopic}>
+            <Button type='submit' size='m'>
               Done
             </Button>
-          </div>
+          </form>
         </div>
       )}
     </Wrapper>

@@ -81,13 +81,12 @@ const Vocabulary = () => {
     setErrorsVIE(listErrorVIE);
     setErrorsENG(listErrorENG);
 
-    if (!listErrorVIE.length && !listErrorENG.length) {
-      onAddVocabulary(id!, {
+    if (!listErrorVIE.length && !listErrorENG.length && id) {
+      onAddVocabulary(id, {
         id: '',
         vietnamese: valueInputVIE,
         english: valueInputENG,
       });
-
       setValueVIE('');
       setValueENG('');
     }
