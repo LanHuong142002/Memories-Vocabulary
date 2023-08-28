@@ -16,12 +16,11 @@ import { initialVocabularyState, vocabularyReducer } from '@stores';
 export interface VocabularyContextType {
   isLoadingVocabularies: boolean;
   isLoadingLoadMore: boolean;
-  isLoadingAdd: boolean;
+  isAdding: boolean;
   isLoadingQuizzes?: boolean;
   errorsVocabulary: string;
   deletingById: {
-    id: string;
-    isLoadingDelete: boolean;
+    string?: boolean;
   };
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
@@ -41,7 +40,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     initialVocabularyState,
   );
   const {
-    isLoadingAdd,
+    isAdding,
     deletingById,
     isLoadingLoadMore,
     isLoading: isLoadingVocabularies,
@@ -89,9 +88,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     setIsLoadingQuizzes(true);
     try {
       const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
-      vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.GET_MORE_REQUEST,
-      });
+
       setQuizzes([...response].sort(() => Math.random() - 0.5));
     } catch (error) {
       const { message } = error as AxiosError;
@@ -206,7 +203,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      isLoadingAdd,
+      isAdding,
       isLoadingQuizzes,
       deletingById,
       isLoadingLoadMore,
@@ -222,7 +219,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onLoadMore: handleLoadMore,
     }),
     [
-      isLoadingAdd,
+      isAdding,
       isLoadingVocabularies,
       deletingById,
       isLoadingLoadMore,

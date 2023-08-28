@@ -9,10 +9,9 @@ import { VOCABULARY_ACTIONS } from '@constants';
 
 export interface VocabularyState {
   isLoading: boolean;
-  isLoadingAdd: boolean;
+  isAdding: boolean;
   deletingById: {
-    id: string;
-    isLoadingDelete: boolean;
+    string?: boolean;
   };
   isLoadingLoadMore: boolean;
   errors: string;
@@ -21,11 +20,8 @@ export interface VocabularyState {
 
 export const initialVocabularyState: VocabularyState = {
   isLoading: false,
-  isLoadingAdd: false,
-  deletingById: {
-    id: '',
-    isLoadingDelete: false,
-  },
+  isAdding: false,
+  deletingById: {},
   isLoadingLoadMore: false,
   errors: '',
   vocabularies: [],
@@ -47,7 +43,7 @@ export const vocabularyReducer = (
     case VOCABULARY_ACTIONS.ADD_REQUEST:
       return {
         ...state,
-        isLoadingAdd: true,
+        isAdding: true,
       };
     case VOCABULARY_ACTIONS.GET_REQUEST:
       return {
@@ -63,15 +59,14 @@ export const vocabularyReducer = (
       return {
         ...state,
         deletingById: {
-          id: actions.payload.vocabularyId,
-          isLoadingDelete: true,
+          [actions.payload.vocabularyId]: true,
         },
       };
     case VOCABULARY_ACTIONS.ADD_SUCCESS:
       return {
         ...state,
         vocabularies: [...state.vocabularies, actions.payload.vocabulary],
-        isLoadingAdd: false,
+        isAdding: false,
       };
     case VOCABULARY_ACTIONS.GET_SUCCESS:
       return {
@@ -87,8 +82,7 @@ export const vocabularyReducer = (
           (vocab) => vocab.id !== actions.payload.vocabularyId,
         ),
         deletingById: {
-          id: actions.payload.vocabularyId,
-          isLoadingDelete: false,
+          [actions.payload.vocabularyId]: false,
         },
       };
     case VOCABULARY_ACTIONS.ADD_FAILURE:
@@ -97,7 +91,7 @@ export const vocabularyReducer = (
         ...state,
         errors: actions.payload.errors,
         isLoading: false,
-        isLoadingAdd: false,
+        isAdding: false,
         isLoadingLoadMore: false,
       };
     case VOCABULARY_ACTIONS.DELETE_FAILURE:
@@ -105,8 +99,7 @@ export const vocabularyReducer = (
         ...state,
         errors: actions.payload.errors,
         deletingById: {
-          id: actions.payload.vocabularyId,
-          isLoadingDelete: false,
+          [actions.payload.vocabularyId]: false,
         },
       };
     default:
