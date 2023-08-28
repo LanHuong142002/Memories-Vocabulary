@@ -203,11 +203,11 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
+      isLoadingVocabularies,
       isAdding,
-      isLoadingQuizzes,
       deletingById,
       isLoadingLoadMore,
-      isLoadingVocabularies,
+      isLoadingQuizzes,
       errorsVocabulary,
       vocabularies,
       quizzes,
@@ -219,19 +219,19 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onLoadMore: handleLoadMore,
     }),
     [
-      isAdding,
       isLoadingVocabularies,
+      isAdding,
       deletingById,
       isLoadingLoadMore,
-      errorsVocabulary,
       isLoadingQuizzes,
+      errorsVocabulary,
       vocabularies,
       quizzes,
       handleAddVocabulary,
       handleGetVocabularies,
       handleDeleteVocabulary,
-      handleRandomQuiz,
       handleLoadMore,
+      handleRandomQuiz,
     ],
   );
 
