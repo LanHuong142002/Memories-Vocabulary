@@ -1,5 +1,8 @@
+// Constants
 import { STATUS_PROCESS } from '@constants';
-import { calculateEachStep, calculateStepLevel } from '@helpers';
+
+// Helpers
+import { calculateEachStep, calculateStepLevel, removeDuplicateObjects } from '@helpers';
 
 describe('Test calculateEachStep', () => {
   it('Should return next step level when surplus is greater than default surplus', () => {
@@ -98,5 +101,44 @@ describe('Test calculateStepLevel', () => {
     const level = calculateStepLevel(step, totalStep);
 
     expect(level).toBe(STATUS_PROCESS.VERY_LOW);
+  });
+});
+
+describe('Test removeDuplicateObjects', () => {
+  it('should remove duplicates from two arrays', () => {
+    const array1 = [
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+    ];
+    const array2 = [
+      { id: '1', name: 'lorem' },
+      { id: '5', name: 'lorem' },
+      { id: '6', name: 'lorem' },
+    ];
+
+    const result = removeDuplicateObjects(array1, array2);
+
+    expect(result).toHaveLength(5);
+    expect(result).toEqual([
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+      { id: '5', name: 'lorem' },
+      { id: '6', name: 'lorem' },
+    ]);
+  });
+
+  it('should not remove any items if arrays have no duplicates', () => {
+    const array1 = [{ id: '1', name: 'a' }];
+    const array2 = [{ id: '2', name: 'b' }];
+
+    const result = removeDuplicateObjects(array1, array2);
+
+    expect(result).toHaveLength(2);
+    expect(result).toEqual([
+      { id: '1', name: 'a' },
+      { id: '2', name: 'b' },
+    ]);
   });
 });
