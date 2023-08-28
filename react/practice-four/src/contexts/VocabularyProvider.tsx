@@ -16,12 +16,11 @@ import { initialVocabularyState, vocabularyReducer } from '@stores';
 export interface VocabularyContextType {
   isLoadingVocabularies: boolean;
   isLoadingLoadMore: boolean;
-  isLoadingAdd: boolean;
+  isAdding: boolean;
   isLoadingQuizzes?: boolean;
   errorsVocabulary: string;
   deletingById: {
-    id: string;
-    isLoadingDelete: boolean;
+    string?: boolean;
   };
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
@@ -41,7 +40,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     initialVocabularyState,
   );
   const {
-    isLoadingAdd,
+    isAdding,
     deletingById,
     isLoadingLoadMore,
     isLoading: isLoadingVocabularies,
@@ -60,9 +59,9 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
 
         vocabularyDispatch({
-          type: VOCABULARY_ACTIONS.GET_SUCCESS,
+          type: VOCABULARY_ACTIONS.GET_MORE_SUCCESS,
           payload: {
-            vocabularies: [...vocabularies, ...response],
+            vocabularies: response,
           },
         });
 
@@ -77,7 +76,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         });
       }
     },
-    [vocabularies],
+    [],
   );
 
   /**
@@ -89,9 +88,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     setIsLoadingQuizzes(true);
     try {
       const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`);
-      vocabularyDispatch({
-        type: VOCABULARY_ACTIONS.GET_MORE_REQUEST,
-      });
+
       setQuizzes([...response].sort(() => Math.random() - 0.5));
     } catch (error) {
       const { message } = error as AxiosError;
@@ -206,11 +203,11 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      isLoadingAdd,
-      isLoadingQuizzes,
+      isLoadingVocabularies,
+      isAdding,
       deletingById,
       isLoadingLoadMore,
-      isLoadingVocabularies,
+      isLoadingQuizzes,
       errorsVocabulary,
       vocabularies,
       quizzes,
@@ -222,19 +219,19 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onLoadMore: handleLoadMore,
     }),
     [
-      isLoadingAdd,
       isLoadingVocabularies,
+      isAdding,
       deletingById,
       isLoadingLoadMore,
-      errorsVocabulary,
       isLoadingQuizzes,
+      errorsVocabulary,
       vocabularies,
       quizzes,
       handleAddVocabulary,
       handleGetVocabularies,
       handleDeleteVocabulary,
-      handleRandomQuiz,
       handleLoadMore,
+      handleRandomQuiz,
     ],
   );
 
