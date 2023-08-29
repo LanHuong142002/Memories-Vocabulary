@@ -27,7 +27,7 @@ describe('Test topic component', () => {
   it('Should call onClick when click topic component', () => {
     const { getByText } = render(<Topic {...defaultProps} quantity={10} isAddNew={true} />);
 
-    const topic = getByText('School (10)');
+    const topic = getByText('School');
     fireEvent.click(topic);
 
     expect(handleClick).toHaveBeenCalled();

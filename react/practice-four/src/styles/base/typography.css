@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'HelveticaNeue';
   src: '../../assets/fonts/HelveticaNeue-Bold.otf';
-  font-weight: var(--fw-bold);
+  font-weight: var(--font-weight-bold);
   font-style: 'normal';
   font-display: 'swap';
 }
@@ -9,7 +9,7 @@
 @font-face {
   font-family: 'HelveticaNeue';
   src: '../../assets/fonts/HelveticaNeue-SemiBold.otf';
-  font-weight: var(--fw-semiBold);
+  font-weight: var(--font-weight-semiBold);
   font-style: 'normal';
   font-display: 'swap';
 }
@@ -17,7 +17,7 @@
 @font-face {
   font-family: 'HelveticaNeue';
   src: '../../assets/fonts/HelveticaNeue-Regular.otf';
-  font-weight: var(--fw-regular);
+  font-weight: var(--font-weight-regular);
   font-style: 'normal';
   font-display: 'swap';
 }
@@ -25,7 +25,7 @@
 @font-face {
   font-family: 'HelveticaNeue';
   src: '../../assets/fonts/HelveticaNeue-Light.otf';
-  font-weight: var(--fw-light);
+  font-weight: var(--font-weight-light);
   font-style: 'normal';
   font-display: 'swap';
 }
