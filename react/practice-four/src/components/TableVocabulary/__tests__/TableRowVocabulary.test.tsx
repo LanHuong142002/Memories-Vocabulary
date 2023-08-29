@@ -10,6 +10,7 @@ describe('Test table row vocabulary component', () => {
     id: '1',
     english: 'pen',
     vietnamese: 'cay but',
+    isLoading: false,
     onClick: jest.fn(),
   };
 
@@ -43,5 +44,15 @@ describe('Test table row vocabulary component', () => {
     fireEvent.click(button);
 
     expect(handleOnClick).toBeCalled();
+  });
+
+  it('Should not render anything when isLoading is true', () => {
+    const { container } = render(
+      <Component>
+        <TableRowVocabulary {...defaultProps} isLoading={true} />
+      </Component>,
+    );
+
+    expect(container).toBeInTheDocument();
   });
 });

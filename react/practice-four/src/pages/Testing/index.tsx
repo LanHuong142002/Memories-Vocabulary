@@ -23,7 +23,7 @@ import './index.css';
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLoading, vocabularies, quizzes, onSetQuiz } = useContext(VocabularyContext);
+  const { isLoadingQuizzes, vocabularies, quizzes, onSetQuiz } = useContext(VocabularyContext);
   const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -119,7 +119,7 @@ const Testing = () => {
         </>
       }
     >
-      {isLoading ? (
+      {isLoadingQuizzes ? (
         <div className='testing-spinner-wrapper'>
           <Spinner />
         </div>

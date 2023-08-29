@@ -2,6 +2,25 @@
 import { STATUS_PROCESS } from '@constants';
 
 /**
+ * @description remove duplicates from two arrays and return a combined array.
+ *
+ * @param {T[]} array1 - The first array.
+ * @param {T[]} array2 - The second array.
+ * @returns {T[]} - Combined array with duplicates removed.
+ */
+export const removeDuplicateObjects = <T extends { id: string }>(array1: T[], array2: T[]): T[] => {
+  const combinedArray: T[] = [...array1];
+
+  array2.forEach((item) => {
+    if (!combinedArray.some((existingItem) => existingItem.id === item.id)) {
+      combinedArray.push(item);
+    }
+  });
+
+  return combinedArray;
+};
+
+/**
  * @description Calculates the step level for the process bar in 4 levels based on given parameters.
  *
  * @param {number} surplus - The surplus value used for calculation.

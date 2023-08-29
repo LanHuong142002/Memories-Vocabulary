@@ -17,7 +17,7 @@ export interface TopicContextType {
   isLoadingTopic: boolean;
   errorsTopic: string;
   topics: Topic[];
-  onGetTopic?: () => Promise<void>;
+  onGetTopics: () => Promise<void>;
   onAddTopic: (topic: Topic) => Promise<void>;
 }
 
@@ -32,31 +32,28 @@ export function TopicProvider({ children }: { children: ReactNode }) {
    *
    * @param {Topic} topic is the topic object to be added.
    */
-  const handleAddTopic = useCallback(
-    async (topic: Topic): Promise<void> => {
+  const handleAddTopic = useCallback(async (topic: Topic): Promise<void> => {
+    topicDispatch({
+      type: TOPIC_ACTIONS.ADD_REQUEST,
+    });
+    try {
+      const response = await postData(topic, URL.TOPIC);
       topicDispatch({
-        type: TOPIC_ACTIONS.ADD_REQUEST,
+        type: TOPIC_ACTIONS.ADD_SUCCESS,
+        payload: {
+          topic: response,
+        },
       });
-      try {
-        const response = await postData(topic, URL.TOPIC);
-        topicDispatch({
-          type: TOPIC_ACTIONS.ADD_SUCCESS,
-          payload: {
-            topics: [...topics, response],
-          },
-        });
-      } catch (error) {
-        const { message } = error as AxiosError;
-        topicDispatch({
-          type: TOPIC_ACTIONS.ADD_FAILURE,
-          payload: {
-            errors: message,
-          },
-        });
-      }
-    },
-    [topics],
-  );
+    } catch (error) {
+      const { message } = error as AxiosError;
+      topicDispatch({
+        type: TOPIC_ACTIONS.ADD_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+  }, []);
 
   /**
    * @description function get topics
@@ -67,10 +64,15 @@ export function TopicProvider({ children }: { children: ReactNode }) {
     });
     try {
       const response = await getData<Topic>(URL.TOPIC);
+      const topicsWithVocabularyCounts = response.map((topic) => ({
+        ...topic,
+        vocabularyCount: topic.vocabularies!.length,
+      }));
+
       topicDispatch({
         type: TOPIC_ACTIONS.GET_SUCCESS,
         payload: {
-          topics: response,
+          topics: topicsWithVocabularyCounts,
         },
       });
     } catch (error) {
@@ -90,7 +92,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
       errorsTopic,
       topics,
       onAddTopic: handleAddTopic,
-      onGetTopic: getTopics,
+      onGetTopics: getTopics,
     }),
     [isLoadingTopic, errorsTopic, topics, handleAddTopic, getTopics],
   );

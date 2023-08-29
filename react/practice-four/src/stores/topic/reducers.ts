@@ -32,19 +32,27 @@ export const topicReducer = (
   actions: ActionTopics,
 ): TopicsState => {
   switch (actions.type) {
+    // Request
     case TOPIC_ACTIONS.ADD_REQUEST:
     case TOPIC_ACTIONS.GET_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
+    // Success
     case TOPIC_ACTIONS.ADD_SUCCESS:
+      return {
+        ...state,
+        topics: [...state.topics, actions.payload.topic],
+        isLoading: false,
+      };
     case TOPIC_ACTIONS.GET_SUCCESS:
       return {
         ...state,
         topics: actions.payload.topics,
         isLoading: false,
       };
+    // Failure
     case TOPIC_ACTIONS.ADD_FAILURE:
     case TOPIC_ACTIONS.GET_FAILURE:
       return {

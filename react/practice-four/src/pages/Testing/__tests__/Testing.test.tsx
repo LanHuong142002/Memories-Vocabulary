@@ -9,18 +9,21 @@ import { MESSAGE_ERRORS } from '@constants';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_TOPICS, MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
 
 // Components
 import { Testing } from '@pages';
 
 jest.useFakeTimers();
 const mockVocabularyContext = {
-  isLoadingTopic: false,
-  isLoadingVocabulary: false,
-  errorsTopic: '',
+  isLoadingVocabularies: false,
+  isLoadingLoadMore: false,
+  isAdding: false,
+  isLoadingQuizzes: false,
   errorsVocabulary: '',
-  topics: MOCK_TOPICS,
+  deletingById: {
+    5: false,
+  },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: MOC_TABLE_RESULT,
   onAddTopic: jest.fn(),
@@ -29,6 +32,7 @@ const mockVocabularyContext = {
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
+  onLoadMore: jest.fn(),
 };
 
 const TestingComponent = ({
@@ -131,7 +135,7 @@ describe('Test Testing Page', () => {
 
   it('Should show loading when isLoading is true', () => {
     const { container } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, isLoading: true }}>
+      <TestingComponent value={{ ...mockVocabularyContext, isLoadingQuizzes: true }}>
         <Testing />
       </TestingComponent>,
     );

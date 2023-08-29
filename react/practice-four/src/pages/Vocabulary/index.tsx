@@ -24,7 +24,10 @@ const Vocabulary = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
-    isLoadingVocabulary,
+    isLoadingVocabularies,
+    isLoadingLoadMore,
+    isAdding,
+    deletingById,
     vocabularies,
     onGetVocabularies,
     onAddVocabulary,
@@ -78,13 +81,12 @@ const Vocabulary = () => {
     setErrorsVIE(listErrorVIE);
     setErrorsENG(listErrorENG);
 
-    if (!listErrorVIE.length && !listErrorENG.length) {
-      onAddVocabulary(id!, {
+    if (!listErrorVIE.length && !listErrorENG.length && id) {
+      onAddVocabulary(id, {
         id: '',
         vietnamese: valueInputVIE,
         english: valueInputENG,
       });
-
       setValueVIE('');
       setValueENG('');
     }
@@ -116,7 +118,7 @@ const Vocabulary = () => {
 
   const handleLoadMore = useCallback(async () => {
     setPages((prev) => prev + 1);
-    if (onLoadMore && id) {
+    if (id) {
       const lengthOfData = (await onLoadMore(id, pages + 1))!;
 
       if (lengthOfData < 20 && lengthOfData === 0) {
@@ -187,7 +189,10 @@ const Vocabulary = () => {
         <Button type='submit' label='Add' />
       </form>
       <TableVocabulary
-        isLoading={isLoadingVocabulary}
+        isLoading={isLoadingVocabularies}
+        isLoadingLoadMore={isLoadingLoadMore}
+        isAdding={isAdding}
+        deletingById={deletingById}
         vocabularies={vocabularies}
         onClick={handleDeleteVocabulary}
       />

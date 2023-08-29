@@ -44,6 +44,7 @@ const Input = memo(
         onChange={onChange}
         data-testid={dataTestId}
         aria-label={ariaLabel}
+        autoComplete='off'
       />
       {errors && errors.length >= 0 && (
         <>
