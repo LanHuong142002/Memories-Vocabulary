@@ -7,11 +7,14 @@ import { ActionVocabularies } from '@stores';
 // Constants
 import { VOCABULARY_ACTIONS } from '@constants';
 
+// Helpers
+import { removeDuplicateObjects } from '@helpers';
+
 export interface VocabularyState {
   isLoading: boolean;
   isAdding: boolean;
   deletingById: {
-    string?: boolean;
+    [id: string]: boolean;
   };
   isLoadingMore: boolean;
   errors: string;
@@ -40,6 +43,7 @@ export const vocabularyReducer = (
   actions: ActionVocabularies,
 ): VocabularyState => {
   switch (actions.type) {
+    // Request
     case VOCABULARY_ACTIONS.ADD_REQUEST:
       return {
         ...state,
@@ -62,6 +66,7 @@ export const vocabularyReducer = (
           [actions.payload.vocabularyId]: true,
         },
       };
+    // Success
     case VOCABULARY_ACTIONS.ADD_SUCCESS:
       return {
         ...state,
@@ -75,6 +80,16 @@ export const vocabularyReducer = (
         isLoading: false,
         isLoadingMore: false,
       };
+    case VOCABULARY_ACTIONS.GET_MORE_SUCCESS:
+      return {
+        ...state,
+        vocabularies: removeDuplicateObjects<Vocabulary>(
+          state.vocabularies,
+          actions.payload.vocabularies,
+        ),
+        isLoading: false,
+        isLoadingLoadMore: false,
+      };
     case VOCABULARY_ACTIONS.DELETE_SUCCESS:
       return {
         ...state,
@@ -85,6 +100,7 @@ export const vocabularyReducer = (
           [actions.payload.vocabularyId]: false,
         },
       };
+    // Failure
     case VOCABULARY_ACTIONS.ADD_FAILURE:
     case VOCABULARY_ACTIONS.GET_FAILURE:
       return {

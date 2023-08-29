@@ -23,7 +23,7 @@ import './index.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { isLoadingTopic, topics, onAddTopic } = useContext(TopicContext);
+  const { isLoadingTopic, topics, onAddTopic, onGetTopics } = useContext(TopicContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
@@ -41,14 +41,15 @@ const Home = () => {
   /**
    * @description function add new topic
    */
-  const handleAddNewTopic = () => {
+  const handleAddNewTopic = (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const listError = validation(topicValue, true);
 
     if (listError.length) {
       setErrors(listError);
     } else {
       onAddTopic({
-        id: '1',
+        id: '', // id when posting, the MockAPI side will support generating the id
         name: topicValue,
         vocabularies: [],
       });
@@ -84,6 +85,10 @@ const Home = () => {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    onGetTopics();
+  }, [onGetTopics]);
+
   return (
     <Wrapper
       className='home'
@@ -101,12 +106,12 @@ const Home = () => {
           <Spinner />
         ) : (
           <>
-            {topics.map(({ id, name, vocabularies }) => (
+            {topics.map(({ id, name, vocabularyCount }) => (
               <Topic
                 id={id}
                 key={`topic-${uuidv4()}`}
                 name={name}
-                quantity={vocabularies?.length || 0}
+                quantity={vocabularyCount || 0}
                 onClick={handleOpenTopic}
               />
             ))}
@@ -125,7 +130,7 @@ const Home = () => {
           <Button variant='tertiary' size='xxl' onClick={handleOpenOverlay}>
             &Chi;
           </Button>
-          <div className='overlay-content'>
+          <form onSubmit={handleAddNewTopic} className='overlay-content'>
             <Typography size='xxl'>Add New Topic</Typography>
             <Input
               value={topicValue}
@@ -135,10 +140,10 @@ const Home = () => {
               errors={errors}
               ariaLabel='enter topic'
             />
-            <Button size='m' onClick={handleAddNewTopic}>
+            <Button type='submit' size='m'>
               Done
             </Button>
-          </div>
+          </form>
         </div>
       )}
     </Wrapper>
