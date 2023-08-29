@@ -40,7 +40,7 @@
 ### Information
 
 - Timeline
-  - Estimate days: 8 days
+  - Estimate days: 18 days
   - Actual days:
 - Techniques Stack:
   - [HTML5](https://developer.mozilla.org/en-US/docs/Glossary/HTML5)/[CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
