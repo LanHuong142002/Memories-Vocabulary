@@ -17,7 +17,7 @@ import { Testing } from '@pages';
 jest.useFakeTimers();
 const mockVocabularyContext = {
   isLoadingVocabularies: false,
-  isLoadingLoadMore: false,
+  isLoadingMore: false,
   isAdding: false,
   isLoadingQuizzes: false,
   errorsVocabulary: '',

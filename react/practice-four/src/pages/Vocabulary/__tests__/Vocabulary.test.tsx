@@ -22,7 +22,7 @@ jest.mock('react-router-dom', () => ({
 
 const mockVocabularyContext = {
   isLoadingVocabularies: false,
-  isLoadingLoadMore: false,
+  isLoadingMore: false,
   isAdding: false,
   isLoadingQuizzes: false,
   errorsVocabulary: '',

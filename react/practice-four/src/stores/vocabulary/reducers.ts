@@ -88,7 +88,7 @@ export const vocabularyReducer = (
           actions.payload.vocabularies,
         ),
         isLoading: false,
-        isLoadingLoadMore: false,
+        isLoadingMore: false,
       };
     case VOCABULARY_ACTIONS.DELETE_SUCCESS:
       return {
