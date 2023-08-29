@@ -18,9 +18,5 @@ export const setItems = <T>(key: string, value: T): void => {
 export const getItems = <T>(key: string): T | null => {
   const item = localStorage.getItem(key);
 
-  if (item) {
-    return JSON.parse(item);
-  } else {
-    return null;
-  }
+  return item ? JSON.parse(item) : null;
 };
