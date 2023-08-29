@@ -16,7 +16,7 @@ export interface VocabularyState {
   deletingById: {
     [id: string]: boolean;
   };
-  isLoadingLoadMore: boolean;
+  isLoadingMore: boolean;
   errors: string;
   vocabularies: Vocabulary[];
 }
@@ -25,7 +25,7 @@ export const initialVocabularyState: VocabularyState = {
   isLoading: false,
   isAdding: false,
   deletingById: {},
-  isLoadingLoadMore: false,
+  isLoadingMore: false,
   errors: '',
   vocabularies: [],
 };
@@ -57,7 +57,7 @@ export const vocabularyReducer = (
     case VOCABULARY_ACTIONS.GET_MORE_REQUEST:
       return {
         ...state,
-        isLoadingLoadMore: true,
+        isLoadingMore: true,
       };
     case VOCABULARY_ACTIONS.DELETE_REQUEST:
       return {
@@ -78,7 +78,7 @@ export const vocabularyReducer = (
         ...state,
         vocabularies: actions.payload.vocabularies,
         isLoading: false,
-        isLoadingLoadMore: false,
+        isLoadingMore: false,
       };
     case VOCABULARY_ACTIONS.GET_MORE_SUCCESS:
       return {
@@ -108,7 +108,7 @@ export const vocabularyReducer = (
         errors: actions.payload.errors,
         isLoading: false,
         isAdding: false,
-        isLoadingLoadMore: false,
+        isLoadingMore: false,
       };
     case VOCABULARY_ACTIONS.DELETE_FAILURE:
       return {

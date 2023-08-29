@@ -7,6 +7,7 @@ import { ToggleTheme, ToggleThemeProps } from '@components';
 const meta: Meta<typeof ToggleTheme> = {
   title: 'PracticeFour/ToggleTheme',
   component: ToggleTheme,
+  tags: ['autodocs'],
 };
 
 const Template: StoryFn<ToggleThemeProps> = () => {
