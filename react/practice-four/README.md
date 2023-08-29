@@ -83,6 +83,7 @@
 - Step 6:
   - To see website run: `$ pnpm run dev`
   - To see Storybook run: `$ pnpm run storybook`
+  - To see coverage of unit test: `pnpm run jest`
 - Step 7:
   - http://127.0.0.1:4000/ to see the website
   - http://localhost:6006 to see Storybook
