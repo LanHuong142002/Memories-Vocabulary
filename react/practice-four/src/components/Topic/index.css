@@ -1,4 +1,7 @@
 .topic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
   position: relative;
   text-align: center;
@@ -50,11 +53,16 @@
   background-color: var(--color-orange-100);
 }
 
-.topic .topic-icon span,
-.topic > span {
+.topic .topic-icon span {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.topic > p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
