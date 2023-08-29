@@ -34,7 +34,7 @@ export const Wrapper = ({
   const { onToggleTheme, theme } = useContext(ThemeContext);
   const { errorsVocabulary } = useContext(VocabularyContext);
   const { errorsTopic } = useContext(TopicContext);
-  const [toggle, setToggle] = useState<boolean>(theme === 'light' ? false : true);
+  const [toggle, setToggle] = useState<boolean>(!(theme === 'light'));
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const hasNotification = useMemo(
     () => showNotification && (errorsTopic || errorsVocabulary),

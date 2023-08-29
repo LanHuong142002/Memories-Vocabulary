@@ -159,8 +159,11 @@ const Vocabulary = () => {
         <>
           <Typography size='xl'>Make Vocabulary with Translation</Typography>
           <Typography color='secondary' size='xs'>
-            Add <Typography tagName='span'>(Min 5)</Typography> word of ENGLISH and Translate it
-            into VIETNAMESE.
+            Add{' '}
+            <Typography className='highlight' tagName='span'>
+              (Min 5)
+            </Typography>{' '}
+            words of ENGLISH and Translate it into VIETNAMESE.
           </Typography>
         </>
       }
