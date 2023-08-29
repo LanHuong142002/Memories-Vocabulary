@@ -25,7 +25,7 @@ const Vocabulary = () => {
   const navigate = useNavigate();
   const {
     isLoadingVocabularies,
-    isLoadingLoadMore,
+    isLoadingMore,
     isAdding,
     deletingById,
     vocabularies,
@@ -190,7 +190,7 @@ const Vocabulary = () => {
       </form>
       <TableVocabulary
         isLoading={isLoadingVocabularies}
-        isLoadingLoadMore={isLoadingLoadMore}
+        isLoadingMore={isLoadingMore}
         isAdding={isAdding}
         deletingById={deletingById}
         vocabularies={vocabularies}

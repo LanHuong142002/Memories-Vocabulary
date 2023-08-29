@@ -22,7 +22,7 @@ import './index.css';
 export interface TableVocabularyProps {
   isLoading: boolean;
   isAdding: boolean;
-  isLoadingLoadMore: boolean;
+  isLoadingMore: boolean;
   deletingById: {
     [id: string]: boolean;
   };
@@ -34,7 +34,7 @@ const TableVocabulary = memo(
   ({
     isLoading,
     isAdding,
-    isLoadingLoadMore,
+    isLoadingMore,
     deletingById,
     vocabularies,
     onClick,
@@ -70,7 +70,7 @@ const TableVocabulary = memo(
                     onClick={onClick}
                   />
                 ))}
-                {(isAdding || isLoadingLoadMore) && (
+                {(isAdding || isLoadingMore) && (
                   <TableRow>
                     <TableCell className='cell-loading' colspan={4}>
                       <Spinner size='s' />

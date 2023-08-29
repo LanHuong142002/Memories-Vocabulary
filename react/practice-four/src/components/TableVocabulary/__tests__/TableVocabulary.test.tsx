@@ -8,7 +8,7 @@ describe('Test table vocabulary component', () => {
     onClick: jest.fn(),
     isLoading: false,
     isAdding: false,
-    isLoadingLoadMore: false,
+    isLoadingMore: false,
     deletingById: {
       5: false,
     },

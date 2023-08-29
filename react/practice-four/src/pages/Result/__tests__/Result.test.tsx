@@ -13,7 +13,7 @@ import { Result } from '@pages';
 
 const mockVocabularyContext = {
   isLoadingVocabularies: false,
-  isLoadingLoadMore: false,
+  isLoadingMore: false,
   isAdding: false,
   isLoadingQuizzes: false,
   errorsVocabulary: '',

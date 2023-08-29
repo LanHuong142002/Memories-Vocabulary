@@ -34,7 +34,7 @@ describe('Test vocabulary reducer', () => {
       },
     });
 
-    expect(state.isLoadingLoadMore).toBe(false);
+    expect(state.isLoadingMore).toBe(false);
     expect(state.vocabularies.length).toBe(MOCK_VOCABULARIES.length);
   });
 
