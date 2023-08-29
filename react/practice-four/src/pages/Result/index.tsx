@@ -55,8 +55,8 @@ const Result = () => {
             <Label color='normal' name={`${percent}% percentage`} />
           </div>
           <div className='answers'>
-            <Label color='success' name={`${totalCorrectQuizzes} Right`} />
-            <Label color='failed' name={`${quizzes.length - totalCorrectQuizzes} Wrong`} />
+            <Label color='success' name={`${totalCorrectQuizzes} Rights`} />
+            <Label color='failed' name={`${quizzes.length - totalCorrectQuizzes} Wrongs`} />
           </div>
         </>
       }
