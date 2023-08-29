@@ -43,6 +43,7 @@
 }
 
 .typography-highlight {
+  color: var(--color-black-200);
   padding: 3px;
   border-radius: 3px;
   background-color: var(--color-yellow-100);

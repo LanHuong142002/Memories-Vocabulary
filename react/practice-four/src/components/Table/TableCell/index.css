@@ -1,4 +1,6 @@
 .table-cell {
+  min-width: 70px;
+  line-break: anywhere;
   text-align: center;
   vertical-align: middle;
   overflow-wrap: break-word;

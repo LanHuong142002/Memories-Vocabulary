@@ -21,7 +21,7 @@ const Topic = memo(
 
     return (
       <div className={`topic topic-${variant}`} onClick={handleOncLick}>
-        <p>{`${name} ${quantity > 0 ? `(${quantity})` : ''}`}</p>
+        <p>{`${name}`}</p> <span>{quantity > 0 ? `(${quantity})` : ''}</span>
         <div className='topic-icon'>
           <span>{isAddNew ? '\u002b' : ''}</span>
         </div>
