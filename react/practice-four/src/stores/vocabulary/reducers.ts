@@ -7,6 +7,9 @@ import { ActionVocabularies } from '@stores';
 // Constants
 import { VOCABULARY_ACTIONS } from '@constants';
 
+// Helpers
+import { removeDuplicateObjects } from '@helpers';
+
 export interface VocabularyState {
   isLoading: boolean;
   isAdding: boolean;
@@ -80,7 +83,10 @@ export const vocabularyReducer = (
     case VOCABULARY_ACTIONS.GET_MORE_SUCCESS:
       return {
         ...state,
-        vocabularies: [...state.vocabularies, ...actions.payload.vocabularies],
+        vocabularies: removeDuplicateObjects<Vocabulary>(
+          state.vocabularies,
+          actions.payload.vocabularies,
+        ),
         isLoading: false,
         isLoadingLoadMore: false,
       };
