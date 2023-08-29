@@ -6,6 +6,7 @@ import { Topic } from '@components';
 const meta: Meta<typeof Topic> = {
   title: 'PracticeFour/Topic',
   component: Topic,
+  tags: ['autodocs'],
   argTypes: {
     onClick: { action: 'clicked' },
     variant: {

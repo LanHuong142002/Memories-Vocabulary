@@ -6,6 +6,7 @@ import { Typography } from '@components';
 const meta: Meta<typeof Typography> = {
   title: 'PracticeFour/Typography',
   component: Typography,
+  tags: ['autodocs'],
   argTypes: {
     size: {
       control: { type: 'radio' },
