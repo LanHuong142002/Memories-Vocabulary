@@ -42,7 +42,7 @@ const TableResult = memo(({ result }: TableResultProps) => (
           key={`table-result-${uuidv4()}`}
           order={`${index + 1}`}
           answer={answer}
-          isSuccess={!!(answer === vietnamese)}
+          isSuccess={!!((answer || '').toLowerCase() === vietnamese.toLowerCase())}
           english={english}
           vietnamese={vietnamese}
         />
