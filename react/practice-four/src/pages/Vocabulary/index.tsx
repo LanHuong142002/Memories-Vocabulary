@@ -200,13 +200,8 @@ const Vocabulary = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        {!(vocabularies.length < 20) && (
-          <Button
-            className='button-load-more'
-            label='Load More'
-            onClick={handleLoadMore}
-            isDisabled={isDisabledButtonLoadMore}
-          />
+        {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
+          <Button className='button-load-more' label='Load More' onClick={handleLoadMore} />
         )}
         <Button
           label='Start Test'
