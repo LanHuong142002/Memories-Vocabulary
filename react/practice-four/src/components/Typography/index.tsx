@@ -1,14 +1,17 @@
 import { ReactNode, memo } from 'react';
 
+// Constants
+import { SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_TEXT_ALIGN, VARIANT } from '@constants';
+
 // Styles
 import './index.css';
 
 interface TypographyProps {
-  textAlign?: 'center' | 'right' | 'left';
+  textAlign?: TYPOGRAPHY_TEXT_ALIGN;
   className?: 'highlight';
-  size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
-  color?: 'primary' | 'secondary' | 'tertiary';
-  tagName?: 'p' | 'span';
+  size?: SIZE;
+  color?: VARIANT.PRIMARY | VARIANT.SECONDARY | VARIANT.TERTIARY;
+  tagName?: TYPOGRAPHY_TAG_NAME;
   children: ReactNode;
 }
 
@@ -16,9 +19,9 @@ const Typography = memo(
   ({
     textAlign,
     className,
-    size = 'xs',
-    color = 'primary',
-    tagName: TagName = 'p',
+    size = SIZE.XS,
+    color = VARIANT.PRIMARY,
+    tagName: TagName = TYPOGRAPHY_TAG_NAME.P,
     children,
   }: TypographyProps) => (
     <TagName

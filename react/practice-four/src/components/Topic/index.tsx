@@ -1,5 +1,7 @@
-// Styles
 import { memo } from 'react';
+
+// Constants
+import { TOPIC_VARIANT } from '@constants';
 
 // Styles
 import './index.css';
@@ -9,12 +11,19 @@ interface TopicProps {
   isAddNew?: boolean;
   quantity?: number;
   name: string;
-  variant?: 'default' | 'selected';
+  variant?: TOPIC_VARIANT.DEFAULT | TOPIC_VARIANT.SELECTED;
   onClick: (id?: string) => void;
 }
 
 const Topic = memo(
-  ({ id, isAddNew = false, quantity = 0, name, variant = 'default', onClick }: TopicProps) => {
+  ({
+    id,
+    isAddNew = false,
+    quantity = 0,
+    name,
+    variant = TOPIC_VARIANT.DEFAULT,
+    onClick,
+  }: TopicProps) => {
     const handleOncLick = () => {
       onClick(id);
     };

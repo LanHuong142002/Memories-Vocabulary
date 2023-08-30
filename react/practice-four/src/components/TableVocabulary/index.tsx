@@ -4,6 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
+// Constants
+import { SIZE, TYPOGRAPHY_TAG_NAME, VARIANT } from '@constants';
+
 // Components
 import {
   Spinner,
@@ -52,7 +55,7 @@ const TableVocabulary = memo(
         {isLoading ? (
           <TableRow>
             <TableCell className='cell-loading' colspan={4}>
-              <Spinner size='s' />
+              <Spinner size={SIZE.S} />
             </TableCell>
           </TableRow>
         ) : (
@@ -73,7 +76,7 @@ const TableVocabulary = memo(
                 {(isAdding || isLoadingMore) && (
                   <TableRow>
                     <TableCell className='cell-loading' colspan={4}>
-                      <Spinner size='s' />
+                      <Spinner size={SIZE.S} />
                     </TableCell>
                   </TableRow>
                 )}
@@ -81,9 +84,9 @@ const TableVocabulary = memo(
             ) : (
               <TableRow>
                 <TableCell colspan={4}>
-                  <Typography color='secondary' size='xs'>
+                  <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
                     Fill All Filed At Above And Press{' '}
-                    <Typography className='highlight' tagName='span'>
+                    <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
                       ENTER
                     </Typography>{' '}
                     key or button Add

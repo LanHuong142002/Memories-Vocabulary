@@ -1,6 +1,9 @@
 import { ChangeEvent, memo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+// Constants
+import { VARIANT } from '@constants';
+
 // Styles
 import './index.css';
 
@@ -12,7 +15,7 @@ interface InputProps {
   placeholder?: string;
   errors?: string[] | null;
   name?: string;
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: VARIANT.PRIMARY | VARIANT.SECONDARY | VARIANT.TERTIARY;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,7 +28,7 @@ const Input = memo(
     name,
     errors,
     dataTestId,
-    variant = 'primary',
+    variant = VARIANT.PRIMARY,
     onChange,
   }: InputProps) => (
     <div
