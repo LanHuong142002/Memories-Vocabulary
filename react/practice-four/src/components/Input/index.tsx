@@ -34,7 +34,9 @@ const Input = memo(
       }`}
     >
       {variant !== 'primary' && (
-        <span className={errors && errors.length > 0 ? 'title-error' : ''}>{title}</span>
+        <div className='title-error-wrapper'>
+          <span className={errors && errors.length > 0 ? 'title-error' : ''}>{title}</span>
+        </div>
       )}
       <input
         className={`input input-${variant}`}

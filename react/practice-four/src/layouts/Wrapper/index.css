@@ -27,7 +27,7 @@
 
 .wrapper-container {
   min-height: calc(100vh - 70px - 120px);
-  padding: 60px 0;
+  padding: 60px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,7 +35,7 @@
 }
 
 .wrapper-box {
-  width: 90%;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -65,11 +65,6 @@
 }
 
 @media screen and (min-width: 600px) {
-  .wrapper-box {
-    padding: 50px 10px;
-    width: 95%;
-  }
-
   .wrapper-content {
     width: 500px;
   }
@@ -77,14 +72,13 @@
 
 @media screen and (min-width: 800px) {
   .wrapper-box {
-    width: 65%;
+    width: 800px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .wrapper-box {
-    padding: 50px 100px;
-    width: 60%;
+    width: 1200px;
   }
 
   .wrapper-content {
