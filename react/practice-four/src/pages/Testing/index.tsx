@@ -5,7 +5,7 @@ import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } fr
 import { VocabularyContext } from '@contexts';
 
 // Constants
-import { ROUTES } from '@constants';
+import { BUTTON_TYPE, ROUTES, SIZE, TYPOGRAPHY_TEXT_ALIGN, VARIANT } from '@constants';
 
 // Hooks
 import { useDebounce } from '@hooks';
@@ -111,8 +111,8 @@ const Testing = () => {
       className='testing'
       childrenTitle={
         <>
-          <Typography size='xl'>Quiz</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={SIZE.XL}>Quiz</Typography>
+          <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
             Give answers of <span className='testing-questions'>{quizzes.length} questions</span>.
             You have to translate English into Vietnamese
           </Typography>
@@ -126,11 +126,15 @@ const Testing = () => {
       ) : (
         <form onSubmit={handleSubmit} className='testing-content'>
           <ProcessBar step={step + 1} totalStep={quizzes.length} />
-          <Typography color='primary' size='m' textAlign='center'>
+          <Typography
+            color={VARIANT.PRIMARY}
+            size={SIZE.M}
+            textAlign={TYPOGRAPHY_TEXT_ALIGN.CENTER}
+          >
             {quizValue}
           </Typography>
           <Input
-            variant='tertiary'
+            variant={VARIANT.TERTIARY}
             value={value}
             onChange={handleOnChange}
             errors={errors}
@@ -139,7 +143,7 @@ const Testing = () => {
             ariaLabel='Enter your answer'
           />
           <div className='testing-actions'>
-            <Button type='submit' size='xs'>
+            <Button type={BUTTON_TYPE.SUBMIT} size={SIZE.XS}>
               {buttonValue}
             </Button>
           </div>

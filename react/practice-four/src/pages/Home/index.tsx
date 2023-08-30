@@ -6,7 +6,7 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import { TopicContext } from '@contexts';
 
 // Constants
-import { ROUTES } from '@constants';
+import { BUTTON_TYPE, ROUTES, SIZE, VARIANT, TOPIC_VARIANT } from '@constants';
 
 // Helpers
 import { validation } from '@helpers';
@@ -94,8 +94,8 @@ const Home = () => {
       className='home'
       childrenTitle={
         <>
-          <Typography size='xl'>Add &amp; Select Topic</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={SIZE.XL}>Add &amp; Select Topic</Typography>
+          <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
             Please choose a topic or create a new topic
           </Typography>
         </>
@@ -116,7 +116,7 @@ const Home = () => {
               />
             ))}
             <Topic
-              variant='selected'
+              variant={TOPIC_VARIANT.SELECTED}
               name='Add Topic'
               isAddNew={true}
               onClick={handleOpenOverlay}
@@ -127,20 +127,20 @@ const Home = () => {
 
       {isOpenOverlay && (
         <div className='overlay'>
-          <Button variant='tertiary' size='xxl' onClick={handleOpenOverlay}>
+          <Button variant={VARIANT.TERTIARY} size={SIZE.XXL} onClick={handleOpenOverlay}>
             &Chi;
           </Button>
           <form onSubmit={handleAddNewTopic} className='overlay-content'>
-            <Typography size='xxl'>Add New Topic</Typography>
+            <Typography size={SIZE.XXL}>Add New Topic</Typography>
             <Input
               value={topicValue}
-              variant='primary'
+              variant={VARIANT.PRIMARY}
               placeholder='Topic Name'
               onChange={handleOnChange}
               errors={errors}
               ariaLabel='enter topic'
             />
-            <Button type='submit' size='m'>
+            <Button type={BUTTON_TYPE.SUBMIT} size={SIZE.M}>
               Done
             </Button>
           </form>

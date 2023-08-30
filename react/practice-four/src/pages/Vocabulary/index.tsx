@@ -11,7 +11,7 @@ import { useDebounce } from '@hooks';
 import { validation } from '@helpers';
 
 // Constants
-import { ROUTES } from '@constants';
+import { BUTTON_TYPE, ROUTES, SIZE, TYPOGRAPHY_TAG_NAME, VARIANT } from '@constants';
 
 // Components
 import { Button, Input, TableVocabulary, Typography } from '@components';
@@ -157,10 +157,10 @@ const Vocabulary = () => {
       className='vocabularies'
       childrenTitle={
         <>
-          <Typography size='xl'>Make Vocabulary with Translation</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={SIZE.XL}>Make Vocabulary with Translation</Typography>
+          <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
             Add{' '}
-            <Typography className='highlight' tagName='span'>
+            <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
               (Min 5)
             </Typography>{' '}
             words of ENGLISH and Translate it into VIETNAMESE.
@@ -171,7 +171,7 @@ const Vocabulary = () => {
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'
-          variant='secondary'
+          variant={VARIANT.SECONDARY}
           onChange={handleOnChangeENG}
           value={valueENG!}
           errors={errorsENG}
@@ -181,7 +181,7 @@ const Vocabulary = () => {
         />
         <Input
           title='In Vietnamese'
-          variant='secondary'
+          variant={VARIANT.SECONDARY}
           onChange={handleOnChangeVIE}
           value={valueVIE!}
           errors={errorsVIE}
@@ -189,7 +189,7 @@ const Vocabulary = () => {
           dataTestId='input-vietnamese'
           ariaLabel='enter vietnamese'
         />
-        <Button type='submit' label='Add' />
+        <Button type={BUTTON_TYPE.SUBMIT} label='Add' />
       </form>
       <TableVocabulary
         isLoading={isLoadingVocabularies}
@@ -210,7 +210,7 @@ const Vocabulary = () => {
         )}
         <Button
           label='Start Test'
-          size='m'
+          size={SIZE.M}
           isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />
