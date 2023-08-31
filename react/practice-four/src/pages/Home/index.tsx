@@ -6,7 +6,16 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import { TopicContext } from '@contexts';
 
 // Constants
-import { ROUTES } from '@constants';
+import {
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  BUTTON_VARIANT,
+  INPUT_VARIANT,
+  ROUTES,
+  TOPIC_VARIANT,
+  TYPOGRAPHY_SIZE,
+  TYPOGRAPHY_VARIANT,
+} from '@constants';
 
 // Helpers
 import { validation } from '@helpers';
@@ -94,8 +103,8 @@ const Home = () => {
       className='home'
       childrenTitle={
         <>
-          <Typography size='xl'>Add &amp; Select Topic</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Add &amp; Select Topic</Typography>
+          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Please choose a topic or create a new topic
           </Typography>
         </>
@@ -116,7 +125,7 @@ const Home = () => {
               />
             ))}
             <Topic
-              variant='selected'
+              variant={TOPIC_VARIANT.SELECTED}
               name='Add Topic'
               isAddNew={true}
               onClick={handleOpenOverlay}
@@ -127,20 +136,24 @@ const Home = () => {
 
       {isOpenOverlay && (
         <div className='overlay'>
-          <Button variant='tertiary' size='xxl' onClick={handleOpenOverlay}>
+          <Button
+            variant={BUTTON_VARIANT.TERTIARY}
+            size={BUTTON_SIZE.XXL}
+            onClick={handleOpenOverlay}
+          >
             &Chi;
           </Button>
           <form onSubmit={handleAddNewTopic} className='overlay-content'>
-            <Typography size='xxl'>Add New Topic</Typography>
+            <Typography size={TYPOGRAPHY_SIZE.XXL}>Add New Topic</Typography>
             <Input
               value={topicValue}
-              variant='primary'
+              variant={INPUT_VARIANT.PRIMARY}
               placeholder='Topic Name'
               onChange={handleOnChange}
               errors={errors}
               ariaLabel='enter topic'
             />
-            <Button type='submit' size='m'>
+            <Button type={BUTTON_TYPE.SUBMIT} size={BUTTON_SIZE.M}>
               Done
             </Button>
           </form>

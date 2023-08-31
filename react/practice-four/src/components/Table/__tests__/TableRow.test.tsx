@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react';
 
+// Constants
+import { TABLE_ROW_SIZE } from '@constants';
+
 // Components
 import { TableRow } from '@components';
 
@@ -28,7 +31,7 @@ describe('Testing Table row component', () => {
     const { getByText } = render(
       <table>
         <tbody>
-          <TableRow size='s'>{children}</TableRow>
+          <TableRow size={TABLE_ROW_SIZE.S}>{children}</TableRow>
         </tbody>
       </table>,
     );

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Vocabulary } from '@interfaces';
 
 // Constants
-import { SIZE, TYPOGRAPHY_TAG_NAME, VARIANT } from '@constants';
+import { SPINNER_SIZE, TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Components
 import {
@@ -55,7 +55,7 @@ const TableVocabulary = memo(
         {isLoading ? (
           <TableRow>
             <TableCell className='cell-loading' colspan={4}>
-              <Spinner size={SIZE.S} />
+              <Spinner size={SPINNER_SIZE.S} />
             </TableCell>
           </TableRow>
         ) : (
@@ -76,7 +76,7 @@ const TableVocabulary = memo(
                 {(isAdding || isLoadingMore) && (
                   <TableRow>
                     <TableCell className='cell-loading' colspan={4}>
-                      <Spinner size={SIZE.S} />
+                      <Spinner size={SPINNER_SIZE.S} />
                     </TableCell>
                   </TableRow>
                 )}
@@ -84,7 +84,7 @@ const TableVocabulary = memo(
             ) : (
               <TableRow>
                 <TableCell colspan={4}>
-                  <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
+                  <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
                     Fill All Filed At Above And Press{' '}
                     <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
                       ENTER
