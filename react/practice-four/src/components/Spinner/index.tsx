@@ -1,18 +1,18 @@
 import { ReactElement, memo } from 'react';
 
 // Constants
-import { SIZE, VARIANT } from '@constants';
+import { SPINNER_SIZE, SPINNER_VARIANT } from '@constants';
 
 // Styles
 import './index.css';
 
 interface SpinnerType {
-  variant?: VARIANT.PRIMARY;
-  size?: SIZE.M | SIZE.S;
+  variant?: SPINNER_VARIANT;
+  size?: SPINNER_SIZE;
 }
 
 const Spinner = memo(
-  ({ variant, size = SIZE.M }: SpinnerType): ReactElement => (
+  ({ variant, size = SPINNER_SIZE.M }: SpinnerType): ReactElement => (
     <div className={`spinner-wrapper${variant ? `-${variant}` : ''} spinner spinner-${size}`} />
   ),
 );

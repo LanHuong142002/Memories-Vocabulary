@@ -11,7 +11,7 @@ import { TopicProvider, VocabularyProvider } from '@contexts';
 import { Routers } from '@routes';
 
 // Constants
-import { VARIANT } from '@constants';
+import { SPINNER_VARIANT } from '@constants';
 
 // Components
 import { Spinner } from '@components';
@@ -23,7 +23,7 @@ export const App = () => {
     <main className={`container ${theme}`}>
       <TopicProvider>
         <VocabularyProvider>
-          <Suspense fallback={<Spinner variant={VARIANT.PRIMARY} />}>
+          <Suspense fallback={<Spinner variant={SPINNER_VARIANT.PRIMARY} />}>
             <Routes>
               {Routers.map(({ path, element }) => (
                 <Route key={path} path={path} element={element} />

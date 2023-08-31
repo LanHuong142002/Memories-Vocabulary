@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 
 // Constants
-import { VARIANT } from '@constants';
+import { BUTTON_VARIANT } from '@constants';
 
 // Components
 import { Button } from '@components';
@@ -25,7 +25,7 @@ describe('Test button component', () => {
   });
 
   it('Should call onClick when click button component', () => {
-    const { getByText } = render(<Button variant={VARIANT.SECONDARY} {...defaultProps} />);
+    const { getByText } = render(<Button variant={BUTTON_VARIANT.SECONDARY} {...defaultProps} />);
 
     const button = getByText('Back to Vocabulary List');
     fireEvent.click(button);

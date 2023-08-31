@@ -6,7 +6,16 @@ import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react
 import { TopicContext } from '@contexts';
 
 // Constants
-import { BUTTON_TYPE, ROUTES, SIZE, VARIANT, TOPIC_VARIANT } from '@constants';
+import {
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  BUTTON_VARIANT,
+  INPUT_VARIANT,
+  ROUTES,
+  TOPIC_VARIANT,
+  TYPOGRAPHY_SIZE,
+  TYPOGRAPHY_VARIANT,
+} from '@constants';
 
 // Helpers
 import { validation } from '@helpers';
@@ -94,8 +103,8 @@ const Home = () => {
       className='home'
       childrenTitle={
         <>
-          <Typography size={SIZE.XL}>Add &amp; Select Topic</Typography>
-          <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Add &amp; Select Topic</Typography>
+          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Please choose a topic or create a new topic
           </Typography>
         </>
@@ -127,20 +136,24 @@ const Home = () => {
 
       {isOpenOverlay && (
         <div className='overlay'>
-          <Button variant={VARIANT.TERTIARY} size={SIZE.XXL} onClick={handleOpenOverlay}>
+          <Button
+            variant={BUTTON_VARIANT.TERTIARY}
+            size={BUTTON_SIZE.XXL}
+            onClick={handleOpenOverlay}
+          >
             &Chi;
           </Button>
           <form onSubmit={handleAddNewTopic} className='overlay-content'>
-            <Typography size={SIZE.XXL}>Add New Topic</Typography>
+            <Typography size={TYPOGRAPHY_SIZE.XXL}>Add New Topic</Typography>
             <Input
               value={topicValue}
-              variant={VARIANT.PRIMARY}
+              variant={INPUT_VARIANT.PRIMARY}
               placeholder='Topic Name'
               onChange={handleOnChange}
               errors={errors}
               ariaLabel='enter topic'
             />
-            <Button type={BUTTON_TYPE.SUBMIT} size={SIZE.M}>
+            <Button type={BUTTON_TYPE.SUBMIT} size={BUTTON_SIZE.M}>
               Done
             </Button>
           </form>

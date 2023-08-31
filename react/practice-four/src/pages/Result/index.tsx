@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { VocabularyContext } from '@contexts';
 
 // Constants
-import { LABEL_COLOR, ROUTES, SIZE } from '@constants';
+import { BUTTON_SIZE, LABEL_COLOR, ROUTES, TYPOGRAPHY_SIZE } from '@constants';
 
 // Layouts
 import { Wrapper } from '@layouts';
@@ -50,7 +50,7 @@ const Result = () => {
       className='result'
       childrenTitle={
         <>
-          <Typography size={SIZE.XL}>Quiz Result</Typography>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
           <div className='total'>
             <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
           </div>
@@ -67,7 +67,7 @@ const Result = () => {
       <div className='table-box'>
         <TableResult result={result} />
         <Link to={`${ROUTES.VOCABULARY}/${id}`}>
-          <Button size={SIZE.S} label='Back to Vocabulary List' />
+          <Button size={BUTTON_SIZE.S} label='Back to Vocabulary List' />
         </Link>
       </div>
     </Wrapper>

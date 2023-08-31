@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Vocabulary } from '@interfaces';
 
 // Constants
-import { SIZE, VARIANT } from '@constants';
+import { BUTTON_VARIANT, SPINNER_SIZE } from '@constants';
 
 // Components
 import { Button, Spinner, TableCell, TableRow } from '@components';
@@ -25,7 +25,7 @@ const TableRowVocabulary = memo(
       <TableRow>
         {isLoading ? (
           <TableCell className='cell-loading' colspan={4}>
-            <Spinner size={SIZE.S} />
+            <Spinner size={SPINNER_SIZE.S} />
           </TableCell>
         ) : (
           <>
@@ -33,7 +33,7 @@ const TableRowVocabulary = memo(
             <TableCell tagName='td'>{english}</TableCell>
             <TableCell tagName='td'>{vietnamese}</TableCell>
             <TableCell tagName='td'>
-              <Button variant={VARIANT.SECONDARY} onClick={handleOnClick}>
+              <Button variant={BUTTON_VARIANT.SECONDARY} onClick={handleOnClick}>
                 X
               </Button>
             </TableCell>

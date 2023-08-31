@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 // Constants
-import { VARIANT } from '@constants';
+import { SPINNER_VARIANT } from '@constants';
 
 // Components
 import { Spinner } from '@components';
@@ -14,7 +14,7 @@ describe('Testing spinner', () => {
   });
 
   it('Should render spinner primary component', () => {
-    const { container } = render(<Spinner variant={VARIANT.PRIMARY} />);
+    const { container } = render(<Spinner variant={SPINNER_VARIANT.PRIMARY} />);
 
     expect(container).toBeInTheDocument();
   });

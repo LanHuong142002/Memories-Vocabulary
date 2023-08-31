@@ -14,7 +14,7 @@ import {
 import { VocabularyContext, ThemeContext, TopicContext } from '@contexts';
 
 // Constants
-import { ROUTES, SIZE, VARIANT } from '@constants';
+import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
 
 // Components
 import { Button, Notification, ToggleTheme } from '@components';
@@ -59,7 +59,7 @@ export const Wrapper = ({
     <div className='wrapper-header'>
       <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
       <Link to={ROUTES.HOME}>
-        <Button variant={VARIANT.PRIMARY} size={SIZE.XS}>
+        <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
           Back to Home
         </Button>
       </Link>

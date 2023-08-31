@@ -2,7 +2,7 @@
 import { Typography } from '@components';
 
 // Constants
-import { SIZE, VARIANT } from '@constants';
+import { TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Styles
 import './index.css';
@@ -10,8 +10,8 @@ import './index.css';
 const Error = () => (
   <div className='container'>
     <div className='error-content'>
-      <Typography size={SIZE.XXL}>404</Typography>
-      <Typography color={VARIANT.SECONDARY} size={SIZE.L}>
+      <Typography size={TYPOGRAPHY_SIZE.XXL}>404</Typography>
+      <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.L}>
         Something went wrong!
       </Typography>
     </div>

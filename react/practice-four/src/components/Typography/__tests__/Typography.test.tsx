@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 // Constants
-import { SIZE, TYPOGRAPHY_TAG_NAME, VARIANT } from '@constants';
+import { TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Components
 import { Typography } from '@components';
@@ -9,7 +9,11 @@ import { Typography } from '@components';
 describe('Test typography component', () => {
   it('Should render typography component', () => {
     const { container, getByText } = render(
-      <Typography color={VARIANT.PRIMARY} tagName={TYPOGRAPHY_TAG_NAME.P} size={SIZE.XS}>
+      <Typography
+        color={TYPOGRAPHY_VARIANT.PRIMARY}
+        tagName={TYPOGRAPHY_TAG_NAME.P}
+        size={TYPOGRAPHY_SIZE.XS}
+      >
         Lorem
       </Typography>,
     );

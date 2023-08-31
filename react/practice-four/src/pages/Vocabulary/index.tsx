@@ -11,7 +11,15 @@ import { useDebounce } from '@hooks';
 import { validation } from '@helpers';
 
 // Constants
-import { BUTTON_TYPE, ROUTES, SIZE, TYPOGRAPHY_TAG_NAME, VARIANT } from '@constants';
+import {
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  INPUT_VARIANT,
+  ROUTES,
+  TYPOGRAPHY_SIZE,
+  TYPOGRAPHY_TAG_NAME,
+  TYPOGRAPHY_VARIANT,
+} from '@constants';
 
 // Components
 import { Button, Input, TableVocabulary, Typography } from '@components';
@@ -157,8 +165,8 @@ const Vocabulary = () => {
       className='vocabularies'
       childrenTitle={
         <>
-          <Typography size={SIZE.XL}>Make Vocabulary with Translation</Typography>
-          <Typography color={VARIANT.SECONDARY} size={SIZE.XS}>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
+          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Add{' '}
             <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
               (Min 5)
@@ -171,7 +179,7 @@ const Vocabulary = () => {
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'
-          variant={VARIANT.SECONDARY}
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeENG}
           value={valueENG!}
           errors={errorsENG}
@@ -181,7 +189,7 @@ const Vocabulary = () => {
         />
         <Input
           title='In Vietnamese'
-          variant={VARIANT.SECONDARY}
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeVIE}
           value={valueVIE!}
           errors={errorsVIE}
@@ -210,7 +218,7 @@ const Vocabulary = () => {
         )}
         <Button
           label='Start Test'
-          size={SIZE.M}
+          size={BUTTON_SIZE.M}
           isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />
