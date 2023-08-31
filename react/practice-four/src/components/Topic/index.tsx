@@ -11,7 +11,7 @@ interface TopicProps {
   isAddNew?: boolean;
   quantity?: number;
   name: string;
-  variant?: TOPIC_VARIANT.DEFAULT | TOPIC_VARIANT.SELECTED;
+  variant?: TOPIC_VARIANT;
   onClick: (id?: string) => void;
 }
 

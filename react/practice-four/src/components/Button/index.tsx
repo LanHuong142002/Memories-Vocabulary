@@ -1,7 +1,7 @@
 import { ReactNode, memo } from 'react';
 
 // Constants
-import { BUTTON_TYPE, SIZE, VARIANT } from '@constants';
+import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '@constants';
 
 // Styles
 import './index.css';
@@ -11,8 +11,8 @@ interface ButtonProps {
   label?: string;
   className?: string;
   type?: BUTTON_TYPE;
-  variant?: VARIANT.PRIMARY | VARIANT.SECONDARY | VARIANT.TERTIARY;
-  size?: SIZE.XS | SIZE.S | SIZE.M | SIZE.XXL;
+  variant?: BUTTON_VARIANT;
+  size?: BUTTON_SIZE;
   onClick?: () => void;
   children?: ReactNode;
 }
@@ -23,8 +23,8 @@ const Button = memo(
     label,
     className,
     type = BUTTON_TYPE.BUTTON,
-    size = SIZE.S,
-    variant = VARIANT.PRIMARY,
+    size = BUTTON_SIZE.S,
+    variant = BUTTON_VARIANT.PRIMARY,
     onClick,
     children,
   }: ButtonProps) => (
