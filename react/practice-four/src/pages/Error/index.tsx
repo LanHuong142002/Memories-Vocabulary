@@ -1,9 +1,11 @@
 // Components
 import { Typography } from '@components';
 
+// Constants
+import { TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
+
 // Styles
 import './index.css';
-import { TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 const Error = () => (
   <div className='container'>

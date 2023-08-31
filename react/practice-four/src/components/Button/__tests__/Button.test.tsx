@@ -1,8 +1,10 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 
+// Constants
+import { BUTTON_VARIANT } from '@constants';
+
 // Components
 import { Button } from '@components';
-import { BUTTON_VARIANT } from '@constants';
 
 describe('Test button component', () => {
   afterEach(() => {

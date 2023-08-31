@@ -1,8 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
 
+// Constants
+import { INPUT_VARIANT } from '@constants';
+
 // Components
 import { Input } from '@components';
-import { INPUT_VARIANT } from '@constants';
 
 describe('Test input component', () => {
   const handleChange = jest.fn();
