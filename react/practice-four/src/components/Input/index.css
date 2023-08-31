@@ -99,6 +99,7 @@
 }
 
 .input-wrapper.input-tertiary .error-wrapper {
+  /* 160px is width of field error */
   width: 160px;
   height: 35px;
   line-height: 35px;
@@ -116,6 +117,7 @@
 
 .input-wrapper.input-tertiary > input {
   height: 35px;
+  /* 160px is width of field error */
   width: calc(100% - 160px);
   box-sizing: border-box;
   padding: 0 5px;
@@ -131,11 +133,15 @@
 @media screen and (min-width: 600px) {
   .input-wrapper.input-tertiary .title-error-wrapper {
     display: block;
+    /* 90px is width of label*/
     width: 90px;
     font-size: var(--font-size-xs);
   }
 
   .input-wrapper.input-tertiary > input {
+    /* 90px is width of label
+     * 160px is width of field error
+    */
     width: calc(100% - 160px - 90px);
   }
 }
