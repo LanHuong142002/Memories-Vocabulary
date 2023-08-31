@@ -1,28 +1,5 @@
-.table-cell {
-  min-width: 70px;
-  line-break: anywhere;
-  text-align: center;
-  vertical-align: middle;
-  overflow-wrap: break-word;
-  padding: 8px;
-  height: 100%;
+.cell {
   box-sizing: border-box;
-  overflow-wrap: break-word;
-}
-
-.table-cell-border .table-cell {
-  border: 1px solid var(--color-black-500);
-}
-
-.table-cell-success,
-.table-cell-failed {
-  color: var(--table-text-color-secondary);
-}
-
-.table-cell-success {
-  background-color: var(--color-green-200);
-}
-
-.table-cell-failed {
-  background-color: var(--color-red-500);
+  padding: 8px;
+  line-break: anywhere;
 }

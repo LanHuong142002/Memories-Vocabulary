@@ -21,15 +21,15 @@ const TableRowVocabulary = memo(
     return (
       <TableRow>
         {isLoading ? (
-          <TableCell className='cell-loading' colspan={4}>
+          <TableCell className='cell-loading'>
             <Spinner size='s' />
           </TableCell>
         ) : (
           <>
-            <TableCell tagName='td'>{order}</TableCell>
-            <TableCell tagName='td'>{english}</TableCell>
-            <TableCell tagName='td'>{vietnamese}</TableCell>
-            <TableCell tagName='td'>
+            <TableCell>{order}</TableCell>
+            <TableCell>{english}</TableCell>
+            <TableCell>{vietnamese}</TableCell>
+            <TableCell>
               <Button variant='secondary' onClick={handleOnClick}>
                 X
               </Button>
