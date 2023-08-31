@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
 import * as reactRouter from 'react-router-dom';
@@ -31,13 +31,13 @@ const mockVocabularyContext = {
   },
   vocabularies: MOCK_VOCABULARIES,
   quizzes: [],
-  onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),
   onGetVocabularies: jest.fn(),
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
   onLoadMore: jest.fn(),
+  onCheckEnglishIsExisted: jest.fn().mockResolvedValue(false),
 };
 
 const VocabularyComponent = ({
@@ -69,9 +69,8 @@ describe('Test Vocabulary Page', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Should Add new vocabulary when enter in two input', () => {
+  it('Should Add new vocabulary when enter in two input', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
-
     const { getByTestId, getByText } = render(
       <VocabularyComponent>
         <Vocabulary />
@@ -85,9 +84,12 @@ describe('Test Vocabulary Page', () => {
       preventDefault: jest.fn(),
       target: [inputENG, inputVIE],
     };
-    fireEvent.change(inputENG, { target: { value: 'Text' } });
-    fireEvent.change(inputVIE, { target: { value: 'Text' } });
-    fireEvent.submit(buttonStartTest, eventMock);
+
+    await act(() => {
+      fireEvent.change(inputENG, { target: { value: 'Text' } });
+      fireEvent.change(inputVIE, { target: { value: 'Text' } });
+      fireEvent.submit(buttonStartTest, eventMock);
+    });
 
     expect(inputENG).toHaveValue('');
     expect(inputVIE).toHaveValue('');
