@@ -23,7 +23,7 @@ describe('Test table cell component', () => {
       <table>
         <tbody>
           <tr>
-            <TableCell tagName='th' color='failed' className='test'>
+            <TableCell color='failed' className='test'>
               Test
             </TableCell>
           </tr>

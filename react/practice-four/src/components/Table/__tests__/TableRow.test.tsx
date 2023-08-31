@@ -28,7 +28,7 @@ describe('Testing Table row component', () => {
     const { getByText } = render(
       <table>
         <tbody>
-          <TableRow size='s'>{children}</TableRow>
+          <TableRow>{children}</TableRow>
         </tbody>
       </table>,
     );
