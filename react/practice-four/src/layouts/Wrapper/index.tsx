@@ -22,7 +22,7 @@ import { Button, Notification, ToggleTheme } from '@components';
 // Styles
 import './index.css';
 
-export const Wrapper = ({
+const Wrapper = ({
   className,
   children,
   childrenTitle,
@@ -55,17 +55,6 @@ export const Wrapper = ({
     [onToggleTheme],
   );
 
-  const WrapperHeader = memo(() => (
-    <div className='wrapper-header'>
-      <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-      <Link to={ROUTES.HOME}>
-        <Button variant='primary' size='xs'>
-          Back to Home
-        </Button>
-      </Link>
-    </div>
-  ));
-
   const MemoizedTitle = memo(({ children }: { children: ReactNode }) => (
     <div className='description'>{children}</div>
   ));
@@ -82,7 +71,21 @@ export const Wrapper = ({
 
   return (
     <div className={`wrapper wrapper-${className}-page`}>
-      <WrapperHeader />
+      {useMemo(
+        () => (
+          <div className='wrapper-header'>
+            <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
+            {window.location.pathname !== ROUTES.HOME && (
+              <Link to={ROUTES.HOME}>
+                <Button variant='primary' size='xs'>
+                  Back to Home
+                </Button>
+              </Link>
+            )}
+          </div>
+        ),
+        [handleToggleTheme, toggle],
+      )}
       <div className='wrapper-container'>
         <div className='wrapper-box'>
           <div className='wrapper-content'>
@@ -97,3 +100,5 @@ export const Wrapper = ({
     </div>
   );
 };
+
+export default Wrapper;

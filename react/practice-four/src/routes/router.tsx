@@ -4,6 +4,9 @@ import { RouteObject } from 'react-router-dom';
 // Constants
 import { ROUTES } from '@constants';
 
+// Contexts
+import { TopicProvider, VocabularyProvider } from '@contexts';
+
 // Pages
 const Home = lazy(() => import('@pages/Home'));
 const Vocabulary = lazy(() => import('@pages/Vocabulary'));
@@ -13,18 +16,34 @@ const Result = lazy(() => import('@pages/Result'));
 export const Routers: RouteObject[] = [
   {
     path: ROUTES.HOME,
-    element: <Home />,
+    element: (
+      <TopicProvider>
+        <Home />
+      </TopicProvider>
+    ),
   },
   {
     path: `${ROUTES.VOCABULARY}/:id`,
-    element: <Vocabulary />,
+    element: (
+      <VocabularyProvider>
+        <Vocabulary />
+      </VocabularyProvider>
+    ),
   },
   {
     path: `${ROUTES.TESTING}/:id`,
-    element: <Testing />,
+    element: (
+      <VocabularyProvider>
+        <Testing />
+      </VocabularyProvider>
+    ),
   },
   {
     path: `${ROUTES.RESULT}/:id`,
-    element: <Result />,
+    element: (
+      <VocabularyProvider>
+        <Result />
+      </VocabularyProvider>
+    ),
   },
 ];
