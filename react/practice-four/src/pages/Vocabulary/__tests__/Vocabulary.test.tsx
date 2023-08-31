@@ -169,6 +169,7 @@ describe('Test Vocabulary Page', () => {
             value={{
               ...mockVocabularyContext,
               vocabularies: [...Array.from({ length: 20 }, () => MOCK_VOCABULARY)],
+              onLoadMore: jest.fn().mockResolvedValue(2),
             }}
           >
             <Vocabulary />
@@ -181,5 +182,19 @@ describe('Test Vocabulary Page', () => {
     });
 
     fireEvent.click(buttonLoadMore);
+  });
+
+  it('Should show confirm modal and click button Delete', () => {
+    const { getByTestId, getByText } = render(
+      <VocabularyComponent>
+        <Vocabulary />
+      </VocabularyComponent>,
+    );
+
+    const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
+    fireEvent.click(buttonShowConfirmModal);
+
+    const buttonDelete = getByText('Delete');
+    fireEvent.click(buttonDelete);
   });
 });

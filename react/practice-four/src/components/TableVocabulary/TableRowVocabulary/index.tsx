@@ -30,7 +30,11 @@ const TableRowVocabulary = memo(
             <TableCell tagName='td'>{english}</TableCell>
             <TableCell tagName='td'>{vietnamese}</TableCell>
             <TableCell tagName='td'>
-              <Button variant='secondary' onClick={handleOnClick}>
+              <Button
+                variant='secondary'
+                onClick={handleOnClick}
+                dataTestId='button-delete-vocabulary'
+              >
                 X
               </Button>
             </TableCell>
