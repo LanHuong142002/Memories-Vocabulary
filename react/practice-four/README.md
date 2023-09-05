@@ -41,7 +41,7 @@
 
 - Timeline
   - Estimate days: 9 days
-  - Actual days: 18 days
+  - Actual days: 20.5 days
 - Dev: 1
 
 ## Tech stacks
