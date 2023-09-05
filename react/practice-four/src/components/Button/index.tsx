@@ -1,13 +1,15 @@
 import { ReactNode, memo } from 'react';
 
 // Constants
-import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '@constants';
+import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT, SPINNER_SIZE } from '@constants';
 
 // Styles
 import './index.css';
+import { Spinner } from '@components';
 
 interface ButtonProps {
   isDisabled?: boolean;
+  isLoading?: boolean;
   label?: string;
   className?: string;
   type?: BUTTON_TYPE;
@@ -19,6 +21,7 @@ interface ButtonProps {
 
 const Button = memo(
   ({
+    isLoading = false,
     isDisabled = false,
     label,
     className,
@@ -34,7 +37,7 @@ const Button = memo(
       onClick={onClick}
       disabled={isDisabled}
     >
-      {children || label}
+      {isLoading ? <Spinner size={SPINNER_SIZE.S} /> : <>{children || label}</>}
     </button>
   ),
 );

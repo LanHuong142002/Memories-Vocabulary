@@ -12,6 +12,7 @@ import { validation } from '@helpers';
 
 // Constants
 import {
+  MESSAGE_ERRORS,
   BUTTON_SIZE,
   BUTTON_TYPE,
   INPUT_VARIANT,
@@ -42,6 +43,7 @@ const Vocabulary = () => {
     onDeleteVocabulary,
     onRandomQuizzes,
     onLoadMore,
+    onCheckEnglishIsExisted,
   } = useContext(VocabularyContext);
   const [pages, setPages] = useState<number>(1);
   const [valueENG, setValueENG] = useState<string>('');
@@ -50,6 +52,7 @@ const Vocabulary = () => {
   const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies.length >= 5) && pages === 1,
@@ -79,7 +82,7 @@ const Vocabulary = () => {
    *
    * @param {Event} event is event of form
    */
-  const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
+  const handleAddNewVocabulary = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const valueInputENG = (event.target[0] as HTMLInputElement).value.trim();
     const valueInputVIE = (event.target[1] as HTMLInputElement).value.trim();
@@ -90,13 +93,21 @@ const Vocabulary = () => {
     setErrorsENG(listErrorENG);
 
     if (!listErrorVIE.length && !listErrorENG.length && id) {
-      onAddVocabulary(id, {
-        id: '',
-        vietnamese: valueInputVIE,
-        english: valueInputENG,
-      });
-      setValueVIE('');
-      setValueENG('');
+      setIsButtonLoading(true);
+      const isExisted = await onCheckEnglishIsExisted(id, valueInputENG);
+
+      if (!isExisted) {
+        onAddVocabulary(id, {
+          id: '',
+          vietnamese: valueInputVIE,
+          english: valueInputENG,
+        });
+        setValueVIE('');
+        setValueENG('');
+      } else {
+        setErrorsENG([MESSAGE_ERRORS.EXISTED]);
+      }
+      setIsButtonLoading(false);
     }
   };
 
@@ -197,7 +208,12 @@ const Vocabulary = () => {
           dataTestId='input-vietnamese'
           ariaLabel='enter vietnamese'
         />
-        <Button type={BUTTON_TYPE.SUBMIT} label='Add' />
+        <Button
+          type={BUTTON_TYPE.SUBMIT}
+          label='Add'
+          isLoading={isButtonLoading}
+          isDisabled={isButtonLoading}
+        />
       </form>
       <TableVocabulary
         isLoading={isLoadingVocabularies}
