@@ -7,14 +7,14 @@
   box-sizing: border-box;
 }
 
-.btn.btn-primary {
+.btn-primary {
   padding: 10px 20px;
   color: var(--text-secondary-color);
   background-color: var(--button-primary-color);
   border: none;
 }
 
-.btn.btn-secondary {
+.btn-secondary {
   height: 25px;
   vertical-align: middle;
   text-align: center;
@@ -23,25 +23,25 @@
   border: 2px solid var(--button-primary-color);
 }
 
-.btn.btn-tertiary {
+.btn-tertiary {
   border: none;
   background-color: transparent;
   color: var(--button-primary-color);
 }
 
-.btn.btn-size-xxl {
+.btn-size-xxl {
   font-size: var(--font-size-xxl);
 }
 
-.btn.btn-size-m {
+.btn-size-m {
   font-size: var(--font-size-m);
 }
 
-.btn.btn-size-s {
+.btn-size-s {
   font-size: var(--font-size-s);
 }
 
-.btn.btn-size-xs {
+.btn-size-xs {
   font-size: var(--font-size-s);
   padding: 5px 15px;
 }

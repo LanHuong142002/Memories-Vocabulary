@@ -8,14 +8,14 @@
   line-height: 23px;
 }
 
-.label.label-success {
+.label-success {
   background-color: var(--color-green-200);
 }
 
-.label.label-failed {
+.label-failed {
   background-color: var(--color-red-500);
 }
 
-.label.label-normal {
+.label-normal {
   background-color: var(--color-cyan-200);
 }
