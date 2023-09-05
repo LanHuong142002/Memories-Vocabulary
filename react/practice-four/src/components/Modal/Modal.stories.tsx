@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
 import { Button, Modal } from '@components';
+import { BUTTON_SIZE, BUTTON_VARIANT } from '@constants';
 
 const meta: Meta<typeof Modal> = {
   title: 'PracticeFour/Modal',
@@ -20,10 +21,10 @@ export const Default: Story = {
     description: 'Are you sure to delete this vocabulary?',
     children: (
       <>
-        <Button variant='secondary' size='xs'>
+        <Button variant={BUTTON_VARIANT.SECONDARY} size={BUTTON_SIZE.XS}>
           Cancel
         </Button>
-        <Button variant='primary' size='xs'>
+        <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
           Delete
         </Button>
       </>

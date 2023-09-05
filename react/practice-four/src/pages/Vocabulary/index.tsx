@@ -11,7 +11,17 @@ import { useDebounce } from '@hooks';
 import { validation } from '@helpers';
 
 // Constants
-import { MESSAGE_ERRORS, ROUTES } from '@constants';
+import {
+  MESSAGE_ERRORS,
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  INPUT_VARIANT,
+  ROUTES,
+  TYPOGRAPHY_SIZE,
+  TYPOGRAPHY_TAG_NAME,
+  TYPOGRAPHY_VARIANT,
+  BUTTON_VARIANT,
+} from '@constants';
 
 // Components
 import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
@@ -188,10 +198,10 @@ const Vocabulary = () => {
       className='vocabularies'
       childrenTitle={
         <>
-          <Typography size='xl'>Make Vocabulary with Translation</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
+          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Add{' '}
-            <Typography className='highlight' tagName='span'>
+            <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
               (Min 5)
             </Typography>{' '}
             words of ENGLISH and Translate it into VIETNAMESE.
@@ -202,7 +212,7 @@ const Vocabulary = () => {
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'
-          variant='secondary'
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeENG}
           value={valueENG!}
           errors={errorsENG}
@@ -212,7 +222,7 @@ const Vocabulary = () => {
         />
         <Input
           title='In Vietnamese'
-          variant='secondary'
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeVIE}
           value={valueVIE!}
           errors={errorsVIE}
@@ -221,7 +231,7 @@ const Vocabulary = () => {
           ariaLabel='enter vietnamese'
         />
         <Button
-          type='submit'
+          type={BUTTON_TYPE.SUBMIT}
           label='Add'
           isLoading={isButtonLoading}
           isDisabled={isButtonLoading}
@@ -241,7 +251,7 @@ const Vocabulary = () => {
         )}
         <Button
           label='Start Test'
-          size='m'
+          size={BUTTON_SIZE.M}
           isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />
@@ -253,10 +263,18 @@ const Vocabulary = () => {
             title='Confirm Delete'
             onCloseModal={handleShowModalConfirm}
           >
-            <Button variant='secondary' size='xs' onClick={handleShowModalConfirm}>
+            <Button
+              variant={BUTTON_VARIANT.SECONDARY}
+              size={BUTTON_SIZE.XS}
+              onClick={handleShowModalConfirm}
+            >
               Cancel
             </Button>
-            <Button variant='primary' size='xs' onClick={handleDeleteVocabulary}>
+            <Button
+              variant={BUTTON_VARIANT.PRIMARY}
+              size={BUTTON_SIZE.XS}
+              onClick={handleDeleteVocabulary}
+            >
               Delete
             </Button>
           </Modal>

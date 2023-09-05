@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+// Constants
+import { BUTTON_SIZE, BUTTON_VARIANT } from '@constants';
+
 // Components
 import { Button } from '@components';
 
@@ -11,11 +14,11 @@ const meta: Meta<typeof Button> = {
     onClick: { action: 'clicked' },
     variant: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary'],
+      options: [BUTTON_VARIANT.PRIMARY, BUTTON_VARIANT.SECONDARY, BUTTON_VARIANT.TERTIARY],
     },
     size: {
       control: { type: 'radio' },
-      options: ['xs', 's', 'm'],
+      options: [BUTTON_SIZE.M, BUTTON_SIZE.S, BUTTON_SIZE.XS, BUTTON_SIZE.XXL],
     },
   },
 };
@@ -24,17 +27,17 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    variant: 'primary',
+    variant: BUTTON_VARIANT.PRIMARY,
     label: 'Submit',
-    size: 'xs',
+    size: BUTTON_SIZE.XS,
   },
 };
 
 export const Disabled: Story = {
   args: {
-    variant: 'primary',
+    variant: BUTTON_VARIANT.PRIMARY,
     label: 'Back to Vocabulary List',
-    size: 's',
+    size: BUTTON_SIZE.S,
     isDisabled: true,
   },
 };

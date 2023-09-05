@@ -5,6 +5,7 @@ import { Button } from '@components';
 
 // Styles
 import './index.css';
+import { BUTTON_SIZE, BUTTON_VARIANT } from '@constants';
 
 interface ModalProps {
   title: string;
@@ -17,7 +18,12 @@ const Modal = memo(({ title, description, onCloseModal, children }: ModalProps) 
   <div className='modal'>
     <div className='modal-header'>
       <p className='title'>{title}</p>
-      <Button className='button-close' variant='tertiary' size='xxl' onClick={onCloseModal}>
+      <Button
+        className='button-close'
+        variant={BUTTON_VARIANT.TERTIARY}
+        size={BUTTON_SIZE.XXL}
+        onClick={onCloseModal}
+      >
         &Chi;
       </Button>
     </div>

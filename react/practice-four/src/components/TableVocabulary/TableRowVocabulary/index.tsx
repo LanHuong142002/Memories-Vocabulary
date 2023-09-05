@@ -3,6 +3,9 @@ import { memo } from 'react';
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
+// Constants
+import { BUTTON_VARIANT, SPINNER_SIZE } from '@constants';
+
 // Components
 import { Button, Spinner, TableCell, TableRow } from '@components';
 
@@ -22,7 +25,7 @@ const TableRowVocabulary = memo(
       <TableRow>
         {isLoading ? (
           <TableCell className='cell-loading' colspan={4}>
-            <Spinner size='s' />
+            <Spinner size={SPINNER_SIZE.S} />
           </TableCell>
         ) : (
           <>
@@ -31,7 +34,7 @@ const TableRowVocabulary = memo(
             <TableCell tagName='td'>{vietnamese}</TableCell>
             <TableCell tagName='td'>
               <Button
-                variant='secondary'
+                variant={BUTTON_VARIANT.SECONDARY}
                 onClick={handleOnClick}
                 dataTestId='button-delete-vocabulary'
               >
