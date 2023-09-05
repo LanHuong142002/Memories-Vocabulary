@@ -50,16 +50,16 @@
   width: 300px;
 }
 
-.wrapper-content .description {
+.wrapper-content > .description {
   line-height: 20px;
   text-align: center;
 }
 
-.wrapper-content .description > p {
+.wrapper-content > .description > p {
   padding-bottom: 10px;
 }
 
-.wrapper-content .description p:first-child {
+.wrapper-content > .description p:first-child {
   padding-bottom: 10px;
   line-height: 30px;
 }
