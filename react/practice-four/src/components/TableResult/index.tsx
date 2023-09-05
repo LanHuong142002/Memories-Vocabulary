@@ -14,41 +14,46 @@ interface TableResultProps {
   result: VocabularyResult[];
 }
 
-const TableResult = memo(({ result }: TableResultProps) => (
-  <Table className='result' hasBorderCell={true}>
-    <TableHeader>
-      <TableRow>
-        <TableCell tagName='th' rowspan={2}>
-          No.
-        </TableCell>
-        <TableCell>English</TableCell>
-        <TableCell tagName='th' colspan={2}>
-          Vietnamese
-        </TableCell>
-        <TableCell tagName='th' rowspan={2}>
-          Result
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell tagName='th'>Native</TableCell>
-        <TableCell tagName='th'>Translation</TableCell>
-        <TableCell tagName='th'>Answer</TableCell>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {result.map(({ id, answer, english, vietnamese }, index) => (
-        <TableRowResult
-          id={id}
-          key={`table-result-${uuidv4()}`}
-          order={`${index + 1}`}
-          answer={answer}
-          isSuccess={!!(answer === vietnamese)}
-          english={english}
-          vietnamese={vietnamese}
-        />
-      ))}
-    </TableBody>
-  </Table>
-));
+const TableResult = memo(({ result }: TableResultProps) => {
+  const isSuccess = (answer: string | undefined, vietnamese: string) =>
+    !!((answer || '').toLowerCase() === vietnamese.toLowerCase());
+
+  return (
+    <Table className='result' hasBorderCell={true}>
+      <TableHeader>
+        <TableRow>
+          <TableCell tagName='th' rowspan={2}>
+            No.
+          </TableCell>
+          <TableCell>English</TableCell>
+          <TableCell tagName='th' colspan={2}>
+            Vietnamese
+          </TableCell>
+          <TableCell tagName='th' rowspan={2}>
+            Result
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell tagName='th'>Native</TableCell>
+          <TableCell tagName='th'>Translation</TableCell>
+          <TableCell tagName='th'>Answer</TableCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {result.map(({ id, answer, english, vietnamese }, index) => (
+          <TableRowResult
+            id={id}
+            key={`table-result-${uuidv4()}`}
+            order={`${index + 1}`}
+            answer={answer}
+            isSuccess={isSuccess(answer, vietnamese)}
+            english={english}
+            vietnamese={vietnamese}
+          />
+        ))}
+      </TableBody>
+    </Table>
+  );
+});
 
 export default TableResult;

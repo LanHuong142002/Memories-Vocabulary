@@ -62,7 +62,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeENG = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueENG(event.target.value);
+    setValueENG(event.target.value.trim());
   }, []);
 
   /**
@@ -71,7 +71,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeVIE = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueVIE(event.target.value);
+    setValueVIE(event.target.value.trim());
   }, []);
 
   /**
@@ -81,8 +81,8 @@ const Vocabulary = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const valueInputENG = (event.target[0] as HTMLInputElement).value;
-    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
+    const valueInputENG = (event.target[0] as HTMLInputElement).value.trim();
+    const valueInputVIE = (event.target[1] as HTMLInputElement).value.trim();
 
     const listErrorVIE = validation(valueInputVIE);
     const listErrorENG = validation(valueInputENG);
@@ -208,13 +208,8 @@ const Vocabulary = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        {!(vocabularies.length < 20) && (
-          <Button
-            className='button-load-more'
-            label='Load More'
-            onClick={handleLoadMore}
-            isDisabled={isDisabledButtonLoadMore}
-          />
+        {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
+          <Button className='button-load-more' label='Load More' onClick={handleLoadMore} />
         )}
         <Button
           label='Start Test'

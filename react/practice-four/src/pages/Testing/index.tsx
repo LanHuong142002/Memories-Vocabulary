@@ -72,7 +72,7 @@ const Testing = () => {
    * @param event
    */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setValue(event.target.value.trim());
   };
 
   /**
