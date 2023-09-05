@@ -129,7 +129,7 @@ describe('Test removeDuplicateObjects', () => {
     ]);
   });
 
-  it('should merge two arrays, preferring values from the first array when there are duplicate "id" properties', () => {
+  it('should merge two arrays, preferring values from the first array when there are duplicate ID properties', () => {
     const sourceArray = [
       { id: '1', name: 'lorem' },
       { id: '2', name: 'lorem' },
@@ -153,7 +153,30 @@ describe('Test removeDuplicateObjects', () => {
     ]);
   });
 
-  it('should not remove any items when arrays have no duplicate "id" properties', () => {
+  it('should merge two arrays, preferring values from the first array when there more than 1 item have duplicate ID properties', () => {
+    const sourceArray = [
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+    ];
+    const arrayWithDuplicate = [
+      { id: '1', name: 'lorem2' },
+      { id: '1', name: 'lorem3' },
+      { id: '4', name: 'lorem' },
+    ];
+
+    const result = removeDuplicateObjects(sourceArray, arrayWithDuplicate);
+
+    expect(result).toHaveLength(4);
+    expect(result).toEqual([
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+      { id: '4', name: 'lorem' },
+    ]);
+  });
+
+  it('should not remove any items when arrays have no duplicate ID properties', () => {
     const sourceArray = [{ id: '1', name: 'a' }];
     const arrayWithoutDuplicate = [{ id: '2', name: 'b' }];
 
