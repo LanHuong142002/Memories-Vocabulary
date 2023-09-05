@@ -75,3 +75,9 @@ export enum LABEL_COLOR {
   FAILED = 'failed',
   NORMAL = 'normal',
 }
+
+// Table row
+export enum TABLE_ROW_SIZE {
+  S = 's',
+  M = 'm',
+}

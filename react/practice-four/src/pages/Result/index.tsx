@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { VocabularyContext } from '@contexts';
 
 // Constants
-import { ROUTES } from '@constants';
+import { BUTTON_SIZE, LABEL_COLOR, ROUTES, TYPOGRAPHY_SIZE } from '@constants';
 
 // Layouts
 import { Wrapper } from '@layouts';
@@ -50,13 +50,16 @@ const Result = () => {
       className='result'
       childrenTitle={
         <>
-          <Typography size='xl'>Quiz Result</Typography>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
           <div className='total'>
-            <Label color='normal' name={`${percent}% percentage`} />
+            <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
           </div>
           <div className='answers'>
-            <Label color='success' name={`${totalCorrectQuizzes} Rights`} />
-            <Label color='failed' name={`${quizzes.length - totalCorrectQuizzes} Wrongs`} />
+            <Label color={LABEL_COLOR.SUCCESS} name={`${totalCorrectQuizzes} Rights`} />
+            <Label
+              color={LABEL_COLOR.FAILED}
+              name={`${quizzes.length - totalCorrectQuizzes} Wrongs`}
+            />
           </div>
         </>
       }
@@ -64,7 +67,7 @@ const Result = () => {
       <div className='table-box'>
         <TableResult result={result} />
         <Link to={`${ROUTES.VOCABULARY}/${id}`}>
-          <Button size='s' label='Back to Vocabulary List' />
+          <Button size={BUTTON_SIZE.S} label='Back to Vocabulary List' />
         </Link>
       </div>
     </Wrapper>

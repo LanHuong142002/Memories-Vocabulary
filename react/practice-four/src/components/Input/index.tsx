@@ -36,7 +36,7 @@ const Input = memo(
         errors ? (errors.length > 0 ? 'input-error' : 'input-success') : ''
       }`}
     >
-      {variant !== 'primary' && (
+      {variant !== INPUT_VARIANT.PRIMARY && (
         <span className={errors && errors.length > 0 ? 'title-error' : ''}>{title}</span>
       )}
       <input
