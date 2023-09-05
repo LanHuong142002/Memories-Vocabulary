@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
@@ -8,16 +7,7 @@ import { Vocabulary } from '@interfaces';
 import { SPINNER_SIZE, TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Components
-import {
-  Spinner,
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-  TableRowVocabulary,
-  Typography,
-} from '@components';
+import { Spinner, Table, TableCell, TableRow, TableRowVocabulary, Typography } from '@components';
 
 // Styles
 import './index.css';
@@ -42,61 +32,61 @@ const TableVocabulary = memo(
     vocabularies,
     onClick,
   }: TableVocabularyProps) => (
-    <Table className='vocabularies'>
-      <TableHeader>
+    <Table
+      className='table-vocabulary'
+      childrenHeader={
         <TableRow>
-          <TableCell tagName='th'>No.</TableCell>
-          <TableCell tagName='th'>English (Native)</TableCell>
-          <TableCell tagName='th'>Vietnamese</TableCell>
-          <TableCell tagName='th'>Action</TableCell>
+          <TableCell>No.</TableCell>
+          <TableCell>English (Native)</TableCell>
+          <TableCell>Vietnamese</TableCell>
+          <TableCell>Action</TableCell>
         </TableRow>
-      </TableHeader>
-      <TableBody>
-        {isLoading ? (
-          <TableRow>
-            <TableCell className='cell-loading' colspan={4}>
-              <Spinner size={SPINNER_SIZE.S} />
-            </TableCell>
-          </TableRow>
-        ) : (
-          <>
-            {vocabularies.length > 0 ? (
-              <>
-                {vocabularies.map(({ id, english, vietnamese }, index) => (
-                  <TableRowVocabulary
-                    isLoading={deletingById[id]}
-                    key={`table-vocabulary-${uuidv4()}`}
-                    id={id}
-                    order={index + 1}
-                    english={english}
-                    vietnamese={vietnamese}
-                    onClick={onClick}
-                  />
-                ))}
-                {(isAdding || isLoadingMore) && (
-                  <TableRow>
-                    <TableCell className='cell-loading' colspan={4}>
-                      <Spinner size={SPINNER_SIZE.S} />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
-            ) : (
-              <TableRow>
-                <TableCell colspan={4}>
-                  <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-                    Fill All Filed At Above And Press{' '}
-                    <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-                      ENTER
-                    </Typography>{' '}
-                    key or button Add
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </>
-        )}
-      </TableBody>
+      }
+    >
+      {isLoading ? (
+        <TableRow>
+          <TableCell className='cell-loading'>
+            <Spinner size={SPINNER_SIZE.S} />
+          </TableCell>
+        </TableRow>
+      ) : (
+        <>
+          {vocabularies.length > 0 ? (
+            <>
+              {vocabularies.map(({ id, english, vietnamese }, index) => (
+                <TableRowVocabulary
+                  isLoading={deletingById[id]}
+                  key={`table-vocabulary-${id}`}
+                  id={id}
+                  order={index + 1}
+                  english={english}
+                  vietnamese={vietnamese}
+                  onClick={onClick}
+                />
+              ))}
+              {(isAdding || isLoadingMore) && (
+                <TableRow>
+                  <TableCell className='cell-loading'>
+                    <Spinner size={SPINNER_SIZE.S} />
+                  </TableCell>
+                </TableRow>
+              )}
+            </>
+          ) : (
+            <TableRow>
+              <TableCell>
+                <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+                  Fill All Filed At Above And Press{' '}
+                  <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
+                    ENTER
+                  </Typography>{' '}
+                  key or button Add
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
+        </>
+      )}
     </Table>
   ),
 );

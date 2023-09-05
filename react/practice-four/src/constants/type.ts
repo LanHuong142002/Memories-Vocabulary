@@ -81,3 +81,9 @@ export enum TABLE_ROW_SIZE {
   S = 's',
   M = 'm',
 }
+
+// Table cell
+export enum TABLE_CELL_COLOR {
+  SUCCESS = 'success',
+  FAILED = 'failed',
+}

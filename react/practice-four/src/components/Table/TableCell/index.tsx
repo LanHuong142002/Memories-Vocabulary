@@ -1,32 +1,25 @@
 import { ReactElement, ReactNode, memo } from 'react';
+
+// Constants
+import { TABLE_CELL_COLOR } from '@constants';
+
 // Styles
 import './index.css';
+
 interface TableCellProps {
-  rowspan?: number;
-  colspan?: number;
   className?: string;
-  tagName?: 'th' | 'td';
-  color?: 'success' | 'failed';
+  color?: TABLE_CELL_COLOR;
   children?: ReactNode;
 }
 
 const TableCell = memo(
-  ({
-    rowspan,
-    colspan,
-    className,
-    color,
-    tagName: TagName = 'td',
-    children,
-  }: TableCellProps): ReactElement => (
-    <TagName
-      className={`table-cell table-cell-${color ? color : ''} ${className ? className : ''}`}
+  ({ className, color, children }: TableCellProps): ReactElement => (
+    <div
+      className={`cell ${color ? `cell-status cell-${color}` : ''} ${className ? className : ''}`}
       data-testid='table-cell'
-      rowSpan={rowspan}
-      colSpan={colspan}
     >
       {children}
-    </TagName>
+    </div>
   ),
 );
 

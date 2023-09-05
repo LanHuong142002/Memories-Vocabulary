@@ -3,6 +3,9 @@ import { memo } from 'react';
 // Interfaces
 import { VocabularyResult } from '@interfaces';
 
+// Constants
+import { TABLE_CELL_COLOR } from '@constants';
+
 // Components
 import { TableCell, TableRow } from '@components';
 
@@ -14,20 +17,14 @@ const TableRowResult = memo(
   ({ isSuccess, order, english, vietnamese, answer }: TableRowResultProps) => (
     <>
       <TableRow>
-        <TableCell tagName='td' rowspan={2}>
-          {order}
-        </TableCell>
-        <TableCell tagName='td' rowspan={2}>
-          {english}
-        </TableCell>
-        <TableCell tagName='td'>{vietnamese}</TableCell>
-        <TableCell tagName='td'>{answer}</TableCell>
-        <TableCell tagName='td' rowspan={2} color={isSuccess ? 'success' : 'failed'}>
+        <TableCell>{order}</TableCell>
+        <TableCell>{english}</TableCell>
+        <TableCell>{vietnamese}</TableCell>
+        <TableCell>{answer}</TableCell>
+        <TableCell color={isSuccess ? TABLE_CELL_COLOR.SUCCESS : TABLE_CELL_COLOR.FAILED}>
           {isSuccess ? '\u2714' : '\u2718'}
         </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell tagName='td' colspan={2} color={isSuccess ? 'success' : 'failed'}>
+        <TableCell color={isSuccess ? TABLE_CELL_COLOR.SUCCESS : TABLE_CELL_COLOR.FAILED}>
           {isSuccess ? '\u2714' : '\u2718'}
         </TableCell>
       </TableRow>

@@ -1,3 +1,14 @@
-.table-wrapper {
-  width: 100%;
+.table {
+  font-size: var(--font-size-xxs);
+  color: var(--table-text-color-primary);
+}
+
+.table .table-header {
+  font-weight: var(--font-weight-bold);
+}
+
+@media screen and (min-width: 1000px) {
+  .table {
+    font-size: var(--font-size-xs);
+  }
 }
