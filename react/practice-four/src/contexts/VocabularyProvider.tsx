@@ -132,7 +132,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const handleCheckEnglishIsExisted = useCallback(async (id: string, valueENG: string) => {
+  const handleCheckExistedVocabulary = useCallback(async (id: string, valueENG: string) => {
     try {
       const response = await getData<Vocabulary>(
         `${URL.TOPIC}/${id}${URL.VOCABULARY}?english=${valueENG}`,
@@ -236,7 +236,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onRandomQuizzes: handleRandomQuiz,
       onSetQuiz: setQuizzes,
       onLoadMore: handleLoadMore,
-      onCheckEnglishIsExisted: handleCheckEnglishIsExisted,
+      onCheckEnglishIsExisted: handleCheckExistedVocabulary,
     }),
     [
       isLoadingVocabularies,
@@ -252,7 +252,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       handleDeleteVocabulary,
       handleLoadMore,
       handleRandomQuiz,
-      handleCheckEnglishIsExisted,
+      handleCheckExistedVocabulary,
     ],
   );
 

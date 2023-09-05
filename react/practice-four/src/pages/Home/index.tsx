@@ -63,7 +63,7 @@ const Home = () => {
    * @param {Event} event of input element
    */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTopicValue(event.target.value);
+    setTopicValue(event.target.value.trim());
   };
 
   /**

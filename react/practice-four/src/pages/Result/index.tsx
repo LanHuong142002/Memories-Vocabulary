@@ -31,7 +31,9 @@ const Result = () => {
     [quizzes, vocabularies],
   );
   const totalCorrectQuizzes = useMemo(
-    () => quizzes.filter((quiz) => quiz.answer === quiz.vietnamese).length,
+    () =>
+      quizzes.filter((quiz) => (quiz.answer || '').toLowerCase() === quiz.vietnamese.toLowerCase())
+        .length,
     [quizzes],
   );
   const percent = useMemo(
