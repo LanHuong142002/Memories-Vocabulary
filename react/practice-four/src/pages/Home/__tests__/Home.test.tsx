@@ -123,7 +123,7 @@ describe('Test Home Page', () => {
     expect(titleHome).not.toBeInTheDocument();
   });
 
-  it('render error message when typing number to input', () => {
+  it('Should render error message when typing number to input', () => {
     const { getByText, getByPlaceholderText } = render(
       <HomePageComponent>
         <Home />

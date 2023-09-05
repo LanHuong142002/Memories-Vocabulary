@@ -56,7 +56,7 @@ describe('Test Result component', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Should navigate to vocabulary list when quizzes length less than 0', () => {
+  it('Should navigate to vocabulary list when quizzes length is empty', () => {
     const { container } = render(
       <ResultComponent value={{ ...mockVocabularyContext, quizzes: [] }}>
         <Result />

@@ -9,7 +9,6 @@ describe('Test setItems localStorage', () => {
     const mockId = '111';
     const mockJson = { data: 'json data' };
     setItems(mockId, mockJson);
-
     expect(localStorage.getItem(mockId)).toEqual(JSON.stringify(mockJson));
   });
 
