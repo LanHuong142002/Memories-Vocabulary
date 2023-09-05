@@ -11,7 +11,15 @@ import { useDebounce } from '@hooks';
 import { validation } from '@helpers';
 
 // Constants
-import { ROUTES } from '@constants';
+import {
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  INPUT_VARIANT,
+  ROUTES,
+  TYPOGRAPHY_SIZE,
+  TYPOGRAPHY_TAG_NAME,
+  TYPOGRAPHY_VARIANT,
+} from '@constants';
 
 // Components
 import { Button, Input, TableVocabulary, Typography } from '@components';
@@ -54,7 +62,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeENG = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueENG(event.target.value);
+    setValueENG(event.target.value.trim());
   }, []);
 
   /**
@@ -63,7 +71,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeVIE = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueVIE(event.target.value);
+    setValueVIE(event.target.value.trim());
   }, []);
 
   /**
@@ -73,8 +81,8 @@ const Vocabulary = () => {
    */
   const handleAddNewVocabulary = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const valueInputENG = (event.target[0] as HTMLInputElement).value;
-    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
+    const valueInputENG = (event.target[0] as HTMLInputElement).value.trim();
+    const valueInputVIE = (event.target[1] as HTMLInputElement).value.trim();
 
     const listErrorVIE = validation(valueInputVIE);
     const listErrorENG = validation(valueInputENG);
@@ -157,10 +165,10 @@ const Vocabulary = () => {
       className='vocabularies'
       childrenTitle={
         <>
-          <Typography size='xl'>Make Vocabulary with Translation</Typography>
-          <Typography color='secondary' size='xs'>
+          <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
+          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Add{' '}
-            <Typography className='highlight' tagName='span'>
+            <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
               (Min 5)
             </Typography>{' '}
             words of ENGLISH and Translate it into VIETNAMESE.
@@ -171,7 +179,7 @@ const Vocabulary = () => {
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input
           title='English (Native)'
-          variant='secondary'
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeENG}
           value={valueENG!}
           errors={errorsENG}
@@ -181,7 +189,7 @@ const Vocabulary = () => {
         />
         <Input
           title='In Vietnamese'
-          variant='secondary'
+          variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeVIE}
           value={valueVIE!}
           errors={errorsVIE}
@@ -189,7 +197,7 @@ const Vocabulary = () => {
           dataTestId='input-vietnamese'
           ariaLabel='enter vietnamese'
         />
-        <Button type='submit' label='Add' />
+        <Button type={BUTTON_TYPE.SUBMIT} label='Add' />
       </form>
       <TableVocabulary
         isLoading={isLoadingVocabularies}
@@ -200,17 +208,12 @@ const Vocabulary = () => {
         onClick={handleDeleteVocabulary}
       />
       <div className='actions-wrapper'>
-        {!(vocabularies.length < 20) && (
-          <Button
-            className='button-load-more'
-            label='Load More'
-            onClick={handleLoadMore}
-            isDisabled={isDisabledButtonLoadMore}
-          />
+        {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
+          <Button className='button-load-more' label='Load More' onClick={handleLoadMore} />
         )}
         <Button
           label='Start Test'
-          size='m'
+          size={BUTTON_SIZE.M}
           isDisabled={isDisabledButtonStartTest}
           onClick={handleStartTest}
         />

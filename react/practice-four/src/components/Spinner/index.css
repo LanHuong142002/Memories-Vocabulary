@@ -1,9 +1,7 @@
 .spinner-wrapper-primary {
   position: absolute;
-  float: left;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   backdrop-filter: blur(10px);
   background-color: var(--overlay-opacity);
 }
