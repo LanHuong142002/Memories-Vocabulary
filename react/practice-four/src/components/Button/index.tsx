@@ -12,6 +12,7 @@ interface ButtonProps {
   isLoading?: boolean;
   label?: string;
   className?: string;
+  dataTestId?: string;
   type?: BUTTON_TYPE;
   variant?: BUTTON_VARIANT;
   size?: BUTTON_SIZE;
@@ -25,6 +26,7 @@ const Button = memo(
     isDisabled = false,
     label,
     className,
+    dataTestId,
     type = BUTTON_TYPE.BUTTON,
     size = BUTTON_SIZE.S,
     variant = BUTTON_VARIANT.PRIMARY,
@@ -36,6 +38,7 @@ const Button = memo(
       className={`btn btn-size-${size} btn-${variant} ${className ? className : ''}`}
       onClick={onClick}
       disabled={isDisabled}
+      data-testid={dataTestId}
     >
       {isLoading ? <Spinner size={SPINNER_SIZE.S} /> : <>{children || label}</>}
     </button>

@@ -47,6 +47,18 @@
   width: 100%;
 }
 
+.overlay-modal {
+  inset: 0;
+  position: fixed;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background-color: var(--overlay-opacity);
+  animation: opacityAnimation linear 0.2s;
+}
+
 @media screen and (min-width: 600px) {
   .wrapper-vocabularies-page .form-add-new-vocabulary {
     flex-direction: row;
