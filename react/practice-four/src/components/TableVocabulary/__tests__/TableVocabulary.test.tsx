@@ -50,9 +50,15 @@ describe('Test table vocabulary component', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Should render row message when table is empty ', () => {
-    const { container } = render(<TableVocabulary {...defaultValue} vocabularies={[]} />);
+  it('Should render loading in last row when isAdding is true', () => {
+    const { container } = render(<TableVocabulary {...defaultValue} isAdding={true} />);
 
     expect(container).toBeInTheDocument();
+  });
+
+  it('Should render row message when table is empty ', () => {
+    const { getByText } = render(<TableVocabulary {...defaultValue} vocabularies={[]} />);
+
+    expect(getByText('ENTER')).toBeInTheDocument();
   });
 });

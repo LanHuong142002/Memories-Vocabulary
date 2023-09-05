@@ -3,6 +3,9 @@ import { memo } from 'react';
 // Interfaces
 import { VocabularyResult } from '@interfaces';
 
+// Constants
+import { TABLE_CELL_COLOR } from '@constants';
+
 // Components
 import { TableCell, TableRow } from '@components';
 
@@ -18,10 +21,10 @@ const TableRowResult = memo(
         <TableCell>{english}</TableCell>
         <TableCell>{vietnamese}</TableCell>
         <TableCell>{answer}</TableCell>
-        <TableCell color={isSuccess ? 'success' : 'failed'}>
+        <TableCell color={isSuccess ? TABLE_CELL_COLOR.SUCCESS : TABLE_CELL_COLOR.FAILED}>
           {isSuccess ? '\u2714' : '\u2718'}
         </TableCell>
-        <TableCell color={isSuccess ? 'success' : 'failed'}>
+        <TableCell color={isSuccess ? TABLE_CELL_COLOR.SUCCESS : TABLE_CELL_COLOR.FAILED}>
           {isSuccess ? '\u2714' : '\u2718'}
         </TableCell>
       </TableRow>
