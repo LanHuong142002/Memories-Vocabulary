@@ -20,10 +20,11 @@ import {
   TYPOGRAPHY_SIZE,
   TYPOGRAPHY_TAG_NAME,
   TYPOGRAPHY_VARIANT,
+  BUTTON_VARIANT,
 } from '@constants';
 
 // Components
-import { Button, Input, TableVocabulary, Typography } from '@components';
+import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
 
 // Styles
@@ -53,11 +54,20 @@ const Vocabulary = () => {
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+  const [isConfirmModal, setIsConfirmModal] = useState<boolean>(false);
+  const [vocabularyId, setVocabularyId] = useState<string>('');
   const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies.length >= 5) && pages === 1,
     [vocabularies.length, pages],
   );
+
+  /**
+   * @description function show hide modal confirm delete
+   */
+  const handleShowModalConfirm = useCallback(() => {
+    setIsConfirmModal((prev) => !prev);
+  }, []);
 
   /**
    * @description function onchange to get value from input english
@@ -126,21 +136,33 @@ const Vocabulary = () => {
    *
    * @param {string} vocabularyId is id of vocabulary which is selected
    */
-  const handleDeleteVocabulary = useCallback(
-    (vocabularyId: string) => {
-      if (id) {
-        onDeleteVocabulary(id, vocabularyId);
-      }
+  const handleDeleteVocabulary = useCallback(() => {
+    if (id) {
+      onDeleteVocabulary(id, vocabularyId);
+      setIsConfirmModal(false);
+    }
+  }, [id, onDeleteVocabulary, vocabularyId]);
+
+  /**
+   * @description function open confirm modal and get vocabulary id
+   */
+  const handleOpenConfirmModalInRow = useCallback(
+    (id: string) => {
+      handleShowModalConfirm();
+      setVocabularyId(id);
     },
-    [id, onDeleteVocabulary],
+    [handleShowModalConfirm],
   );
 
+  /**
+   * @description function load more vocabularies
+   */
   const handleLoadMore = useCallback(async () => {
     setPages((prev) => prev + 1);
     if (id) {
       const lengthOfData = (await onLoadMore(id, pages + 1))!;
 
-      if (lengthOfData < 20 && lengthOfData === 0) {
+      if (lengthOfData < 20 || lengthOfData === 0) {
         setIsDisabledButtonLoadMore(true);
       }
     }
@@ -221,7 +243,7 @@ const Vocabulary = () => {
         isAdding={isAdding}
         deletingById={deletingById}
         vocabularies={vocabularies}
-        onClick={handleDeleteVocabulary}
+        onClick={handleOpenConfirmModalInRow}
       />
       <div className='actions-wrapper'>
         {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
@@ -234,6 +256,30 @@ const Vocabulary = () => {
           onClick={handleStartTest}
         />
       </div>
+      {isConfirmModal && (
+        <div className='overlay-modal'>
+          <Modal
+            description='Are you sure to delete this vocabulary?'
+            title='Confirm Delete'
+            onCloseModal={handleShowModalConfirm}
+          >
+            <Button
+              variant={BUTTON_VARIANT.SECONDARY}
+              size={BUTTON_SIZE.XS}
+              onClick={handleShowModalConfirm}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant={BUTTON_VARIANT.PRIMARY}
+              size={BUTTON_SIZE.XS}
+              onClick={handleDeleteVocabulary}
+            >
+              Delete
+            </Button>
+          </Modal>
+        </div>
+      )}
     </Wrapper>
   );
 };
