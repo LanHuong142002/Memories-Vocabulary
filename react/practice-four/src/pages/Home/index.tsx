@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
@@ -118,7 +117,7 @@ const Home = () => {
             {topics.map(({ id, name, vocabularyCount }) => (
               <Topic
                 id={id}
-                key={`topic-${uuidv4()}`}
+                key={`topic-${id}`}
                 name={name}
                 quantity={vocabularyCount || 0}
                 onClick={handleOpenTopic}
