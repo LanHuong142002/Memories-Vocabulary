@@ -14,7 +14,7 @@ import {
 import { VocabularyContext, ThemeContext, TopicContext } from '@contexts';
 
 // Constants
-import { ROUTES } from '@constants';
+import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
 
 // Components
 import { Button, Notification, ToggleTheme } from '@components';
@@ -77,7 +77,7 @@ const Wrapper = ({
             <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
             {window.location.pathname !== ROUTES.HOME && (
               <Link to={ROUTES.HOME}>
-                <Button variant='primary' size='xs'>
+                <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
                   Back to Home
                 </Button>
               </Link>

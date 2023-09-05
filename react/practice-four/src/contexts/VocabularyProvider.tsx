@@ -30,6 +30,7 @@ export interface VocabularyContextType {
   onRandomQuizzes: (id: string) => void;
   onSetQuiz: (listQuiz: VocabularyResult[]) => void;
   onLoadMore: (id: string, page: number) => Promise<number | undefined>;
+  onCheckEnglishIsExisted: (id: string, valueENG: string) => Promise<boolean | undefined>;
 }
 
 export const VocabularyContext = createContext<VocabularyContextType>({} as VocabularyContextType);
@@ -131,6 +132,24 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const handleCheckExistedVocabulary = useCallback(async (id: string, valueENG: string) => {
+    try {
+      const response = await getData<Vocabulary>(
+        `${URL.TOPIC}/${id}${URL.VOCABULARY}?english=${valueENG}`,
+      );
+
+      return response.length > 0;
+    } catch (error) {
+      const { message } = error as AxiosError;
+      vocabularyDispatch({
+        type: VOCABULARY_ACTIONS.ADD_FAILURE,
+        payload: {
+          errors: message,
+        },
+      });
+    }
+  }, []);
+
   /**
    * @description function handles the addition of a new vocabulary for a specific topic.
    *
@@ -217,6 +236,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       onRandomQuizzes: handleRandomQuiz,
       onSetQuiz: setQuizzes,
       onLoadMore: handleLoadMore,
+      onCheckEnglishIsExisted: handleCheckExistedVocabulary,
     }),
     [
       isLoadingVocabularies,
@@ -232,6 +252,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       handleDeleteVocabulary,
       handleLoadMore,
       handleRandomQuiz,
+      handleCheckExistedVocabulary,
     ],
   );
 

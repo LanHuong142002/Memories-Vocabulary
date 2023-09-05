@@ -45,10 +45,7 @@ export const calculateEachStep = (
  *
  * @returns {string} - The status level: very-low | low | medium | high
  */
-export const calculateStepLevel = (
-  step: number,
-  totalStep: number,
-): 'very-low' | 'low' | 'medium' | 'high' => {
+export const calculateStepLevel = (step: number, totalStep: number): STATUS_PROCESS => {
   // divide the sum of the steps and take the integer part
   const eachStep = totalStep / 4;
   const surplus = eachStep - Math.floor(eachStep);

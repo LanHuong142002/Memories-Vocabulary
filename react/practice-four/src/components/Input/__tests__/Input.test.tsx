@@ -1,5 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
 
+// Constants
+import { INPUT_VARIANT } from '@constants';
+
 // Components
 import { Input } from '@components';
 
@@ -20,14 +23,14 @@ describe('Test input component', () => {
   });
 
   it('Should render input component without error', () => {
-    const { container } = render(<Input variant='secondary' {...defaultProps} />);
+    const { container } = render(<Input variant={INPUT_VARIANT.SECONDARY} {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render input secondary component with error', () => {
     const { getByText } = render(
-      <Input variant='secondary' errors={['errors']} {...defaultProps} />,
+      <Input variant={INPUT_VARIANT.SECONDARY} errors={['errors']} {...defaultProps} />,
     );
 
     expect(getByText('errors')).toBeInTheDocument();
@@ -36,7 +39,7 @@ describe('Test input component', () => {
   it('should call the onChange function when the input value changes', () => {
     const handleChange = jest.fn();
     const { getByPlaceholderText } = render(
-      <Input variant='primary' {...defaultProps} onChange={handleChange} />,
+      <Input variant={INPUT_VARIANT.PRIMARY} {...defaultProps} onChange={handleChange} />,
     );
 
     const inputElement = getByPlaceholderText('Enter name...');
@@ -48,7 +51,12 @@ describe('Test input component', () => {
   it('should call the onChange function when the input secondary value changes', () => {
     const handleChange = jest.fn();
     const { getByPlaceholderText } = render(
-      <Input variant='primary' errors={[]} {...defaultProps} onChange={handleChange} />,
+      <Input
+        variant={INPUT_VARIANT.PRIMARY}
+        errors={[]}
+        {...defaultProps}
+        onChange={handleChange}
+      />,
     );
 
     const inputElement = getByPlaceholderText('Enter name...');

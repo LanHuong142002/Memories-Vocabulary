@@ -5,3 +5,4 @@ export * from './messages';
 export * from './regex';
 export * from './actions';
 export * from './storageKeys';
+export * from './type';

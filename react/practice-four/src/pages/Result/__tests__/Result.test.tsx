@@ -29,6 +29,7 @@ const mockVocabularyContext = {
   onRandomQuizzes: jest.fn(),
   onSetQuiz: jest.fn(),
   onLoadMore: jest.fn(),
+  onCheckEnglishIsExisted: jest.fn(),
 };
 
 const ResultComponent = ({
