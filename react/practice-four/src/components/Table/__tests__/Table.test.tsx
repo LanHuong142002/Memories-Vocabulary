@@ -1,23 +1,16 @@
 import { render } from '@testing-library/react';
 
 // Components
-import { Table } from '@components';
+import { Table, TableCell, TableRow } from '@components';
 
 describe('Test table component', () => {
   it('Should render table component with border', () => {
     const { getByTestId } = render(
-      <Table hasBorderCell={true} className='test'>
-        <thead data-testid='table-header'>
-          <tr>
-            <th>table header</th>
-          </tr>
-        </thead>
-        <tbody data-testid='table-body'>
-          <tr>
-            <td>cell 1</td>
-            <td>cell 2</td>
-          </tr>
-        </tbody>
+      <Table className='test' childrenHeader={<p>table header</p>}>
+        <TableRow>
+          <TableCell>cell 1</TableCell>
+          <TableCell>cell 2</TableCell>
+        </TableRow>
       </Table>,
     );
     const tableHeader = getByTestId('table-header');
@@ -29,24 +22,21 @@ describe('Test table component', () => {
     expect(tableBody.children.length).toBe(1);
   });
 
-  it('Should render table component without border', () => {
+  it('Should render table component without class', () => {
     const { getByTestId } = render(
-      <Table className='test'>
-        <thead data-testid='table-header'>
-          <tr>
-            <th>table header</th>
-          </tr>
-        </thead>
-        <tbody data-testid='table-body'>
-          <tr>
-            <td>cell 1</td>
-            <td>cell 2</td>
-          </tr>
-        </tbody>
+      <Table childrenHeader={<p>table header</p>}>
+        <TableRow>
+          <TableCell>cell 1</TableCell>
+          <TableCell>cell 2</TableCell>
+        </TableRow>
       </Table>,
     );
     const tableHeader = getByTestId('table-header');
+    const tableBody = getByTestId('table-body');
 
     expect(tableHeader).toBeInTheDocument();
+    expect(tableHeader.children.length).toBe(1);
+    expect(tableBody).toBeInTheDocument();
+    expect(tableBody.children.length).toBe(1);
   });
 });

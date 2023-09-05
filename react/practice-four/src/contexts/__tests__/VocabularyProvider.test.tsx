@@ -45,9 +45,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Get Vocabularies
-  it('Should call function get vocabularies success', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_VOCABULARIES);
+  it('Should return vocabularies when call function get vocabularies success', () => {
+    const mockGetVocabularies = jest.spyOn(services, 'getData');
+    mockGetVocabularies.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
       const { vocabularies, onGetVocabularies } = useContext(VocabularyContext);
@@ -68,9 +68,9 @@ describe('Test VocabularyProvider', () => {
     expect(getAllByTestId('items').length).toBe(MOCK_VOCABULARIES.length);
   });
 
-  it('Should call function get vocabularies failure', async () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function get vocabularies failure', async () => {
+    const mockGetVocabularies = jest.spyOn(services, 'getData');
+    mockGetVocabularies.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { errorsVocabulary, onGetVocabularies } = useContext(VocabularyContext);
@@ -92,9 +92,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Add vocabulary
-  it('Should call function add new vocabulary failure', async () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function post vocabulary failure', async () => {
+    const mockPostVocabulary = jest.spyOn(services, 'postData');
+    mockPostVocabulary.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { errorsVocabulary, onAddVocabulary } = useContext(VocabularyContext);
@@ -118,9 +118,9 @@ describe('Test VocabularyProvider', () => {
     expect(getByText('Error')).toBeInTheDocument();
   });
 
-  it('Should call function add new vocabulary success', () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockResolvedValue(MOCK_VOCABULARY);
+  it('Should return vocabularies when call function post vocabulary success', () => {
+    const mockPostVocabulary = jest.spyOn(services, 'postData');
+    mockPostVocabulary.mockResolvedValue(MOCK_VOCABULARY);
 
     const MockChildren = () => {
       const { onAddVocabulary, vocabularies } = useContext(VocabularyContext);
@@ -147,7 +147,7 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Delete vocabulary
-  it('Should call function delete vocabulary failure', async () => {
+  it('Should return error message when call function delete vocabulary failure', async () => {
     const mock = jest.spyOn(services, 'deleteData');
     mock.mockRejectedValue(new Error('Error'));
 
@@ -174,7 +174,7 @@ describe('Test VocabularyProvider', () => {
     expect(getByText('Error')).toBeInTheDocument();
   });
 
-  it('Should call function delete vocabulary success', () => {
+  it('Should return vocabulary when call function delete vocabulary success', () => {
     const mock = jest.spyOn(services, 'deleteData');
     mock.mockResolvedValue(MOCK_VOCABULARY);
 
@@ -200,9 +200,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Random quizzes
-  it('Should call random quiz success and set quiz when click the button', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_VOCABULARIES);
+  it('Should return quizzes when function random quiz success and set quiz when click the button', () => {
+    const mockGetRandomQuizzes = jest.spyOn(services, 'getData');
+    mockGetRandomQuizzes.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
       const { onRandomQuizzes, onSetQuiz, quizzes } = useContext(VocabularyContext);
@@ -238,9 +238,9 @@ describe('Test VocabularyProvider', () => {
     expect(getAllByTestId('items').length).toBe(MOCK_VOCABULARIES.length);
   });
 
-  it('Should call function delete vocabulary failure', async () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function get random quizzes failure', async () => {
+    const mockGetRandomQuizzes = jest.spyOn(services, 'getData');
+    mockGetRandomQuizzes.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { onRandomQuizzes, errorsVocabulary } = useContext(VocabularyContext);
@@ -268,9 +268,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Load More
-  it('Should call random quiz success and set quiz when click the button', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_VOCABULARIES);
+  it('Should call load more success', () => {
+    const mockGetMoreVocabularies = jest.spyOn(services, 'getData');
+    mockGetMoreVocabularies.mockResolvedValue(MOCK_VOCABULARIES);
 
     const MockChildren = () => {
       const { onLoadMore } = useContext(VocabularyContext);
@@ -292,9 +292,9 @@ describe('Test VocabularyProvider', () => {
     });
   });
 
-  it('Should call function delete vocabulary failure', async () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function load more failure', async () => {
+    const mockGetMoreVocabularies = jest.spyOn(services, 'getData');
+    mockGetMoreVocabularies.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { onLoadMore, errorsVocabulary } = useContext(VocabularyContext);
