@@ -105,19 +105,19 @@ describe('Test calculateStepLevel', () => {
 });
 
 describe('Test removeDuplicateObjects', () => {
-  it('should remove duplicates from two arrays', () => {
-    const array1 = [
+  it('should remove the item that has a duplicate ID from two arrays', () => {
+    const sourceArray = [
       { id: '1', name: 'lorem' },
       { id: '2', name: 'lorem' },
       { id: '3', name: 'lorem' },
     ];
-    const array2 = [
+    const duplicateArray = [
       { id: '1', name: 'lorem' },
       { id: '5', name: 'lorem' },
       { id: '6', name: 'lorem' },
     ];
 
-    const result = removeDuplicateObjects(array1, array2);
+    const result = removeDuplicateObjects(sourceArray, duplicateArray);
 
     expect(result).toHaveLength(5);
     expect(result).toEqual([
@@ -129,11 +129,35 @@ describe('Test removeDuplicateObjects', () => {
     ]);
   });
 
-  it('should not remove any items if arrays have no duplicates', () => {
-    const array1 = [{ id: '1', name: 'a' }];
-    const array2 = [{ id: '2', name: 'b' }];
+  it('should merge two arrays, preferring values from the first array when there are duplicate "id" properties', () => {
+    const sourceArray = [
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+    ];
+    const arrayWithDuplicate = [
+      { id: '1', name: 'lorem2' },
+      { id: '5', name: 'lorem' },
+      { id: '6', name: 'lorem' },
+    ];
 
-    const result = removeDuplicateObjects(array1, array2);
+    const result = removeDuplicateObjects(sourceArray, arrayWithDuplicate);
+
+    expect(result).toHaveLength(5);
+    expect(result).toEqual([
+      { id: '1', name: 'lorem' },
+      { id: '2', name: 'lorem' },
+      { id: '3', name: 'lorem' },
+      { id: '5', name: 'lorem' },
+      { id: '6', name: 'lorem' },
+    ]);
+  });
+
+  it('should not remove any items when arrays have no duplicate "id" properties', () => {
+    const sourceArray = [{ id: '1', name: 'a' }];
+    const arrayWithoutDuplicate = [{ id: '2', name: 'b' }];
+
+    const result = removeDuplicateObjects(sourceArray, arrayWithoutDuplicate);
 
     expect(result).toHaveLength(2);
     expect(result).toEqual([

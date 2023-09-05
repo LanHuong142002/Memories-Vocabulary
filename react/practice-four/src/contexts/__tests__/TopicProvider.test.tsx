@@ -38,9 +38,9 @@ describe('Test TopicProvider', () => {
   });
 
   // Get Topic
-  it('Should call function get topics success', () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockResolvedValue(MOCK_TOPICS);
+  it('Should return topics when call function get topics success', () => {
+    const mockGetTopics = jest.spyOn(services, 'getData');
+    mockGetTopics.mockResolvedValue(MOCK_TOPICS);
 
     const MockChildren = () => {
       const { topics, onGetTopics } = useContext(TopicContext);
@@ -60,9 +60,9 @@ describe('Test TopicProvider', () => {
     expect(getAllByTestId('items').length).toBe(MOCK_TOPICS.length);
   });
 
-  it('Should call function get topics failure', async () => {
-    const mock = jest.spyOn(services, 'getData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function get topics failure', async () => {
+    const mockGetTopics = jest.spyOn(services, 'getData');
+    mockGetTopics.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { errorsTopic, onGetTopics } = useContext(TopicContext);
@@ -83,9 +83,9 @@ describe('Test TopicProvider', () => {
   });
 
   // Add Topic
-  it('Should call function add new topic success', () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockResolvedValue(MOCK_TOPIC);
+  it('Should return topic when call function post topic success', () => {
+    const mockPostTopic = jest.spyOn(services, 'postData');
+    mockPostTopic.mockResolvedValue(MOCK_TOPIC);
 
     const MockChildren = () => {
       const { onAddTopic, topics } = useContext(TopicContext);
@@ -106,9 +106,9 @@ describe('Test TopicProvider', () => {
     expect(topics.length).toBe(1);
   });
 
-  it('Should call function add new topic failure', async () => {
-    const mock = jest.spyOn(services, 'postData');
-    mock.mockRejectedValue(new Error('Error'));
+  it('Should return error message when call function post topic failure', async () => {
+    const mockPostTopic = jest.spyOn(services, 'postData');
+    mockPostTopic.mockRejectedValue(new Error('Error'));
 
     const MockChildren = () => {
       const { errorsTopic, onAddTopic } = useContext(TopicContext);

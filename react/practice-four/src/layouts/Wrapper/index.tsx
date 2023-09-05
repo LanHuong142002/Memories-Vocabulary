@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ChangeEvent,
   ReactNode,
@@ -31,6 +31,7 @@ const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
+  const location = useLocation();
   const { onToggleTheme, theme } = useContext(ThemeContext);
   const { errorsVocabulary } = useContext(VocabularyContext);
   const { errorsTopic } = useContext(TopicContext);
@@ -75,7 +76,7 @@ const Wrapper = ({
         () => (
           <div className='wrapper-header'>
             <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
-            {window.location.pathname !== ROUTES.HOME && (
+            {location.pathname !== ROUTES.HOME && (
               <Link to={ROUTES.HOME}>
                 <Button variant='primary' size='xs'>
                   Back to Home
@@ -84,7 +85,7 @@ const Wrapper = ({
             )}
           </div>
         ),
-        [handleToggleTheme, toggle],
+        [handleToggleTheme, location.pathname, toggle],
       )}
       <div className='wrapper-container'>
         <div className='wrapper-box'>
