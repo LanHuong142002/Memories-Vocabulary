@@ -1,5 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import * as reactRouter from 'react-router-dom';
 
 // Contexts
 import {
@@ -19,6 +20,9 @@ import { Wrapper } from '@layouts';
 
 const handleToggleTheme = jest.fn();
 jest.useFakeTimers();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+}));
 
 const mockThemeContext = {
   theme: 'light',
@@ -35,6 +39,14 @@ const WrapperComponent = () => (
   </BrowserRouter>
 );
 
+const mockLocation = {
+  pathname: '/123123',
+  state: null,
+  key: '',
+  search: '',
+  hash: '',
+};
+
 describe('Test Wrapper component', () => {
   it('Should render Wrapper component', () => {
     const { container } = render(<WrapperComponent />);
@@ -43,6 +55,7 @@ describe('Test Wrapper component', () => {
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
+    jest.spyOn(reactRouter, 'useLocation').mockReturnValue(mockLocation);
     const { getByRole } = render(<WrapperComponent />);
 
     const button = getByRole('button');
@@ -56,6 +69,7 @@ describe('Test Wrapper component', () => {
   });
 
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
+    jest.spyOn(reactRouter, 'useLocation').mockReturnValue(mockLocation);
     const { getByRole, getByText } = render(
       <BrowserRouter>
         <ThemeContext.Provider value={{ ...mockThemeContext, theme: 'dark' }}>

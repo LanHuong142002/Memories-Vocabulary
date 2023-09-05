@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
 
 // Components
 import { Result } from '@pages';
@@ -57,9 +57,24 @@ describe('Test Result component', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Should navigate to vocabulary list when quizzes length less than 0', () => {
+  it('Should navigate to vocabulary list when quizzes length is empty', () => {
     const { container } = render(
       <ResultComponent value={{ ...mockVocabularyContext, quizzes: [] }}>
+        <Result />
+      </ResultComponent>,
+    );
+
+    expect(container).toBeInTheDocument();
+  });
+
+  it('Should use empty string when quizzes have one quiz dont have value', () => {
+    const { container } = render(
+      <ResultComponent
+        value={{
+          ...mockVocabularyContext,
+          quizzes: [{ ...MOC_RESULT, answer: undefined }],
+        }}
+      >
         <Result />
       </ResultComponent>,
     );
