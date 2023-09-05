@@ -75,7 +75,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeENG = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueENG(event.target.value.trim());
+    setValueENG(event.target.value);
   }, []);
 
   /**
@@ -84,7 +84,7 @@ const Vocabulary = () => {
    * @param {Event} event of inputs
    */
   const handleOnChangeVIE = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueVIE(event.target.value.trim());
+    setValueVIE(event.target.value);
   }, []);
 
   /**
@@ -94,8 +94,8 @@ const Vocabulary = () => {
    */
   const handleAddNewVocabulary = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const valueInputENG = (event.target[0] as HTMLInputElement).value.trim();
-    const valueInputVIE = (event.target[1] as HTMLInputElement).value.trim();
+    const valueInputENG = (event.target[0] as HTMLInputElement).value;
+    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
 
     const listErrorVIE = validation(valueInputVIE);
     const listErrorENG = validation(valueInputENG);
@@ -104,13 +104,13 @@ const Vocabulary = () => {
 
     if (!listErrorVIE.length && !listErrorENG.length && id) {
       setIsButtonLoading(true);
-      const isExisted = await onCheckEnglishIsExisted(id, valueInputENG);
+      const isExisted = await onCheckEnglishIsExisted(id, valueInputENG.trim());
 
       if (!isExisted) {
         onAddVocabulary(id, {
           id: '',
-          vietnamese: valueInputVIE,
-          english: valueInputENG,
+          vietnamese: valueInputVIE.trim(),
+          english: valueInputENG.trim(),
         });
         setValueVIE('');
         setValueENG('');

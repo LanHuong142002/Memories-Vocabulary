@@ -72,7 +72,7 @@ const Testing = () => {
    * @param event
    */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value.trim());
+    setValue(event.target.value);
   };
 
   /**
@@ -90,7 +90,7 @@ const Testing = () => {
         const answersArr = [...quizzes];
         answersArr[step] = {
           ...quizzes[step],
-          answer: value,
+          answer: value.trim(),
         };
         onSetQuiz(answersArr);
         setErrors(null);

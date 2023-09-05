@@ -58,7 +58,7 @@ const Home = () => {
     } else {
       onAddTopic({
         id: '', // id when posting, the MockAPI side will support generating the id
-        name: topicValue,
+        name: topicValue.trim(),
         vocabularies: [],
       });
       handleOpenOverlay();
@@ -71,7 +71,7 @@ const Home = () => {
    * @param {Event} event of input element
    */
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTopicValue(event.target.value.trim());
+    setTopicValue(event.target.value);
   };
 
   /**
