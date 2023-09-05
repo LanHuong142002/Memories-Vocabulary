@@ -320,4 +320,64 @@ describe('Test VocabularyProvider', () => {
 
     expect(getByText('Error')).toBeInTheDocument();
   });
+
+  // Handle Check English Is Existed
+  it('Should call random quiz success and set quiz when click the button', () => {
+    const mock = jest.spyOn(services, 'getData');
+    mock.mockResolvedValue([MOCK_VOCABULARY]);
+
+    const MockChildren = () => {
+      const { onCheckEnglishIsExisted } = useContext(VocabularyContext);
+      return (
+        <button
+          onClick={() => onCheckEnglishIsExisted!('1', MOCK_VOCABULARY.english)}
+          data-testid='check'
+        >
+          Check
+        </button>
+      );
+    };
+
+    const { getByTestId } = render(
+      <VocabularyProvider>
+        <MockChildren />
+      </VocabularyProvider>,
+    );
+    const button = getByTestId('check');
+    act(() => {
+      fireEvent.click(button);
+    });
+  });
+
+  it('Should call function delete vocabulary failure', async () => {
+    const mock = jest.spyOn(services, 'getData');
+    mock.mockRejectedValue(new Error('Error'));
+
+    const MockChildren = () => {
+      const { onCheckEnglishIsExisted, errorsVocabulary } = useContext(VocabularyContext);
+      return (
+        <>
+          <p>{errorsVocabulary}</p>
+          <button
+            onClick={() => onCheckEnglishIsExisted!('1', MOCK_VOCABULARY.english)}
+            data-testid='check'
+          >
+            Check
+          </button>
+        </>
+      );
+    };
+
+    const { getByTestId, getByText } = render(
+      <VocabularyProvider>
+        <MockChildren />
+      </VocabularyProvider>,
+    );
+    const buttonRandom = getByTestId('check');
+    await act(() => {
+      fireEvent.click(buttonRandom);
+    });
+
+    expect(getByText('Error')).toBeInTheDocument();
+  });
 });
