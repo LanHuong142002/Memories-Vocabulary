@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
 import { Input } from '@components';
+import { INPUT_VARIANT } from '@constants';
 
 const meta: Meta<typeof Input> = {
   title: 'PracticeFour/Input',
@@ -11,7 +12,7 @@ const meta: Meta<typeof Input> = {
     onChange: { action: 'changed' },
     variant: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary', 'tertiary'],
+      options: [INPUT_VARIANT.PRIMARY, INPUT_VARIANT.SECONDARY, INPUT_VARIANT.TERTIARY],
     },
   },
 };
@@ -21,21 +22,21 @@ type Story = StoryObj<typeof Input>;
 export const Primary: Story = {
   args: {
     placeholder: 'Enter name...',
-    variant: 'primary',
+    variant: INPUT_VARIANT.PRIMARY,
   },
 };
 
 export const Secondary: Story = {
   args: {
     placeholder: 'Enter name...',
-    variant: 'secondary',
+    variant: INPUT_VARIANT.SECONDARY,
   },
 };
 
 export const Tertiary: Story = {
   args: {
     placeholder: 'Enter name...',
-    variant: 'tertiary',
+    variant: INPUT_VARIANT.TERTIARY,
     title: 'Vietnamese',
   },
 };

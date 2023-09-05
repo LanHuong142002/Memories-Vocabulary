@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+// Constants
+import { SPINNER_SIZE } from '@constants';
+
 // Components
 import { Spinner } from '@components';
 
@@ -10,7 +13,7 @@ const meta: Meta<typeof Spinner> = {
   argTypes: {
     size: {
       control: { type: 'radio' },
-      options: ['xs', 's', 'm'],
+      options: [SPINNER_SIZE.M, SPINNER_SIZE.S],
     },
   },
 };
