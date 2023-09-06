@@ -17,10 +17,6 @@
   background-color: var(--color-white-400);
 }
 
-.topic-selected:hover {
-  opacity: 0.7;
-}
-
 .topic-default {
   background-color: var(--color-opacity-tertiary);
   border: 2px solid var(--color-opacity-secondary);
@@ -30,6 +26,10 @@
 .topic-selected {
   border: 2px solid var(--color-orange-100);
   color: var(--text-quaternary-color);
+}
+
+.topic-selected:hover {
+  opacity: 0.7;
 }
 
 .topic .topic-icon {

@@ -27,19 +27,19 @@
   animation: 2s linear infinite identifier;
 }
 
-.process-wrapper .process.process-very-low {
+.process-wrapper .process-very-low {
   background-color: var(--color-red-300);
 }
 
-.process-wrapper .process.process-low {
+.process-wrapper .process-low {
   background-color: var(--color-orange-200);
 }
 
-.process-wrapper .process.process-medium {
+.process-wrapper .process-medium {
   background-color: var(--color-cyan-100);
 }
 
-.process-wrapper .process.process-high {
+.process-wrapper .process-high {
   background-color: var(--color-green-100);
 }
 

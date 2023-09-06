@@ -27,14 +27,14 @@
   border-radius: 50%;
 }
 
-.toggle .slider-wrapper.slider-wrapper-dark {
+.toggle .slider-wrapper-dark {
   background: url(../../assets/icons/moon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-color: var(--color-black-400);
 }
 
-.toggle .slider-wrapper.slider-wrapper-light {
+.toggle .slider-wrapper-light {
   background: url(../../assets/icons/sun.svg);
   background-repeat: no-repeat;
   background-position: center;
