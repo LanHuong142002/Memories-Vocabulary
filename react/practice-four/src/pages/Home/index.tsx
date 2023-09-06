@@ -86,6 +86,7 @@ const Home = () => {
     [navigate],
   );
 
+  // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
     if (debouncedValue) {
       const listError = validation(debouncedValue, true);

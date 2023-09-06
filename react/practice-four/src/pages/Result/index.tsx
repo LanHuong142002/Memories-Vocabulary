@@ -30,12 +30,16 @@ const Result = () => {
       }),
     [quizzes, vocabularies],
   );
+
+  // Calculate the total correct answers
   const totalCorrectQuizzes = useMemo(
     () =>
       quizzes.filter((quiz) => (quiz.answer || '').toLowerCase() === quiz.vietnamese.toLowerCase())
         .length,
     [quizzes],
   );
+
+  // Calculate the percentage of correct answers
   const percent = useMemo(
     () => Math.round((totalCorrectQuizzes / quizzes.length) * 100),
     [quizzes.length, totalCorrectQuizzes],
