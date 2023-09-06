@@ -24,8 +24,8 @@ export interface TopicContextType {
 export const TopicContext = createContext<TopicContextType>({} as TopicContextType);
 
 export function TopicProvider({ children }: { children: ReactNode }) {
-  const [topicState, topicDispatch] = useReducer(topicReducer, initialTopicState);
-  const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = topicState;
+  const [state, dispatch] = useReducer(topicReducer, initialTopicState);
+  const { isLoading: isLoadingTopic, errors: errorsTopic, topics } = state;
 
   /**
    * @description handles the add a new topic.
@@ -33,12 +33,12 @@ export function TopicProvider({ children }: { children: ReactNode }) {
    * @param {Topic} topic is the topic object to be added.
    */
   const handleAddTopic = useCallback(async (topic: Topic): Promise<void> => {
-    topicDispatch({
+    dispatch({
       type: TOPIC_ACTIONS.ADD_REQUEST,
     });
     try {
       const response = await postData(topic, URL.TOPIC);
-      topicDispatch({
+      dispatch({
         type: TOPIC_ACTIONS.ADD_SUCCESS,
         payload: {
           topic: response,
@@ -46,7 +46,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       const { message } = error as AxiosError;
-      topicDispatch({
+      dispatch({
         type: TOPIC_ACTIONS.ADD_FAILURE,
         payload: {
           errors: message,
@@ -59,7 +59,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
    * @description function get topics
    */
   const getTopics = useCallback(async () => {
-    topicDispatch({
+    dispatch({
       type: TOPIC_ACTIONS.GET_REQUEST,
     });
     try {
@@ -69,7 +69,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
         vocabularyCount: topic.vocabularies!.length,
       }));
 
-      topicDispatch({
+      dispatch({
         type: TOPIC_ACTIONS.GET_SUCCESS,
         payload: {
           topics: topicsWithVocabularyCounts,
@@ -77,7 +77,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       const { message } = error as AxiosError;
-      topicDispatch({
+      dispatch({
         type: TOPIC_ACTIONS.GET_FAILURE,
         payload: {
           errors: message,
