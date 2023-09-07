@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react';
-import { ReactNode } from 'react';
 
 // Components
 import { TableRowVocabulary } from '@components';
@@ -14,18 +13,8 @@ describe('Test table row vocabulary component', () => {
     onClick: jest.fn(),
   };
 
-  const Component = ({ children }: { children: ReactNode }) => (
-    <table>
-      <tbody>{children}</tbody>
-    </table>
-  );
-
   it('Should render table row vocabulary component', () => {
-    const { container, getByText } = render(
-      <Component>
-        <TableRowVocabulary {...defaultProps} />
-      </Component>,
-    );
+    const { container, getByText } = render(<TableRowVocabulary {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
     expect(getByText('pen')).toBeInTheDocument();
@@ -34,11 +23,7 @@ describe('Test table row vocabulary component', () => {
 
   it('Should call onClick when click in action of table row vocabulary', () => {
     const handleOnClick = jest.fn();
-    const { getByRole } = render(
-      <Component>
-        <TableRowVocabulary {...defaultProps} onClick={handleOnClick} />
-      </Component>,
-    );
+    const { getByRole } = render(<TableRowVocabulary {...defaultProps} onClick={handleOnClick} />);
 
     const button = getByRole('button');
     fireEvent.click(button);
@@ -47,11 +32,7 @@ describe('Test table row vocabulary component', () => {
   });
 
   it('Should not render anything when isLoading is true', () => {
-    const { container } = render(
-      <Component>
-        <TableRowVocabulary {...defaultProps} isLoading={true} />
-      </Component>,
-    );
+    const { container } = render(<TableRowVocabulary {...defaultProps} isLoading={true} />);
 
     expect(container).toBeInTheDocument();
   });

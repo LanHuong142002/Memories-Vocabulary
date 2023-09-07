@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import { ReactNode } from 'react';
 
 // Mocks
 import { MOC_RESULT } from '@mocks';
@@ -8,24 +7,16 @@ import { MOC_RESULT } from '@mocks';
 import { TableRowResult } from '@components';
 
 describe('Test table row result component', () => {
-  const Component = ({ children }: { children: ReactNode }) => (
-    <table>
-      <tbody>{children}</tbody>
-    </table>
-  );
-
   it('Should render table row result', () => {
     const { container, getAllByText, getByText } = render(
-      <Component>
-        <TableRowResult
-          id='1'
-          answer={MOC_RESULT.answer}
-          order={'1'}
-          isSuccess={MOC_RESULT.isSuccess}
-          english={MOC_RESULT.english}
-          vietnamese={MOC_RESULT.vietnamese}
-        />
-      </Component>,
+      <TableRowResult
+        id='1'
+        answer={MOC_RESULT.answer}
+        order={'1'}
+        isSuccess={MOC_RESULT.isSuccess}
+        english={MOC_RESULT.english}
+        vietnamese={MOC_RESULT.vietnamese}
+      />,
     );
 
     expect(container).toBeInTheDocument();
@@ -35,16 +26,14 @@ describe('Test table row result component', () => {
 
   it('Should render table row result have case failed', () => {
     const { container, getAllByText } = render(
-      <Component>
-        <TableRowResult
-          id='1'
-          answer={MOC_RESULT.answer}
-          order={'1'}
-          isSuccess={false}
-          english={MOC_RESULT.english}
-          vietnamese={MOC_RESULT.vietnamese}
-        />
-      </Component>,
+      <TableRowResult
+        id='1'
+        answer={MOC_RESULT.answer}
+        order={'1'}
+        isSuccess={false}
+        english={MOC_RESULT.english}
+        vietnamese={MOC_RESULT.vietnamese}
+      />,
     );
 
     expect(container).toBeInTheDocument();
