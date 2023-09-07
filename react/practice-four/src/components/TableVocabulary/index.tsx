@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
@@ -35,12 +35,19 @@ const TableVocabulary = memo(
     <Table
       className='table-vocabulary'
       childrenHeader={
-        <TableRow>
-          <TableCell>No.</TableCell>
-          <TableCell>English (Native)</TableCell>
-          <TableCell>Vietnamese</TableCell>
-          <TableCell>Action</TableCell>
-        </TableRow>
+        <>
+          {useMemo(
+            () => (
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell>English (Native)</TableCell>
+                <TableCell>Vietnamese</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            ),
+            [],
+          )}
+        </>
       }
     >
       {isLoading ? (

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { useMemo } from 'react';
 
 // Interfaces
 import { VocabularyResult } from '@interfaces';
@@ -13,23 +13,33 @@ interface TableResultProps {
   result: VocabularyResult[];
 }
 
-const TableResult = memo(({ result }: TableResultProps) => {
-  const isSuccess = (answer: string | undefined, vietnamese: string) =>
-    !!((answer || '').toLowerCase() === vietnamese.toLowerCase());
+const TableResult = ({ result }: TableResultProps) => {
+  const isSuccess = useMemo(
+    () => (answer: string | undefined, vietnamese: string) =>
+      !!((answer || '').toLowerCase() === vietnamese.toLowerCase()),
+    [],
+  );
 
   return (
     <Table
       className='table-result'
       childrenHeader={
-        <TableRow>
-          <TableCell>No.</TableCell>
-          <TableCell>English</TableCell>
-          <TableCell>Vietnamese</TableCell>
-          <TableCell>Result</TableCell>
-          <TableCell>Native</TableCell>
-          <TableCell>Translation</TableCell>
-          <TableCell>Answer</TableCell>
-        </TableRow>
+        <>
+          {useMemo(
+            () => (
+              <TableRow>
+                <TableCell>No.</TableCell>
+                <TableCell>English</TableCell>
+                <TableCell>Vietnamese</TableCell>
+                <TableCell>Result</TableCell>
+                <TableCell>Native</TableCell>
+                <TableCell>Translation</TableCell>
+                <TableCell>Answer</TableCell>
+              </TableRow>
+            ),
+            [],
+          )}
+        </>
       }
     >
       {result.map(({ id, answer, english, vietnamese }, index) => (
@@ -45,6 +55,6 @@ const TableResult = memo(({ result }: TableResultProps) => {
       ))}
     </Table>
   );
-});
+};
 
 export default TableResult;
