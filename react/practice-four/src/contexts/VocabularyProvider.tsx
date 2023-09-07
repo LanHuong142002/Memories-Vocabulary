@@ -51,6 +51,14 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
   const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
   const [isLoadingQuizzes, setIsLoadingQuizzes] = useState<boolean>(false);
 
+  /**
+   * @description function get more vocabularies with id and page number
+   *
+   * @param {string} id is id of topic
+   * @param {number} page is page number of data
+   *
+   * @returns {number | undefined} return length of vocabularies
+   */
   const handleLoadMore = useCallback(
     async (id: string, page: number): Promise<number | undefined> => {
       vocabularyDispatch({
@@ -132,6 +140,13 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  /**
+   * @description function check the vocabulary with id existed or not
+   *
+   * @param {string} id is id of topic
+   *
+   * @return {boolean | undefined} return true if length of array more than 0
+   */
   const handleCheckExistedVocabulary = useCallback(async (id: string, valueENG: string) => {
     try {
       const response = await getData<Vocabulary>(
