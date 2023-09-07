@@ -54,21 +54,24 @@ const Result = () => {
   return (
     <Wrapper
       className='result'
-      childrenTitle={
-        <>
-          <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
-          <div className='total'>
-            <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
-          </div>
-          <div className='answers'>
-            <Label color={LABEL_COLOR.SUCCESS} name={`${totalCorrectQuizzes} Rights`} />
-            <Label
-              color={LABEL_COLOR.FAILED}
-              name={`${quizzes.length - totalCorrectQuizzes} Wrongs`}
-            />
-          </div>
-        </>
-      }
+      childrenTitle={useMemo(
+        () => (
+          <>
+            <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
+            <div className='total'>
+              <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
+            </div>
+            <div className='answers'>
+              <Label color={LABEL_COLOR.SUCCESS} name={`${totalCorrectQuizzes} Rights`} />
+              <Label
+                color={LABEL_COLOR.FAILED}
+                name={`${quizzes.length - totalCorrectQuizzes} Wrongs`}
+              />
+            </div>
+          </>
+        ),
+        [percent, quizzes.length, totalCorrectQuizzes],
+      )}
     >
       <div className='table-box'>
         <TableResult result={result} />

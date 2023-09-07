@@ -117,15 +117,18 @@ const Testing = () => {
   return (
     <Wrapper
       className='testing'
-      childrenTitle={
-        <>
-          <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz</Typography>
-          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-            Give answers of <span className='testing-questions'>{quizzes.length} questions</span>.
-            You have to translate English into Vietnamese
-          </Typography>
-        </>
-      }
+      childrenTitle={useMemo(
+        () => (
+          <>
+            <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz</Typography>
+            <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+              Give answers of <span className='testing-questions'>{quizzes.length} questions</span>.
+              You have to translate English into Vietnamese
+            </Typography>
+          </>
+        ),
+        [quizzes.length],
+      )}
     >
       {isLoadingQuizzes ? (
         <div className='testing-spinner-wrapper'>
