@@ -1,36 +1,19 @@
 import { useContext } from 'react';
-import { act, cleanup, fireEvent, render } from '@testing-library/react';
+import { act, cleanup, fireEvent } from '@testing-library/react';
 
 // Contexts
-import { TopicContext, TopicProvider } from '@contexts';
-
-// Interfaces
-import { Topic } from '@interfaces';
+import { TopicContext } from '@contexts';
 
 // Mocks
-import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
+import { MOCK_TOPIC, MOCK_TOPICS, MockFailureComponent, MockSuccessComponent } from '@mocks';
 
 // Services
 import * as services from '@services';
 
-jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
-const MockSuccessComponent = ({ items, onClick }: { items: Topic[]; onClick: () => void }) => (
-  <div>
-    <div data-testid='items'>
-      {items.map((item, index) => (
-        <p key={`item-${index}`}>{item.id}</p>
-      ))}
-    </div>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
+// Helpers
+import { customRenderProvider } from '@helpers';
 
-const MockFailureComponent = ({ error, onClick }: { error: string; onClick: () => void }) => (
-  <div>
-    <p>{error}</p>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
+jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
 
 describe('Test TopicProvider', () => {
   afterEach(() => {
@@ -38,22 +21,18 @@ describe('Test TopicProvider', () => {
   });
 
   // Get Topic
-  it('Should return topics when call function get topics success', () => {
+  it('Should return topics when call function get topics success', async () => {
     const mockGetTopics = jest.spyOn(services, 'getData');
     mockGetTopics.mockResolvedValue(MOCK_TOPICS);
-
     const MockChildren = () => {
       const { topics, onGetTopics } = useContext(TopicContext);
       return <MockSuccessComponent items={topics} onClick={onGetTopics} />;
     };
 
-    const { getAllByTestId, getByTestId } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
+    const { getAllByTestId, getByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
-    act(() => {
+    // Click button to get topics
+    await act(() => {
       fireEvent.click(button);
     });
 
@@ -63,18 +42,14 @@ describe('Test TopicProvider', () => {
   it('Should return error message when call function get topics failure', async () => {
     const mockGetTopics = jest.spyOn(services, 'getData');
     mockGetTopics.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { errorsTopic, onGetTopics } = useContext(TopicContext);
       return <MockFailureComponent error={errorsTopic} onClick={onGetTopics} />;
     };
 
-    const { getByTestId, getByText } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
+    // Click button to get topics
     await act(() => {
       fireEvent.click(button);
     });
@@ -83,23 +58,19 @@ describe('Test TopicProvider', () => {
   });
 
   // Add Topic
-  it('Should return topic when call function post topic success', () => {
+  it('Should return topic when call function post topic success', async () => {
     const mockPostTopic = jest.spyOn(services, 'postData');
     mockPostTopic.mockResolvedValue(MOCK_TOPIC);
-
     const MockChildren = () => {
       const { onAddTopic, topics } = useContext(TopicContext);
       return <MockSuccessComponent items={topics} onClick={() => onAddTopic(MOCK_TOPIC)} />;
     };
 
-    const { getByTestId, getAllByTestId } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
+    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const topics = getAllByTestId('items');
-    act(() => {
+    // Click button to post topic
+    await act(() => {
       fireEvent.click(button);
     });
 
@@ -109,17 +80,14 @@ describe('Test TopicProvider', () => {
   it('Should return error message when call function post topic failure', async () => {
     const mockPostTopic = jest.spyOn(services, 'postData');
     mockPostTopic.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { errorsTopic, onAddTopic } = useContext(TopicContext);
       return <MockFailureComponent error={errorsTopic} onClick={() => onAddTopic(MOCK_TOPIC)} />;
     };
-    const { getByTestId, getByText } = render(
-      <TopicProvider>
-        <MockChildren />
-      </TopicProvider>,
-    );
+
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
+    // Click button to post topic
     await act(() => {
       fireEvent.click(button);
     });

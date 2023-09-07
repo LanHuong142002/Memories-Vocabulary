@@ -1,43 +1,24 @@
-import { act, cleanup, fireEvent, render } from '@testing-library/react';
+import { act, cleanup, fireEvent } from '@testing-library/react';
 import { useContext } from 'react';
 
 /// Contexts
-import { VocabularyContext, VocabularyProvider } from '@contexts';
+import { VocabularyContext } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
+import {
+  MOCK_VOCABULARIES,
+  MOCK_VOCABULARY,
+  MockFailureComponent,
+  MockSuccessComponent,
+} from '@mocks';
 
 // Services
 import * as services from '@services';
 
-// Interfaces
-import { Topic, Vocabulary } from '@interfaces';
+// Helpers
+import { customRenderProvider } from '@helpers';
 
 jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
-
-const MockSuccessComponent = ({
-  items,
-  onClick,
-}: {
-  items: Vocabulary[] | Topic[];
-  onClick: () => void;
-}) => (
-  <div>
-    <div data-testid='items'>
-      {items.map((item, index) => (
-        <p key={`item-${index}`}>{item.id}</p>
-      ))}
-    </div>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
-
-const MockFailureComponent = ({ error, onClick }: { error: string; onClick: () => void }) => (
-  <div>
-    <p>{error}</p>
-    <button name='Submit' onClick={onClick} data-testid='button-action' />
-  </div>
-);
 
 describe('Test VocabularyProvider', () => {
   afterEach(() => {
@@ -45,23 +26,18 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Get Vocabularies
-  it('Should return vocabularies when call function get vocabularies success', () => {
+  it('Should return vocabularies when call function get vocabularies success', async () => {
     const mockGetVocabularies = jest.spyOn(services, 'getData');
     mockGetVocabularies.mockResolvedValue(MOCK_VOCABULARIES);
-
     const MockChildren = () => {
       const { vocabularies, onGetVocabularies } = useContext(VocabularyContext);
       return <MockSuccessComponent items={vocabularies} onClick={() => onGetVocabularies('1')} />;
     };
 
-    const { getAllByTestId, getByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getAllByTestId, getByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
-
-    act(() => {
+    // Click button to get vocabularies
+    await act(() => {
       fireEvent.click(button);
     });
 
@@ -71,19 +47,16 @@ describe('Test VocabularyProvider', () => {
   it('Should return error message when call function get vocabularies failure', async () => {
     const mockGetVocabularies = jest.spyOn(services, 'getData');
     mockGetVocabularies.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { errorsVocabulary, onGetVocabularies } = useContext(VocabularyContext);
       return (
         <MockFailureComponent error={errorsVocabulary} onClick={() => onGetVocabularies('1')} />
       );
     };
-    const { getByText, getByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+
+    const { getByText, getByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
+    // Click button to get vocabularies
     await act(() => {
       fireEvent.click(button);
     });
@@ -95,7 +68,6 @@ describe('Test VocabularyProvider', () => {
   it('Should return error message when call function post vocabulary failure', async () => {
     const mockPostVocabulary = jest.spyOn(services, 'postData');
     mockPostVocabulary.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { errorsVocabulary, onAddVocabulary } = useContext(VocabularyContext);
       return (
@@ -105,12 +77,10 @@ describe('Test VocabularyProvider', () => {
         />
       );
     };
-    const { getByTestId, getByText } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
+    // Click button to post vocabulary
     await act(() => {
       fireEvent.click(button);
     });
@@ -118,10 +88,9 @@ describe('Test VocabularyProvider', () => {
     expect(getByText('Error')).toBeInTheDocument();
   });
 
-  it('Should return vocabularies when call function post vocabulary success', () => {
+  it('Should return vocabularies when call function post vocabulary success', async () => {
     const mockPostVocabulary = jest.spyOn(services, 'postData');
     mockPostVocabulary.mockResolvedValue(MOCK_VOCABULARY);
-
     const MockChildren = () => {
       const { onAddVocabulary, vocabularies } = useContext(VocabularyContext);
       return (
@@ -132,14 +101,11 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
-    act(() => {
+    // Click button to post vocabulary
+    await act(() => {
       fireEvent.click(button);
     });
 
@@ -150,7 +116,6 @@ describe('Test VocabularyProvider', () => {
   it('Should return error message when call function delete vocabulary failure', async () => {
     const mock = jest.spyOn(services, 'deleteData');
     mock.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { errorsVocabulary, onDeleteVocabulary } = useContext(VocabularyContext);
       return (
@@ -160,11 +125,8 @@ describe('Test VocabularyProvider', () => {
         />
       );
     };
-    const { getByTestId, getByText } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    // Click button to delete vocabulary
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
 
     await act(() => {
@@ -174,10 +136,9 @@ describe('Test VocabularyProvider', () => {
     expect(getByText('Error')).toBeInTheDocument();
   });
 
-  it('Should return vocabulary when call function delete vocabulary success', () => {
+  it('Should return vocabulary when call function delete vocabulary success', async () => {
     const mock = jest.spyOn(services, 'deleteData');
     mock.mockResolvedValue(MOCK_VOCABULARY);
-
     const MockChildren = () => {
       const { onDeleteVocabulary, vocabularies } = useContext(VocabularyContext);
       return (
@@ -185,14 +146,11 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
-    act(() => {
+    // Click button to delete vocabulary
+    await act(() => {
       fireEvent.click(button);
     });
 
@@ -200,10 +158,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Random quizzes
-  it('Should return quizzes when function random quiz success and set quiz when click the button', () => {
+  it('Should return quizzes when function random quiz success and set quiz when click the button', async () => {
     const mockGetRandomQuizzes = jest.spyOn(services, 'getData');
     mockGetRandomQuizzes.mockResolvedValue(MOCK_VOCABULARIES);
-
     const MockChildren = () => {
       const { onRandomQuizzes, onSetQuiz, quizzes } = useContext(VocabularyContext);
       return (
@@ -223,14 +180,11 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
     const buttonRandom = getByTestId('button-random');
     const buttonSetQuiz = getByTestId('button-set-quiz');
-    act(() => {
+    // Click button random quizzes and set quiz
+    await act(() => {
       fireEvent.click(buttonRandom);
       fireEvent.click(buttonSetQuiz);
     });
@@ -241,7 +195,6 @@ describe('Test VocabularyProvider', () => {
   it('Should return error message when call function get random quizzes failure', async () => {
     const mockGetRandomQuizzes = jest.spyOn(services, 'getData');
     mockGetRandomQuizzes.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { onRandomQuizzes, errorsVocabulary } = useContext(VocabularyContext);
       return (
@@ -254,12 +207,9 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const buttonRandom = getByTestId('button-random');
+    // Click button random quizzes
     await act(() => {
       fireEvent.click(buttonRandom);
     });
@@ -268,10 +218,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Load More
-  it('Should call load more success', () => {
+  it('Should call load more success', async () => {
     const mockGetMoreVocabularies = jest.spyOn(services, 'getData');
     mockGetMoreVocabularies.mockResolvedValue(MOCK_VOCABULARIES);
-
     const MockChildren = () => {
       const { onLoadMore } = useContext(VocabularyContext);
       return (
@@ -281,13 +230,10 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('load-more');
-    act(() => {
+    // Click button load more
+    await act(() => {
       fireEvent.click(button);
     });
   });
@@ -295,7 +241,6 @@ describe('Test VocabularyProvider', () => {
   it('Should return error message when call function load more failure', async () => {
     const mockGetMoreVocabularies = jest.spyOn(services, 'getData');
     mockGetMoreVocabularies.mockRejectedValue(new Error('Error'));
-
     const MockChildren = () => {
       const { onLoadMore, errorsVocabulary } = useContext(VocabularyContext);
       return (
@@ -308,12 +253,9 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const buttonRandom = getByTestId('load-more');
+    // Click button load more
     await act(() => {
       fireEvent.click(buttonRandom);
     });
@@ -322,10 +264,9 @@ describe('Test VocabularyProvider', () => {
   });
 
   // Handle Check English Is Existed
-  it('Should call random quiz success and set quiz when click the button', () => {
+  it('Should call function onCheckEnglishIsExisted success', async () => {
     const mock = jest.spyOn(services, 'getData');
     mock.mockResolvedValue([MOCK_VOCABULARY]);
-
     const MockChildren = () => {
       const { onCheckEnglishIsExisted } = useContext(VocabularyContext);
       return (
@@ -338,18 +279,15 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId } = customRenderProvider(<MockChildren />);
     const button = getByTestId('check');
-    act(() => {
+    // Click button to check vocabulary existed or not
+    await act(() => {
       fireEvent.click(button);
     });
   });
 
-  it('Should call function delete vocabulary failure', async () => {
+  it('Should return error message when call onCheckEnglishIsExisted failure', async () => {
     const mock = jest.spyOn(services, 'getData');
     mock.mockRejectedValue(new Error('Error'));
 
@@ -368,11 +306,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = render(
-      <VocabularyProvider>
-        <MockChildren />
-      </VocabularyProvider>,
-    );
+    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
     const buttonRandom = getByTestId('check');
     await act(() => {
       fireEvent.click(buttonRandom);
