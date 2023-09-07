@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TableResult } from '@components';
 
 // Mocks
-import { MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_TABLE_RESULT } from '@mocks';
 
 const meta: Meta<typeof TableResult> = {
   title: 'PracticeFour/TableResult',
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof TableResult>;
 
 export const Default: Story = {
   args: {
-    result: MOC_TABLE_RESULT,
+    result: MOCK_TABLE_RESULT,
   },
 };
 

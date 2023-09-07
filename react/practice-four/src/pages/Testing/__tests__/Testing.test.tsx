@@ -9,7 +9,7 @@ import { MESSAGE_ERRORS } from '@constants';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARIES, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
 
 // Components
 import { Testing } from '@pages';
@@ -25,7 +25,7 @@ const mockVocabularyContext = {
     5: false,
   },
   vocabularies: MOCK_VOCABULARIES,
-  quizzes: MOC_TABLE_RESULT,
+  quizzes: MOCK_TABLE_RESULT,
   onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),
@@ -59,7 +59,7 @@ describe('Test Testing Page', () => {
     );
 
     expect(container).toBeInTheDocument();
-    expect(getByText(`1 of ${MOC_TABLE_RESULT.length}`)).toBeInTheDocument();
+    expect(getByText(`1 of ${MOCK_TABLE_RESULT.length}`)).toBeInTheDocument();
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {

@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARIES, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
 
 // Components
 import { Result } from '@pages';
@@ -21,7 +21,7 @@ const mockVocabularyContext = {
     5: false,
   },
   vocabularies: MOCK_VOCABULARIES,
-  quizzes: MOC_TABLE_RESULT,
+  quizzes: MOCK_TABLE_RESULT,
   onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),

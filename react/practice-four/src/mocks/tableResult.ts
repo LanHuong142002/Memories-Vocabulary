@@ -1,4 +1,4 @@
-export const MOC_TABLE_RESULT = [
+export const MOCK_TABLE_RESULT = [
   {
     id: '1',
     isSuccess: true,
