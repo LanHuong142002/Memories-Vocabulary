@@ -1,4 +1,4 @@
-import { MOC_TABLE_RESULT } from './tableResult';
+import { MOCK_TABLE_RESULT } from './tableResult';
 
 export const MOCK_VOCABULARY = {
   english: 'english 1',
@@ -19,7 +19,7 @@ export const MOCK_VOCABULARY_CONTEXT_VALUE = {
     5: false,
   },
   vocabularies: MOCK_VOCABULARIES,
-  quizzes: MOC_TABLE_RESULT,
+  quizzes: MOCK_TABLE_RESULT,
   onAddTopic: jest.fn(),
   onAddVocabulary: jest.fn(),
   onDeleteVocabulary: jest.fn(),

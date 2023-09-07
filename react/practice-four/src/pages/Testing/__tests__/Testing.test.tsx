@@ -7,7 +7,7 @@ import { MESSAGE_ERRORS } from '@constants';
 import { VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARY_CONTEXT_VALUE, MOC_RESULT, MOC_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARY_CONTEXT_VALUE, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
 
 // Helpers
 import { customRender } from '@helpers';
@@ -32,7 +32,7 @@ describe('Test Testing Page', () => {
     const { container, getByText } = customRender(<TestingComponent />);
 
     expect(container).toBeInTheDocument();
-    expect(getByText(`1 of ${MOC_TABLE_RESULT.length}`)).toBeInTheDocument();
+    expect(getByText(`1 of ${MOCK_TABLE_RESULT.length}`)).toBeInTheDocument();
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
