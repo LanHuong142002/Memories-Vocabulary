@@ -10,7 +10,7 @@ import { VocabularyContext, VocabularyContextType } from '@contexts';
 import { MOCK_VOCABULARY_CONTEXT_VALUE, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
 
 // Helpers
-import { customRender } from '@helpers';
+import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { Testing } from '@pages';
@@ -29,14 +29,14 @@ const TestingComponent = ({
 
 describe('Test Testing Page', () => {
   it('Should render Testing page', () => {
-    const { container, getByText } = customRender(<TestingComponent />);
+    const { container, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     expect(container).toBeInTheDocument();
     expect(getByText(`1 of ${MOCK_TABLE_RESULT.length}`)).toBeInTheDocument();
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
-    const { getByText } = customRender(
+    const { getByText } = renderWithThemeProvider(
       <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, quizzes: [MOC_RESULT] }} />,
     );
 
@@ -44,7 +44,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Should render error required when click button Next', () => {
-    const { getByRole, getByText } = customRender(<TestingComponent />);
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     const button = getByRole('button', {
       name: /next/i,
@@ -55,7 +55,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Enter value to input and click button submit', () => {
-    const { getByRole, getByText } = customRender(<TestingComponent />);
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     // Enter value for input
     const input = getByRole('textbox');
@@ -78,7 +78,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Should render error message when typing number to input', () => {
-    const { getByRole, getByText } = customRender(<TestingComponent />);
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     const input = getByRole('textbox');
     act(() => {
@@ -90,7 +90,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Should back to Vocabulary list when quizzes not exist', () => {
-    const { getByText } = customRender(
+    const { getByText } = renderWithThemeProvider(
       <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, quizzes: [] }} />,
     );
 
@@ -98,7 +98,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Should show loading when isLoading is true', () => {
-    const { container } = customRender(
+    const { container } = renderWithThemeProvider(
       <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, isLoadingQuizzes: true }} />,
     );
 
@@ -106,7 +106,7 @@ describe('Test Testing Page', () => {
   });
 
   it('Should navigate to vocabulary page when dont have any vocabularies', () => {
-    const { container } = customRender(
+    const { container } = renderWithThemeProvider(
       <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, vocabularies: [] }} />,
     );
 

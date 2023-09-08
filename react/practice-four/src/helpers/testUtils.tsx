@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, TopicProvider, VocabularyProvider } from '@contexts';
 
-export const customRender = (children: ReactNode) => {
+export const renderWithThemeProvider = (children: ReactNode) => {
   return render(
     <BrowserRouter>
       <ThemeProvider>{children}</ThemeProvider>
@@ -11,8 +11,8 @@ export const customRender = (children: ReactNode) => {
   );
 };
 
-export const customRenderProvider = (children: ReactNode) => {
-  return customRender(
+export const renderWithProvider = (children: ReactNode) => {
+  return renderWithThemeProvider(
     <TopicProvider>
       <VocabularyProvider>{children}</VocabularyProvider>
     </TopicProvider>,

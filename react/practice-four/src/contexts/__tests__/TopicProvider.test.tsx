@@ -11,7 +11,7 @@ import { MOCK_TOPIC, MOCK_TOPICS, MockFailureComponent, MockSuccessComponent } f
 import * as services from '@services';
 
 // Helpers
-import { customRenderProvider } from '@helpers';
+import { renderWithProvider } from '@helpers';
 
 jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
 
@@ -29,7 +29,7 @@ describe('Test TopicProvider', () => {
       return <MockSuccessComponent items={topics} onClick={onGetTopics} />;
     };
 
-    const { getAllByTestId, getByTestId } = customRenderProvider(<MockChildren />);
+    const { getAllByTestId, getByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to get topics
     await act(() => {
@@ -47,7 +47,7 @@ describe('Test TopicProvider', () => {
       return <MockFailureComponent error={errorsTopic} onClick={onGetTopics} />;
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to get topics
     await act(() => {
@@ -66,7 +66,7 @@ describe('Test TopicProvider', () => {
       return <MockSuccessComponent items={topics} onClick={() => onAddTopic(MOCK_TOPIC)} />;
     };
 
-    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getAllByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const topics = getAllByTestId('items');
     // Click button to post topic
@@ -85,7 +85,7 @@ describe('Test TopicProvider', () => {
       return <MockFailureComponent error={errorsTopic} onClick={() => onAddTopic(MOCK_TOPIC)} />;
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to post topic
     await act(() => {

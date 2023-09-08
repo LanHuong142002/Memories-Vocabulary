@@ -13,7 +13,7 @@ import { MESSAGE_ERRORS } from '@constants';
 import { Home } from '@pages';
 
 // Helpers
-import { customRender } from '@helpers';
+import { renderWithThemeProvider } from '@helpers';
 
 jest.useFakeTimers();
 const mockTopicContext = {
@@ -33,13 +33,13 @@ const HomePageComponent = ({ value = mockTopicContext }: { value?: TopicContextT
 
 describe('Test Home Page', () => {
   it('Should render Home page', () => {
-    const { container } = customRender(<HomePageComponent />);
+    const { container } = renderWithThemeProvider(<HomePageComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render overlay add new topic when click to button Add Topic', () => {
-    const { getByText } = customRender(<HomePageComponent />);
+    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
 
     const buttonAddTopic = getByText('Add Topic');
     // Click button add topic
@@ -50,7 +50,7 @@ describe('Test Home Page', () => {
   });
 
   it('Should show loading when isLoadingTopic is true', () => {
-    const { container } = customRender(
+    const { container } = renderWithThemeProvider(
       <HomePageComponent value={{ ...mockTopicContext, isLoadingTopic: true }} />,
     );
     const topics = container.querySelectorAll('.topic');
@@ -59,7 +59,7 @@ describe('Test Home Page', () => {
   });
 
   it('Should Add new topic when enter the new topic', () => {
-    const { getByText, getByPlaceholderText } = customRender(<HomePageComponent />);
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
 
     // Click button Add Topic
     const topic = getByText('Add Topic');
@@ -76,7 +76,7 @@ describe('Test Home Page', () => {
   });
 
   it('Should show error message when enter wrong value with click to Done button', () => {
-    const { getByText, getByPlaceholderText } = customRender(<HomePageComponent />);
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
 
     // Click button Add Topic
     const topic = getByText('Add Topic');
@@ -93,7 +93,7 @@ describe('Test Home Page', () => {
   });
 
   it('Should open new topic', () => {
-    const { getByText } = customRender(<HomePageComponent />);
+    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
 
     const titleHome = getByText('Add & Select Topic');
     const topic = getByText(MOCK_TOPIC.name);
@@ -103,7 +103,7 @@ describe('Test Home Page', () => {
   });
 
   it('Should render error message when typing number to input', () => {
-    const { getByText, getByPlaceholderText } = customRender(<HomePageComponent />);
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
 
     // Click button Add Topic
     const topic = getByText('Add Topic');

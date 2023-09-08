@@ -5,7 +5,7 @@ import { VocabularyContext, VocabularyContextType } from '@contexts';
 import { MOCK_VOCABULARY_CONTEXT_VALUE, MOC_RESULT } from '@mocks';
 
 // Helpers
-import { customRender } from '@helpers';
+import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { Result } from '@pages';
@@ -22,13 +22,13 @@ const ResultComponent = ({
 
 describe('Test Result component', () => {
   it('Should render Result component', () => {
-    const { container } = customRender(<ResultComponent />);
+    const { container } = renderWithThemeProvider(<ResultComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should navigate to vocabulary list when quizzes length is empty', () => {
-    const { container } = customRender(
+    const { container } = renderWithThemeProvider(
       <ResultComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, quizzes: [] }} />,
     );
 
@@ -36,7 +36,7 @@ describe('Test Result component', () => {
   });
 
   it('Should use empty string when quizzes have one quiz dont have value', () => {
-    const { container } = customRender(
+    const { container } = renderWithThemeProvider(
       <ResultComponent
         value={{
           ...MOCK_VOCABULARY_CONTEXT_VALUE,

@@ -16,7 +16,7 @@ import {
 import * as services from '@services';
 
 // Helpers
-import { customRenderProvider } from '@helpers';
+import { renderWithProvider } from '@helpers';
 
 jest.mock('@services', () => ({ __esModule: true, ...jest.requireActual('@services') }));
 
@@ -34,7 +34,7 @@ describe('Test VocabularyProvider', () => {
       return <MockSuccessComponent items={vocabularies} onClick={() => onGetVocabularies('1')} />;
     };
 
-    const { getAllByTestId, getByTestId } = customRenderProvider(<MockChildren />);
+    const { getAllByTestId, getByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to get vocabularies
     await act(() => {
@@ -54,7 +54,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByText, getByTestId } = customRenderProvider(<MockChildren />);
+    const { getByText, getByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to get vocabularies
     await act(() => {
@@ -78,7 +78,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     // Click button to post vocabulary
     await act(() => {
@@ -101,7 +101,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getAllByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
     // Click button to post vocabulary
@@ -126,7 +126,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
     // Click button to delete vocabulary
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
 
     await act(() => {
@@ -146,7 +146,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getAllByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('button-action');
     const vocabularies = getAllByTestId('items');
     // Click button to delete vocabulary
@@ -180,7 +180,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getAllByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getAllByTestId } = renderWithProvider(<MockChildren />);
     const buttonRandom = getByTestId('button-random');
     const buttonSetQuiz = getByTestId('button-set-quiz');
     // Click button random quizzes and set quiz
@@ -207,7 +207,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const buttonRandom = getByTestId('button-random');
     // Click button random quizzes
     await act(() => {
@@ -230,7 +230,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('load-more');
     // Click button load more
     await act(() => {
@@ -253,7 +253,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const buttonRandom = getByTestId('load-more');
     // Click button load more
     await act(() => {
@@ -279,7 +279,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId } = customRenderProvider(<MockChildren />);
+    const { getByTestId } = renderWithProvider(<MockChildren />);
     const button = getByTestId('check');
     // Click button to check vocabulary existed or not
     await act(() => {
@@ -306,7 +306,7 @@ describe('Test VocabularyProvider', () => {
       );
     };
 
-    const { getByTestId, getByText } = customRenderProvider(<MockChildren />);
+    const { getByTestId, getByText } = renderWithProvider(<MockChildren />);
     const buttonRandom = getByTestId('check');
     await act(() => {
       fireEvent.click(buttonRandom);

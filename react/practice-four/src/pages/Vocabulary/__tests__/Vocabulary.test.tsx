@@ -11,7 +11,7 @@ import { MOCK_VOCABULARY, MOCK_VOCABULARY_CONTEXT_VALUE } from '@mocks';
 import { MESSAGE_ERRORS } from '@constants';
 
 // Helpers
-import { customRender } from '@helpers';
+import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { Vocabulary } from '@pages';
@@ -42,14 +42,14 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should render Vocabulary page', () => {
-    const { container } = customRender(<VocabularyComponent />);
+    const { container } = renderWithThemeProvider(<VocabularyComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should Add new vocabulary when enter in two input', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
-    const { getByTestId, getByText } = customRender(<VocabularyComponent />);
+    const { getByTestId, getByText } = renderWithThemeProvider(<VocabularyComponent />);
 
     const inputENG = getByTestId('input-english');
     const inputVIE = getByTestId('input-vietnamese');
@@ -72,7 +72,7 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should render error message when typing number to input', async () => {
-    const { getByTestId, getAllByText } = customRender(<VocabularyComponent />);
+    const { getByTestId, getAllByText } = renderWithThemeProvider(<VocabularyComponent />);
 
     const inputENG = getByTestId('input-english');
     const inputVIE = getByTestId('input-vietnamese');
@@ -88,7 +88,7 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should call onRandomQuizzes when handleStartTest is called', () => {
-    const { getByRole } = customRender(
+    const { getByRole } = renderWithThemeProvider(
       <VocabularyComponent
         value={{
           ...mockVocabularyContext,
@@ -109,7 +109,7 @@ describe('Test Vocabulary Page', () => {
   it('Should click button load more', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '5' });
 
-    const { getByRole } = customRender(
+    const { getByRole } = renderWithThemeProvider(
       <VocabularyComponent
         value={{
           ...mockVocabularyContext,
@@ -132,7 +132,7 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should show confirm modal and click button Delete', () => {
-    const { getByTestId, getByText } = customRender(<VocabularyComponent />);
+    const { getByTestId, getByText } = renderWithThemeProvider(<VocabularyComponent />);
 
     // Click button X in row and show confirm modal
     const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
