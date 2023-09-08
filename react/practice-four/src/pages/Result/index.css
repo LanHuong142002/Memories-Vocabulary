@@ -9,12 +9,26 @@
   gap: 8px;
 }
 
+.wrapper-result-page .cell {
+  min-width: 60px;
+}
+
 .wrapper-result-page .table-box {
   text-align: center;
-  width: 430px;
+  width: 300px;
   margin: auto;
 }
 
 .wrapper-result-page .table-box button {
   margin-top: 20px;
+}
+
+@media screen and (min-width: 1000px) {
+  .wrapper-result-page .cell {
+    min-width: 85px;
+  }
+
+  .wrapper-result-page .table-box {
+    width: 430px;
+  }
 }
