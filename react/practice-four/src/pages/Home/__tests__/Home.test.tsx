@@ -92,14 +92,14 @@ describe('Test Home Page', () => {
     expect(error).toBeInTheDocument();
   });
 
-  it('Should open new topic', () => {
+  it('Should open topic when click to topic', () => {
     const { getByText } = renderWithThemeProvider(<HomePageComponent />);
 
     const titleHome = getByText('Add & Select Topic');
     const topic = getByText(MOCK_TOPIC.name);
     fireEvent.click(topic);
 
-    expect(titleHome).not.toBeInTheDocument();
+    expect(titleHome).toBeInTheDocument();
   });
 
   it('Should render error message when typing number to input', () => {
