@@ -13,7 +13,7 @@ interface SpinnerType {
 
 const Spinner = memo(
   ({ variant, size = SPINNER_SIZE.M }: SpinnerType): ReactElement => (
-    <div className={`spinner-wrapper${variant ? `-${variant}` : ''} spinner spinner-${size}`} />
+    <div className={`spinner-wrapper-${variant || ''} spinner spinner-${size}`} />
   ),
 );
 

@@ -36,10 +36,7 @@ export interface VocabularyContextType {
 export const VocabularyContext = createContext<VocabularyContextType>({} as VocabularyContextType);
 
 export function VocabularyProvider({ children }: { children: ReactNode }) {
-  const [vocabularyState, vocabularyDispatch] = useReducer(
-    vocabularyReducer,
-    initialVocabularyState,
-  );
+  const [state, dispatch] = useReducer(vocabularyReducer, initialVocabularyState);
   const {
     isAdding,
     deletingById,
@@ -47,7 +44,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     isLoading: isLoadingVocabularies,
     errors: errorsVocabulary,
     vocabularies,
-  } = vocabularyState;
+  } = state;
   const [quizzes, setQuizzes] = useState<VocabularyResult[]>([]);
   const [isLoadingQuizzes, setIsLoadingQuizzes] = useState<boolean>(false);
 
@@ -61,13 +58,13 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
    */
   const handleLoadMore = useCallback(
     async (id: string, page: number): Promise<number | undefined> => {
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.GET_MORE_REQUEST,
       });
       try {
         const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page);
 
-        vocabularyDispatch({
+        dispatch({
           type: VOCABULARY_ACTIONS.GET_MORE_SUCCESS,
           payload: {
             vocabularies: response,
@@ -77,7 +74,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         return response.length;
       } catch (error) {
         const { message } = error as AxiosError;
-        vocabularyDispatch({
+        dispatch({
           type: VOCABULARY_ACTIONS.GET_FAILURE,
           payload: {
             errors: message,
@@ -101,7 +98,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       setQuizzes([...response].sort(() => Math.random() - 0.5));
     } catch (error) {
       const { message } = error as AxiosError;
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.GET_FAILURE,
         payload: {
           errors: message,
@@ -117,13 +114,13 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
    * @param {string} id is the id of the topic.
    */
   const handleGetVocabularies = useCallback(async (id: string): Promise<void> => {
-    vocabularyDispatch({
+    dispatch({
       type: VOCABULARY_ACTIONS.GET_REQUEST,
     });
     try {
       const response = await getData<Vocabulary>(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, 1);
 
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.GET_SUCCESS,
         payload: {
           vocabularies: response,
@@ -131,7 +128,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       const { message } = error as AxiosError;
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.GET_FAILURE,
         payload: {
           errors: message,
@@ -156,7 +153,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       return response.length > 0;
     } catch (error) {
       const { message } = error as AxiosError;
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.ADD_FAILURE,
         payload: {
           errors: message,
@@ -173,7 +170,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
    */
   const handleAddVocabulary = useCallback(
     async (id: string, vocabulary: Vocabulary): Promise<void> => {
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.ADD_REQUEST,
       });
       try {
@@ -182,7 +179,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
           `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
         );
 
-        vocabularyDispatch({
+        dispatch({
           type: VOCABULARY_ACTIONS.ADD_SUCCESS,
           payload: {
             vocabulary: response,
@@ -190,7 +187,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         });
       } catch (error) {
         const { message } = error as AxiosError;
-        vocabularyDispatch({
+        dispatch({
           type: VOCABULARY_ACTIONS.ADD_FAILURE,
           payload: {
             errors: message,
@@ -208,7 +205,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
    * @param {string} id is the ID of the vocabulary to be deleted.
    */
   const handleDeleteVocabulary = useCallback(async (topicId: string, id: string): Promise<void> => {
-    vocabularyDispatch({
+    dispatch({
       type: VOCABULARY_ACTIONS.DELETE_REQUEST,
       payload: {
         vocabularyId: id,
@@ -217,7 +214,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
     try {
       await deleteData<Vocabulary>(`${URL.TOPIC}/${topicId}${URL.VOCABULARY}`, id);
 
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.DELETE_SUCCESS,
         payload: {
           vocabularyId: id,
@@ -225,7 +222,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       const { message } = error as AxiosError;
-      vocabularyDispatch({
+      dispatch({
         type: VOCABULARY_ACTIONS.DELETE_FAILURE,
         payload: {
           errors: message,

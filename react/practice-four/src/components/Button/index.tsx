@@ -35,7 +35,7 @@ const Button = memo(
   }: ButtonProps) => (
     <button
       type={type}
-      className={`btn btn-size-${size} btn-${variant} ${className ? className : ''}`}
+      className={`btn btn-size-${size} btn-${variant} ${className || ''}`}
       onClick={onClick}
       disabled={isDisabled}
       data-testid={dataTestId}

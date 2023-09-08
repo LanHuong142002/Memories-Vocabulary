@@ -31,7 +31,7 @@ const Typography = memo(
   }: TypographyProps) => (
     <TagName
       className={`typography typography-${size} typography-color-${color} ${
-        className ? `typography-${className}` : ''
+        `typography-${className}` || ''
       }`}
       style={{ textAlign: textAlign }}
     >
