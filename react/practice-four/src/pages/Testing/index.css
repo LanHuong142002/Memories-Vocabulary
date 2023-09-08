@@ -38,7 +38,7 @@
   display: inline-block;
   border-width: 0 2px 2px 0;
   border-style: solid;
-  border-color: var(--color-white-100);
+  border-color: var(--button-text-color-primary);
   transform: rotate(-45deg);
   margin-left: 5px;
 }

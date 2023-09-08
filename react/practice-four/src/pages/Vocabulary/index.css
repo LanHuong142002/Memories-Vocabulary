@@ -34,9 +34,13 @@
 
 .wrapper-vocabularies-page .actions-wrapper .button-load-more {
   padding: 0;
-  color: var(--color-orange-100);
+  color: var(--color-brown-100);
   background-color: transparent;
   text-decoration: underline;
+}
+
+.dark .wrapper-vocabularies-page .actions-wrapper .button-load-more {
+  color: var(--color-white-100);
 }
 
 .wrapper-vocabularies-page .actions-wrapper > .button-load-more:hover {
