@@ -24,8 +24,8 @@
 }
 
 .topic-selected {
-  border: 2px solid var(--color-orange-100);
-  color: var(--text-quaternary-color);
+  border: 2px solid var(--topic-primary-color);
+  color: var(--topic-primary-color);
 }
 
 .topic-selected:hover {
@@ -50,7 +50,11 @@
 
 .topic-selected .topic-icon {
   color: var(--text-secondary-color);
-  background-color: var(--color-orange-100);
+  background-color: var(--topic-primary-color);
+}
+
+.dark .topic-selected .topic-icon {
+  color: var(--color-black-200);
 }
 
 .topic > p {

@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   ChangeEvent,
   ReactNode,
-  memo,
   useCallback,
   useContext,
   useEffect,
@@ -56,10 +55,6 @@ const Wrapper = ({
     [onToggleTheme],
   );
 
-  const MemoizedTitle = memo(({ children }: { children: ReactNode }) => (
-    <div className='description'>{children}</div>
-  ));
-
   useEffect(() => {
     if (errorsTopic || errorsVocabulary) {
       const timeout = setTimeout(() => {
@@ -90,7 +85,7 @@ const Wrapper = ({
       <div className='wrapper-container'>
         <div className='wrapper-box'>
           <div className='wrapper-content'>
-            <MemoizedTitle>{childrenTitle}</MemoizedTitle>
+            <div className='description'>{childrenTitle}</div>
             {children}
           </div>
         </div>

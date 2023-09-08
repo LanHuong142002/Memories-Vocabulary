@@ -196,18 +196,21 @@ const Vocabulary = () => {
   return (
     <Wrapper
       className='vocabularies'
-      childrenTitle={
-        <>
-          <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
-          <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-            Add{' '}
-            <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-              (Min 5)
-            </Typography>{' '}
-            words of ENGLISH and Translate it into VIETNAMESE.
-          </Typography>
-        </>
-      }
+      childrenTitle={useMemo(
+        () => (
+          <>
+            <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
+            <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+              Add{' '}
+              <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
+                (Min 5)
+              </Typography>{' '}
+              words of ENGLISH and Translate it into VIETNAMESE.
+            </Typography>
+          </>
+        ),
+        [],
+      )}
     >
       <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
         <Input

@@ -19,6 +19,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
+  /**
+   * @description function set toggle theme with value from checkbox
+   *
+   * @param {boolean} value is value of checkbox
+   */
   const handleToggleTheme = useCallback((value: boolean) => {
     setTheme(value ? 'dark' : 'light');
     setItems(STORAGE_KEYS.THEME, value ? 'dark' : 'light');
