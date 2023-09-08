@@ -1,83 +1,50 @@
-import { act, fireEvent, render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 
 // Constants
 import { MESSAGE_ERRORS } from '@constants';
 
 // Contexts
-import { ThemeProvider, VocabularyContext, VocabularyContextType } from '@contexts';
+import { VocabularyContext, VocabularyContextType } from '@contexts';
 
 // Mocks
-import { MOCK_VOCABULARIES, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
+import { MOCK_VOCABULARY_CONTEXT_VALUE, MOC_RESULT, MOCK_TABLE_RESULT } from '@mocks';
+
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { Testing } from '@pages';
 
 jest.useFakeTimers();
-const mockVocabularyContext = {
-  isLoadingVocabularies: false,
-  isLoadingMore: false,
-  isAdding: false,
-  isLoadingQuizzes: false,
-  errorsVocabulary: '',
-  deletingById: {
-    5: false,
-  },
-  vocabularies: MOCK_VOCABULARIES,
-  quizzes: MOCK_TABLE_RESULT,
-  onAddTopic: jest.fn(),
-  onAddVocabulary: jest.fn(),
-  onDeleteVocabulary: jest.fn(),
-  onGetVocabularies: jest.fn(),
-  onRandomQuizzes: jest.fn(),
-  onSetQuiz: jest.fn(),
-  onLoadMore: jest.fn(),
-  onCheckEnglishIsExisted: jest.fn(),
-};
 
 const TestingComponent = ({
-  children,
-  value = mockVocabularyContext,
+  value = MOCK_VOCABULARY_CONTEXT_VALUE,
 }: {
-  children: ReactNode;
   value?: VocabularyContextType;
 }) => (
-  <BrowserRouter>
-    <ThemeProvider>
-      <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>
-    </ThemeProvider>
-  </BrowserRouter>
+  <VocabularyContext.Provider value={value}>
+    <Testing />
+  </VocabularyContext.Provider>
 );
 
 describe('Test Testing Page', () => {
   it('Should render Testing page', () => {
-    const { container, getByText } = render(
-      <TestingComponent>
-        <Testing />
-      </TestingComponent>,
-    );
+    const { container, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     expect(container).toBeInTheDocument();
     expect(getByText(`1 of ${MOCK_TABLE_RESULT.length}`)).toBeInTheDocument();
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
-    const { getByText } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, quizzes: [MOC_RESULT] }}>
-        <Testing />
-      </TestingComponent>,
+    const { getByText } = renderWithThemeProvider(
+      <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, quizzes: [MOC_RESULT] }} />,
     );
 
     expect(getByText('Submit Answers')).toBeInTheDocument();
   });
 
   it('Should render error required when click button Next', () => {
-    const { getByRole, getByText } = render(
-      <TestingComponent>
-        <Testing />
-      </TestingComponent>,
-    );
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     const button = getByRole('button', {
       name: /next/i,
@@ -88,32 +55,30 @@ describe('Test Testing Page', () => {
   });
 
   it('Enter value to input and click button submit', () => {
-    const { getByRole, getByText } = render(
-      <TestingComponent>
-        <Testing />
-      </TestingComponent>,
-    );
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
+    // Enter value for input
     const input = getByRole('textbox');
     fireEvent.change(input, { target: { value: 'Text' } });
+    // Click button move to next quiz
     const button = getByRole('button', {
       name: /next/i,
     });
     fireEvent.submit(button);
+    // Enter value for second input
     fireEvent.change(input, { target: { value: 'Text' } });
+    // Click button move to next quiz
     fireEvent.submit(button);
+    // Enter value for third input
     fireEvent.change(input, { target: { value: 'Text' } });
+    // Click button move to next quiz
     fireEvent.submit(button);
 
     expect(getByText('Submit Answers')).toBeInTheDocument();
   });
 
   it('Should render error message when typing number to input', () => {
-    const { getByRole, getByText } = render(
-      <TestingComponent>
-        <Testing />
-      </TestingComponent>,
-    );
+    const { getByRole, getByText } = renderWithThemeProvider(<TestingComponent />);
 
     const input = getByRole('textbox');
     act(() => {
@@ -125,30 +90,24 @@ describe('Test Testing Page', () => {
   });
 
   it('Should back to Vocabulary list when quizzes not exist', () => {
-    const { getByText } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, quizzes: [] }}>
-        <Testing />
-      </TestingComponent>,
+    const { getByText } = renderWithThemeProvider(
+      <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, quizzes: [] }} />,
     );
 
     expect(getByText('0 of 0')).toBeInTheDocument();
   });
 
   it('Should show loading when isLoading is true', () => {
-    const { container } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, isLoadingQuizzes: true }}>
-        <Testing />
-      </TestingComponent>,
+    const { container } = renderWithThemeProvider(
+      <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, isLoadingQuizzes: true }} />,
     );
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should navigate to vocabulary page when dont have any vocabularies', () => {
-    const { container } = render(
-      <TestingComponent value={{ ...mockVocabularyContext, vocabularies: [] }}>
-        <Testing />
-      </TestingComponent>,
+    const { container } = renderWithThemeProvider(
+      <TestingComponent value={{ ...MOCK_VOCABULARY_CONTEXT_VALUE, vocabularies: [] }} />,
     );
 
     expect(container).toBeInTheDocument();

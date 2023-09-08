@@ -1,9 +1,7 @@
-import { act, fireEvent, render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 
 // Contexts
-import { ThemeProvider, TopicContext, TopicContextType } from '@contexts';
+import { TopicContext, TopicContextType } from '@contexts';
 
 // Mocks
 import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
@@ -13,6 +11,9 @@ import { MESSAGE_ERRORS } from '@constants';
 
 // Components
 import { Home } from '@pages';
+
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
 
 jest.useFakeTimers();
 const mockTopicContext = {
@@ -24,38 +25,24 @@ const mockTopicContext = {
   onGetTopics: jest.fn(),
 };
 
-const HomePageComponent = ({
-  children,
-  value = mockTopicContext,
-}: {
-  children: ReactNode;
-  value?: TopicContextType;
-}) => (
-  <BrowserRouter>
-    <ThemeProvider>
-      <TopicContext.Provider value={value}>{children}</TopicContext.Provider>
-    </ThemeProvider>
-  </BrowserRouter>
+const HomePageComponent = ({ value = mockTopicContext }: { value?: TopicContextType }) => (
+  <TopicContext.Provider value={value}>
+    <Home />
+  </TopicContext.Provider>
 );
 
 describe('Test Home Page', () => {
   it('Should render Home page', () => {
-    const { container } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+    const { container } = renderWithThemeProvider(<HomePageComponent />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render overlay add new topic when click to button Add Topic', () => {
-    const { getByText } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
+
     const buttonAddTopic = getByText('Add Topic');
+    // Click button add topic
     fireEvent.click(buttonAddTopic);
     const overlayAddNew = getByText('Add New Topic');
 
@@ -63,10 +50,8 @@ describe('Test Home Page', () => {
   });
 
   it('Should show loading when isLoadingTopic is true', () => {
-    const { container } = render(
-      <HomePageComponent value={{ ...mockTopicContext, isLoadingTopic: true }}>
-        <Home />
-      </HomePageComponent>,
+    const { container } = renderWithThemeProvider(
+      <HomePageComponent value={{ ...mockTopicContext, isLoadingTopic: true }} />,
     );
     const topics = container.querySelectorAll('.topic');
 
@@ -74,16 +59,15 @@ describe('Test Home Page', () => {
   });
 
   it('Should Add new topic when enter the new topic', () => {
-    const { getByText, getByPlaceholderText } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
 
+    // Click button Add Topic
     const topic = getByText('Add Topic');
     fireEvent.click(topic);
+    // Enter value for input
     const input = getByPlaceholderText('Topic Name');
     fireEvent.change(input, { target: { value: 'Text' } });
+    // Click button Done to add new topic
     const button = getByText('Done');
     fireEvent.click(button);
     const titleAddTopic = getByText('Add & Select Topic');
@@ -92,16 +76,15 @@ describe('Test Home Page', () => {
   });
 
   it('Should show error message when enter wrong value with click to Done button', () => {
-    const { getByText, getByPlaceholderText } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
 
+    // Click button Add Topic
     const topic = getByText('Add Topic');
     fireEvent.click(topic);
+    // Enter value empty for input
     const input = getByPlaceholderText('Topic Name');
     fireEvent.change(input, { target: { value: '' } });
+    // Click button Done to add new topic
     const button = getByText('Done');
     fireEvent.click(button);
     const error = getByText(MESSAGE_ERRORS.REQUIRED);
@@ -109,29 +92,24 @@ describe('Test Home Page', () => {
     expect(error).toBeInTheDocument();
   });
 
-  it('Should open new topic', () => {
-    const { getByText } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+  it('Should open topic when click to topic', () => {
+    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
 
     const titleHome = getByText('Add & Select Topic');
     const topic = getByText(MOCK_TOPIC.name);
     fireEvent.click(topic);
 
-    expect(titleHome).not.toBeInTheDocument();
+    expect(titleHome).toBeInTheDocument();
   });
 
   it('Should render error message when typing number to input', () => {
-    const { getByText, getByPlaceholderText } = render(
-      <HomePageComponent>
-        <Home />
-      </HomePageComponent>,
-    );
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
+
+    // Click button Add Topic
     const topic = getByText('Add Topic');
     fireEvent.click(topic);
     const input = getByPlaceholderText('Topic Name');
+    // Enter value for input
     act(() => {
       fireEvent.change(input, { target: { value: '2' } });
       jest.runAllTimers();

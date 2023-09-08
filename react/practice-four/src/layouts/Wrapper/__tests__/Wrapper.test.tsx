@@ -18,26 +18,17 @@ import { ROUTES } from '@constants';
 // Components
 import { Wrapper } from '@layouts';
 
-const handleToggleTheme = jest.fn();
 jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
 }));
 
+const handleToggleTheme = jest.fn();
+
 const mockThemeContext = {
   theme: 'light',
   onToggleTheme: handleToggleTheme,
 } as ThemeProviderProps;
-
-const WrapperComponent = () => (
-  <BrowserRouter>
-    <ThemeContext.Provider value={mockThemeContext}>
-      <Wrapper className='testing' childrenTitle={<p>Title</p>}>
-        <p>Wrapper body</p>
-      </Wrapper>
-    </ThemeContext.Provider>
-  </BrowserRouter>
-);
 
 const mockLocation = {
   pathname: '/123123',
@@ -46,6 +37,16 @@ const mockLocation = {
   search: '',
   hash: '',
 };
+
+const WrapperComponent = ({ value = mockThemeContext }: { value?: ThemeProviderProps }) => (
+  <BrowserRouter>
+    <ThemeContext.Provider value={value}>
+      <Wrapper className='testing' childrenTitle={<p>Title</p>}>
+        <p>Wrapper body</p>
+      </Wrapper>
+    </ThemeContext.Provider>
+  </BrowserRouter>
+);
 
 describe('Test Wrapper component', () => {
   it('Should render Wrapper component', () => {
@@ -61,6 +62,7 @@ describe('Test Wrapper component', () => {
     const button = getByRole('button');
     const checkbox = getByRole('checkbox') as HTMLInputElement;
 
+    // Click checkbox and click button redirect to home page
     fireEvent.click(checkbox);
     fireEvent.click(button);
 
@@ -71,17 +73,10 @@ describe('Test Wrapper component', () => {
   it('Should call handleToggleTheme when click checkbox to change theme', () => {
     jest.spyOn(reactRouter, 'useLocation').mockReturnValue(mockLocation);
     const { getByRole, getByText } = render(
-      <BrowserRouter>
-        <ThemeContext.Provider value={{ ...mockThemeContext, theme: 'dark' }}>
-          <Wrapper className='testing' childrenTitle={<p>Title</p>}>
-            <p>Wrapper body</p>
-          </Wrapper>
-        </ThemeContext.Provider>
-      </BrowserRouter>,
+      <WrapperComponent value={{ ...mockThemeContext, theme: 'dark' }} />,
     );
 
     const button = getByRole('button');
-
     fireEvent.click(button);
 
     expect(getByText('Back to Home').closest('a')).toHaveAttribute('href', ROUTES.HOME);
