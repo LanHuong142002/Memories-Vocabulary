@@ -41,6 +41,10 @@ type Story = StoryObj<typeof TableVocabulary>;
 export const Default: Story = {
   args: {
     vocabularies: mockData,
+    isLoading: false,
+    isAdding: false,
+    isLoadingMore: false,
+    deletingById: { 5: false },
   },
 };
 
