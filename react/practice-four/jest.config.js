@@ -21,6 +21,7 @@ module.exports = {
     '^@utils(.*)$': '<rootDir>src/utils/$1',
     '^@mocks(.*)$': '<rootDir>src/mocks/$1',
     '^@stores(.*)$': '<rootDir>src/stores/$1',
+    '^@themes(.*)$': '<rootDir>src/themes/$1',
     uuid: require.resolve('uuid'),
   },
   transform: {
