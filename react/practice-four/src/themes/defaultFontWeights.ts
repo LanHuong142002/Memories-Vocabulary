@@ -1,8 +1,8 @@
-enum DEFAULT_FONT_WEIGHT {
+enum DEFAULT_FONT_WEIGHTS {
   bold = '700',
   semiBold = '500',
   regular = '400',
   light = '300',
 }
 
-export default DEFAULT_FONT_WEIGHT;
+export default DEFAULT_FONT_WEIGHTS;

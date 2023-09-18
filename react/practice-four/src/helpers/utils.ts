@@ -6,8 +6,8 @@ import { STATUS_PROCESS } from '@constants';
  * in light theme
  *
  * @param {string} colorScheme dark mode or light mode
- * @param {string} InDarkTheme the color will show in dark theme
- * @param {string} InLightTheme the color will show in light theme
+ * @param {string} InDarkTheme this will show in dark theme
+ * @param {string} InLightTheme this will show in light theme
  *
  * @returns {string}
  */
