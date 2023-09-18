@@ -1,16 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import {
-  ChangeEvent,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useMantineColorScheme } from '@mantine/core';
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts
-import { VocabularyContext, ThemeContext, TopicContext } from '@contexts';
+import { VocabularyContext, TopicContext } from '@contexts';
 
 // Constants
 import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
@@ -31,10 +24,9 @@ const Wrapper = ({
   childrenTitle: ReactNode;
 }) => {
   const location = useLocation();
-  const { onToggleTheme, theme } = useContext(ThemeContext);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { errorsVocabulary } = useContext(VocabularyContext);
   const { errorsTopic } = useContext(TopicContext);
-  const [toggle, setToggle] = useState<boolean>(!(theme === 'light'));
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const hasNotification = useMemo(
     () => showNotification && (errorsTopic || errorsVocabulary),
@@ -46,14 +38,9 @@ const Wrapper = ({
    *
    * @param {Event} event of input element
    */
-  const handleToggleTheme = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const { checked } = event.currentTarget;
-      setToggle(checked);
-      onToggleTheme(checked);
-    },
-    [onToggleTheme],
-  );
+  const handleToggleTheme = useCallback(() => {
+    toggleColorScheme();
+  }, [toggleColorScheme]);
 
   useEffect(() => {
     if (errorsTopic || errorsVocabulary) {
@@ -70,7 +57,7 @@ const Wrapper = ({
       {useMemo(
         () => (
           <div className='wrapper-header'>
-            <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
+            <ToggleTheme isChecked={colorScheme === 'light'} onChange={handleToggleTheme} />
             {location.pathname !== ROUTES.HOME && (
               <Link to={ROUTES.HOME}>
                 <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
@@ -80,7 +67,7 @@ const Wrapper = ({
             )}
           </div>
         ),
-        [handleToggleTheme, location.pathname, toggle],
+        [colorScheme, handleToggleTheme, location.pathname],
       )}
       <div className='wrapper-container'>
         <div className='wrapper-box'>
