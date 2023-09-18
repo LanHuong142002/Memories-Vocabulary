@@ -1,4 +1,5 @@
 export * from './ToggleTheme';
+export { default as GlobalFonts } from './GlobalFonts';
 export { default as Table } from './Table';
 export { default as TableCell } from './Table/TableCell';
 export { default as TableRow } from './Table/TableRow';
