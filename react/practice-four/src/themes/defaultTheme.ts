@@ -6,6 +6,8 @@ import DEFAULT_FONT_SIZES from './defaultFontSizes';
 import DEFAULT_FONT_WEIGHTS from './defaultFontWeights';
 import DEFAULT_LINE_HEIGHTS from './defaultLineHeights';
 
+import { TextInput } from './components';
+
 export const defaultTheme: MantineThemeOverride = {
   fontFamily: 'HelveticaNeue, Helvetica, Arial, sans-serif',
   colors: DEFAULT_COLORS,
@@ -18,6 +20,9 @@ export const defaultTheme: MantineThemeOverride = {
       xs: '0.7',
       md: '1',
     },
+  },
+  components: {
+    TextInput,
   },
   globalStyles: GLOBAL_STYLES,
 };
