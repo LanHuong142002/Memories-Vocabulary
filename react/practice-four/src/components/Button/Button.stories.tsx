@@ -30,6 +30,7 @@ export const Default: Story = {
     variant: BUTTON_VARIANT.PRIMARY,
     children: 'Submit',
     size: BUTTON_SIZE.XS,
+    loading: true,
   },
 };
 

@@ -4,7 +4,6 @@ import { ReactNode, memo } from 'react';
 import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '@constants';
 
 // Styles
-// import './index.css';
 import { ButtonProps, Button as ButtonMantine } from '@mantine/core';
 
 interface Props extends ButtonProps {
