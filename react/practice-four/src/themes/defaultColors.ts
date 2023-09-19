@@ -18,6 +18,7 @@ const DEFAULT_COLORS: Partial<MantineThemeOverride['colors']> = {
     'rgba(0, 0, 0, 0.1)',
     'rgba(56, 67, 84, 0.05)',
   ],
+  none: ['transparent'],
 };
 
 export default DEFAULT_COLORS;
