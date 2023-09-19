@@ -16,6 +16,11 @@ export const defaultTheme: MantineThemeOverride = {
     fontWeight: DEFAULT_FONT_WEIGHTS,
     lineHeight: DEFAULT_LINE_HEIGHTS,
   },
+  opacity: {
+    xxs: '0.5',
+    xs: '0.7',
+    md: '1',
+  },
   components: {
     Button,
   },
