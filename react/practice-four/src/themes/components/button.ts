@@ -1,26 +1,89 @@
 import { MantineTheme } from '@mantine/core';
 
-const commonButton = (theme: MantineTheme) => ({
-  cursor: 'pointer',
-  fontSize: theme.fontSizes.s,
-  fontWeight: theme.other.fontWeight.light,
-  borderRadius: '3px',
-  boxSizing: 'border-box',
-  ':disabled': {
-    opacity: '0.6',
-    cursor: 'default',
+// Constants
+import { BOX_SIZING, VERTICAL_ALIGN } from '@constants';
+
+// Helpers
+import { getColorScheme } from '@helpers';
+
+const commonColor = (theme: MantineTheme) =>
+  getColorScheme(theme.colorScheme, theme.colors.orange[0], theme.colors.brown[0]);
+
+const commonButtonLabel = (theme: MantineTheme) => ({
+  label: {
+    fontWeight: theme.other.fontWeight.regular,
   },
 });
 
-const button = {
+const commonButtonRoot = (theme: MantineTheme) => ({
+  color: commonColor(theme),
+  cursor: 'pointer',
+  fontSize: theme.fontSizes.s,
+  boxSizing: BOX_SIZING.BORDER_BOX,
+  borderRadius: '3px',
+});
+
+const Button = {
   variants: {
     primary: (theme: MantineTheme) => ({
-      ...commonButton(theme),
-      padding: '10px 20px',
-      color: theme.colors.white[4],
-      backgroundColor: theme.colors.brown[0],
+      root: {
+        ...commonButtonRoot(theme),
+        height: 'fit-content',
+        padding: '10px 20px',
+        color: getColorScheme(theme.colorScheme, theme.colors.dark[3], theme.colors.white[4]),
+        backgroundColor: getColorScheme(
+          theme.colorScheme,
+          theme.colors.orange[0],
+          theme.colors.brown[0],
+        ),
+        ':disabled': {
+          opacity: theme.other.opacity.xxs,
+          backgroundColor: getColorScheme(
+            theme.colorScheme,
+            theme.colors.orange[0],
+            theme.colors.brown[0],
+          ),
+        },
+      },
+      ...commonButtonLabel(theme),
+    }),
+    secondary: (theme: MantineTheme) => ({
+      root: {
+        height: '25px',
+        verticalAlign: 'middle',
+        textAlign: VERTICAL_ALIGN.CENTER,
+        backgroundColor: theme.colors.none[0],
+        border: `2px solid ${getColorScheme(
+          theme.colorScheme,
+          theme.colors.orange[0],
+          theme.colors.brown[0],
+        )}`,
+        ':disabled': {
+          opacity: theme.other.opacity.xxs,
+          color: commonColor(theme),
+          backgroundColor: theme.colors.none[0],
+          border: `2px solid ${getColorScheme(
+            theme.colorScheme,
+            theme.colors.orange[0],
+            theme.colors.brown[0],
+          )}`,
+        },
+      },
+      ...commonButtonLabel(theme),
+    }),
+    tertiary: (theme: MantineTheme) => ({
+      root: {
+        border: 'none',
+        backgroundColor: theme.colors.none[0],
+        ':disabled': {
+          opacity: theme.other.opacity.xxs,
+          color: commonColor(theme),
+          backgroundColor: theme.colors.none[0],
+        },
+      },
+      ...commonButtonLabel(theme),
     }),
   },
 };
 
-export default button;
+export default Button;

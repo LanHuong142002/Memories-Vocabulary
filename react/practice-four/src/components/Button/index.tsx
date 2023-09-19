@@ -1,19 +1,14 @@
 import { ReactNode, memo } from 'react';
 
 // Constants
-import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT, SPINNER_SIZE } from '@constants';
+import { BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '@constants';
 
 // Styles
-import './index.css';
-import { Spinner } from '@components';
+// import './index.css';
+import { ButtonProps, Button as ButtonMantine } from '@mantine/core';
 
-interface ButtonProps {
-  isDisabled?: boolean;
-  isLoading?: boolean;
-  label?: string;
-  className?: string;
+interface Props extends ButtonProps {
   dataTestId?: string;
-  type?: BUTTON_TYPE;
   variant?: BUTTON_VARIANT;
   size?: BUTTON_SIZE;
   onClick?: () => void;
@@ -22,26 +17,16 @@ interface ButtonProps {
 
 const Button = memo(
   ({
-    isLoading = false,
-    isDisabled = false,
-    label,
-    className,
     dataTestId,
     type = BUTTON_TYPE.BUTTON,
     size = BUTTON_SIZE.S,
     variant = BUTTON_VARIANT.PRIMARY,
-    onClick,
     children,
-  }: ButtonProps) => (
-    <button
-      type={type}
-      className={`btn btn-size-${size} btn-${variant} ${className || ''}`}
-      onClick={onClick}
-      disabled={isDisabled}
-      data-testid={dataTestId}
-    >
-      {isLoading ? <Spinner size={SPINNER_SIZE.S} /> : <>{children || label}</>}
-    </button>
+    ...props
+  }: Props) => (
+    <ButtonMantine type={type} variant={variant} data-testid={dataTestId} size={size} {...props}>
+      {children}
+    </ButtonMantine>
   ),
 );
 

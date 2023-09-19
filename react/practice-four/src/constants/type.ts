@@ -87,3 +87,12 @@ export enum TABLE_CELL_COLOR {
   SUCCESS = 'success',
   FAILED = 'failed',
 }
+
+// Styles
+export enum BOX_SIZING {
+  BORDER_BOX = 'border-box',
+}
+
+export enum VERTICAL_ALIGN {
+  CENTER = 'center',
+}
