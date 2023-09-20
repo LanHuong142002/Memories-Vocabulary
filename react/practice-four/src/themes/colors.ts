@@ -12,7 +12,7 @@ const COLORS: Partial<MantineThemeOverride['colors']> = {
   brown: ['#6b3000'],
   opacity: [
     'rgba(255, 255, 255, 0.5)',
-    'rgba(255, 255, 255, 0.8',
+    'rgba(255, 255, 255, 0.8)',
     'rgba(255, 255, 255, 0.15)',
     'rgba(243, 244, 248, 0.65)',
     'rgba(0, 0, 0, 0.1)',
