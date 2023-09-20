@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { TableVocabulary } from '@components';
@@ -37,7 +38,9 @@ describe('Test table vocabulary component', () => {
   };
 
   it('Should render table vocabulary with list vocabularies', () => {
-    const { container, getAllByTestId, getByText } = render(<TableVocabulary {...defaultValue} />);
+    const { container, getAllByTestId, getByText } = renderWithThemeProvider(
+      <TableVocabulary {...defaultValue} />,
+    );
 
     expect(container).toBeInTheDocument();
     expect(getAllByTestId('table-cell').length).toBe(20);
@@ -45,19 +48,25 @@ describe('Test table vocabulary component', () => {
   });
 
   it('Should render loading when isLoading is true', () => {
-    const { container } = render(<TableVocabulary {...defaultValue} isLoading={true} />);
+    const { container } = renderWithThemeProvider(
+      <TableVocabulary {...defaultValue} isLoading={true} />,
+    );
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render loading in last row when isAdding is true', () => {
-    const { container } = render(<TableVocabulary {...defaultValue} isAdding={true} />);
+    const { container } = renderWithThemeProvider(
+      <TableVocabulary {...defaultValue} isAdding={true} />,
+    );
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render row message when table is empty ', () => {
-    const { getByText } = render(<TableVocabulary {...defaultValue} vocabularies={[]} />);
+    const { getByText } = renderWithThemeProvider(
+      <TableVocabulary {...defaultValue} vocabularies={[]} />,
+    );
 
     expect(getByText('ENTER')).toBeInTheDocument();
   });
