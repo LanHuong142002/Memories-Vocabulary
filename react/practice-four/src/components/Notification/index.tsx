@@ -1,18 +1,19 @@
 import { memo } from 'react';
+import {
+  Notification as NotificationMantine,
+  NotificationProps as NotificationPropsMantine,
+} from '@mantine/core';
 
-// Styles
-import './index.css';
-
-interface NotificationProps {
+interface NotificationProps extends NotificationPropsMantine {
+  icon?: string;
   title: string;
   description: string;
 }
 
-const Notification = memo(({ description, title }: NotificationProps) => (
-  <div className='notification'>
-    <p className='title'>{title}</p>
-    <p className='description'>{description}</p>
-  </div>
+const Notification = memo(({ icon = '!', description, title, ...props }: NotificationProps) => (
+  <NotificationMantine title={title} icon={icon} withCloseButton={false} {...props}>
+    {description}
+  </NotificationMantine>
 ));
 
 export default Notification;
