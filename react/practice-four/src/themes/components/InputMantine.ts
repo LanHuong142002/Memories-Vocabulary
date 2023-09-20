@@ -6,22 +6,22 @@ import { BOX_SIZING, POSITION, ALIGN } from '@constants';
 // Helpers
 import { getColorScheme } from '@helpers';
 
-const commonInput = (theme: MantineTheme) => ({
-  outline: 'none',
-  boxSizing: BOX_SIZING.BORDER_BOX,
-  backgroundColor: theme.colors.none[0],
-  fontWeight: theme.other.fontWeight.regular,
-  '::placeholder': {
-    color: getColorScheme(theme.colorScheme, theme.colors.dark[0], theme.colors.dark[3]),
-  },
-});
-
-const commonError = (theme: MantineTheme) => ({
-  paddingLeft: '5px',
-  fontWeight: theme.other.fontWeight.regular,
-});
-
 const TextInput = {
+  styles: (theme: MantineTheme) => ({
+    input: {
+      outline: 'none',
+      boxSizing: BOX_SIZING.BORDER_BOX,
+      backgroundColor: theme.colors.none[0],
+      fontWeight: theme.other.fontWeight.regular,
+      '::placeholder': {
+        color: getColorScheme(theme.colorScheme, theme.colors.dark[0], theme.colors.dark[3]),
+      },
+    },
+    error: {
+      paddingLeft: '5px',
+      fontWeight: theme.other.fontWeight.regular,
+    },
+  }),
   variants: {
     primary: (theme: MantineTheme) => ({
       input: {
@@ -35,10 +35,8 @@ const TextInput = {
           theme.colors.orange[0],
           theme.colors.brown[0],
         )}`,
-        ...commonInput(theme),
       },
       error: {
-        ...commonError(theme),
         color: getColorScheme(theme.colorScheme, theme.colors.red[1], theme.colors.red[4]),
       },
     }),
@@ -58,7 +56,6 @@ const TextInput = {
           theme.colors.orange[0],
           theme.colors.brown[0],
         )}`,
-        ...commonInput(theme),
       },
       label: {
         width: 'max-content',
@@ -77,7 +74,6 @@ const TextInput = {
         zIndex: 99,
       },
       error: {
-        ...commonError(theme),
         color: getColorScheme(theme.colorScheme, theme.colors.red[1], theme.colors.red[4]),
       },
     }),
@@ -106,7 +102,6 @@ const TextInput = {
         paddingLeft: '5px',
         color: theme.colors.dark[6],
         fontSize: theme.fontSizes.s,
-        ...commonInput(theme),
       },
       label: {
         display: 'none',
@@ -120,7 +115,6 @@ const TextInput = {
         },
       },
       error: {
-        ...commonError(theme),
         width: '160px',
         display: 'flex',
         alignItems: 'center',
