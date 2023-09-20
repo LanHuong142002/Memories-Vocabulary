@@ -93,7 +93,7 @@ export enum BOX_SIZING {
   BORDER_BOX = 'border-box',
 }
 
-export enum VERTICAL_ALIGN {
+export enum ALIGN {
   CENTER = 'center',
 }
 

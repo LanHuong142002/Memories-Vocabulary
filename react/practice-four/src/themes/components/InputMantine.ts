@@ -1,7 +1,7 @@
 import { MantineTheme } from '@mantine/core';
 
 // Constants
-import { BOX_SIZING, POSITION, VERTICAL_ALIGN } from '@constants';
+import { BOX_SIZING, POSITION, ALIGN } from '@constants';
 
 // Helpers
 import { getColorScheme } from '@helpers';
@@ -27,7 +27,7 @@ const TextInput = {
       input: {
         border: 'none',
         height: '40px',
-        textAlign: VERTICAL_ALIGN.CENTER,
+        textAlign: ALIGN.CENTER,
         fontSize: theme.fontSizes.l,
         color: getColorScheme(theme.colorScheme, theme.colors.white[4], theme.colors.dark[3]),
         borderBottom: `2px solid ${getColorScheme(
@@ -102,7 +102,7 @@ const TextInput = {
       input: {
         height: '35px',
         border: 'none',
-        alignItems: VERTICAL_ALIGN.CENTER,
+        alignItems: 'center',
         paddingLeft: '5px',
         color: theme.colors.dark[6],
         fontSize: theme.fontSizes.s,
@@ -111,7 +111,7 @@ const TextInput = {
       label: {
         display: 'none',
         justifyContent: 'center',
-        alignItems: VERTICAL_ALIGN.CENTER,
+        alignItems: 'center',
         color: theme.colors.dark[6],
         fontWeight: theme.other.fontWeight.regular,
         [`@media (min-width: ${theme.breakpoints.sm})`]: {
