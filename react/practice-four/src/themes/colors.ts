@@ -1,6 +1,6 @@
 import { MantineThemeOverride } from '@mantine/core';
 
-const DEFAULT_COLORS: Partial<MantineThemeOverride['colors']> = {
+const COLORS: Partial<MantineThemeOverride['colors']> = {
   dark: ['#ddd', '#888', '#555', '#333', '#1a1b1e', '#25262b', '#000'],
   gray: ['#868e96', '#786f6f', '#343a40'],
   white: ['#f9f9f9', '#e8e8e8', '#f5f5f5', '#f3f4f8', '#fff'],
@@ -21,4 +21,4 @@ const DEFAULT_COLORS: Partial<MantineThemeOverride['colors']> = {
   none: ['transparent'],
 };
 
-export default DEFAULT_COLORS;
+export default COLORS;
