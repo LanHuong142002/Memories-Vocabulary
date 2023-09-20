@@ -1,16 +1,29 @@
 import { fireEvent, render } from '@testing-library/react';
 import Modal from '..';
 import { Button } from '@components';
+import { ThemeProvider } from '@contexts';
 
 describe('Test Modal component', () => {
   const handleOnClick = jest.fn();
   const handleCloseModal = jest.fn();
+  const defaultProps = {
+    opened: true,
+    onClose: jest.fn(),
+  };
 
   it('Should render Modal component', () => {
     const { getByText, container } = render(
-      <Modal title='lorem' description='description' onCloseModal={handleCloseModal}>
-        <Button onClick={handleOnClick}>Click</Button>
-      </Modal>,
+      <ThemeProvider>
+        <Modal
+          {...defaultProps}
+          title='lorem'
+          description='description'
+          onCloseModal={handleCloseModal}
+        >
+          <Button onClick={handleOnClick}>Click</Button>
+        </Modal>
+        ,
+      </ThemeProvider>,
     );
 
     expect(getByText('lorem')).toBeInTheDocument();
@@ -19,18 +32,21 @@ describe('Test Modal component', () => {
   });
 
   it('Should call onclick when click buttons', () => {
-    const { getByRole, getByText } = render(
-      <Modal title='lorem' description='description' onCloseModal={handleCloseModal}>
-        <Button onClick={handleOnClick}>Click</Button>
-      </Modal>,
+    const { getByText } = render(
+      <ThemeProvider>
+        <Modal
+          {...defaultProps}
+          title='lorem'
+          description='description'
+          onCloseModal={handleCloseModal}
+        >
+          <Button onClick={handleOnClick}>Click</Button>
+        </Modal>
+        ,
+      </ThemeProvider>,
     );
-
-    const buttonClose = getByRole('button', {
-      name: /χ/i,
-    });
     const button = getByText('Click');
 
-    fireEvent.click(buttonClose);
     fireEvent.click(button);
 
     expect(handleOnClick).toBeCalled();
