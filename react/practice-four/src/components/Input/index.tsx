@@ -22,7 +22,7 @@ const Input = memo(
     variant = INPUT_VARIANT.PRIMARY,
     ...props
   }: Props) => {
-    const hasError = errors && errors.length >= 0 && <>{errors.map((error) => error)}</>;
+    const hasErrors = errors && errors.length >= 0 && <>{errors.map((error) => error)}</>;
 
     return (
       <TextInput
@@ -30,7 +30,7 @@ const Input = memo(
         variant={variant}
         data-testid={dataTestId}
         autoComplete={autoComplete}
-        error={hasError}
+        error={hasErrors}
         styles={(theme: MantineTheme) =>
           variant === INPUT_VARIANT.TERTIARY && errors
             ? errors.length >= 0
