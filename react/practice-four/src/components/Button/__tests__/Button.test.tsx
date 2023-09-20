@@ -14,7 +14,7 @@ describe('Test button component', () => {
   const handleClick = jest.fn();
 
   const defaultProps = {
-    label: 'Back to Vocabulary List',
+    children: 'Back to Vocabulary List',
     onClick: handleClick,
   };
 
@@ -36,7 +36,7 @@ describe('Test button component', () => {
   it('Should not call onClick when button disabled', () => {
     const handleClick = jest.fn();
     const { getByText } = render(
-      <Button {...defaultProps} onClick={handleClick} isDisabled={true} />,
+      <Button {...defaultProps} onClick={handleClick} disabled={true} />,
     );
 
     const button = getByText('Back to Vocabulary List');

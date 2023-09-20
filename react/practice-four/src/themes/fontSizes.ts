@@ -1,4 +1,4 @@
-enum DEFAULT_FONT_SIZES {
+enum FONT_SIZES {
   xxs = '12px',
   xs = '14px',
   s = '15px',
@@ -8,4 +8,4 @@ enum DEFAULT_FONT_SIZES {
   xxl = '30px',
 }
 
-export default DEFAULT_FONT_SIZES;
+export default FONT_SIZES;
