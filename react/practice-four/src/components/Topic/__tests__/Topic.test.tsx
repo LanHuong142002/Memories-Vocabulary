@@ -1,7 +1,13 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
 // Components
 import { Topic } from '@components';
+
+// Constants
+import { TOPIC_VARIANT } from '@constants';
+
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
 
 describe('Test topic component', () => {
   const handleClick = jest.fn();
@@ -13,19 +19,23 @@ describe('Test topic component', () => {
   };
 
   it('Should render topic component', () => {
-    const { container } = render(<Topic {...defaultProps} quantity={10} />);
+    const { container } = renderWithThemeProvider(<Topic {...defaultProps} quantity={10} />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render topic component without quantity', () => {
-    const { container } = render(<Topic {...defaultProps} />);
+    const { container } = renderWithThemeProvider(
+      <Topic {...defaultProps} variant={TOPIC_VARIANT.SELECTED} />,
+    );
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should call onClick when click topic component', () => {
-    const { getByText } = render(<Topic {...defaultProps} quantity={10} isAddNew={true} />);
+    const { getByText } = renderWithThemeProvider(
+      <Topic {...defaultProps} quantity={10} isAddNew={true} />,
+    );
 
     const topic = getByText('School');
     fireEvent.click(topic);
