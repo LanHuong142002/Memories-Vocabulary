@@ -37,7 +37,7 @@ export const Tertiary: Story = {
   args: {
     placeholder: 'Enter name...',
     variant: INPUT_VARIANT.TERTIARY,
-    title: 'Vietnamese',
+    label: 'Vietnamese',
   },
 };
 
