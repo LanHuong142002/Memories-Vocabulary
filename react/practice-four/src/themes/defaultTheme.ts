@@ -6,6 +6,8 @@ import FONT_SIZES from './fontSizes';
 import FONT_WEIGHTS from './fontWeights';
 import LINE_HEIGHTS from './lineHeights';
 
+import { Button } from './components';
+
 export const defaultTheme: MantineThemeOverride = {
   fontFamily: 'HelveticaNeue, Helvetica, Arial, sans-serif',
   colors: COLORS,
@@ -18,6 +20,9 @@ export const defaultTheme: MantineThemeOverride = {
       xs: '0.7',
       md: '1',
     },
+  },
+  components: {
+    Button,
   },
   globalStyles: GLOBAL_STYLES,
 };
