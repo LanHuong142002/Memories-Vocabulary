@@ -28,7 +28,7 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {
   args: {
     variant: BUTTON_VARIANT.PRIMARY,
-    label: 'Submit',
+    children: 'Submit',
     size: BUTTON_SIZE.XS,
   },
 };
@@ -36,9 +36,9 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     variant: BUTTON_VARIANT.PRIMARY,
-    label: 'Back to Vocabulary List',
+    children: 'Back to Vocabulary List',
     size: BUTTON_SIZE.S,
-    isDisabled: true,
+    disabled: true,
   },
 };
 
