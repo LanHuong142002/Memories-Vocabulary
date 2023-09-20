@@ -45,6 +45,8 @@
     "@storybook/react": "7.1.1",
     "@storybook/react-vite": "7.1.1",
     "@storybook/testing-library": "0.2.0",
+    "@storybook/theming": "7.4.2",
+    "storybook-dark-mode": "3.0.1",
     "@testing-library/dom": "8.20.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
