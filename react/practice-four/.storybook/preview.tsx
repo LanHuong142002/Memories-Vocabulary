@@ -1,25 +1,21 @@
 import React from 'react';
-import { addons } from '@storybook/addons';
-import { UPDATE_GLOBALS, STORY_ARGS_UPDATED } from '@storybook/core-events';
 import type { Preview } from '@storybook/react';
+import { themes } from '@storybook/theming';
+import { useDarkMode } from 'storybook-dark-mode';
+import { MantineProvider } from '@mantine/core';
 
-// Styles
-import '../src/styles/main.css';
+// Themes
+import { defaultTheme } from '../src/themes';
 
-let channel = addons.getChannel();
-let theme = 'light';
-
-const storyListener = (args) => {
-  if (args.args.theme) {
-    theme = args.args.theme;
-    channel.emit(UPDATE_GLOBALS, {
-      globals: {
-        backgrounds:
-          theme === 'light' ? { name: 'light', value: '#fff' } : { name: 'dark', value: '#1a1b1e' },
-      },
-    });
-  }
-};
+const ThemeWrapper = (props: { children: React.ReactNode }) => (
+  <MantineProvider
+    theme={{ ...defaultTheme, colorScheme: useDarkMode() ? 'dark' : 'light' }}
+    withGlobalStyles
+    withNormalizeCSS
+  >
+    {props.children}
+  </MantineProvider>
+);
 
 const preview: Preview = {
   parameters: {
@@ -30,44 +26,22 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    backgrounds: {
-      default: theme,
-      values: [
-        {
-          name: 'light',
-          value: '#fff',
-        },
-        {
-          name: 'dark',
-          value: '#1a1b1e',
-        },
-      ],
-    },
-  },
-  args: {
-    theme: 'light',
-  },
-  argTypes: {
-    theme: {
-      control: { type: 'radio' },
-      options: ['light', 'dark'],
+    darkMode: {
+      dark: { ...themes.normal },
+      light: { ...themes.normal },
     },
   },
   decorators: [
     (Story) => {
       return (
-        <div className={theme} style={{ margin: '10px' }}>
-          <Story />
-        </div>
+        <ThemeWrapper>
+          <div style={{ margin: '10px' }}>
+            <Story />
+          </div>
+        </ThemeWrapper>
       );
     },
   ],
 };
 
-function setupBackgroundListener() {
-  channel.removeListener(STORY_ARGS_UPDATED, storyListener);
-  channel.addListener(STORY_ARGS_UPDATED, storyListener);
-}
-
-setupBackgroundListener();
 export default preview;

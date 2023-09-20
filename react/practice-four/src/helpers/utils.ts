@@ -2,6 +2,22 @@
 import { STATUS_PROCESS } from '@constants';
 
 /**
+ * @description function return color dark when in dark theme and color light
+ * in light theme
+ *
+ * @param {string} colorScheme dark mode or light mode
+ * @param {string} InDarkTheme this will show in dark theme
+ * @param {string} InLightTheme this will show in light theme
+ *
+ * @returns {string}
+ */
+export const getColorScheme = (
+  colorScheme: string,
+  InDarkTheme: string,
+  InLightTheme: string,
+): string => (colorScheme === 'dark' ? InDarkTheme : InLightTheme);
+
+/**
  * @description remove duplicates from two arrays and return a combined array.
  *
  * @param {T[]} array1 - The first array.

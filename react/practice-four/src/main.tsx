@@ -7,7 +7,7 @@ import { ThemeProvider } from '@contexts';
 
 // Components
 import { App } from '@App';
-import { ErrorBoundary } from '@components';
+import { GlobalFonts, ErrorBoundary } from '@components';
 import { Error } from '@pages';
 
 // Styles
@@ -16,11 +16,12 @@ import './styles/main.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
-      <ErrorBoundary fallback={<Error />}>
-        <ThemeProvider>
+      <ThemeProvider>
+        <GlobalFonts />
+        <ErrorBoundary fallback={<Error />}>
           <App />
-        </ThemeProvider>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </ThemeProvider>
     </Router>
   </StrictMode>,
 );

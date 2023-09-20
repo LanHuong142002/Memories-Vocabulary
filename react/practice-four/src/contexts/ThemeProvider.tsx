@@ -1,9 +1,11 @@
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
-
-// Utils
+import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 
 // Helpers
 import { getItems, setItems } from '@helpers';
+
+// Themes
+import { defaultTheme } from '@themes';
 
 // Constants
 import { STORAGE_KEYS } from '@constants';
@@ -17,40 +19,50 @@ export const ThemeContext = createContext<ThemeProviderProps>({} as ThemeProvide
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 
   /**
    * @description function set toggle theme with value from checkbox
    *
    * @param {boolean} value is value of checkbox
    */
-  const handleToggleTheme = useCallback((value: boolean) => {
-    setTheme(value ? 'dark' : 'light');
-    setItems(STORAGE_KEYS.THEME, value ? 'dark' : 'light');
-  }, []);
+  const toggleColorScheme = useCallback(
+    (value?: ColorScheme) => {
+      const themeColor = colorScheme === 'dark' ? 'light' : 'dark';
+      setItems(STORAGE_KEYS.THEME, themeColor);
+      setColorScheme(value || themeColor);
+    },
+    [colorScheme],
+  );
 
-  const initialize = useCallback(() => {
+  const initialize = () => {
     const themeColor = getItems<'light' | 'dark'>(STORAGE_KEYS.THEME);
     setIsInitialized(true);
 
     if (themeColor) {
-      setTheme(themeColor);
+      setColorScheme(themeColor);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!isInitialized) {
       initialize();
     }
-  }, [initialize, isInitialized]);
+  }, [isInitialized]);
 
-  const value = useMemo(
+  const theme = useMemo(
     () => ({
-      theme,
-      onToggleTheme: handleToggleTheme,
+      colorScheme,
+      ...defaultTheme,
     }),
-    [handleToggleTheme, theme],
+    [colorScheme],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS withCSSVariables>
+        {children}
+      </MantineProvider>
+    </ColorSchemeProvider>
+  );
 }
