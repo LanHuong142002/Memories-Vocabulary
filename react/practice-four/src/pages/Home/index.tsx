@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 
 // Contexts
@@ -20,22 +21,20 @@ import {
 import { validation } from '@helpers';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import { useDebounce, useTopics } from '@hooks';
 
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Spinner, Topic, Typography } from '@components';
 
-// Styles
-import './index.css';
-
 const Home = () => {
   const navigate = useNavigate();
-  const { isLoadingTopic, topics, onAddTopic, onGetTopics } = useContext(TopicContext);
+  const { onAddTopic } = useContext(TopicContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
   const debouncedValue = useDebounce<string>(topicValue, 700);
+  const { data: topics, isLoading } = useTopics();
 
   /**
    * @description function show hide overlay add new
@@ -94,10 +93,6 @@ const Home = () => {
     }
   }, [debouncedValue]);
 
-  useEffect(() => {
-    onGetTopics();
-  }, [onGetTopics]);
-
   return (
     <Wrapper
       className='home'
@@ -110,20 +105,33 @@ const Home = () => {
         </>
       }
     >
-      <div className='topics'>
-        {isLoadingTopic ? (
+      <Flex
+        className='topics'
+        justify='center'
+        wrap='wrap'
+        gap='30px'
+        align='center'
+        p='25px 0 15px 0'
+        sx={{
+          '.topic': {
+            width: '150px',
+          },
+        }}
+      >
+        {isLoading ? (
           <Spinner />
         ) : (
           <>
-            {topics.map(({ id, name, vocabularyCount }) => (
-              <Topic
-                id={id}
-                key={`topic-${id}`}
-                name={name}
-                quantity={vocabularyCount || 0}
-                onClick={handleOpenTopic}
-              />
-            ))}
+            {topics &&
+              topics.map(({ id, name, vocabularies }) => (
+                <Topic
+                  id={id}
+                  key={`topic-${id}`}
+                  name={name}
+                  quantity={vocabularies?.length || 0}
+                  onClick={handleOpenTopic}
+                />
+              ))}
             <Topic
               variant={TOPIC_VARIANT.SELECTED}
               name='Add Topic'
@@ -132,19 +140,56 @@ const Home = () => {
             />
           </>
         )}
-      </div>
+      </Flex>
 
       {isOpenOverlay && (
-        <div className='overlay'>
+        <Overlay
+          styles={{
+            root: {
+              height: '100%',
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 5,
+              backdropFilter: 'blur(10px)',
+              backgroundColor: 'var(--overlay-opacity)',
+              animation: 'opacityAnimation linear 0.2s',
+            },
+          }}
+        >
           <Button
             variant={BUTTON_VARIANT.TERTIARY}
             size={BUTTON_SIZE.XXL}
             onClick={handleOpenOverlay}
+            sx={(theme: MantineTheme) => ({
+              top: '10px',
+              right: '20px',
+              position: 'absolute',
+              fontSize: theme.fontSizes.xxl,
+            })}
           >
             &Chi;
           </Button>
-          <form onSubmit={handleAddNewTopic} className='overlay-content'>
-            <Typography size={TYPOGRAPHY_SIZE.XXL}>Add New Topic</Typography>
+          <Box
+            component='form'
+            onSubmit={handleAddNewTopic}
+            className='overlay-content'
+            sx={{
+              marginTop: '100px',
+              minWidth: '300px',
+              height: 'fit-content',
+              position: 'absolute',
+              top: '10%',
+              left: '50%',
+              borderRadius: '8px',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <Typography size={TYPOGRAPHY_SIZE.XXL} sx={{ textAlign: 'center' }}>
+              Add New Topic
+            </Typography>
             <Input
               value={topicValue}
               variant={INPUT_VARIANT.PRIMARY}
@@ -152,12 +197,26 @@ const Home = () => {
               onChange={handleOnChange}
               errors={errors}
               aria-label='enter topic'
+              sx={(theme: MantineTheme) => ({
+                margin: '30px 0 10px 0',
+                input: {
+                  '::placeholder': {
+                    fontSize: theme.fontSizes.l,
+                  },
+                },
+              })}
             />
-            <Button type={BUTTON_TYPE.SUBMIT} size={BUTTON_SIZE.M}>
+            <Button
+              type={BUTTON_TYPE.SUBMIT}
+              size={BUTTON_SIZE.M}
+              sx={{
+                width: '100%',
+              }}
+            >
               Done
             </Button>
-          </form>
-        </div>
+          </Box>
+        </Overlay>
       )}
     </Wrapper>
   );
