@@ -1,37 +1,43 @@
 import { ReactNode, memo } from 'react';
+import {
+  Flex,
+  Text,
+  Modal as ModalMantine,
+  ModalProps as ModalPropsMantine,
+  useMantineTheme,
+} from '@mantine/core';
 
-// Components
-import { Button } from '@components';
-
-// Styles
-import './index.css';
-import { BUTTON_SIZE, BUTTON_VARIANT } from '@constants';
-
-interface ModalProps {
+interface ModalProps extends ModalPropsMantine {
+  opened: boolean;
   title: string;
   description: string;
   onCloseModal: () => void;
   children: ReactNode;
 }
 
-const Modal = memo(({ title, description, onCloseModal, children }: ModalProps) => (
-  <div className='modal'>
-    <div className='modal-header'>
-      <p className='title'>{title}</p>
-      <Button
-        className='button-close'
-        variant={BUTTON_VARIANT.TERTIARY}
-        size={BUTTON_SIZE.XXL}
-        onClick={onCloseModal}
+const Modal = memo(
+  ({ opened, title, description, onCloseModal, children, ...props }: ModalProps) => {
+    const theme = useMantineTheme();
+
+    return (
+      <ModalMantine
+        {...props}
+        opened={opened}
+        onClose={onCloseModal}
+        title={title}
+        overlayProps={{
+          color: theme.colors.white[4],
+          opacity: 0.5,
+          blur: '10px',
+        }}
       >
-        &Chi;
-      </Button>
-    </div>
-    <div className='modal-body'>
-      <p className='description'>{description}</p>
-    </div>
-    <div className='modal-actions'>{children}</div>
-  </div>
-));
+        <Text sx={{ padding: '20px 0' }}>{description}</Text>
+        <Flex mt='xl' justify='end' gap='15px'>
+          {children}
+        </Flex>
+      </ModalMantine>
+    );
+  },
+);
 
 export default Modal;
