@@ -22,7 +22,7 @@ const Input = memo(
     variant = INPUT_VARIANT.PRIMARY,
     ...props
   }: Props) => {
-    const hasErrors = errors && errors.length >= 0;
+    const hasErrors = errors && errors.length > 0;
 
     return (
       <TextInput
@@ -33,7 +33,7 @@ const Input = memo(
         error={hasErrors && <>{errors.map((error) => error)}</>}
         styles={(theme: MantineTheme) =>
           variant === INPUT_VARIANT.TERTIARY && errors
-            ? errors.length >= 0
+            ? errors.length > 0
               ? {
                   root: {
                     backgroundColor: theme.colors.red[0],

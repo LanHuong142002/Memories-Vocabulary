@@ -15,7 +15,7 @@ interface TypographyProps extends TextProps {
 
 const Typography = memo(
   ({
-    variant,
+    variant = TYPOGRAPHY_VARIANT.PRIMARY,
     size = TYPOGRAPHY_SIZE.XS,
     tagName = TYPOGRAPHY_TAG_NAME.P,
     children,

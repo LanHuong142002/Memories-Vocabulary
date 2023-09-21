@@ -11,33 +11,31 @@ interface ModalProps extends ModalPropsMantine {
   opened: boolean;
   title: string;
   description: string;
-  onCloseModal: () => void;
+  onClose: () => void;
   children: ReactNode;
 }
 
-const Modal = memo(
-  ({ opened, title, description, onCloseModal, children, ...props }: ModalProps) => {
-    const theme = useMantineTheme();
+const Modal = memo(({ opened, title, description, onClose, children, ...props }: ModalProps) => {
+  const theme = useMantineTheme();
 
-    return (
-      <ModalMantine
-        {...props}
-        opened={opened}
-        onClose={onCloseModal}
-        title={title}
-        overlayProps={{
-          color: theme.colors.white[4],
-          opacity: 0.5,
-          blur: '10px',
-        }}
-      >
-        <Text sx={{ padding: '20px 0' }}>{description}</Text>
-        <Flex mt='xl' justify='end' gap='15px'>
-          {children}
-        </Flex>
-      </ModalMantine>
-    );
-  },
-);
+  return (
+    <ModalMantine
+      {...props}
+      opened={opened}
+      onClose={onClose}
+      title={title}
+      overlayProps={{
+        color: theme.colors.white[4],
+        opacity: 0.5,
+        blur: '10px',
+      }}
+    >
+      <Text sx={{ padding: '20px 0' }}>{description}</Text>
+      <Flex mt='xl' justify='end' gap='15px'>
+        {children}
+      </Flex>
+    </ModalMantine>
+  );
+});
 
 export default Modal;

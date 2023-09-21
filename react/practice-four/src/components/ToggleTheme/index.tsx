@@ -13,7 +13,9 @@ export const ToggleTheme = memo(() => {
       onClick={() => toggleColorScheme()}
       size='xl'
       title='Toggle color scheme'
+      data-testid='toggle-theme'
       sx={(theme: MantineTheme) => ({
+        minHeight: '40px',
         backgroundColor: theme.colors.dark[0],
         ':hover': {
           backgroundColor: theme.colors.dark[0],
