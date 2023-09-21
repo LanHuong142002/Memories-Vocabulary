@@ -1,9 +1,8 @@
+import { memo } from 'react';
+import { Progress, useMantineTheme } from '@mantine/core';
+
 // Helpers
 import { calculateStepLevel } from '@helpers';
-
-// Styles
-import './index.css';
-import { memo } from 'react';
 
 interface ProcessBarProps {
   step: number;
@@ -11,18 +10,21 @@ interface ProcessBarProps {
 }
 
 const ProcessBar = memo(({ step, totalStep }: ProcessBarProps) => {
+  const theme = useMantineTheme();
   const limitStep = step > totalStep ? totalStep : step;
   const percent = (limitStep / totalStep) * 100;
 
   return (
-    <div className='process-wrapper'>
-      <div
-        className={`process process-${calculateStepLevel(step, totalStep)}`}
-        style={{ width: `${percent}%` }}
-      >
-        {`${limitStep} of ${totalStep}`}
-      </div>
-    </div>
+    <Progress
+      size={24}
+      sections={[
+        {
+          value: percent,
+          color: calculateStepLevel(theme, step, totalStep),
+          label: `${limitStep} of ${totalStep}`,
+        },
+      ]}
+    />
   );
 });
 
