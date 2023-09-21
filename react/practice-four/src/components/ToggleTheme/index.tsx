@@ -1,16 +1,30 @@
-import { ChangeEvent, memo } from 'react';
+import { memo } from 'react';
+import { ActionIcon, Image, MantineTheme, useMantineColorScheme } from '@mantine/core';
 
-// Styles
-import './index.css';
+// Images
+import { moon, sun } from '@assets';
 
-export interface ToggleThemeProps {
-  isChecked: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+export const ToggleTheme = memo(() => {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
-export const ToggleTheme = memo(({ isChecked, onChange }: ToggleThemeProps) => (
-  <label className='toggle' htmlFor='toggle-theme'>
-    <input checked={isChecked} id='toggle-theme' type='checkbox' onChange={onChange} />
-    <span className={`slider-wrapper slider-wrapper-${isChecked ? 'dark' : 'light'}`} />
-  </label>
-));
+  return (
+    <ActionIcon
+      variant='light'
+      onClick={() => toggleColorScheme()}
+      size='xl'
+      title='Toggle color scheme'
+      sx={(theme: MantineTheme) => ({
+        backgroundColor: theme.colors.dark[0],
+        ':hover': {
+          backgroundColor: theme.colors.dark[0],
+        },
+      })}
+    >
+      {colorScheme === 'light' ? (
+        <Image width='20px' height='20px' src={moon} />
+      ) : (
+        <Image width='20px' height='20px' src={sun} />
+      )}
+    </ActionIcon>
+  );
+});
