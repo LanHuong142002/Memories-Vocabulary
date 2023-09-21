@@ -1,16 +1,17 @@
 import { memo, useMemo } from 'react';
+import { Box, Loader, MantineTheme } from '@mantine/core';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
 // Constants
-import { SPINNER_SIZE, TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
+import { TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Components
-import { Spinner, Table, TableCell, TableRow, TableRowVocabulary, Typography } from '@components';
+import { TableCell, TableRow, TableRowVocabulary, Typography } from '@components';
 
-// Styles
-import './index.css';
+// Helpers
+import { getColorScheme } from '@helpers';
 
 export interface TableVocabularyProps {
   isLoading: boolean;
@@ -32,69 +33,103 @@ const TableVocabulary = memo(
     vocabularies,
     onClick,
   }: TableVocabularyProps) => (
-    <Table
+    <Box
       className='table-vocabulary'
-      childrenHeader={
-        <>
-          {useMemo(
-            () => (
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell>English (Native)</TableCell>
-                <TableCell>Vietnamese</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            ),
-            [],
-          )}
-        </>
-      }
+      sx={(theme: MantineTheme) => ({
+        fontSize: theme.fontSizes.xxs,
+        color: getColorScheme(theme.colorScheme, theme.colors.white[4], theme.colors.dark[3]),
+        '.row': {
+          display: 'flex',
+        },
+        '.cell': {
+          width: '100%',
+          padding: '8px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderBottom: `1px solid ${theme.colors.dark[0]}`,
+        },
+        [`@media (min-width: ${theme.breakpoints.md})`]: {
+          fontSize: theme.fontSizes.xs,
+        },
+      })}
     >
-      {isLoading ? (
-        <TableRow>
-          <TableCell className='cell-loading'>
-            <Spinner size={SPINNER_SIZE.S} />
-          </TableCell>
-        </TableRow>
-      ) : (
-        <>
-          {vocabularies.length > 0 ? (
-            <>
-              {vocabularies.map(({ id, english, vietnamese }, index) => (
-                <TableRowVocabulary
-                  isLoading={deletingById[id]}
-                  key={`table-vocabulary-${id}`}
-                  id={id}
-                  order={index + 1}
-                  english={english}
-                  vietnamese={vietnamese}
-                  onClick={onClick}
-                />
-              ))}
-              {(isAdding || isLoadingMore) && (
-                <TableRow>
-                  <TableCell className='cell-loading'>
-                    <Spinner size={SPINNER_SIZE.S} />
-                  </TableCell>
-                </TableRow>
-              )}
-            </>
-          ) : (
+      <Box
+        className='table-header'
+        sx={(theme: MantineTheme) => ({
+          fontWeight: theme.other.fontWeight.bold,
+        })}
+      >
+        {useMemo(
+          () => (
             <TableRow>
-              <TableCell>
-                <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-                  Fill All Filed At Above And Press{' '}
-                  <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-                    ENTER
-                  </Typography>{' '}
-                  key or button Add
-                </Typography>
-              </TableCell>
+              <TableCell>No.</TableCell>
+              <TableCell>English (Native)</TableCell>
+              <TableCell>Vietnamese</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
-          )}
-        </>
-      )}
-    </Table>
+          ),
+          [],
+        )}
+      </Box>
+      <Box
+        className='table-body'
+        sx={(theme: MantineTheme) => ({
+          '.row:nth-child(even):hover, .row:nth-child(odd)': {
+            backgroundColor: getColorScheme(
+              theme.colorScheme,
+              theme.colors.dark[2],
+              theme.colors.white[0],
+            ),
+          },
+        })}
+      >
+        {isLoading ? (
+          <TableRow>
+            <TableCell>
+              <Loader color='dark' size='xs' />
+            </TableCell>
+          </TableRow>
+        ) : (
+          <>
+            {vocabularies.length > 0 ? (
+              <>
+                {vocabularies.map(({ id, english, vietnamese }, index) => (
+                  <TableRowVocabulary
+                    isLoading={deletingById[id]}
+                    key={`table-vocabulary-${id}`}
+                    id={id}
+                    order={index + 1}
+                    english={english}
+                    vietnamese={vietnamese}
+                    onClick={onClick}
+                  />
+                ))}
+                {(isAdding || isLoadingMore) && (
+                  <TableRow>
+                    <TableCell>
+                      <Loader color='dark' size='xs' />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
+            ) : (
+              <TableRow>
+                <TableCell>
+                  <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+                    Fill All Filed At Above And Press{' '}
+                    <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
+                      ENTER
+                    </Typography>{' '}
+                    key or button Add
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
+          </>
+        )}
+      </Box>
+    </Box>
   ),
 );
 
