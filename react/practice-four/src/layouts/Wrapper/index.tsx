@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useMantineColorScheme } from '@mantine/core';
-import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts
 import { VocabularyContext, TopicContext } from '@contexts';
@@ -24,7 +23,6 @@ const Wrapper = ({
   childrenTitle: ReactNode;
 }) => {
   const location = useLocation();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { errorsVocabulary } = useContext(VocabularyContext);
   const { errorsTopic } = useContext(TopicContext);
   const [showNotification, setShowNotification] = useState<boolean>(true);
@@ -32,15 +30,6 @@ const Wrapper = ({
     () => showNotification && (errorsTopic || errorsVocabulary),
     [errorsTopic, errorsVocabulary, showNotification],
   );
-
-  /**
-   * @description function change theme
-   *
-   * @param {Event} event of input element
-   */
-  const handleToggleTheme = useCallback(() => {
-    toggleColorScheme();
-  }, [toggleColorScheme]);
 
   useEffect(() => {
     if (errorsTopic || errorsVocabulary) {
@@ -57,7 +46,7 @@ const Wrapper = ({
       {useMemo(
         () => (
           <div className='wrapper-header'>
-            <ToggleTheme isChecked={colorScheme === 'light'} onChange={handleToggleTheme} />
+            <ToggleTheme />
             {location.pathname !== ROUTES.HOME && (
               <Link to={ROUTES.HOME}>
                 <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
@@ -67,7 +56,7 @@ const Wrapper = ({
             )}
           </div>
         ),
-        [colorScheme, handleToggleTheme, location.pathname],
+        [location.pathname],
       )}
       <div className='wrapper-container'>
         <div className='wrapper-box'>

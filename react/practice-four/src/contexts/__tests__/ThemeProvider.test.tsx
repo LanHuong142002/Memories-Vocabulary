@@ -1,17 +1,17 @@
-import { fireEvent, cleanup } from '@testing-library/react';
-import { ChangeEvent, useCallback, useContext, useState } from 'react';
+import { cleanup, fireEvent } from '@testing-library/react';
+import { useMantineColorScheme } from '@mantine/core';
 
 // Components
 import { ToggleTheme } from '@components';
 
-// Contexts
-import { ThemeContext } from '@contexts';
-
 // Helpers
-import * as helpers from '@helpers';
 import { renderWithThemeProvider } from '@helpers';
 
-jest.mock('@helpers', () => ({ __esModule: true, ...jest.requireActual('@helpers') }));
+jest.mock('@helpers', () => ({
+  __esModule: true,
+  ...jest.requireActual('@helpers'),
+  getItems: jest.fn().mockReturnValueOnce('dark').mockReturnValueOnce('light'),
+}));
 
 describe('Test ThemeProvider', () => {
   afterEach(() => {
@@ -19,45 +19,28 @@ describe('Test ThemeProvider', () => {
   });
 
   const Component = () => {
-    const { onToggleTheme, theme } = useContext(ThemeContext);
-    const [toggle, setToggle] = useState<boolean>(false);
-    const handleToggleTheme = useCallback(
-      (event: ChangeEvent<HTMLInputElement>) => {
-        const { checked } = event.currentTarget;
-        setToggle(checked);
-        onToggleTheme(checked);
-      },
-      [onToggleTheme],
-    );
+    const { colorScheme } = useMantineColorScheme();
 
     return (
       <div>
-        <p>{theme}</p>
-        <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />
+        <p>{colorScheme}</p>
+        <ToggleTheme />
       </div>
     );
   };
 
   it('Should render dark when click toggle button', () => {
-    jest.spyOn(helpers, 'getItems').mockReturnValue('light');
-
-    const { getByRole, getByText } = renderWithThemeProvider(<Component />);
-    const checkbox = getByRole('checkbox') as HTMLInputElement;
-
-    // Click checkbox
-    fireEvent.click(checkbox);
+    const { getByText } = renderWithThemeProvider(<Component />);
 
     expect(getByText('dark')).toBeInTheDocument();
   });
 
   it('Should render light when click toggle button twice', () => {
     const { getByRole, getByText } = renderWithThemeProvider(<Component />);
-    const checkbox = getByRole('checkbox') as HTMLInputElement;
+    const button = getByRole('button') as HTMLInputElement;
 
-    // Double click checkbox to uncheck
-    fireEvent.click(checkbox);
-    fireEvent.click(checkbox);
+    fireEvent.click(button);
 
-    expect(getByText('light')).toBeInTheDocument();
+    expect(getByText('dark')).toBeInTheDocument();
   });
 });

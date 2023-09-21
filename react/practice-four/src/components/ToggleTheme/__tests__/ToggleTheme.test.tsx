@@ -1,33 +1,22 @@
-import { fireEvent, render } from '@testing-library/react';
+// Helpers
+import { fireEvent, renderWithThemeProvider } from '@helpers';
 
 // Components
 import { ToggleTheme } from '@components';
 
 describe('Test toggle theme component', () => {
-  const defaultValue = {
-    onChange: jest.fn(),
-    isChecked: true,
-  };
-
   it('Should render toggle light', () => {
-    const { container } = render(<ToggleTheme {...defaultValue} />);
+    const { container } = renderWithThemeProvider(<ToggleTheme />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render toggle dark', () => {
-    const { container } = render(<ToggleTheme {...defaultValue} />);
+    const { container, getByRole } = renderWithThemeProvider(<ToggleTheme />);
+    const button = getByRole('button');
+
+    fireEvent.click(button);
 
     expect(container).toBeInTheDocument();
-  });
-
-  it('Should call function onChange when click toggle component', () => {
-    const handleOnChange = jest.fn();
-    const { getByRole } = render(<ToggleTheme {...defaultValue} onChange={handleOnChange} />);
-
-    const checkbox = getByRole('checkbox');
-    fireEvent.click(checkbox);
-
-    expect(handleOnChange).toBeCalled();
   });
 });
