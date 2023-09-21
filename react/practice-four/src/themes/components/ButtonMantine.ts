@@ -1,7 +1,7 @@
 import { MantineTheme } from '@mantine/core';
 
 // Constants
-import { BOX_SIZING, VERTICAL_ALIGN } from '@constants';
+import { BOX_SIZING, ALIGN } from '@constants';
 
 // Helpers
 import { getColorScheme } from '@helpers';
@@ -51,7 +51,7 @@ const Button = {
       root: {
         height: '25px',
         verticalAlign: 'middle',
-        textAlign: VERTICAL_ALIGN.CENTER,
+        textAlign: ALIGN.CENTER,
         backgroundColor: theme.colors.none[0],
         border: `2px solid ${getColorScheme(
           theme.colorScheme,
