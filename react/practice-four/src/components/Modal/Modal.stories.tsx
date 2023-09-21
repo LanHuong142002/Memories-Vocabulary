@@ -19,6 +19,7 @@ export const Default: Story = {
   args: {
     title: 'Confirm Delete',
     description: 'Are you sure to delete this vocabulary?',
+    opened: true,
     children: (
       <>
         <Button variant={BUTTON_VARIANT.SECONDARY} size={BUTTON_SIZE.XS}>

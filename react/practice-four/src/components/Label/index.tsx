@@ -1,20 +1,18 @@
 import { memo } from 'react';
+import { Badge, BadgeProps } from '@mantine/core';
 
 // Constants
 import { LABEL_COLOR } from '@constants';
 
-// Styles
-import './index.css';
-
-interface LabelProps {
+interface LabelProps extends BadgeProps {
   name: string;
   color: LABEL_COLOR;
 }
 
-const Label = memo(({ name, color }: LabelProps) => (
-  <label className={`label label-${color}`}>
-    <span>{name}</span>
-  </label>
+const Label = memo(({ name, color, ...props }: LabelProps) => (
+  <Badge variant={color} {...props}>
+    {name}
+  </Badge>
 ));
 
 export default Label;

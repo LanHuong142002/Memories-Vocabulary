@@ -3,6 +3,9 @@ import { fireEvent, render } from '@testing-library/react';
 // Constants
 import { INPUT_VARIANT } from '@constants';
 
+// Contexts
+import { ThemeProvider } from '@contexts';
+
 // Components
 import { Input } from '@components';
 
@@ -31,6 +34,16 @@ describe('Test input component', () => {
   it('Should render input secondary component with error', () => {
     const { getByText } = render(
       <Input variant={INPUT_VARIANT.SECONDARY} errors={['errors']} {...defaultProps} />,
+    );
+
+    expect(getByText('errors')).toBeInTheDocument();
+  });
+
+  it('Should render input tertiary component with error', () => {
+    const { getByText } = render(
+      <ThemeProvider>
+        <Input variant={INPUT_VARIANT.TERTIARY} errors={['errors']} {...defaultProps} />
+      </ThemeProvider>,
     );
 
     expect(getByText('errors')).toBeInTheDocument();
