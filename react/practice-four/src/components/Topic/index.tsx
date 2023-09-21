@@ -31,6 +31,7 @@ const Topic = memo(
 
     return (
       <Flex
+        className='topic'
         justify='center'
         align='center'
         style={{
