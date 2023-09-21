@@ -11,7 +11,6 @@ import {
   INPUT_VARIANT,
   ROUTES,
   TYPOGRAPHY_SIZE,
-  TYPOGRAPHY_TEXT_ALIGN,
   TYPOGRAPHY_VARIANT,
 } from '@constants';
 
@@ -19,14 +18,14 @@ import {
 import { useDebounce } from '@hooks';
 
 // Helpers
-import { validation } from '@helpers';
+import { getColorScheme, validation } from '@helpers';
 
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 
 // Styles
-import './index.css';
+import { Box, Flex, MantineTheme, Text } from '@mantine/core';
 
 const Testing = () => {
   const { id } = useParams();
@@ -122,8 +121,16 @@ const Testing = () => {
           <>
             <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz</Typography>
             <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-              Give answers of <span className='testing-questions'>{quizzes.length} questions</span>.
-              You have to translate English into Vietnamese
+              Give answers of{' '}
+              <Text
+                component='span'
+                sx={(theme: MantineTheme) => ({
+                  fontWeight: theme.other.fontWeight.bold,
+                })}
+              >
+                {quizzes.length} questions
+              </Text>
+              . You have to translate English into Vietnamese
             </Typography>
           </>
         ),
@@ -131,16 +138,24 @@ const Testing = () => {
       )}
     >
       {isLoadingQuizzes ? (
-        <div className='testing-spinner-wrapper'>
+        <Flex justify='center' className='testing-spinner-wrapper'>
           <Spinner />
-        </div>
+        </Flex>
       ) : (
         <form onSubmit={handleSubmit} className='testing-content'>
-          <ProcessBar step={step + 1} totalStep={quizzes.length} />
+          <ProcessBar
+            step={step + 1}
+            totalStep={quizzes.length}
+            sx={{
+              margin: '20px 0 30px 0',
+            }}
+          />
           <Typography
             color={TYPOGRAPHY_VARIANT.PRIMARY}
             size={TYPOGRAPHY_SIZE.M}
-            textAlign={TYPOGRAPHY_TEXT_ALIGN.CENTER}
+            sx={{
+              textAlign: 'center',
+            }}
           >
             {quizValue}
           </Typography>
@@ -149,15 +164,44 @@ const Testing = () => {
             value={value}
             onChange={handleOnChange}
             errors={errors}
-            title='Vietnamese'
+            label='Vietnamese'
             placeholder='Type your answer here'
-            ariaLabel='Enter your answer'
+            aria-label='Enter your answer'
+            sx={{ margin: '20px 0' }}
           />
-          <div className='testing-actions'>
-            <Button type={BUTTON_TYPE.SUBMIT} size={BUTTON_SIZE.XS}>
+          <Box
+            className='testing-actions'
+            sx={(theme: MantineTheme) => ({
+              textAlign: 'end',
+              paddingBottom: '25px',
+              '.icon-next': {
+                padding: '4px',
+                display: 'inline-block',
+                borderWidth: '0 2px 2px 0',
+                borderStyle: 'solid',
+                borderColor: getColorScheme(
+                  theme.colorScheme,
+                  theme.colors.dark[3],
+                  theme.colors.white[4],
+                ),
+                transform: 'rotate(-45deg)',
+                marginLeft: '5px',
+              },
+            })}
+          >
+            <Button
+              type={BUTTON_TYPE.SUBMIT}
+              size={BUTTON_SIZE.XS}
+              p='5px 15px'
+              styles={{
+                label: {
+                  overflow: 'inherit',
+                },
+              }}
+            >
               {buttonValue}
             </Button>
-          </div>
+          </Box>
         </form>
       )}
     </Wrapper>

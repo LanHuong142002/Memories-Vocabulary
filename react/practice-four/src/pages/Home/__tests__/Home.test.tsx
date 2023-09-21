@@ -111,7 +111,7 @@ describe('Test Home Page', () => {
     const input = getByPlaceholderText('Topic Name');
     // Enter value for input
     act(() => {
-      fireEvent.change(input, { target: { value: '2' } });
+      fireEvent.change(input, { target: { value: '222' } });
       jest.runAllTimers();
     });
 

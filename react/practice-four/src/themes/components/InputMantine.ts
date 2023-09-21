@@ -14,7 +14,11 @@ const TextInput = {
       backgroundColor: theme.colors.none[0],
       fontWeight: theme.other.fontWeight.regular,
       '::placeholder': {
+        fontSize: theme.fontSizes.xxs,
         color: getColorScheme(theme.colorScheme, theme.colors.dark[0], theme.colors.dark[3]),
+        [`@media (min-width: ${theme.breakpoints.md})`]: {
+          fontSize: theme.fontSizes.xs,
+        },
       },
     },
     error: {
@@ -42,11 +46,13 @@ const TextInput = {
     }),
     secondary: (theme: MantineTheme) => ({
       root: {
-        width: 'fit-content',
+        width: '100%',
         position: POSITION.RELATIVE,
+        [`@media (min-width: ${theme.breakpoints.xs})`]: {
+          width: '170px',
+        },
       },
       input: {
-        width: '170px',
         height: '40px',
         padding: '0 5px',
         fontSize: theme.fontSizes.xs,
@@ -86,13 +92,13 @@ const TextInput = {
         borderRadius: '3px',
       },
       wrapper: {
-        // 160px is width of error
-        width: 'calc(100% - 160px)',
+        // 120px is width of error
+        width: 'calc(100% - 120px)',
         backgroundColor: theme.colors.none[0],
         margin: 0,
         [`@media (min-width: ${theme.breakpoints.sm})`]: {
           // 90px is width of label
-          width: 'calc(100% - 160px - 90px)',
+          width: 'calc(100% - 120px - 90px)',
         },
       },
       input: {
@@ -115,7 +121,7 @@ const TextInput = {
         },
       },
       error: {
-        width: '160px',
+        width: '120px',
         display: 'flex',
         alignItems: 'center',
         borderRadius: '0 3px 3px 0',

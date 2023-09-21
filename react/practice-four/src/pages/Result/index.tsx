@@ -12,7 +12,7 @@ import { Wrapper } from '@layouts';
 import { Button, Label, TableResult, Typography } from '@components';
 
 // Styles
-import './index.css';
+import { Box, Flex, MantineTheme } from '@mantine/core';
 
 const Result = () => {
   const { id } = useParams();
@@ -58,27 +58,44 @@ const Result = () => {
         () => (
           <>
             <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
-            <div className='total'>
+            <Flex className='total' justify='center'>
               <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
-            </div>
-            <div className='answers'>
+            </Flex>
+            <Flex className='answers' justify='center' gap='8px' p='10px 0'>
               <Label color={LABEL_COLOR.SUCCESS} name={`${totalCorrectQuizzes} Rights`} />
               <Label
                 color={LABEL_COLOR.FAILED}
                 name={`${quizzes.length - totalCorrectQuizzes} Wrongs`}
               />
-            </div>
+            </Flex>
           </>
         ),
         [percent, quizzes.length, totalCorrectQuizzes],
       )}
     >
-      <div className='table-box'>
+      <Box
+        className='table-box'
+        sx={(theme: MantineTheme) => ({
+          textAlign: 'center',
+          width: '250px',
+          margin: 'auto',
+          [`@media (min-width: ${theme.breakpoints.xs})`]: {
+            width: '430px',
+          },
+        })}
+      >
         <TableResult result={result} />
         <Link to={`${ROUTES.VOCABULARY}/${id}`}>
-          <Button size={BUTTON_SIZE.S} label='Back to Vocabulary List' />
+          <Button
+            size={BUTTON_SIZE.S}
+            sx={{
+              marginTop: '20px',
+            }}
+          >
+            Back to Vocabulary List
+          </Button>
         </Link>
-      </div>
+      </Box>
     </Wrapper>
   );
 };
