@@ -17,7 +17,7 @@ export const useMutationPostTopic = () => {
   const queryClient = useQueryClient();
 
   return useMutation<Omit<Topic, 'id'>, AxiosError, Omit<Topic, 'id'>>({
-    mutationFn: (topic) => postData({ item: topic, endpoint: 'asdasdasdasdasd' }),
+    mutationFn: (topic) => postData({ item: topic, endpoint: URL.TOPIC }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TOPICS] });
     },
@@ -42,11 +42,12 @@ export const useMutationPostVocabulary = (id: string) => {
 /**
  * @description custom hook to delete vocabulary
  */
-export const useMutationDeleteVocabulary = () => {
+export const useMutationDeleteVocabulary = (id: string) => {
   const queryClient = useQueryClient();
 
   return useMutation<string, AxiosError, string>({
-    mutationFn: (id) => deleteData({ endpoint: `${URL.TOPIC}/${id}${URL.VOCABULARY}`, id }),
+    mutationFn: (vocabularyId) =>
+      deleteData({ endpoint: `${URL.TOPIC}/${id}${URL.VOCABULARY}`, id: vocabularyId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.VOCABULARIES] });
     },
