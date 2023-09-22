@@ -20,7 +20,7 @@ export interface TableVocabularyProps {
   deletingById: {
     [id: string]: boolean;
   };
-  vocabularies: Vocabulary[];
+  vocabularies: Vocabulary[][] | undefined;
   onClick: (id: string) => void;
 }
 
@@ -92,27 +92,29 @@ const TableVocabulary = memo(
           </TableRow>
         ) : (
           <>
-            {vocabularies.length > 0 ? (
-              <>
-                {vocabularies.map(({ id, english, vietnamese }, index) => (
-                  <TableRowVocabulary
-                    isLoading={deletingById[id]}
-                    key={`table-vocabulary-${id}`}
-                    id={id}
-                    order={index + 1}
-                    english={english}
-                    vietnamese={vietnamese}
-                    onClick={onClick}
-                  />
-                ))}
-                {(isAdding || isLoadingMore) && (
-                  <TableRow>
-                    <TableCell>
-                      <Loader color='dark' size='xs' />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
+            {vocabularies && vocabularies?.length > 0 ? (
+              vocabularies.map((item, i) => (
+                <div key={`table-vocabulary-row${i}`}>
+                  {item.map(({ id, english, vietnamese }, index) => (
+                    <TableRowVocabulary
+                      isLoading={deletingById[id]}
+                      key={`table-vocabulary-${id}`}
+                      id={id}
+                      order={i === 0 ? index + 1 : (i + 1) * 10 + index + 1}
+                      english={english}
+                      vietnamese={vietnamese}
+                      onClick={onClick}
+                    />
+                  ))}
+                  {(isAdding || isLoadingMore) && (
+                    <TableRow>
+                      <TableCell>
+                        <Loader color='dark' size='xs' />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </div>
+              ))
             ) : (
               <TableRow>
                 <TableCell>

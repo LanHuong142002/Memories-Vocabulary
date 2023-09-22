@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Flex, MantineTheme, Text } from '@mantine/core';
 import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 // Contexts
@@ -15,7 +16,7 @@ import {
 } from '@constants';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import { useDebounce, useVocabularies } from '@hooks';
 
 // Helpers
 import { getColorScheme, validation } from '@helpers';
@@ -24,13 +25,12 @@ import { getColorScheme, validation } from '@helpers';
 import { Wrapper } from '@layouts';
 import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 
-// Styles
-import { Box, Flex, MantineTheme, Text } from '@mantine/core';
-
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isLoadingQuizzes, vocabularies, quizzes, onSetQuiz } = useContext(VocabularyContext);
+  const { data: vocabularies } = useVocabularies(id || '');
+  // TODO: replace with Zustand store
+  const { isLoadingQuizzes, quizzes, onSetQuiz } = useContext(VocabularyContext);
   const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -108,7 +108,7 @@ const Testing = () => {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (!vocabularies.length) {
+    if (vocabularies && !vocabularies.length) {
       navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
   }, [id, navigate, vocabularies]);

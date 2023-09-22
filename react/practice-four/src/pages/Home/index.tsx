@@ -1,9 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
-
-// Contexts
-import { TopicContext } from '@contexts';
+import { Box, Flex, Loader, MantineTheme, Overlay } from '@mantine/core';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 // Constants
 import {
@@ -21,20 +18,20 @@ import {
 import { validation } from '@helpers';
 
 // Hooks
-import { useDebounce, useTopics } from '@hooks';
+import { useDebounce, useMutationPostTopic, useTopics } from '@hooks';
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, Spinner, Topic, Typography } from '@components';
+import { Button, Input, Topic, Typography } from '@components';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { onAddTopic } = useContext(TopicContext);
   const [errors, setErrors] = useState<string[]>([]);
   const [topicValue, setTopicValue] = useState<string>('');
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
   const debouncedValue = useDebounce<string>(topicValue, 700);
   const { data: topics, isLoading } = useTopics();
+  const { mutate, isLoading: isAdding } = useMutationPostTopic();
 
   /**
    * @description function show hide overlay add new
@@ -55,11 +52,17 @@ const Home = () => {
     if (listError.length) {
       setErrors(listError);
     } else {
-      onAddTopic({
-        id: '', // id when posting, the MockAPI side will support generating the id
-        name: topicValue.trim(),
-        vocabularies: [],
-      });
+      mutate(
+        {
+          name: topicValue.trim(),
+          vocabularies: [],
+        },
+        {
+          onError: () => {
+            // TODO: set error to store
+          },
+        },
+      );
       handleOpenOverlay();
     }
   };
@@ -119,7 +122,7 @@ const Home = () => {
         }}
       >
         {isLoading ? (
-          <Spinner />
+          <Loader color='dark' size='md' />
         ) : (
           <>
             {topics &&
@@ -132,6 +135,13 @@ const Home = () => {
                   onClick={handleOpenTopic}
                 />
               ))}
+            {isAdding && (
+              <Topic>
+                <Flex justify='center' align='center'>
+                  <Loader color='dark' size='xs' />
+                </Flex>
+              </Topic>
+            )}
             <Topic
               variant={TOPIC_VARIANT.SELECTED}
               name='Add Topic'

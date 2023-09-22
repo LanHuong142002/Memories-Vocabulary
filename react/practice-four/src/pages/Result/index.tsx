@@ -1,4 +1,6 @@
+import { useVocabularies } from '@hooks';
 import { useContext, useEffect, useMemo } from 'react';
+import { Box, Flex, MantineTheme } from '@mantine/core';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // Contexts
@@ -11,15 +13,15 @@ import { BUTTON_SIZE, LABEL_COLOR, ROUTES, TYPOGRAPHY_SIZE } from '@constants';
 import { Wrapper } from '@layouts';
 import { Button, Label, TableResult, Typography } from '@components';
 
-// Styles
-import { Box, Flex, MantineTheme } from '@mantine/core';
-
 const Result = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { quizzes, vocabularies } = useContext(VocabularyContext);
+  // TODO: replace with Zustand store
+  const { quizzes } = useContext(VocabularyContext);
+  const { data: vocabularies } = useVocabularies(id || '');
   const result = useMemo(
     () =>
+      vocabularies &&
       vocabularies.map((vocab) => {
         const { id: vocabID } = vocab || {};
 
@@ -84,7 +86,7 @@ const Result = () => {
           },
         })}
       >
-        <TableResult result={result} />
+        <TableResult result={result || []} />
         <Link to={`${ROUTES.VOCABULARY}/${id}`}>
           <Button
             size={BUTTON_SIZE.S}

@@ -1,12 +1,18 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
+import { Box, Flex, MantineTheme } from '@mantine/core';
 import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
 
 // Contexts
 import { VocabularyContext } from '@contexts';
 
 // Hooks
-import { useDebounce } from '@hooks';
+import {
+  useDebounce,
+  useInfiniteVocabularies,
+  useMutationDeleteVocabulary,
+  useMutationPostVocabulary,
+} from '@hooks';
 
 // Helpers
 import { validation } from '@helpers';
@@ -25,32 +31,25 @@ import {
 } from '@constants';
 
 // Components
-import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
-
-// Styles
-// import './index.css';
-import { Box, Flex, MantineTheme } from '@mantine/core';
+import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
 
 const Vocabulary = () => {
   const [opened, { open, close }] = useDisclosure(false);
-
   const { id } = useParams();
   const navigate = useNavigate();
+  // TODO: replace with Zustand store
+  const { onRandomQuizzes, onCheckEnglishIsExisted } = useContext(VocabularyContext);
   const {
-    isLoadingVocabularies,
-    isLoadingMore,
-    isAdding,
-    deletingById,
-    vocabularies,
-    onGetVocabularies,
-    onAddVocabulary,
-    onDeleteVocabulary,
-    onRandomQuizzes,
-    onLoadMore,
-    onCheckEnglishIsExisted,
-  } = useContext(VocabularyContext);
-  const [pages, setPages] = useState<number>(1);
+    data: vocabularies,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteVocabularies(id || '');
+  const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
+  const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
+
   const [valueENG, setValueENG] = useState<string>('');
   const [errorsENG, setErrorsENG] = useState<string[]>([]);
   const [valueVIE, setValueVIE] = useState<string>('');
@@ -59,10 +58,9 @@ const Vocabulary = () => {
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const [vocabularyId, setVocabularyId] = useState<string>('');
-  const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
   const isDisabledButtonStartTest = useMemo(
-    () => !(vocabularies.length >= 5) && pages === 1,
-    [vocabularies.length, pages],
+    () => !(vocabularies && vocabularies?.pages[0].length >= 5),
+    [vocabularies],
   );
 
   /**
@@ -103,8 +101,7 @@ const Vocabulary = () => {
       const isExisted = await onCheckEnglishIsExisted(id, valueInputENG.trim());
 
       if (!isExisted) {
-        onAddVocabulary(id, {
-          id: '',
+        mutatePost({
           vietnamese: valueInputVIE.trim(),
           english: valueInputENG.trim(),
         });
@@ -134,10 +131,10 @@ const Vocabulary = () => {
    */
   const handleDeleteVocabulary = useCallback(() => {
     if (id) {
-      onDeleteVocabulary(id, vocabularyId);
+      mutateDelete(vocabularyId);
       close();
     }
-  }, [close, id, onDeleteVocabulary, vocabularyId]);
+  }, [close, id, mutateDelete, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
@@ -149,20 +146,6 @@ const Vocabulary = () => {
     },
     [open],
   );
-
-  /**
-   * @description function load more vocabularies
-   */
-  const handleLoadMore = useCallback(async () => {
-    setPages((prev) => prev + 1);
-    if (id) {
-      const lengthOfData = (await onLoadMore(id, pages + 1))!;
-
-      if (lengthOfData < 20 || lengthOfData === 0) {
-        setIsDisabledButtonLoadMore(true);
-      }
-    }
-  }, [id, onLoadMore, pages]);
 
   // show errors of input vietnamese after delay 0.7s
   useEffect(() => {
@@ -182,12 +165,8 @@ const Vocabulary = () => {
 
   // get vocabularies with the id of topic selected
   useEffect(() => {
-    if (id) {
-      onGetVocabularies(id);
-    } else {
-      navigate(ROUTES.HOME);
-    }
-  }, [id, navigate, onGetVocabularies]);
+    if (!id) navigate(ROUTES.HOME);
+  }, [id, navigate]);
 
   return (
     <Wrapper
@@ -258,11 +237,11 @@ const Vocabulary = () => {
         </Button>
       </Box>
       <TableVocabulary
-        isLoading={isLoadingVocabularies}
-        isLoadingMore={isLoadingMore}
+        isLoading={isLoading}
+        isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
-        deletingById={deletingById}
-        vocabularies={vocabularies}
+        deletingById={{ [vocabularyId]: isDeleting }}
+        vocabularies={vocabularies && vocabularies.pages}
         onClick={handleOpenConfirmModalInRow}
       />
       <Flex
@@ -282,11 +261,11 @@ const Vocabulary = () => {
           },
         })}
       >
-        {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
+        {hasNextPage && (
           <Button
             variant={BUTTON_VARIANT.TERTIARY}
             className='button-load-more'
-            onClick={handleLoadMore}
+            onClick={() => fetchNextPage()}
           >
             Load More
           </Button>
