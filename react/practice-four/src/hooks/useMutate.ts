@@ -10,21 +10,27 @@ import { Topic, Vocabulary } from '@interfaces';
 // Constants
 import { QUERY_KEYS, URL } from '@constants';
 
+/**
+ * @description custom hook to post topic
+ */
 export const useMutationPostTopic = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Topic, AxiosError, Topic>({
-    mutationFn: (topic) => postData({ item: topic, endpoint: URL.TOPIC }),
+  return useMutation<Omit<Topic, 'id'>, AxiosError, Omit<Topic, 'id'>>({
+    mutationFn: (topic) => postData({ item: topic, endpoint: 'asdasdasdasdasd' }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TOPICS] });
     },
   });
 };
 
+/**
+ * @description custom hook to post vocabulary
+ */
 export const useMutationPostVocabulary = (id: string) => {
   const queryClient = useQueryClient();
 
-  return useMutation<Vocabulary, AxiosError, Vocabulary>({
+  return useMutation<Omit<Vocabulary, 'id'>, AxiosError, Omit<Vocabulary, 'id'>>({
     mutationFn: (vocabulary) =>
       postData({ item: vocabulary, endpoint: `${URL.TOPIC}/${id}${URL.VOCABULARY}` }),
     onSuccess: () => {
@@ -33,6 +39,9 @@ export const useMutationPostVocabulary = (id: string) => {
   });
 };
 
+/**
+ * @description custom hook to delete vocabulary
+ */
 export const useMutationDeleteVocabulary = () => {
   const queryClient = useQueryClient();
 
