@@ -20,11 +20,7 @@ export const ToggleTheme = memo(() => {
         },
       })}
     >
-      {colorScheme === 'light' ? (
-        <Image width='20px' height='20px' src={moon} />
-      ) : (
-        <Image width='20px' height='20px' src={sun} />
-      )}
+      <Image width='20px' height='20px' src={colorScheme === 'light' ? moon : sun} />
     </ActionIcon>
   );
 });
