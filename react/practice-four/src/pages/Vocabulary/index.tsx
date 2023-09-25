@@ -1,10 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Box, Flex, MantineTheme } from '@mantine/core';
-import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
-
-// Contexts
-import { VocabularyContext } from '@contexts';
+import { useState, ChangeEvent, useEffect, useCallback, useMemo } from 'react';
 
 // Hooks
 import {
@@ -12,7 +9,11 @@ import {
   useInfiniteVocabularies,
   useMutationDeleteVocabulary,
   useMutationPostVocabulary,
+  useVocabularies,
 } from '@hooks';
+
+// Stores
+import { useNotificationStores, useVocabulariesStores } from '@stores';
 
 // Helpers
 import { validation } from '@helpers';
@@ -38,8 +39,29 @@ const Vocabulary = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  // TODO: replace with Zustand store
-  const { onRandomQuizzes, onCheckEnglishIsExisted } = useContext(VocabularyContext);
+
+  const [vocabularyId, setVocabularyId] = useState<string>('');
+  // Flags
+  const [isRandomQuizzes, setIsRandomQuizzes] = useState<boolean>(false);
+  const [isExisted, setIsExisted] = useState<boolean>(false);
+  // value ENG
+  const [valueENG, setValueENG] = useState<string>('');
+  const [errorsENG, setErrorsENG] = useState<string[]>([]);
+  const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
+  // Value VIE
+  const [valueVIE, setValueVIE] = useState<string>('');
+  const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
+  const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
+
+  // Hooks
+  const { onRandomQuizzes } = useVocabulariesStores();
+  const { data } = useVocabularies(id || '', isRandomQuizzes);
+  const { data: dataByValue, isFetching: isLoadingCheckExisted } = useVocabularies(
+    id || '',
+    isExisted,
+    1,
+    `?english=${valueENG}`,
+  );
   const {
     data: vocabularies,
     fetchNextPage,
@@ -49,15 +71,8 @@ const Vocabulary = () => {
   } = useInfiniteVocabularies(id || '');
   const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
   const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
+  const { setMessageError } = useNotificationStores();
 
-  const [valueENG, setValueENG] = useState<string>('');
-  const [errorsENG, setErrorsENG] = useState<string[]>([]);
-  const [valueVIE, setValueVIE] = useState<string>('');
-  const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
-  const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
-  const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
-  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const [vocabularyId, setVocabularyId] = useState<string>('');
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
     [vocabularies],
@@ -97,20 +112,27 @@ const Vocabulary = () => {
     setErrorsENG(listErrorENG);
 
     if (!listErrorVIE.length && !listErrorENG.length && id) {
-      setIsButtonLoading(true);
-      const isExisted = await onCheckEnglishIsExisted(id, valueInputENG.trim());
+      setValueENG(valueInputENG.trim());
+      setIsExisted(true);
+      console.log(dataByValue);
 
-      if (!isExisted) {
-        mutatePost({
-          vietnamese: valueInputVIE.trim(),
-          english: valueInputENG.trim(),
-        });
+      if (dataByValue && dataByValue.length === 0) {
+        mutatePost(
+          {
+            vietnamese: valueInputVIE.trim(),
+            english: valueInputENG.trim(),
+          },
+          {
+            onError: (error) => {
+              setMessageError(error.message);
+            },
+          },
+        );
         setValueVIE('');
         setValueENG('');
       } else {
         setErrorsENG([MESSAGE_ERRORS.EXISTED]);
       }
-      setIsButtonLoading(false);
     }
   };
 
@@ -118,11 +140,12 @@ const Vocabulary = () => {
    * @description function handle start testing with vocabularies of topic
    */
   const handleStartTest = useCallback(() => {
-    if (id) {
-      onRandomQuizzes(id);
+    setIsRandomQuizzes(true);
+    if (id && data) {
+      onRandomQuizzes(data);
       navigate(`${ROUTES.TESTING}/${id}`);
     }
-  }, [id, navigate, onRandomQuizzes]);
+  }, [data, id, navigate, onRandomQuizzes]);
 
   /**
    * @description function delete a vocabulary
@@ -131,10 +154,14 @@ const Vocabulary = () => {
    */
   const handleDeleteVocabulary = useCallback(() => {
     if (id) {
-      mutateDelete(vocabularyId);
+      mutateDelete(vocabularyId, {
+        onError: (error) => {
+          setMessageError(error.message);
+        },
+      });
       close();
     }
-  }, [close, id, mutateDelete, vocabularyId]);
+  }, [close, id, mutateDelete, setMessageError, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
@@ -232,7 +259,11 @@ const Vocabulary = () => {
           dataTestId='input-vietnamese'
           aria-label='enter vietnamese'
         />
-        <Button type={BUTTON_TYPE.SUBMIT} loading={isButtonLoading} disabled={isButtonLoading}>
+        <Button
+          type={BUTTON_TYPE.SUBMIT}
+          loading={isLoadingCheckExisted}
+          disabled={isLoadingCheckExisted}
+        >
           Add
         </Button>
       </Box>

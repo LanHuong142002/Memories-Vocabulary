@@ -1,9 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Text } from '@mantine/core';
-import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-
-// Contexts
-import { VocabularyContext } from '@contexts';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 // Constants
 import {
@@ -14,6 +11,9 @@ import {
   TYPOGRAPHY_SIZE,
   TYPOGRAPHY_VARIANT,
 } from '@constants';
+
+// Stores
+import { useVocabulariesStores } from '@stores';
 
 // Hooks
 import { useDebounce, useVocabularies } from '@hooks';
@@ -28,9 +28,8 @@ import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: vocabularies } = useVocabularies(id || '');
-  // TODO: replace with Zustand store
-  const { isLoadingQuizzes, quizzes, onSetQuiz } = useContext(VocabularyContext);
+  const { data: vocabularies, isLoading } = useVocabularies(id || '', true);
+  const { quizzes, onSetQuizzes } = useVocabulariesStores();
   const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -91,12 +90,12 @@ const Testing = () => {
           ...quizzes[step],
           answer: value.trim(),
         };
-        onSetQuiz(answersArr);
+        onSetQuizzes(answersArr);
         setErrors(null);
         handleSetStep();
       }
     },
-    [handleSetStep, onSetQuiz, quizzes, step, value],
+    [handleSetStep, onSetQuizzes, quizzes, step, value],
   );
 
   // show errors of input vietnamese after delay 0.7s
@@ -137,7 +136,7 @@ const Testing = () => {
         [quizzes.length],
       )}
     >
-      {isLoadingQuizzes ? (
+      {isLoading ? (
         <Flex justify='center' className='testing-spinner-wrapper'>
           <Spinner />
         </Flex>

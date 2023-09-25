@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Box, Flex, MantineTheme } from '@mantine/core';
-import { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
+import { ReactNode, useContext, useEffect, useMemo } from 'react';
 
 // Contexts
 import { VocabularyContext, TopicContext } from '@contexts';
+import { useNotificationStores } from '@stores';
 
 // Constants
 import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
@@ -26,21 +27,18 @@ const Wrapper = ({
   const location = useLocation();
   const { errorsVocabulary } = useContext(VocabularyContext);
   const { errorsTopic } = useContext(TopicContext);
-  const [showNotification, setShowNotification] = useState<boolean>(true);
-  const hasNotification = useMemo(
-    () => showNotification && (errorsTopic || errorsVocabulary),
-    [errorsTopic, errorsVocabulary, showNotification],
-  );
+  const { notification, setNotification } = useNotificationStores();
 
   useEffect(() => {
     if (errorsTopic || errorsVocabulary) {
+      setNotification(!(errorsTopic || errorsVocabulary));
       const timeout = setTimeout(() => {
-        setShowNotification(false);
+        setNotification(false);
       }, 3000);
 
       return () => clearTimeout(timeout);
     }
-  }, [errorsTopic, errorsVocabulary]);
+  }, [errorsTopic, errorsVocabulary, setNotification]);
 
   return (
     <Box
@@ -134,7 +132,7 @@ const Wrapper = ({
               sx={{
                 lineHeight: '20px',
                 textAlign: 'center',
-                'p:first-child': {
+                'p:first-of-type': {
                   paddingBottom: '10px',
                   lineHeight: '30px',
                 },
@@ -149,8 +147,28 @@ const Wrapper = ({
           </Box>
         </Flex>
       </Flex>
-      {hasNotification && (
-        <Notification description={errorsTopic || errorsVocabulary} title='Something went wrong!' />
+      {notification && (
+        <Overlay
+          styles={{
+            root: {
+              height: '100%',
+              position: 'fixed',
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <Notification
+            description={errorsTopic || errorsVocabulary}
+            title='Something went wrong!'
+            styles={{
+              root: {
+                position: 'absolute',
+                right: '30px',
+                bottom: '30px',
+              },
+            }}
+          />
+        </Overlay>
       )}
     </Box>
   );

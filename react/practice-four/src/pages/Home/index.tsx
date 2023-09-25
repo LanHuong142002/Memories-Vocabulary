@@ -14,6 +14,9 @@ import {
   TYPOGRAPHY_VARIANT,
 } from '@constants';
 
+// Stores
+import { useNotificationStores, useTopicStores } from '@stores';
+
 // Helpers
 import { validation } from '@helpers';
 
@@ -32,6 +35,8 @@ const Home = () => {
   const debouncedValue = useDebounce<string>(topicValue, 700);
   const { data: topics, isLoading } = useTopics();
   const { mutate, isLoading: isAdding } = useMutationPostTopic();
+  const { topics: topicsStore } = useTopicStores();
+  const { setMessageError } = useNotificationStores();
 
   /**
    * @description function show hide overlay add new
@@ -58,8 +63,8 @@ const Home = () => {
           vocabularies: [],
         },
         {
-          onError: () => {
-            // TODO: set error to store
+          onError: (error) => {
+            setMessageError(error.message);
           },
         },
       );
@@ -125,8 +130,8 @@ const Home = () => {
           <Loader color='dark' size='md' />
         ) : (
           <>
-            {topics &&
-              topics.map(({ id, name, vocabularies }) => (
+            {(topics || topicsStore) &&
+              (topics || topicsStore).map(({ id, name, vocabularies }) => (
                 <Topic
                   id={id}
                   key={`topic-${id}`}

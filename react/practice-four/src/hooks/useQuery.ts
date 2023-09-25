@@ -9,24 +9,34 @@ import { Topic, Vocabulary } from '@interfaces';
 
 // Services
 import { getData } from '@services';
+import { useTopicStores } from '@stores';
 
 /**
  * @description custom hook to get topics
  */
-export const useTopics = () =>
-  useQuery<Topic[], AxiosError>({
+export const useTopics = () => {
+  const { setTopics } = useTopicStores();
+  return useQuery<Topic[], AxiosError>({
     queryKey: [QUERY_KEYS.TOPICS],
     queryFn: () => getData(URL.TOPIC),
+    onSuccess: (data) => {
+      setTopics(data);
+    },
   });
+};
 
 /**
  * @description custom hook to get vocabularies
+ *
+ * @param {string} id is id of topic
+ * @param {number} page is the number of pages out of total number of pages
+ * @param {string} param is param endpoint
  */
-export const useVocabularies = (id: string, page?: number) =>
+export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) =>
   useQuery<Vocabulary[], AxiosError>({
     queryKey: [QUERY_KEYS.VOCABULARIES, page, id],
-    queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, page),
-    enabled: !!id,
+    queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
+    enabled,
   });
 
 /**

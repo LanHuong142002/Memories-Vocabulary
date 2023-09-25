@@ -49,17 +49,17 @@ const TableResult = ({ result }: TableResultProps) => {
         className='table-header'
         sx={(theme: MantineTheme) => ({
           fontWeight: theme.other.fontWeight.bold,
-          '.cell:nth-child(1)': {
+          '.cell:nth-of-type(1)': {
             gridRow: '1/3',
           },
-          '.cell:nth-child(3)': {
+          '.cell:nth-of-type(3)': {
             gridColumn: '3/5',
           },
-          '.cell:nth-child(4)': {
+          '.cell:nth-of-type(4)': {
             gridColumn: '5',
             gridRow: '1/3',
           },
-          '.cell:nth-child(5)': {
+          '.cell:nth-of-type(5)': {
             gridColumn: '2',
           },
         })}
@@ -82,20 +82,20 @@ const TableResult = ({ result }: TableResultProps) => {
       <Box
         className='table-body'
         sx={(theme: MantineTheme) => ({
-          '.row:nth-child(even):hover, .row:nth-child(odd)': {
+          '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
             backgroundColor: getColorScheme(
               theme.colorScheme,
               theme.colors.dark[2],
               theme.colors.white[0],
             ),
           },
-          '.cell:first-child': {
+          '.cell:first-of-type': {
             gridRow: '1/3',
           },
-          '.cell:nth-child(2)': {
+          '.cell:nth-of-type(2)': {
             gridRow: '1/3',
           },
-          '.cell:nth-child(5)': {
+          '.cell:nth-of-type(5)': {
             gridColumn: '3/5',
             color: theme.colors.dark[3],
           },
