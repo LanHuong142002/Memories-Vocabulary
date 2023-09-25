@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Box, Flex, Loader, MantineTheme, Overlay } from '@mantine/core';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 // Constants
 import {
@@ -21,18 +21,32 @@ import { useNotificationStores, useTopicStores } from '@stores';
 import { validation } from '@helpers';
 
 // Hooks
-import { useDebounce, useMutationPostTopic, useTopics } from '@hooks';
+import { useMutationPostTopic, useTopics } from '@hooks';
 
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Topic, Typography } from '@components';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+interface FormInput {
+  value: string;
+}
 
 const Home = () => {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState<string[]>([]);
-  const [topicValue, setTopicValue] = useState<string>('');
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors: errorsTest },
+  } = useForm<FormInput>({
+    defaultValues: {
+      value: '',
+    },
+  });
+
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
-  const debouncedValue = useDebounce<string>(topicValue, 700);
+  // const debouncedValue = useDebounce<string>(topicValue, 700);
   const { data: topics, isLoading } = useTopics();
   const { mutate, isLoading: isAdding } = useMutationPostTopic();
   const { topics: topicsStore } = useTopicStores();
@@ -43,42 +57,29 @@ const Home = () => {
    */
   const handleOpenOverlay = useCallback(() => {
     setIsOpenOverlay((prev) => !prev);
-    setTopicValue('');
-    setErrors([]);
   }, []);
 
   /**
    * @description function add new topic
    */
-  const handleAddNewTopic = (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const listError = validation(topicValue, true);
-
-    if (listError.length) {
-      setErrors(listError);
-    } else {
-      mutate(
-        {
-          name: topicValue.trim(),
-          vocabularies: [],
+  const handleAddNewTopic = (value: string) => {
+    mutate(
+      {
+        name: value.trim(),
+        vocabularies: [],
+      },
+      {
+        onError: (error) => {
+          setMessageError(error.message);
         },
-        {
-          onError: (error) => {
-            setMessageError(error.message);
-          },
-        },
-      );
-      handleOpenOverlay();
-    }
+      },
+    );
+    handleOpenOverlay();
   };
 
-  /**
-   * @description function get value from input
-   *
-   * @param {Event} event of input element
-   */
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTopicValue(event.target.value);
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    handleAddNewTopic(data.value);
+    reset();
   };
 
   /**
@@ -93,13 +94,13 @@ const Home = () => {
     [navigate],
   );
 
-  // show errors of input vietnamese after delay 0.7s
-  useEffect(() => {
-    if (debouncedValue) {
-      const listError = validation(debouncedValue, true);
-      setErrors(listError);
-    }
-  }, [debouncedValue]);
+  // // show errors of input vietnamese after delay 0.7s
+  // useEffect(() => {
+  //   if (debouncedValue) {
+  //     const listError = validation(debouncedValue, true);
+  //     setErrors(listError);
+  //   }
+  // }, [debouncedValue]);
 
   return (
     <Wrapper
@@ -189,7 +190,7 @@ const Home = () => {
           </Button>
           <Box
             component='form'
-            onSubmit={handleAddNewTopic}
+            onSubmit={handleSubmit(onSubmit)}
             className='overlay-content'
             sx={{
               marginTop: '100px',
@@ -205,21 +206,29 @@ const Home = () => {
             <Typography size={TYPOGRAPHY_SIZE.XXL} sx={{ textAlign: 'center' }}>
               Add New Topic
             </Typography>
-            <Input
-              value={topicValue}
-              variant={INPUT_VARIANT.PRIMARY}
-              placeholder='Topic Name'
-              onChange={handleOnChange}
-              errors={errors}
-              aria-label='enter topic'
-              sx={(theme: MantineTheme) => ({
-                margin: '30px 0 10px 0',
-                input: {
-                  '::placeholder': {
-                    fontSize: theme.fontSizes.l,
-                  },
-                },
-              })}
+            <Controller
+              name='value'
+              rules={{
+                validate: (v) => validation(v),
+              }}
+              control={control}
+              render={({ field }) => (
+                <Input
+                  variant={INPUT_VARIANT.PRIMARY}
+                  placeholder='Topic Name'
+                  errors={errorsTest.value ? errorsTest.value.message : ''}
+                  aria-label='enter topic'
+                  sx={(theme: MantineTheme) => ({
+                    margin: '30px 0 10px 0',
+                    input: {
+                      '::placeholder': {
+                        fontSize: theme.fontSizes.l,
+                      },
+                    },
+                  })}
+                  {...field}
+                />
+              )}
             />
             <Button
               type={BUTTON_TYPE.SUBMIT}
