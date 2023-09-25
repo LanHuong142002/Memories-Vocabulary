@@ -6,7 +6,7 @@ import { getColorScheme } from '@helpers';
 const Notification = {
   styles: (theme: MantineTheme) => ({
     root: {
-      maxWidth: '350px',
+      width: '350px',
       backgroundColor: getColorScheme(
         theme.colorScheme,
         theme.colors.dark[2],
