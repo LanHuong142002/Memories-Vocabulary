@@ -1,15 +1,15 @@
 import { memo } from 'react';
-import { Progress, useMantineTheme } from '@mantine/core';
+import { Progress, ProgressProps, useMantineTheme } from '@mantine/core';
 
 // Helpers
 import { calculateStepLevel } from '@helpers';
 
-interface ProcessBarProps {
+interface ProcessBarProps extends ProgressProps {
   step: number;
   totalStep: number;
 }
 
-const ProcessBar = memo(({ step, totalStep }: ProcessBarProps) => {
+const ProcessBar = memo(({ step, totalStep, ...props }: ProcessBarProps) => {
   const theme = useMantineTheme();
   const limitStep = step > totalStep ? totalStep : step;
   const percent = (limitStep / totalStep) * 100;
@@ -24,6 +24,7 @@ const ProcessBar = memo(({ step, totalStep }: ProcessBarProps) => {
           label: `${limitStep} of ${totalStep}`,
         },
       ]}
+      {...props}
     />
   );
 });

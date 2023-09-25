@@ -59,7 +59,7 @@ export const calculateEachStep = (
  * @param {number} step - The current step within the total steps.
  * @param {number} totalStep - The total number of steps.
  *
- * @returns {string} - The status level: very-low | low | medium | high
+ * @returns {string} - The color matches the current level
  */
 export const calculateStepLevel = (
   theme: MantineTheme,
