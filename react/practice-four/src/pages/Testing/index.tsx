@@ -40,22 +40,19 @@ const Testing = () => {
     formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
-      value: undefined,
+      value: '',
     },
   });
 
-  const { data: vocabularies, isLoading } = useVocabularies(id || '', true);
+  const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
   const { quizzes, onSetQuizzes } = useVocabulariesStores();
   const [step, setStep] = useState<number>(0);
-  // const [value, setValue] = useState<string>('');
-  // const debouncedValue = useDebounce<string | null>(value, 700);
   const quizValue = useMemo(
     () =>
       quizzes.length > 0 &&
       `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
     [quizzes, step],
   );
-
   const buttonValue = useMemo(
     () =>
       step + 1 === quizzes.length ? (
@@ -76,7 +73,6 @@ const Testing = () => {
       navigate(`${ROUTES.RESULT}/${id}`);
     } else {
       setStep((prev) => prev + 1);
-      // setValue('value', '');
       reset();
     }
   }, [id, navigate, quizzes.length, reset, step]);
@@ -97,19 +93,15 @@ const Testing = () => {
     reset();
   };
 
-  // // show error of input ietnamese after delay 0.7s
-  // useEffect(() => {
-  //   if (debouncedValue) {
-  //     const messageError = validation(debouncedValue);
-  //     setError(messageError);
-  //   }
-  // }, [debouncedValue]);
+  useEffect(() => {
+    if (vocabulariesAll && !vocabulariesAll.length) navigate(`${ROUTES.VOCABULARY}/${id}`);
+  }, [id, navigate, vocabulariesAll]);
 
   useEffect(() => {
-    if (vocabularies && !vocabularies.length) {
-      navigate(`${ROUTES.VOCABULARY}/${id}`);
+    if (isSuccess && vocabulariesAll) {
+      onSetQuizzes(vocabulariesAll);
     }
-  }, [id, navigate, vocabularies]);
+  }, [isSuccess, onSetQuizzes, vocabulariesAll]);
 
   return (
     <Wrapper
@@ -166,7 +158,7 @@ const Testing = () => {
             render={({ field: { onChange, value } }) => (
               <Input
                 value={value}
-                error={errors.value?.message || ''}
+                error={errors.value?.message || undefined}
                 variant={INPUT_VARIANT.TERTIARY}
                 label='Vietnamese'
                 placeholder='Type your answer here'

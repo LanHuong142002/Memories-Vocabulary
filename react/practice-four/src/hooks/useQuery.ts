@@ -34,7 +34,7 @@ export const useTopics = () => {
  */
 export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) =>
   useQuery<Vocabulary[], AxiosError>({
-    queryKey: [QUERY_KEYS.VOCABULARIES, page, id],
+    queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param],
     queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
     enabled,
   });

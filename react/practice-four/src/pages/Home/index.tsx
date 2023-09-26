@@ -46,7 +46,6 @@ const Home = () => {
   });
 
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
-  // const debouncedValue = useDebounce<string>(topicValue, 700);
   const { data: topics, isLoading } = useTopics();
   const { mutate, isLoading: isAdding } = useMutationPostTopic();
   const { topics: topicsStore } = useTopicStores();
@@ -93,14 +92,6 @@ const Home = () => {
     },
     [navigate],
   );
-
-  // // show errors of input vietnamese after delay 0.7s
-  // useEffect(() => {
-  //   if (debouncedValue) {
-  //     const listError = validation(debouncedValue, true);
-  //     setErrors(listError);
-  //   }
-  // }, [debouncedValue]);
 
   return (
     <Wrapper
