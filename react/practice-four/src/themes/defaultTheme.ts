@@ -23,12 +23,12 @@ export const defaultTheme: MantineThemeOverride = {
   },
   components: {
     Text,
+    TextInput,
     Modal,
     Notification,
     Button,
     Progress,
     Badge,
-    TextInput,
   },
   globalStyles: GLOBAL_STYLES,
 };
