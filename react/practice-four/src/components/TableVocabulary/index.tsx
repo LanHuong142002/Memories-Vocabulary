@@ -92,7 +92,7 @@ const TableVocabulary = memo(
           </TableRow>
         ) : (
           <>
-            {vocabularies.length > 0 ? (
+            {vocabularies.length ? (
               <>
                 {vocabularies.map(({ id, english, vietnamese }, index) => (
                   <TableRowVocabulary
