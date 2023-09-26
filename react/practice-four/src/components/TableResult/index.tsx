@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
+import { Box, MantineTheme } from '@mantine/core';
 
 // Interfaces
 import { VocabularyResult } from '@interfaces';
 
 // Components
-import { Table, TableCell, TableRow, TableRowResult } from '@components';
+import { TableCell, TableRow, TableRowResult } from '@components';
 
-// Styles
-import './index.css';
+// Helpers
+import { getColorScheme } from '@helpers';
 
 interface TableResultProps {
   result: VocabularyResult[];
@@ -21,39 +22,103 @@ const TableResult = ({ result }: TableResultProps) => {
   );
 
   return (
-    <Table
+    <Box
       className='table-result'
-      childrenHeader={
-        <>
-          {useMemo(
-            () => (
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell>English</TableCell>
-                <TableCell>Vietnamese</TableCell>
-                <TableCell>Result</TableCell>
-                <TableCell>Native</TableCell>
-                <TableCell>Translation</TableCell>
-                <TableCell>Answer</TableCell>
-              </TableRow>
-            ),
-            [],
-          )}
-        </>
-      }
+      sx={(theme: MantineTheme) => ({
+        fontSize: theme.fontSizes.xxs,
+        color: getColorScheme(theme.colorScheme, theme.colors.white[4], theme.colors.dark[3]),
+        '.row': {
+          minHeight: '70px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateRows: 'repeat(2, 1fr)',
+          gridGap: 0,
+        },
+        '.cell': {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: `1px solid ${theme.colors.dark[0]}`,
+        },
+        [`@media (min-width: ${theme.breakpoints.md})`]: {
+          fontSize: theme.fontSizes.xs,
+        },
+      })}
     >
-      {result.map(({ id, answer, english, vietnamese }, index) => (
-        <TableRowResult
-          id={id}
-          key={`table-result-${id}`}
-          order={`${index + 1}`}
-          answer={answer}
-          isSuccess={isSuccess(answer, vietnamese)}
-          english={english}
-          vietnamese={vietnamese}
-        />
-      ))}
-    </Table>
+      <Box
+        className='table-header'
+        sx={(theme: MantineTheme) => ({
+          fontWeight: theme.other.fontWeight.bold,
+          '.cell:nth-of-type(1)': {
+            gridRow: '1/3',
+          },
+          '.cell:nth-of-type(3)': {
+            gridColumn: '3/5',
+          },
+          '.cell:nth-of-type(4)': {
+            gridColumn: '5',
+            gridRow: '1/3',
+          },
+          '.cell:nth-of-type(5)': {
+            gridColumn: '2',
+          },
+        })}
+      >
+        {useMemo(
+          () => (
+            <TableRow>
+              <TableCell>No.</TableCell>
+              <TableCell>English</TableCell>
+              <TableCell>Vietnamese</TableCell>
+              <TableCell>Result</TableCell>
+              <TableCell>Native</TableCell>
+              <TableCell>Translation</TableCell>
+              <TableCell>Answer</TableCell>
+            </TableRow>
+          ),
+          [],
+        )}
+      </Box>
+      <Box
+        className='table-body'
+        sx={(theme: MantineTheme) => ({
+          '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
+            backgroundColor: getColorScheme(
+              theme.colorScheme,
+              theme.colors.dark[2],
+              theme.colors.white[0],
+            ),
+          },
+          '.cell:first-of-type': {
+            gridRow: '1/3',
+          },
+          '.cell:nth-of-type(2)': {
+            gridRow: '1/3',
+          },
+          '.cell:nth-of-type(5)': {
+            gridColumn: '3/5',
+            color: theme.colors.dark[3],
+          },
+          '.cell:last-child': {
+            gridColumn: '5',
+            gridRow: '1/3',
+            color: theme.colors.dark[3],
+          },
+        })}
+      >
+        {result.map(({ id, answer, english, vietnamese }, index) => (
+          <TableRowResult
+            id={id}
+            key={`table-result-${id}`}
+            order={`${index + 1}`}
+            answer={answer}
+            isSuccess={isSuccess(answer, vietnamese)}
+            english={english}
+            vietnamese={vietnamese}
+          />
+        ))}
+      </Box>
+    </Box>
   );
 };
 

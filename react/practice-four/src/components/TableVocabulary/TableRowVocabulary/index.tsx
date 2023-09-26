@@ -1,13 +1,14 @@
 import { memo } from 'react';
+import { Loader } from '@mantine/core';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
 // Constants
-import { BUTTON_VARIANT, SPINNER_SIZE } from '@constants';
+import { BUTTON_VARIANT } from '@constants';
 
 // Components
-import { Button, Spinner, TableCell, TableRow } from '@components';
+import { Button, TableCell, TableRow } from '@components';
 
 interface TableRowVocabularyProps extends Vocabulary {
   isLoading: boolean;
@@ -24,8 +25,8 @@ const TableRowVocabulary = memo(
     return (
       <TableRow>
         {isLoading ? (
-          <TableCell className='cell-loading'>
-            <Spinner size={SPINNER_SIZE.S} />
+          <TableCell>
+            <Loader color='dark' size='xs' />
           </TableCell>
         ) : (
           <>

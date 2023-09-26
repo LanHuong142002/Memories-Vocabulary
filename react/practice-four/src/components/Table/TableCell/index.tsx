@@ -1,26 +1,44 @@
 import { ReactElement, ReactNode, memo } from 'react';
+import { Box, MantineTheme } from '@mantine/core';
 
 // Constants
 import { TABLE_CELL_COLOR } from '@constants';
 
-// Styles
-import './index.css';
-
 interface TableCellProps {
-  className?: string;
   color?: TABLE_CELL_COLOR;
   children: ReactNode;
 }
 
-const TableCell = memo(
-  ({ className, color, children }: TableCellProps): ReactElement => (
-    <div
-      className={`cell ${color ? `cell-status cell-${color}` : ''} ${className || ''}`}
+const TableCell = memo(({ color, children }: TableCellProps): ReactElement => {
+  const getBackgroundColor = (theme: MantineTheme): string => {
+    switch (color) {
+      case TABLE_CELL_COLOR.SUCCESS:
+        return theme.colors.green[0];
+      case TABLE_CELL_COLOR.FAILED:
+        return theme.colors.red[0];
+      default:
+        return theme.colors.none[0];
+    }
+  };
+
+  return (
+    <Box
+      className='cell'
       data-testid='table-cell'
+      sx={(theme: MantineTheme) => ({
+        minWidth: '70px',
+        boxSizing: 'border-box',
+        padding: '8px 2px',
+        lineBreak: 'anywhere',
+        backgroundColor: getBackgroundColor(theme),
+        [`@media (min-width: ${theme.breakpoints.md})`]: {
+          minWidth: '85px',
+        },
+      })}
     >
       {children}
-    </div>
-  ),
-);
+    </Box>
+  );
+});
 
 export default TableCell;
