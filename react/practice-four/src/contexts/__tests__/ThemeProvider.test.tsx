@@ -10,7 +10,7 @@ import { renderWithThemeProvider } from '@helpers';
 jest.mock('@helpers', () => ({
   __esModule: true,
   ...jest.requireActual('@helpers'),
-  getItems: jest.fn().mockReturnValueOnce('dark').mockReturnValueOnce('light'),
+  getItems: jest.fn().mockReturnValue('light'),
 }));
 
 describe('Test ThemeProvider', () => {
@@ -30,8 +30,10 @@ describe('Test ThemeProvider', () => {
   };
 
   it('Should render dark when click toggle button', () => {
-    const { getByText } = renderWithThemeProvider(<Component />);
+    const { getByText, getByRole } = renderWithThemeProvider(<Component />);
+    const button = getByRole('button') as HTMLInputElement;
 
+    fireEvent.click(button);
     expect(getByText('dark')).toBeInTheDocument();
   });
 
@@ -39,8 +41,10 @@ describe('Test ThemeProvider', () => {
     const { getByRole, getByText } = renderWithThemeProvider(<Component />);
     const button = getByRole('button') as HTMLInputElement;
 
+    // Click button 2 times
+    fireEvent.click(button);
     fireEvent.click(button);
 
-    expect(getByText('dark')).toBeInTheDocument();
+    expect(getByText('light')).toBeInTheDocument();
   });
 });
