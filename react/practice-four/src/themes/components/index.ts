@@ -3,4 +3,5 @@ export { default as Modal } from './ModalMantine';
 export { default as Badge } from './BadgeMantine';
 export { default as TextInput } from './InputMantine';
 export { default as Button } from './ButtonMantine';
+export { default as Progress } from './ProgressMantine';
 export { default as Text } from './TextMantine';

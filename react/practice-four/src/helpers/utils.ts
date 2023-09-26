@@ -1,5 +1,5 @@
 // Constants
-import { STATUS_PROCESS } from '@constants';
+import { MantineTheme } from '@mantine/core';
 
 /**
  * @description function return color dark when in dark theme and color light
@@ -59,9 +59,13 @@ export const calculateEachStep = (
  * @param {number} step - The current step within the total steps.
  * @param {number} totalStep - The total number of steps.
  *
- * @returns {string} - The status level: very-low | low | medium | high
+ * @returns {string} - The color matches the current level
  */
-export const calculateStepLevel = (step: number, totalStep: number): STATUS_PROCESS => {
+export const calculateStepLevel = (
+  theme: MantineTheme,
+  step: number,
+  totalStep: number,
+): string => {
   // divide the sum of the steps and take the integer part
   const eachStep = totalStep / 4;
   const surplus = eachStep - Math.floor(eachStep);
@@ -73,15 +77,19 @@ export const calculateStepLevel = (step: number, totalStep: number): STATUS_PROC
   const high = calculateEachStep(surplus, veryLow, 0.25);
 
   switch (true) {
+    // Very low
     case step <= veryLow:
-      return STATUS_PROCESS.VERY_LOW;
+      return theme.colors.red[2];
+    // Low
     case step <= low + veryLow:
-      return STATUS_PROCESS.LOW;
+      return theme.colors.orange[1];
+    // Medium
     case step <= medium + low + veryLow:
-      return STATUS_PROCESS.MEDIUM;
+      return theme.colors.cyan[1];
+    // High
     case step <= high + medium + low + veryLow:
-      return STATUS_PROCESS.HIGH;
+      return theme.colors.green[1];
     default:
-      return STATUS_PROCESS.HIGH;
+      return theme.colors.green[1];
   }
 };

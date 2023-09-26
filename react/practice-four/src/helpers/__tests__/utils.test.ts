@@ -1,8 +1,6 @@
-// Constants
-import { STATUS_PROCESS } from '@constants';
-
 // Helpers
 import { calculateEachStep, calculateStepLevel, removeDuplicateObjects } from '@helpers';
+import { MantineTheme } from '@mantine/core';
 
 describe('Test calculateEachStep', () => {
   it('Should return next step level when surplus is greater than default surplus', () => {
@@ -47,60 +45,61 @@ describe('Test calculateEachStep', () => {
 });
 
 describe('Test calculateStepLevel', () => {
-  it('Should return low step when step in very low', () => {
+  const mockThemeColors = {
+    colors: {
+      green: ['green-0', 'green-1'],
+      cyan: ['cyan-0', 'cyan-1'],
+      orange: ['orange-0', 'orange-1'],
+      red: ['red-0', 'red-1', 'red-2'],
+    },
+  } as unknown as MantineTheme;
+
+  it('Should return red color when step in level very low (in the first process)', () => {
     const step = 1;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.VERY_LOW);
+    expect(level).toBe(mockThemeColors.colors.red[2]);
   });
 
-  it('Should return very low step when step in level very low', () => {
-    const step = 1;
-    const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
-
-    expect(level).toBe(STATUS_PROCESS.VERY_LOW);
-  });
-
-  it('Should return low step when step in level very low', () => {
+  it('Should return orange color when step in level low (in the second process)', () => {
     const step = 2;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.LOW);
+    expect(level).toBe(mockThemeColors.colors.orange[1]);
   });
 
-  it('Should return medium step when step in level medium', () => {
+  it('Should return cyan color when step in level medium (in the middle process)', () => {
     const step = 3;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.MEDIUM);
+    expect(level).toBe(mockThemeColors.colors.cyan[1]);
   });
 
-  it('Should return high step when step in level high', () => {
+  it('Should return green color when step in level high (almost done or done)', () => {
     const step = 4;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.HIGH);
+    expect(level).toBe(mockThemeColors.colors.green[1]);
   });
 
-  it('Should return high step when step over than total steps', () => {
+  it('Should return green color when step over than total steps', () => {
     const step = 8;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.HIGH);
+    expect(level).toBe(mockThemeColors.colors.green[1]);
   });
 
-  it('Should return low step when step is negative number', () => {
+  it('Should return red color when step is negative number', () => {
     const step = -2;
     const totalStep = 5;
-    const level = calculateStepLevel(step, totalStep);
+    const level = calculateStepLevel(mockThemeColors, step, totalStep);
 
-    expect(level).toBe(STATUS_PROCESS.VERY_LOW);
+    expect(level).toBe(mockThemeColors.colors.red[2]);
   });
 });
 
