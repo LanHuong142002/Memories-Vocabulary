@@ -9,8 +9,19 @@ interface TableCellProps {
   children: ReactNode;
 }
 
-const TableCell = memo(
-  ({ color, children }: TableCellProps): ReactElement => (
+const TableCell = memo(({ color, children }: TableCellProps): ReactElement => {
+  const getBackgroundColor = (theme: MantineTheme): string => {
+    switch (color) {
+      case TABLE_CELL_COLOR.SUCCESS:
+        return theme.colors.green[0];
+      case TABLE_CELL_COLOR.FAILED:
+        return theme.colors.red[0];
+      default:
+        return theme.colors.none[0];
+    }
+  };
+
+  return (
     <Box
       className='cell'
       data-testid='table-cell'
@@ -19,12 +30,7 @@ const TableCell = memo(
         boxSizing: 'border-box',
         padding: '8px 2px',
         lineBreak: 'anywhere',
-        backgroundColor:
-          color === TABLE_CELL_COLOR.SUCCESS
-            ? theme.colors.green[0]
-            : color === TABLE_CELL_COLOR.FAILED
-            ? theme.colors.red[0]
-            : theme.colors.none[0],
+        backgroundColor: getBackgroundColor(theme),
         [`@media (min-width: ${theme.breakpoints.md})`]: {
           minWidth: '85px',
         },
@@ -32,7 +38,7 @@ const TableCell = memo(
     >
       {children}
     </Box>
-  ),
-);
+  );
+});
 
 export default TableCell;
