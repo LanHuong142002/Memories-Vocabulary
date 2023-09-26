@@ -1,8 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { ChangeEvent, useState } from 'react';
+
+// Contexts
+import { ThemeProvider } from '@contexts';
 
 // Components
-import { ToggleTheme, ToggleThemeProps } from '@components';
+import { ToggleTheme } from '@components';
 
 const meta: Meta<typeof ToggleTheme> = {
   title: 'PracticeFour/ToggleTheme',
@@ -10,16 +12,11 @@ const meta: Meta<typeof ToggleTheme> = {
   tags: ['autodocs'],
 };
 
-const Template: StoryFn<ToggleThemeProps> = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
-
-  const handleToggleTheme = (event: ChangeEvent<HTMLInputElement>) => {
-    const { checked } = event.currentTarget;
-    setToggle(checked);
-  };
-
-  return <ToggleTheme isChecked={toggle} onChange={handleToggleTheme} />;
-};
+const Template: StoryFn = () => (
+  <ThemeProvider>
+    <ToggleTheme />
+  </ThemeProvider>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {};
