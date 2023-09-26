@@ -28,7 +28,9 @@ const Topic = memo(
     children,
   }: TopicProps) => {
     const handleOncLick = () => {
-      onClick!(id);
+      if (onClick) {
+        onClick(id);
+      }
     };
 
     return (
