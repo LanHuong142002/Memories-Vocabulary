@@ -67,17 +67,17 @@ describe('Test validation', () => {
     expect(errors).toContain(MESSAGE_ERRORS.ALPHABETS);
   });
 
-  it('Should return no error for empty value', () => {
+  it('Should return undefined for empty value', () => {
     const emptyValue = '     ';
     const errors = validation(emptyValue);
 
-    expect(errors).toEqual([]);
+    expect(errors).toEqual(undefined);
   });
 
-  it('Should return no error for valid value', () => {
+  it('Should return undefined for valid value', () => {
     const validValue = 'abc';
     const errors = validation(validValue);
 
-    expect(errors).toEqual([]);
+    expect(errors).toEqual(undefined);
   });
 });

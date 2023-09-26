@@ -9,18 +9,23 @@ import { Topic, Vocabulary } from '@interfaces';
 
 // Services
 import { getData } from '@services';
-import { useTopicStores } from '@stores';
+import { useNotificationStores, useTopicStores, useVocabulariesStores } from '@stores';
 
 /**
  * @description custom hook to get topics
  */
 export const useTopics = () => {
   const { setTopics } = useTopicStores();
+  const { setMessageError } = useNotificationStores();
+
   return useQuery<Topic[], AxiosError>({
     queryKey: [QUERY_KEYS.TOPICS],
     queryFn: () => getData(URL.TOPIC),
     onSuccess: (data) => {
       setTopics(data);
+    },
+    onError: (error) => {
+      setMessageError(error.message);
     },
   });
 };
@@ -32,12 +37,22 @@ export const useTopics = () => {
  * @param {number} page is the number of pages out of total number of pages
  * @param {string} param is param endpoint
  */
-export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) =>
-  useQuery<Vocabulary[], AxiosError>({
+export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) => {
+  const { onSetVocabularies } = useVocabulariesStores();
+  const { setMessageError } = useNotificationStores();
+
+  return useQuery<Vocabulary[], AxiosError>({
     queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param],
     queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
     enabled,
+    onSuccess: (data) => {
+      onSetVocabularies(data);
+    },
+    onError: (error) => {
+      setMessageError(error.message);
+    },
   });
+};
 
 /**
  * @description custom hook to get vocabularies with pagination
