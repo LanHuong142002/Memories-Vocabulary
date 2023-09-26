@@ -75,7 +75,7 @@ const TableVocabulary = memo(
       <Box
         className='table-body'
         sx={(theme: MantineTheme) => ({
-          '.row:nth-child(even):hover, .row:nth-child(odd)': {
+          '.row:nth-of-type:first-of-type(even):hover, .row:nth-of-type:first-of-type(odd)': {
             backgroundColor: getColorScheme(
               theme.colorScheme,
               theme.colors.dark[2],
@@ -92,7 +92,7 @@ const TableVocabulary = memo(
           </TableRow>
         ) : (
           <>
-            {vocabularies && vocabularies?.length > 0 ? (
+            {vocabularies && vocabularies.length ? (
               vocabularies.map((item, i) => (
                 <div key={`table-vocabulary-row${i}`}>
                   {item.map(({ id, english, vietnamese }, index) => (
