@@ -6,7 +6,7 @@ import FONT_SIZES from './fontSizes';
 import FONT_WEIGHTS from './fontWeights';
 import LINE_HEIGHTS from './lineHeights';
 
-import { Notification, Modal, Badge, TextInput, Button, Progress, Text } from './components';
+import { Modal, Notification, Badge, TextInput, Button, Text, Progress } from './components';
 
 export const defaultTheme: MantineThemeOverride = {
   fontFamily: 'HelveticaNeue, Helvetica, Arial, sans-serif',
@@ -23,12 +23,12 @@ export const defaultTheme: MantineThemeOverride = {
   },
   components: {
     Text,
-    Notification,
+    TextInput,
     Modal,
+    Notification,
     Button,
     Progress,
     Badge,
-    TextInput,
   },
   globalStyles: GLOBAL_STYLES,
 };
