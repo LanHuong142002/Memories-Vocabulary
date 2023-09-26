@@ -67,6 +67,7 @@ export enum TYPOGRAPHY_VARIANT {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   TERTIARY = 'tertiary',
+  HIGHLIGHT = 'highlight',
 }
 
 // Label
