@@ -1,6 +1,9 @@
 import { memo } from 'react';
 import { ActionIcon, Image, MantineTheme, useMantineColorScheme } from '@mantine/core';
 
+// Helpers
+import { isLightTheme } from '@helpers';
+
 // Images
 import { moon, sun } from '@assets';
 
@@ -20,11 +23,7 @@ export const ToggleTheme = memo(() => {
         },
       })}
     >
-      {colorScheme === 'light' ? (
-        <Image width='20px' height='20px' src={moon} />
-      ) : (
-        <Image width='20px' height='20px' src={sun} />
-      )}
+      <Image width='20px' height='20px' src={isLightTheme(colorScheme) ? moon : sun} />
     </ActionIcon>
   );
 });

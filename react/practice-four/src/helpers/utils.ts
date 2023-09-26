@@ -17,6 +17,8 @@ export const getColorScheme = (
   InLightTheme: string,
 ): string => (colorScheme === 'dark' ? InDarkTheme : InLightTheme);
 
+export const isLightTheme = (theme = 'light') => theme === 'light';
+
 /**
  * @description remove duplicates from two arrays and return a combined array.
  *
