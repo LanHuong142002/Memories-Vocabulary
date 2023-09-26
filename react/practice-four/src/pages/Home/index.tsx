@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { Box, Flex, Loader, MantineTheme, Overlay } from '@mantine/core';
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Box, Flex, Loader, MantineTheme, Overlay } from '@mantine/core';
 
 // Constants
 import {
@@ -26,7 +27,6 @@ import { useMutationPostTopic, useTopics } from '@hooks';
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Topic, Typography } from '@components';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormInput {
   value: string;
@@ -38,7 +38,7 @@ const Home = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors: errorsTest },
+    formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
       value: '',
@@ -209,14 +209,15 @@ const Home = () => {
             <Controller
               name='value'
               rules={{
-                validate: (v) => validation(v),
+                validate: (v) => validation(v, true),
               }}
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, value } }) => (
                 <Input
+                  value={value}
                   variant={INPUT_VARIANT.PRIMARY}
                   placeholder='Topic Name'
-                  errors={errorsTest.value ? errorsTest.value.message : ''}
+                  error={errors.value?.message || ''}
                   aria-label='enter topic'
                   sx={(theme: MantineTheme) => ({
                     margin: '30px 0 10px 0',
@@ -226,7 +227,7 @@ const Home = () => {
                       },
                     },
                   })}
-                  {...field}
+                  onChange={onChange}
                 />
               )}
             />

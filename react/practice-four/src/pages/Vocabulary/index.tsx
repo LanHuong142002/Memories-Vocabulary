@@ -46,11 +46,11 @@ const Vocabulary = () => {
   const [isExisted, setIsExisted] = useState<boolean>(false);
   // value ENG
   const [valueENG, setValueENG] = useState<string>('');
-  const [errorsENG, setErrorsENG] = useState<string[]>([]);
+  const [errorsENG, setErrorsENG] = useState<string>();
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   // Value VIE
   const [valueVIE, setValueVIE] = useState<string>('');
-  const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
+  const [errorsVIE, setErrorsVIE] = useState<string>();
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
 
   // Hooks
@@ -111,10 +111,9 @@ const Vocabulary = () => {
     setErrorsVIE(listErrorVIE);
     setErrorsENG(listErrorENG);
 
-    if (!listErrorVIE.length && !listErrorENG.length && id) {
+    if (!listErrorVIE && !listErrorENG && id) {
       setValueENG(valueInputENG.trim());
       setIsExisted(true);
-      console.log(dataByValue);
 
       if (dataByValue && dataByValue.length === 0) {
         mutatePost(
@@ -131,7 +130,7 @@ const Vocabulary = () => {
         setValueVIE('');
         setValueENG('');
       } else {
-        setErrorsENG([MESSAGE_ERRORS.EXISTED]);
+        setErrorsENG(MESSAGE_ERRORS.EXISTED);
       }
     }
   };
@@ -244,7 +243,7 @@ const Vocabulary = () => {
           variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeENG}
           value={valueENG!}
-          errors={errorsENG}
+          error={errorsENG}
           name='english'
           dataTestId='input-english'
           aria-label='enter english'
@@ -254,7 +253,7 @@ const Vocabulary = () => {
           variant={INPUT_VARIANT.SECONDARY}
           onChange={handleOnChangeVIE}
           value={valueVIE!}
-          errors={errorsVIE}
+          error={errorsVIE}
           name='vietnamese'
           dataTestId='input-vietnamese'
           aria-label='enter vietnamese'

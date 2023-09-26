@@ -9,31 +9,31 @@ import { MantineTheme, TextInput, TextInputProps } from '@mantine/core';
 interface Props extends TextInputProps {
   dataTestId?: string;
   autoComplete?: string;
-  errors?: string | null;
+  error?: string | undefined;
   variant?: INPUT_VARIANT;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = memo(
   ({
-    errors,
+    error,
     dataTestId,
     autoComplete = 'off',
     variant = INPUT_VARIANT.PRIMARY,
     ...props
   }: Props) => {
-    // const hasErrors = errors && errors.length > 0;
-
     return (
       <TextInput
         {...props}
         variant={variant}
         data-testid={dataTestId}
         autoComplete={autoComplete}
-        error={errors}
+        error={error}
         styles={(theme: MantineTheme) =>
-          variant === INPUT_VARIANT.TERTIARY && errors
-            ? errors.length > 0
+          variant === INPUT_VARIANT.TERTIARY && error === undefined
+            ? error === undefined
+              ? {}
+              : error === ''
               ? {
                   root: {
                     backgroundColor: theme.colors.red[0],
