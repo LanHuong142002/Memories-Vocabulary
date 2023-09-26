@@ -92,7 +92,7 @@ const TableVocabulary = memo(
           </TableRow>
         ) : (
           <>
-            {vocabularies && vocabularies?.length > 0 ? (
+            {vocabularies && vocabularies.length ? (
               vocabularies.map((item, i) => (
                 <div key={`table-vocabulary-row${i}`}>
                   {item.map(({ id, english, vietnamese }, index) => (

@@ -36,7 +36,7 @@ const Testing = () => {
   const debouncedValue = useDebounce<string | null>(value, 700);
   const quizValue = useMemo(
     () =>
-      quizzes.length > 0 &&
+      quizzes.length &&
       `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
     [quizzes, step],
   );
