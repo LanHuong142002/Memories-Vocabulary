@@ -134,7 +134,7 @@ const Wrapper = ({
               sx={{
                 lineHeight: '20px',
                 textAlign: 'center',
-                'p:first-of-type': {
+                'p:first-child': {
                   paddingBottom: '10px',
                   lineHeight: '30px',
                 },
