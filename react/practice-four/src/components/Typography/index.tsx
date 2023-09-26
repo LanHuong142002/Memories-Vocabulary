@@ -1,40 +1,29 @@
 import { ReactNode, memo } from 'react';
 
 // Constants
-import {
-  TYPOGRAPHY_SIZE,
-  TYPOGRAPHY_TAG_NAME,
-  TYPOGRAPHY_TEXT_ALIGN,
-  TYPOGRAPHY_VARIANT,
-} from '@constants';
+import { TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Styles
-import './index.css';
+import { Text, TextProps } from '@mantine/core';
 
-interface TypographyProps {
-  textAlign?: TYPOGRAPHY_TEXT_ALIGN;
-  className?: 'highlight';
+interface TypographyProps extends TextProps {
   size?: TYPOGRAPHY_SIZE;
-  color?: TYPOGRAPHY_VARIANT;
+  variant?: TYPOGRAPHY_VARIANT;
   tagName?: TYPOGRAPHY_TAG_NAME;
   children: ReactNode;
 }
 
 const Typography = memo(
   ({
-    textAlign,
-    className,
+    variant,
     size = TYPOGRAPHY_SIZE.XS,
-    color = TYPOGRAPHY_VARIANT.PRIMARY,
-    tagName: TagName = TYPOGRAPHY_TAG_NAME.P,
+    tagName = TYPOGRAPHY_TAG_NAME.P,
     children,
+    ...props
   }: TypographyProps) => (
-    <TagName
-      className={`typography-${className || ''} typography-${size} typography-color-${color}`}
-      style={{ textAlign: textAlign }}
-    >
+    <Text component={tagName} variant={variant} size={size} {...props}>
       {children}
-    </TagName>
+    </Text>
   ),
 );
 

@@ -10,7 +10,7 @@ describe('Test typography component', () => {
   it('Should render typography component', () => {
     const { container, getByText } = render(
       <Typography
-        color={TYPOGRAPHY_VARIANT.PRIMARY}
+        variant={TYPOGRAPHY_VARIANT.PRIMARY}
         tagName={TYPOGRAPHY_TAG_NAME.P}
         size={TYPOGRAPHY_SIZE.XS}
       >

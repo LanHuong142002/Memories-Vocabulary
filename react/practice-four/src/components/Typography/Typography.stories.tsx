@@ -22,12 +22,13 @@ const meta: Meta<typeof Typography> = {
         TYPOGRAPHY_SIZE.XXXL,
       ],
     },
-    color: {
+    variant: {
       control: { type: 'radio' },
       options: [
         TYPOGRAPHY_VARIANT.PRIMARY,
         TYPOGRAPHY_VARIANT.SECONDARY,
         TYPOGRAPHY_VARIANT.TERTIARY,
+        TYPOGRAPHY_VARIANT.HIGHLIGHT,
       ],
     },
     tagName: {
