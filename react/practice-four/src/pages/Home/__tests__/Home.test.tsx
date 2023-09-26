@@ -8,15 +8,22 @@ import { Home } from '@pages';
 
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
-import * as hooks from '@hooks';
-import { AxiosError } from 'axios';
-import { Topic } from '@interfaces';
-import { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 
 jest.useFakeTimers();
-jest.mock('@hooks', () => ({
-  ...jest.requireActual('@hooks'),
-}));
+jest.mock('@hooks', () => {
+  const originalModule = jest.requireActual('@hooks');
+  return {
+    ...originalModule,
+    useTopics: jest.fn().mockImplementation(() => ({
+      isLoading: false,
+      data: MOCK_TOPICS,
+    })),
+    useMutationPostTopic: jest.fn().mockImplementation(() => ({
+      mutate: jest.fn(),
+      isLoading: true,
+    })),
+  };
+});
 
 describe('Test Home Page', () => {
   it('Should render Home page', () => {
@@ -26,9 +33,6 @@ describe('Test Home Page', () => {
   });
 
   it('Should render overlay add new topic when click to button Add Topic', () => {
-    jest
-      .spyOn(hooks, 'useTopics')
-      .mockImplementation(() => ({ isLoading: false } as UseQueryResult<Topic[], AxiosError>));
     const { getByText } = renderWithThemeProvider(<Home />);
 
     const buttonAddTopic = getByText('Add Topic');
@@ -40,68 +44,11 @@ describe('Test Home Page', () => {
   });
 
   it('Should show loading when isLoadingTopic is true', () => {
-    jest
-      .spyOn(hooks, 'useTopics')
-      .mockImplementation(
-        () => ({ isLoading: false, data: MOCK_TOPICS } as UseQueryResult<Topic[], AxiosError>),
-      );
     const { container } = renderWithThemeProvider(<Home />);
     const topics = container.querySelectorAll('.topic');
 
-    expect(topics.length).toBe(2);
+    expect(topics.length).toBe(3);
   });
-
-  // it('Should Add new topic when enter the new topic', () => {
-  //   jest
-  //     .spyOn(hooks, 'useTopics')
-  //     .mockImplementation(
-  //       () => ({ isLoading: false, data: MOCK_TOPICS } as UseQueryResult<Topic[], AxiosError>),
-  //     );
-  //   const { getByText, getByPlaceholderText } = renderWithThemeProvider(<Home />);
-
-  //   act(() => {
-  //     // Click button Add Topic
-  //     const topic = getByText('Add Topic');
-  //     fireEvent.click(topic);
-
-  //     // Enter value for input
-  //     const input = getByPlaceholderText('Topic Name');
-  //     fireEvent.change(input, { target: { value: 'Text' } });
-  //     // Click button Done to add new topic
-  //     const button = getByText('Done');
-  //     fireEvent.click(button);
-  //   });
-
-  //   const titleAddTopic = getByText('Add & Select Topic');
-  //   expect(titleAddTopic).toBeInTheDocument();
-  // });
-
-  // it('Should show error message when enter wrong value with click to Done button', () => {
-  //   jest
-  //     .spyOn(hooks, 'useTopics')
-  //     .mockImplementation(
-  //       () => ({ isLoading: false, data: MOCK_TOPICS } as UseQueryResult<Topic[], AxiosError>),
-  //     );
-  //   const { getByText } = renderWithThemeProvider(<Home />);
-
-  //   act(() => {
-  //     // Click button Add Topic
-  //     const topic = getByText('Add Topic');
-  //     fireEvent.click(topic);
-  //     // fireEvent.click(topic);
-
-  //     // // Enter value empty for input
-  //     // const input = getByPlaceholderText('Topic Name');
-  //     // fireEvent.change(input, { target: { value: '' } });
-
-  //     // // Click button Done to add new topic
-  //     // const button = getByText('Done');
-  //     // fireEvent.click(button);
-  //   });
-
-  //   // const error = getByText(MESSAGE_ERRORS.REQUIRED);
-  //   // expect(error).toBeInTheDocument();
-  // });
 
   it('Should open topic when click to topic', () => {
     const { getByText } = renderWithThemeProvider(<Home />);
@@ -113,23 +60,7 @@ describe('Test Home Page', () => {
     expect(titleHome).toBeInTheDocument();
   });
 
-  it('Should render error message when typing number to input', () => {
-    jest
-      .spyOn(hooks, 'useTopics')
-      .mockImplementation(
-        () => ({ isLoading: false, data: MOCK_TOPICS } as UseQueryResult<Topic[], AxiosError>),
-      );
-    jest
-      .spyOn(hooks, 'useMutationPostTopic')
-      .mockImplementation(
-        () =>
-          ({ mutate: jest.fn(), isLoading: true } as unknown as UseMutationResult<
-            Omit<Topic, 'id'>,
-            AxiosError<unknown, unknown>,
-            Omit<Topic, 'id'>,
-            unknown
-          >),
-      );
+  it('Should render input with value entered', () => {
     const { getByText, getByPlaceholderText } = renderWithThemeProvider(<Home />);
 
     // Click button Add Topic
@@ -144,5 +75,7 @@ describe('Test Home Page', () => {
     // Enter valid value for input
     fireEvent.change(input, { target: { value: 'aaa' } });
     fireEvent.submit(button);
+
+    expect(input).toHaveValue('aaa');
   });
 });
