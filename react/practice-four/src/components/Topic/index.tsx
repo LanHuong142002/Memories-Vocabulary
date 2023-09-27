@@ -11,7 +11,6 @@ interface TopicProps {
   id?: string;
   isAddNew?: boolean;
   quantity?: number;
-  name?: string;
   variant?: TOPIC_VARIANT;
   onClick?: (id?: string) => void;
   children?: ReactNode;
@@ -22,7 +21,6 @@ const Topic = memo(
     id,
     isAddNew = false,
     quantity = 0,
-    name,
     variant = TOPIC_VARIANT.DEFAULT,
     onClick,
     children,
@@ -85,7 +83,7 @@ const Topic = memo(
             textOverflow: 'ellipsis',
           }}
         >
-          {name || children}
+          {children}
         </Text>
         <Text sx={{ marginLeft: '5px' }}>{quantity > 0 ? `(${quantity})` : ''}</Text>
 
