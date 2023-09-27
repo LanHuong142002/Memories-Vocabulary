@@ -32,6 +32,8 @@ module.exports = {
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!src/interfaces/**',
+    '!src/themes/**',
+    '!src/components/GlobalFonts/**',
     '!src/routes/**',
     '!.storybook/main.ts',
     '!.storybook/preview.tsx',

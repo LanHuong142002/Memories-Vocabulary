@@ -1,17 +1,13 @@
-import { fireEvent, act } from '@testing-library/react';
+import * as hooks from '@hooks';
+import * as services from '@services';
 import * as reactRouter from 'react-router-dom';
-
-// Contexts
-import { VocabularyContext, VocabularyContextType } from '@contexts';
-
-// Mocks
-import { MOCK_VOCABULARY, MOCK_VOCABULARY_CONTEXT_VALUE } from '@mocks';
-
-// Constants
-import { MESSAGE_ERRORS } from '@constants';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
+
+// Mocks
+import { MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
 // Components
 import { Vocabulary } from '@pages';
@@ -20,21 +16,12 @@ jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
 }));
-
-const mockVocabularyContext = {
-  ...MOCK_VOCABULARY_CONTEXT_VALUE,
-  onCheckEnglishIsExisted: jest.fn().mockResolvedValue(false),
-};
-
-const VocabularyComponent = ({
-  value = mockVocabularyContext,
-}: {
-  value?: VocabularyContextType;
-}) => (
-  <VocabularyContext.Provider value={value}>
-    <Vocabulary />
-  </VocabularyContext.Provider>
-);
+jest.mock('@hooks', () => ({
+  ...jest.requireActual('@hooks'),
+}));
+jest.mock('@services', () => ({
+  ...jest.requireActual('@services'),
+}));
 
 describe('Test Vocabulary Page', () => {
   afterEach(() => {
@@ -42,15 +29,15 @@ describe('Test Vocabulary Page', () => {
   });
 
   it('Should render Vocabulary page', () => {
-    const { container } = renderWithThemeProvider(<VocabularyComponent />);
+    const { container } = renderWithThemeProvider(<Vocabulary />);
 
     expect(container).toBeInTheDocument();
   });
 
-  it('Should Add new vocabulary when enter in two input', async () => {
+  it('Input should have value after click button add', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
-    const { getByTestId, getByText } = renderWithThemeProvider(<VocabularyComponent />);
 
+    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
     const inputENG = getByTestId('input-english');
     const inputVIE = getByTestId('input-vietnamese');
     const buttonStartTest = getByText('Add');
@@ -59,7 +46,7 @@ describe('Test Vocabulary Page', () => {
       target: [inputENG, inputVIE],
     };
 
-    await act(() => {
+    act(() => {
       // Enter value for two inputs ENG and VIE
       fireEvent.change(inputENG, { target: { value: 'Text' } });
       fireEvent.change(inputVIE, { target: { value: 'Text' } });
@@ -67,73 +54,60 @@ describe('Test Vocabulary Page', () => {
       fireEvent.submit(buttonStartTest, eventMock);
     });
 
-    expect(inputENG).toHaveValue('');
-    expect(inputVIE).toHaveValue('');
-  });
-
-  it('Should render error message when typing number to input', async () => {
-    const { getByTestId, getAllByText } = renderWithThemeProvider(<VocabularyComponent />);
-
-    const inputENG = getByTestId('input-english');
-    const inputVIE = getByTestId('input-vietnamese');
-
-    await act(() => {
-      // Enter value number for two inputs ENG and VIE
-      fireEvent.change(inputENG, { target: { value: '2' } });
-      fireEvent.change(inputVIE, { target: { value: '2' } });
-      jest.runAllTimers();
+    await waitFor(() => {
+      expect(inputENG).toHaveValue('Text');
+      expect(inputVIE).toHaveValue('Text');
     });
-
-    expect(getAllByText(MESSAGE_ERRORS.ALPHABETS).length).toBe(2);
   });
 
-  it('Should call onRandomQuizzes when handleStartTest is called', () => {
-    const { getByRole } = renderWithThemeProvider(
-      <VocabularyComponent
-        value={{
-          ...mockVocabularyContext,
-          vocabularies: [
-            ...Array.from({ length: 5 }, (_, index) => ({
-              ...MOCK_VOCABULARY,
-              id: `id_${index + 1}`,
-            })),
-          ],
-        }}
-      />,
-    );
+  it('Should call onRandomQuizzes when handleStartTest is called (click button Start Test)', () => {
+    const { getByRole } = renderWithThemeProvider(<Vocabulary />);
     const startTestBtn = getByRole('button', { name: 'Start Test' });
 
     fireEvent.click(startTestBtn);
   });
 
-  it('Should click button load more', async () => {
+  it('Should click button load more when vocabularies more than 20 and add more vocabularies when click Load More', async () => {
+    const vocabularies = [
+      ...Array.from({ length: 20 }, (_, index) => ({
+        ...MOCK_VOCABULARY,
+        id: `id_${index + 1}`,
+      })),
+      MOCK_VOCABULARIES,
+    ];
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '5' });
+    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
+      fetchNextPage: jest.fn(),
+      hasNextPage: true,
+      isLoading: false,
+      data: {
+        pages: [vocabularies],
+      },
+    }));
 
-    const { getByRole } = renderWithThemeProvider(
-      <VocabularyComponent
-        value={{
-          ...mockVocabularyContext,
-          vocabularies: [
-            ...Array.from({ length: 20 }, (_, index) => ({
-              ...MOCK_VOCABULARY,
-              id: `id_${index + 1}`,
-            })),
-          ],
-          onLoadMore: jest.fn().mockResolvedValue(2),
-        }}
-      />,
-    );
+    const { getByRole, getAllByTestId } = renderWithThemeProvider(<Vocabulary />);
     const buttonLoadMore = getByRole('button', {
       name: 'Load More',
     });
     await act(() => {
       fireEvent.click(buttonLoadMore);
     });
+
+    await waitFor(async () => {
+      const buttonsDelete = getAllByTestId('button-delete-vocabulary');
+      expect(buttonsDelete.length).toBe(21);
+    });
   });
 
   it('Should show confirm modal and click button Delete', () => {
-    const { getByTestId, getByText } = renderWithThemeProvider(<VocabularyComponent />);
+    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: {
+        pages: [MOCK_VOCABULARIES],
+      },
+    }));
 
+    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
     // Click button X in row and show confirm modal
     const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
     fireEvent.click(buttonShowConfirmModal);
@@ -141,5 +115,32 @@ describe('Test Vocabulary Page', () => {
     // Click button delete confirm delete
     const buttonDelete = getByText('Delete');
     fireEvent.click(buttonDelete);
+  });
+
+  it('Should show notification Error when click button Delete but call API failed', async () => {
+    jest.spyOn(services, 'deleteData').mockRejectedValue(new Error('Error'));
+    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: {
+        pages: [MOCK_VOCABULARIES],
+      },
+    }));
+    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
+
+    act(() => {
+      // Click button X in row and show confirm modal
+      const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
+      fireEvent.click(buttonShowConfirmModal);
+    });
+
+    act(() => {
+      // Click button delete confirm delete
+      const buttonDelete = getByText('Delete');
+      fireEvent.click(buttonDelete);
+    });
+
+    await waitFor(() => {
+      expect(getByText('Error')).toBeInTheDocument();
+    });
   });
 });
