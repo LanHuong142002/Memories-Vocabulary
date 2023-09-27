@@ -29,7 +29,7 @@ const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: vocabularies, isLoading } = useVocabularies(id || '', true);
-  const { quizzes, onSetQuizzes } = useVocabulariesStores();
+  const { quizzes, setQuizzes } = useVocabulariesStores();
   const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -90,12 +90,12 @@ const Testing = () => {
           ...quizzes[step],
           answer: value.trim(),
         };
-        onSetQuizzes(answersArr);
+        setQuizzes(answersArr);
         setErrors(null);
         handleSetStep();
       }
     },
-    [handleSetStep, onSetQuizzes, quizzes, step, value],
+    [handleSetStep, setQuizzes, quizzes, step, value],
   );
 
   // show errors of input vietnamese after delay 0.7s

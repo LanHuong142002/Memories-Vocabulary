@@ -9,7 +9,7 @@ import { Topic, Vocabulary } from '@interfaces';
 
 // Services
 import { getData } from '@services';
-import { useTopicStores } from '@stores';
+import { useTopicStores, useVocabulariesStores } from '@stores';
 
 /**
  * @description custom hook to get topics
@@ -19,9 +19,7 @@ export const useTopics = () => {
   return useQuery<Topic[], AxiosError>({
     queryKey: [QUERY_KEYS.TOPICS],
     queryFn: () => getData(URL.TOPIC),
-    onSuccess: (data) => {
-      setTopics(data);
-    },
+    onSuccess: (data) => setTopics(data),
   });
 };
 
@@ -32,12 +30,16 @@ export const useTopics = () => {
  * @param {number} page is the number of pages out of total number of pages
  * @param {string} param is param endpoint
  */
-export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) =>
-  useQuery<Vocabulary[], AxiosError>({
-    queryKey: [QUERY_KEYS.VOCABULARIES, page, id],
+export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) => {
+  const { setVocabularies } = useVocabulariesStores();
+
+  return useQuery<Vocabulary[], AxiosError>({
+    queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param],
     queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
+    onSuccess: (data) => setVocabularies(data),
     enabled,
   });
+};
 
 /**
  * @description custom hook to get vocabularies with pagination
