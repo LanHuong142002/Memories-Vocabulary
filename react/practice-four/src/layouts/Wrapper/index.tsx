@@ -1,9 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
-import { ReactNode, useContext, useEffect, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 
 // Contexts
-import { VocabularyContext, TopicContext } from '@contexts';
 import { useNotificationStores } from '@stores';
 
 // Constants
@@ -25,20 +24,18 @@ const Wrapper = ({
   childrenTitle: ReactNode;
 }) => {
   const location = useLocation();
-  const { errorsVocabulary } = useContext(VocabularyContext);
-  const { errorsTopic } = useContext(TopicContext);
-  const { notification, setNotification } = useNotificationStores();
+  const { notification, setNotification, messageError } = useNotificationStores();
 
   useEffect(() => {
-    if (errorsTopic || errorsVocabulary) {
-      setNotification(!(errorsTopic || errorsVocabulary));
+    if (messageError) {
+      setNotification(true);
       const timeout = setTimeout(() => {
         setNotification(false);
       }, 3000);
 
       return () => clearTimeout(timeout);
     }
-  }, [errorsTopic, errorsVocabulary, setNotification]);
+  }, [messageError, setNotification]);
 
   return (
     <Box
@@ -158,7 +155,7 @@ const Wrapper = ({
           }}
         >
           <Notification
-            description={errorsTopic || errorsVocabulary}
+            description={messageError}
             title='Something went wrong!'
             styles={{
               root: {

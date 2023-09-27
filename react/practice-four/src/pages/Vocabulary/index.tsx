@@ -55,8 +55,11 @@ const Vocabulary = () => {
 
   // Hooks
   const { onRandomQuizzes } = useVocabulariesStores();
-  const { data } = useVocabularies(id || '', isRandomQuizzes);
-  const { data: dataByValue, isFetching: isLoadingCheckExisted } = useVocabularies(
+  const { setMessageError } = useNotificationStores();
+  const { data: vocabulariesAll } = useVocabularies(id || '', isRandomQuizzes);
+  const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
+  const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
+  const { data: vocabularyByValue, isFetching: isLoadingCheckExisted } = useVocabularies(
     id || '',
     isExisted,
     1,
@@ -69,9 +72,6 @@ const Vocabulary = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteVocabularies(id || '');
-  const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
-  const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
-  const { setMessageError } = useNotificationStores();
 
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
@@ -114,9 +114,9 @@ const Vocabulary = () => {
     if (!listErrorVIE.length && !listErrorENG.length && id) {
       setValueENG(valueInputENG.trim());
       setIsExisted(true);
-      console.log(dataByValue);
+      console.log(vocabularyByValue);
 
-      if (dataByValue && dataByValue.length === 0) {
+      if (vocabularyByValue && vocabularyByValue.length === 0) {
         mutatePost(
           {
             vietnamese: valueInputVIE.trim(),
@@ -141,27 +141,23 @@ const Vocabulary = () => {
    */
   const handleStartTest = useCallback(() => {
     setIsRandomQuizzes(true);
-    if (id && data) {
-      onRandomQuizzes(data);
+    if (id && vocabulariesAll) {
+      onRandomQuizzes(vocabulariesAll);
       navigate(`${ROUTES.TESTING}/${id}`);
     }
-  }, [data, id, navigate, onRandomQuizzes]);
+  }, [vocabulariesAll, id, navigate, onRandomQuizzes]);
 
   /**
    * @description function delete a vocabulary
-   *
-   * @param {string} vocabularyId is id of vocabulary which is selected
    */
   const handleDeleteVocabulary = useCallback(() => {
-    if (id) {
-      mutateDelete(vocabularyId, {
-        onError: (error) => {
-          setMessageError(error.message);
-        },
-      });
-      close();
-    }
-  }, [close, id, mutateDelete, setMessageError, vocabularyId]);
+    mutateDelete(vocabularyId, {
+      onError: (error) => {
+        setMessageError(error.message);
+      },
+    });
+    close();
+  }, [close, mutateDelete, setMessageError, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
