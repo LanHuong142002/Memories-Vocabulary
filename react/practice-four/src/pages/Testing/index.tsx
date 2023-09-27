@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Text } from '@mantine/core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 // Constants
 import {
@@ -24,7 +25,6 @@ import { getColorScheme, validation } from '@helpers';
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormInput {
   value: string;
@@ -99,9 +99,9 @@ const Testing = () => {
 
   useEffect(() => {
     if (isSuccess && vocabulariesAll) {
-      onSetQuizzes(vocabulariesAll);
+      setQuizzes(vocabulariesAll);
     }
-  }, [isSuccess, onSetQuizzes, vocabulariesAll]);
+  }, [isSuccess, setQuizzes, vocabulariesAll]);
 
   return (
     <Wrapper

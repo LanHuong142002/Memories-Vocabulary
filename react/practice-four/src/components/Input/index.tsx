@@ -22,14 +22,22 @@ const Input = memo(
     variant = INPUT_VARIANT.PRIMARY,
     ...props
   }: Props) => {
+    /**
+     * @description function return 3 status of input
+     *
+     * @param theme from Mantine Theme
+     *
+     * @returns 3 status normal | success | failed
+     */
     const getInputStyles = (theme: MantineTheme) => {
-      if (variant === INPUT_VARIANT.TERTIARY && error === undefined) {
-        return {};
-      } else if (variant !== INPUT_VARIANT.TERTIARY) {
-        return {};
-      } else {
-        return error !== ''
-          ? {
+      switch (variant) {
+        case INPUT_VARIANT.TERTIARY:
+          if (error === undefined) {
+            return {};
+            // When error is not the empty string
+            // It will return failed styles
+          } else if (error !== '') {
+            return {
               root: {
                 backgroundColor: theme.colors.red[0],
               },
@@ -40,8 +48,10 @@ const Input = memo(
               label: {
                 color: theme.colors.red[3],
               },
-            }
-          : {
+            };
+            // This will return success styles
+          } else {
+            return {
               root: {
                 backgroundColor: theme.colors.green[0],
               },
@@ -52,6 +62,10 @@ const Input = memo(
                 color: theme.colors.dark[6],
               },
             };
+          }
+
+        default:
+          return {};
       }
     };
 
@@ -62,7 +76,11 @@ const Input = memo(
         data-testid={dataTestId}
         autoComplete={autoComplete}
         error={error}
-        styles={(theme: MantineTheme) => getInputStyles(theme)}
+        styles={(theme: MantineTheme) => {
+          console.log(getInputStyles(theme));
+
+          return getInputStyles(theme);
+        }}
       />
     );
   },
