@@ -47,7 +47,7 @@ const Result = () => {
   );
 
   useEffect(() => {
-    if (!(quizzes.length > 0)) {
+    if (!quizzes.length) {
       navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
   }, [id, navigate, quizzes]);

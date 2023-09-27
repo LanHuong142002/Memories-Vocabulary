@@ -14,19 +14,24 @@ describe('Test topic component', () => {
 
   const defaultProps = {
     id: '1',
-    name: 'School',
     onClick: handleClick,
   };
 
   it('Should render topic component', () => {
-    const { container } = renderWithThemeProvider(<Topic {...defaultProps} quantity={10} />);
+    const { container } = renderWithThemeProvider(
+      <Topic {...defaultProps} quantity={10}>
+        School
+      </Topic>,
+    );
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render topic component without quantity', () => {
     const { container } = renderWithThemeProvider(
-      <Topic {...defaultProps} variant={TOPIC_VARIANT.SELECTED} />,
+      <Topic {...defaultProps} variant={TOPIC_VARIANT.SELECTED}>
+        School
+      </Topic>,
     );
 
     expect(container).toBeInTheDocument();
@@ -34,7 +39,9 @@ describe('Test topic component', () => {
 
   it('Should call onClick when click topic component', () => {
     const { getByText } = renderWithThemeProvider(
-      <Topic {...defaultProps} quantity={10} isAddNew={true} />,
+      <Topic {...defaultProps} quantity={10} isAddNew={true}>
+        School
+      </Topic>,
     );
 
     const topic = getByText('School');

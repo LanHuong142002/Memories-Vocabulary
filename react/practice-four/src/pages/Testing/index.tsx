@@ -49,7 +49,7 @@ const Testing = () => {
   const [step, setStep] = useState<number>(0);
   const quizValue = useMemo(
     () =>
-      quizzes.length > 0 &&
+      quizzes.length &&
       `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
     [quizzes, step],
   );
