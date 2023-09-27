@@ -80,7 +80,7 @@ const TableVocabulary = memo(
         <Box
           className='table-body'
           sx={(theme: MantineTheme) => ({
-            '.row:nth-of-type:first-of-type(even):hover, .row:nth-of-type:first-of-type(odd)': {
+            '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
               backgroundColor: getColorScheme(
                 theme.colorScheme,
                 theme.colors.dark[2],
