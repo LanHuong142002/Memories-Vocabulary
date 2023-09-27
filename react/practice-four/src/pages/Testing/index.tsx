@@ -45,7 +45,7 @@ const Testing = () => {
   });
 
   const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
-  const { quizzes, onSetQuizzes } = useVocabulariesStores();
+  const { quizzes, setQuizzes } = useVocabulariesStores();
   const [step, setStep] = useState<number>(0);
   const quizValue = useMemo(
     () =>
@@ -88,7 +88,7 @@ const Testing = () => {
       ...quizzes[step],
       answer: data.value.trim(),
     };
-    onSetQuizzes(answersArr);
+    setQuizzes(answersArr);
     handleSetStep();
     reset();
   };
