@@ -272,7 +272,7 @@ const Vocabulary = () => {
         isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
         deletingById={{ [vocabularyId]: isDeleting }}
-        vocabularies={vocabularies && vocabularies.pages}
+        vocabularies={vocabularies?.pages || []}
         onClick={handleOpenConfirmModalInRow}
       />
       <Flex
@@ -296,7 +296,7 @@ const Vocabulary = () => {
           <Button
             variant={BUTTON_VARIANT.TERTIARY}
             className='button-load-more'
-            onClick={() => fetchNextPage()}
+            onClick={fetchNextPage}
           >
             Load More
           </Button>

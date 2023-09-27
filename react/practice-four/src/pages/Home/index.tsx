@@ -135,10 +135,11 @@ const Home = () => {
                 <Topic
                   id={id}
                   key={`topic-${id}`}
-                  name={name}
                   quantity={vocabularies?.length || 0}
                   onClick={handleOpenTopic}
-                />
+                >
+                  {name}
+                </Topic>
               ))}
             {isAdding && (
               <Topic>
@@ -147,12 +148,9 @@ const Home = () => {
                 </Flex>
               </Topic>
             )}
-            <Topic
-              variant={TOPIC_VARIANT.SELECTED}
-              name='Add Topic'
-              isAddNew={true}
-              onClick={handleOpenOverlay}
-            />
+            <Topic variant={TOPIC_VARIANT.SELECTED} isAddNew={true} onClick={handleOpenOverlay}>
+              Add Topic
+            </Topic>
           </>
         )}
       </Flex>
