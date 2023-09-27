@@ -60,7 +60,7 @@ const Wrapper = ({
             width: '100%',
             borderRadius: '4px',
             padding: '50px 10px',
-            boxShadow: `0 2px 8px ${theme.colors.opacity[5]}`,
+            boxShadow: theme.shadows.xs,
             backgroundColor: getColorScheme(
               theme.colorScheme,
               theme.colors.dark[5],
