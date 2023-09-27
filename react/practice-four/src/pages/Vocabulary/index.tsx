@@ -52,7 +52,6 @@ const Vocabulary = () => {
     handleSubmit,
     reset,
     setError,
-    getValues,
     formState: { errors },
     watch,
   } = useForm<FormInput>({
@@ -61,6 +60,8 @@ const Vocabulary = () => {
       valueVIE: '',
     },
   });
+
+  // Queries
   const { isFetching: isLoadingCheckExisted, refetch } = useVocabularies(
     id || '',
     false,
@@ -76,7 +77,10 @@ const Vocabulary = () => {
   } = useInfiniteVocabularies(id || '');
   const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
   const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
+
+  // Stores
   const { setMessageError } = useNotificationStores();
+
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
     [vocabularies],
@@ -93,19 +97,15 @@ const Vocabulary = () => {
 
   /**
    * @description function delete a vocabulary
-   *
-   * @param {string} vocabularyId is id of vocabulary which is selected
    */
   const handleDeleteVocabulary = useCallback(() => {
-    if (id) {
-      mutateDelete(vocabularyId, {
-        onError: (error) => {
-          setMessageError(error.message);
-        },
-      });
-      close();
-    }
-  }, [close, id, mutateDelete, setMessageError, vocabularyId]);
+    mutateDelete(vocabularyId, {
+      onError: (error) => {
+        setMessageError(error.message);
+      },
+    });
+    close();
+  }, [close, mutateDelete, setMessageError, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
@@ -121,25 +121,28 @@ const Vocabulary = () => {
   /**
    * @description function add new vocabulary
    */
-  const onSubmit: SubmitHandler<FormInput> = useCallback(async () => {
-    const res = await refetch();
-    if (res.data && res.data.length === 0) {
-      mutatePost(
-        {
-          vietnamese: getValues('valueVIE').trim(),
-          english: getValues('valueENG').trim(),
-        },
-        {
-          onError: (error) => {
-            setMessageError(error.message);
+  const onSubmit: SubmitHandler<FormInput> = useCallback(
+    async (data) => {
+      const res = await refetch();
+      if (res.data && res.data.length === 0) {
+        mutatePost(
+          {
+            vietnamese: data.valueVIE.trim(),
+            english: data.valueENG.trim(),
           },
-        },
-      );
-      reset();
-    } else {
-      setError('valueENG', { type: 'validate', message: MESSAGE_ERRORS.EXISTED });
-    }
-  }, [getValues, mutatePost, refetch, reset, setError, setMessageError]);
+          {
+            onError: (error) => {
+              setMessageError(error.message);
+            },
+          },
+        );
+        reset();
+      } else {
+        setError('valueENG', { type: 'validate', message: MESSAGE_ERRORS.EXISTED });
+      }
+    },
+    [mutatePost, refetch, reset, setError, setMessageError],
+  );
 
   // get vocabularies with the id of topic selected
   useEffect(() => {
@@ -238,7 +241,7 @@ const Vocabulary = () => {
         isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
         deletingById={{ [vocabularyId]: isDeleting }}
-        vocabularies={vocabularies && vocabularies.pages}
+        vocabularies={vocabularies?.pages || []}
         onClick={handleOpenConfirmModalInRow}
       />
       <Flex
@@ -262,7 +265,7 @@ const Vocabulary = () => {
           <Button
             variant={BUTTON_VARIANT.TERTIARY}
             className='button-load-more'
-            onClick={() => fetchNextPage()}
+            onClick={fetchNextPage}
           >
             Load More
           </Button>

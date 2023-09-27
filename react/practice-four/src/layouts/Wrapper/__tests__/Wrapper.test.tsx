@@ -1,4 +1,4 @@
-import { act, fireEvent } from '@testing-library/react';
+import { act } from '@testing-library/react';
 import * as reactRouter from 'react-router-dom';
 import * as stores from '@stores';
 
@@ -52,17 +52,7 @@ describe('Test Wrapper component', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Should call handleToggleTheme when click checkbox to change theme', () => {
-    jest.spyOn(reactRouter, 'useLocation').mockReturnValue(mockLocation);
-    const { getByTestId } = renderWithThemeProvider(<WrapperComponent />);
-
-    const toggle = getByTestId('toggle-theme');
-
-    // Click checkbox and click button redirect to home page
-    fireEvent.click(toggle);
-  });
-
-  it('Should call handleToggleTheme when click checkbox to change theme', () => {
+  it('Should render a tag with href is home ', () => {
     jest.spyOn(reactRouter, 'useLocation').mockReturnValue(mockLocation);
     const { getByText } = renderWithThemeProvider(
       <WrapperComponent value={{ ...mockThemeContext, theme: 'dark' }} />,

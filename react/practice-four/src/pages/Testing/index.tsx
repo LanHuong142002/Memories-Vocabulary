@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Text } from '@mantine/core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 // Constants
 import {
@@ -24,7 +25,6 @@ import { getColorScheme, validation } from '@helpers';
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormInput {
   value: string;
@@ -33,6 +33,7 @@ interface FormInput {
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [step, setStep] = useState<number>(0);
   const {
     control,
     handleSubmit,
@@ -44,12 +45,15 @@ const Testing = () => {
     },
   });
 
+  // Queries
   const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
-  const { quizzes, onSetQuizzes } = useVocabulariesStores();
-  const [step, setStep] = useState<number>(0);
+
+  // Stores
+  const { quizzes, setQuizzes } = useVocabulariesStores();
+
   const quizValue = useMemo(
     () =>
-      quizzes.length > 0 &&
+      quizzes.length &&
       `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
     [quizzes, step],
   );
@@ -88,7 +92,7 @@ const Testing = () => {
       ...quizzes[step],
       answer: data.value.trim(),
     };
-    onSetQuizzes(answersArr);
+    setQuizzes(answersArr);
     handleSetStep();
     reset();
   };
@@ -99,9 +103,9 @@ const Testing = () => {
 
   useEffect(() => {
     if (isSuccess && vocabulariesAll) {
-      onSetQuizzes(vocabulariesAll);
+      setQuizzes(vocabulariesAll);
     }
-  }, [isSuccess, onSetQuizzes, vocabulariesAll]);
+  }, [isSuccess, setQuizzes, vocabulariesAll]);
 
   return (
     <Wrapper

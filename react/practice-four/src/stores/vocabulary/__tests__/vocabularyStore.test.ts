@@ -18,7 +18,7 @@ describe('Test useVocabulariesStores', () => {
     const { result } = renderHook(() => useVocabulariesStores());
 
     expect(result.current.vocabularies).toEqual([]);
-    act(() => result.current.onSetVocabularies(MOCK_VOCABULARIES));
+    act(() => result.current.setVocabularies(MOCK_VOCABULARIES));
     expect(result.current.vocabularies).toEqual(MOCK_VOCABULARIES);
   });
 
@@ -26,14 +26,14 @@ describe('Test useVocabulariesStores', () => {
     const { result } = renderHook(() => useVocabulariesStores());
 
     expect(result.current.quizzes).toEqual([]);
-    act(() => result.current.onSetQuizzes(MOCK_VOCABULARIES));
+    act(() => result.current.setQuizzes(MOCK_VOCABULARIES));
     expect(result.current.vocabularies).toEqual(MOCK_VOCABULARIES);
   });
 
   it('Should add more value when add vocabulary', () => {
     const { result } = renderHook(() => useVocabulariesStores());
 
-    act(() => result.current.onSetVocabularies(MOCK_VOCABULARIES));
+    act(() => result.current.setVocabularies(MOCK_VOCABULARIES));
     act(() => result.current.onAddVocabularies(MOCK_VOCABULARY));
     expect(result.current.vocabularies).toEqual([...MOCK_VOCABULARIES, MOCK_VOCABULARY]);
   });
@@ -41,7 +41,7 @@ describe('Test useVocabulariesStores', () => {
   it('Should delete value when delete vocabulary', () => {
     const { result } = renderHook(() => useVocabulariesStores());
 
-    act(() => result.current.onSetVocabularies(MOCK_VOCABULARIES));
+    act(() => result.current.setVocabularies(MOCK_VOCABULARIES));
     act(() => result.current.onDeleteVocabularies('1'));
     expect(result.current.vocabularies.length).toEqual(MOCK_VOCABULARIES.length - 1);
   });
@@ -55,7 +55,7 @@ describe('Test useVocabulariesStores', () => {
         id: '10',
       },
     ];
-    act(() => result.current.onSetQuizzes(vocabularies));
+    act(() => result.current.setQuizzes(vocabularies));
     expect(result.current.quizzes[0]).toEqual(MOCK_VOCABULARY);
     act(() => result.current.onRandomQuizzes(vocabularies));
     expect(result.current.quizzes.length).toEqual(2);

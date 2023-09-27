@@ -53,7 +53,7 @@ describe('Test Testing Page', () => {
     );
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: MOCK_VOCABULARIES,
-      onSetQuizzes: jest.fn(),
+      setQuizzes: jest.fn(),
     }));
 
     const { getByText } = renderWithThemeProvider(<Testing />);
@@ -72,7 +72,7 @@ describe('Test Testing Page', () => {
     );
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      onSetQuizzes: jest.fn(),
+      setQuizzes: jest.fn(),
     }));
 
     const { getByRole, getByPlaceholderText } = renderWithThemeProvider(<Testing />);
@@ -102,7 +102,7 @@ describe('Test Testing Page', () => {
     );
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      onSetQuizzes: jest.fn(),
+      setQuizzes: jest.fn(),
     }));
 
     const { getByRole } = renderWithThemeProvider(<Testing />);

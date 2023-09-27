@@ -1,4 +1,3 @@
-import { useVocabularies } from '@hooks';
 import { useEffect, useMemo } from 'react';
 import { Box, Flex, MantineTheme } from '@mantine/core';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -16,8 +15,9 @@ import { Button, Label, TableResult, Typography } from '@components';
 const Result = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { quizzes } = useVocabulariesStores();
-  const { data: vocabularies } = useVocabularies(id || '', true);
+  // Stores
+  const { quizzes, vocabularies } = useVocabulariesStores();
+
   const result = useMemo(
     () =>
       vocabularies &&
@@ -47,7 +47,7 @@ const Result = () => {
   );
 
   useEffect(() => {
-    if (!(quizzes.length > 0)) {
+    if (!quizzes.length) {
       navigate(`${ROUTES.VOCABULARY}/${id}`);
     }
   }, [id, navigate, quizzes]);

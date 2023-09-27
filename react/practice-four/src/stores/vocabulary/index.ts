@@ -6,8 +6,8 @@ import { Vocabulary, VocabularyResult } from '@interfaces';
 interface StoresType {
   vocabularies: Vocabulary[];
   quizzes: VocabularyResult[];
-  onSetVocabularies: (data: Vocabulary[]) => void;
-  onSetQuizzes: (data: Vocabulary[]) => void;
+  setVocabularies: (data: Vocabulary[]) => void;
+  setQuizzes: (data: Vocabulary[]) => void;
   onAddVocabularies: (data: Vocabulary) => void;
   onDeleteVocabularies: (id: string) => void;
   onRandomQuizzes: (data: Vocabulary[]) => void;
@@ -16,8 +16,8 @@ interface StoresType {
 export const useVocabulariesStores = create<StoresType>((set, get) => ({
   vocabularies: [],
   quizzes: [],
-  onSetVocabularies: (data: Vocabulary[]) => set(() => ({ vocabularies: data })),
-  onSetQuizzes: (data: Vocabulary[]) => set(() => ({ quizzes: data })),
+  setVocabularies: (data: Vocabulary[]) => set(() => ({ vocabularies: data })),
+  setQuizzes: (data: Vocabulary[]) => set(() => ({ quizzes: data })),
   onAddVocabularies: (data: Vocabulary) =>
     set(() => ({ vocabularies: [...get().vocabularies, data] })),
   onDeleteVocabularies: (id: string) =>

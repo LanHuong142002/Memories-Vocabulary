@@ -9,6 +9,8 @@ import { Topic, Vocabulary } from '@interfaces';
 
 // Services
 import { getData } from '@services';
+
+// Stores
 import { useNotificationStores, useTopicStores, useVocabulariesStores } from '@stores';
 
 /**
@@ -21,12 +23,8 @@ export const useTopics = () => {
   return useQuery<Topic[], AxiosError>({
     queryKey: [QUERY_KEYS.TOPICS],
     queryFn: () => getData(URL.TOPIC),
-    onSuccess: (data) => {
-      setTopics(data);
-    },
-    onError: (error) => {
-      setMessageError(error.message);
-    },
+    onSuccess: (data) => setTopics(data),
+    onError: (error) => setMessageError(error.message),
   });
 };
 
@@ -38,19 +36,15 @@ export const useTopics = () => {
  * @param {string} param is param endpoint
  */
 export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) => {
-  const { onSetVocabularies } = useVocabulariesStores();
   const { setMessageError } = useNotificationStores();
+  const { setVocabularies } = useVocabulariesStores();
 
   return useQuery<Vocabulary[], AxiosError>({
-    queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param],
+    queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param, param],
     queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
+    onSuccess: (data) => setVocabularies(data),
+    onError: (error) => setMessageError(error.message),
     enabled,
-    onSuccess: (data) => {
-      onSetVocabularies(data);
-    },
-    onError: (error) => {
-      setMessageError(error.message);
-    },
   });
 };
 
