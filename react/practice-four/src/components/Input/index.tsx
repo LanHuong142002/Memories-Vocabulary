@@ -76,11 +76,7 @@ const Input = memo(
         data-testid={dataTestId}
         autoComplete={autoComplete}
         error={error}
-        styles={(theme: MantineTheme) => {
-          console.log(getInputStyles(theme));
-
-          return getInputStyles(theme);
-        }}
+        styles={(theme: MantineTheme) => getInputStyles(theme)}
       />
     );
   },
