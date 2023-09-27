@@ -97,19 +97,15 @@ const Vocabulary = () => {
 
   /**
    * @description function delete a vocabulary
-   *
-   * @param {string} vocabularyId is id of vocabulary which is selected
    */
   const handleDeleteVocabulary = useCallback(() => {
-    if (id) {
-      mutateDelete(vocabularyId, {
-        onError: (error) => {
-          setMessageError(error.message);
-        },
-      });
-      close();
-    }
-  }, [close, id, mutateDelete, setMessageError, vocabularyId]);
+    mutateDelete(vocabularyId, {
+      onError: (error) => {
+        setMessageError(error.message);
+      },
+    });
+    close();
+  }, [close, mutateDelete, setMessageError, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id

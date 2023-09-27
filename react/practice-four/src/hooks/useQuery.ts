@@ -16,6 +16,7 @@ import { useTopicStores, useVocabulariesStores } from '@stores';
  */
 export const useTopics = () => {
   const { setTopics } = useTopicStores();
+
   return useQuery<Topic[], AxiosError>({
     queryKey: [QUERY_KEYS.TOPICS],
     queryFn: () => getData(URL.TOPIC),
