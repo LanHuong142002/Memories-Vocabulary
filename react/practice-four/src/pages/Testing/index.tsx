@@ -33,6 +33,7 @@ interface FormInput {
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [step, setStep] = useState<number>(0);
   const {
     control,
     handleSubmit,
@@ -44,9 +45,12 @@ const Testing = () => {
     },
   });
 
+  // Queries
   const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
+
+  // Stores
   const { quizzes, setQuizzes } = useVocabulariesStores();
-  const [step, setStep] = useState<number>(0);
+
   const quizValue = useMemo(
     () =>
       quizzes.length &&

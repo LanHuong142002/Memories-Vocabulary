@@ -33,6 +33,7 @@ interface FormInput {
 }
 
 const Home = () => {
+  const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
   const navigate = useNavigate();
   const {
     control,
@@ -45,9 +46,11 @@ const Home = () => {
     },
   });
 
-  const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
+  // Queries
   const { data: topics, isLoading } = useTopics();
   const { mutate, isLoading: isAdding } = useMutationPostTopic();
+
+  // Stores
   const { topics: topicsStore } = useTopicStores();
   const { setMessageError } = useNotificationStores();
 
@@ -61,10 +64,10 @@ const Home = () => {
   /**
    * @description function add new topic
    */
-  const handleAddNewTopic = (value: string) => {
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
     mutate(
       {
-        name: value.trim(),
+        name: data.value.trim(),
         vocabularies: [],
       },
       {
@@ -74,10 +77,6 @@ const Home = () => {
       },
     );
     handleOpenOverlay();
-  };
-
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    handleAddNewTopic(data.value);
     reset();
   };
 
