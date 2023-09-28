@@ -21,6 +21,9 @@ export const defaultTheme: MantineThemeOverride = {
       md: '1',
     },
   },
+  shadows: {
+    xs: '0 2px 8px rgba(56, 67, 84, 0.05)',
+  },
   components: {
     Text,
     TextInput,

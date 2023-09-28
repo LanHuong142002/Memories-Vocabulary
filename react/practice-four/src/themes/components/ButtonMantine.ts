@@ -28,7 +28,7 @@ const Button = {
   variants: {
     primary: (theme: MantineTheme) => ({
       root: {
-        height: 'fit-content',
+        height: '100%',
         padding: '10px 20px',
         span: {
           color: getColorScheme(theme.colorScheme, theme.colors.dark[3], theme.colors.white[4]),
