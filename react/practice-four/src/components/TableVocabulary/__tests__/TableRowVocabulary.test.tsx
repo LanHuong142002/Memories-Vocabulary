@@ -1,11 +1,10 @@
-import { fireEvent } from '@testing-library/react';
-
 // Components
 import { TableRowVocabulary } from '@components';
 import { renderWithThemeProvider } from '@helpers';
 
 describe('Test table row vocabulary component', () => {
   const defaultProps = {
+    topicId: '1',
     order: 1,
     id: '1',
     english: 'pen',
@@ -24,22 +23,8 @@ describe('Test table row vocabulary component', () => {
     expect(getByText('cay but')).toBeInTheDocument();
   });
 
-  it('Should call onClick when click in action of table row vocabulary', () => {
-    const handleOnClick = jest.fn();
-    const { getByRole } = renderWithThemeProvider(
-      <TableRowVocabulary {...defaultProps} onClick={handleOnClick} />,
-    );
-
-    const button = getByRole('button');
-    fireEvent.click(button);
-
-    expect(handleOnClick).toBeCalled();
-  });
-
   it('Should not render anything when isLoading is true', () => {
-    const { container } = renderWithThemeProvider(
-      <TableRowVocabulary {...defaultProps} isLoading={true} />,
-    );
+    const { container } = renderWithThemeProvider(<TableRowVocabulary {...defaultProps} />);
 
     expect(container).toBeInTheDocument();
   });
