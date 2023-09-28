@@ -23,7 +23,7 @@ export interface TableVocabularyProps {
   deletingById: {
     [id: string]: boolean;
   };
-  vocabularies: Vocabulary[][];
+  vocabularies?: Vocabulary[][];
   onClick: (id: string) => void;
 }
 
@@ -33,7 +33,7 @@ const TableVocabulary = memo(
     isAdding,
     isLoadingMore,
     deletingById,
-    vocabularies,
+    vocabularies = [],
     onClick,
   }: TableVocabularyProps) => (
     <Box
