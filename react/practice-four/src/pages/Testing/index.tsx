@@ -162,7 +162,7 @@ const Testing = () => {
             render={({ field: { onChange, value } }) => (
               <Input
                 value={value}
-                error={errors.value?.message || undefined}
+                error={errors.value?.message}
                 variant={INPUT_VARIANT.TERTIARY}
                 label='Vietnamese'
                 placeholder='Type your answer here'
