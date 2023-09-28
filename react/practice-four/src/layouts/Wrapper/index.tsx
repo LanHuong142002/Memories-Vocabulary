@@ -81,8 +81,11 @@ const Wrapper = ({
               [`@media (min-width: ${theme.breakpoints.xs})`]: {
                 width: '460px',
               },
+              [`@media (min-width: ${theme.breakpoints.sm})`]: {
+                width: '510px',
+              },
               [`@media (min-width: ${theme.breakpoints.lg})`]: {
-                width: '850px',
+                width: '690px',
               },
             })}
           >

@@ -14,12 +14,7 @@ describe('Test Modal component', () => {
   it('Should render Modal component', () => {
     const { getByText, container } = render(
       <ThemeProvider>
-        <Modal
-          {...defaultProps}
-          title='lorem'
-          description='description'
-          onCloseModal={handleCloseModal}
-        >
+        <Modal {...defaultProps} title='lorem' description='description' onClose={handleCloseModal}>
           <Button onClick={handleOnClick}>Click</Button>
         </Modal>
         ,
@@ -34,12 +29,7 @@ describe('Test Modal component', () => {
   it('Should call onclick when click buttons', () => {
     const { getByText } = render(
       <ThemeProvider>
-        <Modal
-          {...defaultProps}
-          title='lorem'
-          description='description'
-          onCloseModal={handleCloseModal}
-        >
+        <Modal {...defaultProps} title='lorem' description='description' onClose={handleCloseModal}>
           <Button onClick={handleOnClick}>Click</Button>
         </Modal>
         ,

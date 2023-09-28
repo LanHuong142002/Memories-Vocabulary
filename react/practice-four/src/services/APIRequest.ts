@@ -32,7 +32,13 @@ export const getData = async <T>(
  *
  * @returns {T} data
  */
-export const postData = async <T>(item: T, endpoint: string): Promise<T> => {
+export const postData = async <T>({
+  item,
+  endpoint,
+}: {
+  item: T;
+  endpoint: string;
+}): Promise<T> => {
   const response = await axios.post<T>(`${linkURL.BASE}${endpoint}`, item);
 
   return response.data;
@@ -47,7 +53,15 @@ export const postData = async <T>(item: T, endpoint: string): Promise<T> => {
  *
  * @returns {T} data
  */
-export const putData = async <T>(item: T, endpoint: string, id: string): Promise<T> => {
+export const putData = async <T>({
+  item,
+  endpoint,
+  id,
+}: {
+  item: T;
+  endpoint: string;
+  id: string;
+}): Promise<T> => {
   const response = await axios.put<T>(`${linkURL.BASE}${endpoint}/${id}`, item);
 
   return response.data;
@@ -61,7 +75,13 @@ export const putData = async <T>(item: T, endpoint: string, id: string): Promise
  *
  * @returns {T} data
  */
-export const deleteData = async <T>(endpoint: string, id: string): Promise<T> => {
+export const deleteData = async <T>({
+  endpoint,
+  id,
+}: {
+  endpoint: string;
+  id: string;
+}): Promise<T> => {
   const response = await axios.delete<T>(`${linkURL.BASE}${endpoint}/${id}`);
 
   return response.data;

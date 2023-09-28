@@ -10,7 +10,7 @@ interface LabelProps extends BadgeProps {
 }
 
 const Label = memo(({ name, color, ...props }: LabelProps) => (
-  <Badge variant={color} {...props}>
+  <Badge component='label' variant={color} {...props}>
     {name}
   </Badge>
 ));

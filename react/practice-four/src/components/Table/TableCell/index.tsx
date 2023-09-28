@@ -26,7 +26,7 @@ const TableCell = memo(({ color, children }: TableCellProps): ReactElement => {
       className='cell'
       data-testid='table-cell'
       sx={(theme: MantineTheme) => ({
-        minWidth: '70px',
+        minWidth: '45px',
         boxSizing: 'border-box',
         padding: '8px 2px',
         lineBreak: 'anywhere',
