@@ -1,11 +1,12 @@
 export * from './ToggleTheme';
+export * from './TableVocabulary/TableRowVocabulary';
+export { default as TableVocabularyBody } from './TableVocabulary/TableVocabularyBody';
 export { default as GlobalFonts } from './GlobalFonts';
 export { default as TableCell } from './Table/TableCell';
 export { default as TableRow } from './Table/TableRow';
 export { default as TableResult } from './TableResult';
 export { default as TableRowResult } from './TableResult/TableRowResult';
 export { default as TableVocabulary } from './TableVocabulary';
-export { default as TableRowVocabulary } from './TableVocabulary/TableRowVocabulary';
 export { default as Input } from './Input';
 export { default as Topic } from './Topic';
 export { default as Label } from './Label';

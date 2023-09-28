@@ -1,18 +1,15 @@
-import { Link, useLocation } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
-import { ReactNode, useEffect, useMemo } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 // Contexts
 import { useNotificationStores } from '@stores';
-
-// Constants
-import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
 
 // Helpers
 import { getColorScheme } from '@helpers';
 
 // Components
-import { Button, Notification, ToggleTheme } from '@components';
+import { WrapperHeader } from '@layouts';
+import { Notification } from '@components';
 
 const Wrapper = ({
   className,
@@ -23,7 +20,6 @@ const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
-  const location = useLocation();
   const { notification, setNotification, messageError } = useNotificationStores();
 
   useEffect(() => {
@@ -38,42 +34,8 @@ const Wrapper = ({
   }, [messageError, setNotification]);
 
   return (
-    <Box
-      className={`wrapper-${className}-page`}
-      sx={{
-        height: '100%',
-      }}
-    >
-      {useMemo(
-        () => (
-          <Flex
-            className='wrapper-header'
-            align='center'
-            justify='end'
-            gap='10px'
-            sx={{
-              width: '100%',
-              height: '70px',
-              padding: '15px 30px',
-              boxSizing: 'border-box',
-              'button, a': {
-                height: '100%',
-              },
-            }}
-          >
-            <ToggleTheme />
-            {location.pathname !== ROUTES.HOME && (
-              <Link to={ROUTES.HOME}>
-                <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>
-                  Back to Home
-                </Button>
-              </Link>
-            )}
-          </Flex>
-        ),
-        [location.pathname],
-      )}
-
+    <Box className={`wrapper-${className}-page`}>
+      <WrapperHeader />
       <Flex
         direction='column'
         justify='center'
@@ -82,7 +44,6 @@ const Wrapper = ({
         sx={{
           /* 70px is height of wrapper header */
           minHeight: 'calc(100vh - 70px)',
-          boxSizing: 'border-box',
           padding: '60px 20px',
         }}
       >
@@ -92,10 +53,9 @@ const Wrapper = ({
           className='wrapper-box'
           sx={(theme: MantineTheme) => ({
             width: '100%',
-            boxSizing: 'border-box',
             borderRadius: '4px',
             padding: '50px 10px',
-            boxShadow: `0 2px 8px ${theme.colors.opacity[5]}`,
+            boxShadow: theme.shadows.xs,
             backgroundColor: getColorScheme(
               theme.colorScheme,
               theme.colors.dark[5],
