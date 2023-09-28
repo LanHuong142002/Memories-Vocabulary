@@ -43,7 +43,7 @@ describe('Test useTopics', () => {
 describe('Test useVocabularies', () => {
   it('Should return data and isSuccess is true when call useVocabularies success', async () => {
     jest.spyOn(services, 'getData').mockResolvedValue(MOCK_VOCABULARIES);
-    const { result } = renderHook(() => useVocabularies('1'), { wrapper });
+    const { result } = renderHook(() => useVocabularies('1', true), { wrapper });
 
     await waitFor(() => {
       expect(result.current.data).toEqual(MOCK_VOCABULARIES);
@@ -53,7 +53,7 @@ describe('Test useVocabularies', () => {
 
   it('Should return error and isSuccess is false when call useVocabularies failed', async () => {
     jest.spyOn(services, 'getData').mockRejectedValue(new Error('Error'));
-    const { result } = renderHook(() => useVocabularies('1'), { wrapper });
+    const { result } = renderHook(() => useVocabularies('1', true), { wrapper });
 
     await waitFor(() => {
       expect(result.current.data).toEqual(undefined);
