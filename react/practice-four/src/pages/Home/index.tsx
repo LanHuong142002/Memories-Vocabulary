@@ -151,7 +151,7 @@ const Home = () => {
               placeholder='Topic Name'
               onChange={handleOnChange}
               errors={errors}
-              ariaLabel='enter topic'
+              aria-label='enter topic'
             />
             <Button type={BUTTON_TYPE.SUBMIT} size={BUTTON_SIZE.M}>
               Done

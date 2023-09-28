@@ -1,8 +1,6 @@
-import { Suspense, useContext } from 'react';
+import { Suspense } from 'react';
+import { Container } from '@mantine/core';
 import { Route, Routes } from 'react-router-dom';
-
-// Contexts
-import { ThemeContext } from '@contexts';
 
 // Routes
 import { Routers } from '@routes';
@@ -13,18 +11,14 @@ import { SPINNER_VARIANT } from '@constants';
 // Components
 import { Spinner } from '@components';
 
-export const App = () => {
-  const { theme } = useContext(ThemeContext);
-
-  return (
-    <main className={`container ${theme}`}>
-      <Suspense fallback={<Spinner variant={SPINNER_VARIANT.PRIMARY} />}>
-        <Routes>
-          {Routers.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-        </Routes>
-      </Suspense>
-    </main>
-  );
-};
+export const App = () => (
+  <Container sx={{ maxWidth: '100%' }}>
+    <Suspense fallback={<Spinner variant={SPINNER_VARIANT.PRIMARY} />}>
+      <Routes>
+        {Routers.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
+      </Routes>
+    </Suspense>
+  </Container>
+);

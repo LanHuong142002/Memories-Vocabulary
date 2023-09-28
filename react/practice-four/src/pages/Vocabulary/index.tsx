@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDisclosure } from '@mantine/hooks';
 import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
 
 // Contexts
@@ -28,9 +29,12 @@ import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
 import { Wrapper } from '@layouts';
 
 // Styles
-import './index.css';
+// import './index.css';
+import { Box, Flex, MantineTheme } from '@mantine/core';
 
 const Vocabulary = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -54,20 +58,12 @@ const Vocabulary = () => {
   const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
   const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const [isConfirmModal, setIsConfirmModal] = useState<boolean>(false);
   const [vocabularyId, setVocabularyId] = useState<string>('');
   const [isDisabledButtonLoadMore, setIsDisabledButtonLoadMore] = useState<boolean>(false);
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies.length >= 5) && pages === 1,
     [vocabularies.length, pages],
   );
-
-  /**
-   * @description function show hide modal confirm delete
-   */
-  const handleShowModalConfirm = useCallback(() => {
-    setIsConfirmModal((prev) => !prev);
-  }, []);
 
   /**
    * @description function onchange to get value from input english
@@ -139,19 +135,19 @@ const Vocabulary = () => {
   const handleDeleteVocabulary = useCallback(() => {
     if (id) {
       onDeleteVocabulary(id, vocabularyId);
-      setIsConfirmModal(false);
+      close();
     }
-  }, [id, onDeleteVocabulary, vocabularyId]);
+  }, [close, id, onDeleteVocabulary, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
    */
   const handleOpenConfirmModalInRow = useCallback(
     (id: string) => {
-      handleShowModalConfirm();
+      open();
       setVocabularyId(id);
     },
-    [handleShowModalConfirm],
+    [open],
   );
 
   /**
@@ -212,7 +208,31 @@ const Vocabulary = () => {
         [],
       )}
     >
-      <form onSubmit={handleAddNewVocabulary} className='form-add-new-vocabulary'>
+      <Box
+        component='form'
+        onSubmit={handleAddNewVocabulary}
+        className='form-add-new-vocabulary'
+        sx={(theme: MantineTheme) => ({
+          height: 'max-content',
+          margin: 'auto',
+          padding: '20px 0',
+          display: 'flex',
+          gap: '30px',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          button: {
+            width: '100%',
+          },
+          [`@media (min-width: ${theme.breakpoints.xs})`]: {
+            flexDirection: 'row',
+            button: {
+              height: '100%',
+              width: 'fit-content',
+            },
+          },
+        })}
+      >
         <Input
           title='English (Native)'
           variant={INPUT_VARIANT.SECONDARY}
@@ -221,7 +241,7 @@ const Vocabulary = () => {
           errors={errorsENG}
           name='english'
           dataTestId='input-english'
-          ariaLabel='enter english'
+          aria-label='enter english'
         />
         <Input
           title='In Vietnamese'
@@ -231,15 +251,12 @@ const Vocabulary = () => {
           errors={errorsVIE}
           name='vietnamese'
           dataTestId='input-vietnamese'
-          ariaLabel='enter vietnamese'
+          aria-label='enter vietnamese'
         />
-        <Button
-          type={BUTTON_TYPE.SUBMIT}
-          label='Add'
-          isLoading={isButtonLoading}
-          isDisabled={isButtonLoading}
-        />
-      </form>
+        <Button type={BUTTON_TYPE.SUBMIT} loading={isButtonLoading} disabled={isButtonLoading}>
+          Add
+        </Button>
+      </Box>
       <TableVocabulary
         isLoading={isLoadingVocabularies}
         isLoadingMore={isLoadingMore}
@@ -248,41 +265,59 @@ const Vocabulary = () => {
         vocabularies={vocabularies}
         onClick={handleOpenConfirmModalInRow}
       />
-      <div className='actions-wrapper'>
+      <Flex
+        className='actions-wrapper'
+        justify='center'
+        p='10px 0'
+        gap='30px'
+        align='center'
+        direction='column'
+        sx={(theme: MantineTheme) => ({
+          textAlign: 'center',
+          button: {
+            width: '100%',
+            [`@media (min-width: ${theme.breakpoints.md})`]: {
+              width: 'fit-content',
+            },
+          },
+        })}
+      >
         {vocabularies.length >= 20 && !isDisabledButtonLoadMore && (
-          <Button className='button-load-more' label='Load More' onClick={handleLoadMore} />
-        )}
-        <Button
-          label='Start Test'
-          size={BUTTON_SIZE.M}
-          isDisabled={isDisabledButtonStartTest}
-          onClick={handleStartTest}
-        />
-      </div>
-      {isConfirmModal && (
-        <div className='overlay-modal'>
-          <Modal
-            description='Are you sure to delete this vocabulary?'
-            title='Confirm Delete'
-            onCloseModal={handleShowModalConfirm}
+          <Button
+            variant={BUTTON_VARIANT.TERTIARY}
+            className='button-load-more'
+            onClick={handleLoadMore}
           >
-            <Button
-              variant={BUTTON_VARIANT.SECONDARY}
-              size={BUTTON_SIZE.XS}
-              onClick={handleShowModalConfirm}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant={BUTTON_VARIANT.PRIMARY}
-              size={BUTTON_SIZE.XS}
-              onClick={handleDeleteVocabulary}
-            >
-              Delete
-            </Button>
-          </Modal>
-        </div>
-      )}
+            Load More
+          </Button>
+        )}
+        <Button size={BUTTON_SIZE.M} disabled={isDisabledButtonStartTest} onClick={handleStartTest}>
+          Start Test
+        </Button>
+      </Flex>
+
+      <Modal
+        onClose={close}
+        opened={opened}
+        description='Are you sure to delete this vocabulary?'
+        title='Confirm Delete'
+      >
+        <Button
+          variant={BUTTON_VARIANT.SECONDARY}
+          size={BUTTON_SIZE.XS}
+          onClick={close}
+          sx={{ height: '35px' }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant={BUTTON_VARIANT.PRIMARY}
+          size={BUTTON_SIZE.XS}
+          onClick={handleDeleteVocabulary}
+        >
+          Delete
+        </Button>
+      </Modal>
     </Wrapper>
   );
 };
