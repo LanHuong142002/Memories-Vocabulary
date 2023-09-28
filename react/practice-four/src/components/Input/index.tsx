@@ -30,7 +30,7 @@ const Input = memo(
      * @returns 3 status normal | failed
      */
     const getInputStyles = (theme: MantineTheme) => {
-      if (variant === INPUT_VARIANT.TERTIARY && error !== '') {
+      if (variant === INPUT_VARIANT.TERTIARY && !!error) {
         return {
           root: {
             backgroundColor: theme.colors.red[0],
