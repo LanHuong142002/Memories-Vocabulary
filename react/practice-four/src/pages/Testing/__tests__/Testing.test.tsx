@@ -1,14 +1,13 @@
-import { AxiosError } from 'axios';
 import { act, fireEvent, waitFor } from '@testing-library/react';
-import { UseQueryResult } from '@tanstack/react-query';
 
 // Mocks
 import { MOCK_VOCABULARIES } from '@mocks';
-import * as hooks from '@hooks';
-import * as stores from '@stores';
 
-// Interfaces
-import { Vocabulary } from '@interfaces';
+// Hooks
+import * as hooks from '@hooks';
+
+// Stores
+import * as stores from '@stores';
 
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
@@ -27,14 +26,11 @@ jest.mock('@stores', () => ({
 
 describe('Test Testing Page', () => {
   it('Should render Testing page and description with total quizzes', () => {
-    jest.spyOn(hooks, 'useVocabularies').mockImplementation(
-      () =>
-        ({
-          data: MOCK_VOCABULARIES,
-          isSuccess: true,
-          isLoading: false,
-        } as UseQueryResult<Vocabulary[], AxiosError>),
-    );
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      data: MOCK_VOCABULARIES,
+      isSuccess: true,
+      isLoading: false,
+    }));
 
     const { container, getByText } = renderWithThemeProvider(<Testing />);
 
@@ -43,14 +39,11 @@ describe('Test Testing Page', () => {
   });
 
   it('Should render text Submit Answer in button when step equal with totalStep', () => {
-    jest.spyOn(hooks, 'useVocabularies').mockImplementation(
-      () =>
-        ({
-          data: MOCK_VOCABULARIES,
-          isSuccess: true,
-          isLoading: false,
-        } as UseQueryResult<Vocabulary[], AxiosError>),
-    );
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      data: MOCK_VOCABULARIES,
+      isSuccess: true,
+      isLoading: false,
+    }));
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: MOCK_VOCABULARIES,
       setQuizzes: jest.fn(),
@@ -62,14 +55,11 @@ describe('Test Testing Page', () => {
   });
 
   it('Input should have empty value after submitted value', async () => {
-    jest.spyOn(hooks, 'useVocabularies').mockImplementation(
-      () =>
-        ({
-          data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-          isSuccess: true,
-          isLoading: false,
-        } as UseQueryResult<Vocabulary[], AxiosError>),
-    );
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
+      isSuccess: true,
+      isLoading: false,
+    }));
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
       setQuizzes: jest.fn(),
@@ -92,14 +82,11 @@ describe('Test Testing Page', () => {
   });
 
   it('Input should change value after change value twice', async () => {
-    jest.spyOn(hooks, 'useVocabularies').mockImplementation(
-      () =>
-        ({
-          data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-          isSuccess: true,
-          isLoading: false,
-        } as UseQueryResult<Vocabulary[], AxiosError>),
-    );
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
+      isSuccess: true,
+      isLoading: false,
+    }));
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
       setQuizzes: jest.fn(),

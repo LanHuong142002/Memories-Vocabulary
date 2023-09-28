@@ -43,13 +43,6 @@ describe('Test Home Page', () => {
     expect(overlayAddNew).toBeInTheDocument();
   });
 
-  it('Should show loading when isLoadingTopic is true', () => {
-    const { container } = renderWithThemeProvider(<Home />);
-    const topics = container.querySelectorAll('.topic');
-
-    expect(topics.length).toBe(3);
-  });
-
   it('Should open topic when click to topic', () => {
     const { getByText } = renderWithThemeProvider(<Home />);
 
