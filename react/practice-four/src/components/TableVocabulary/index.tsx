@@ -1,43 +1,32 @@
 import { memo, useMemo } from 'react';
-import { Box, Loader, MantineTheme } from '@mantine/core';
+import { Box, MantineTheme } from '@mantine/core';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
-// Constants
-import { TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
-
-// Components
-import { TableCell, TableRow, TableRowVocabulary, Typography } from '@components';
-
 // Helpers
 import { getColorScheme } from '@helpers';
 
+// Components
+import {
+  TableCell,
+  TableRow,
+  TableRowEmpty,
+  TableRowLoading,
+  TableVocabularyBody,
+} from '@components';
+
 export interface TableVocabularyProps {
+  topicId: string;
   isLoading: boolean;
   isAdding: boolean;
   isLoadingMore: boolean;
-  deletingById: {
-    [id: string]: boolean;
-  };
   vocabularies: Vocabulary[][];
-  onClick: (id: string) => void;
 }
 
 const TableVocabulary = memo(
-  ({
-    isLoading,
-    isAdding,
-    isLoadingMore,
-    deletingById,
-    vocabularies,
-    onClick,
-  }: TableVocabularyProps) => {
-    const orderItemNestedArray = (index: number, indexNested: number) => {
-      return index === 0 ? indexNested + 1 : (index + 1) * 10 + indexNested + 1;
-    };
-
-    return (
+  ({ topicId, isLoading, isAdding, isLoadingMore, vocabularies }: TableVocabularyProps) => (
+    <>
       <Box
         className='table-vocabulary'
         sx={(theme: MantineTheme) => ({
@@ -89,56 +78,29 @@ const TableVocabulary = memo(
             },
           })}
         >
+          {/* If fetching api to get vocabularies, show loading */}
           {isLoading ? (
-            <TableRow>
-              <TableCell>
-                <Loader color='dark' size='xs' />
-              </TableCell>
-            </TableRow>
+            <TableRowLoading />
           ) : (
+            // After fetching, render the vocabulary list
             <>
               {vocabularies.length ? (
-                vocabularies.map((item, index) => (
-                  <div key={`table-vocabulary-row${index}`}>
-                    {item.map(({ id, english, vietnamese }, indexNested) => (
-                      <TableRowVocabulary
-                        isLoading={deletingById[id]}
-                        key={`table-vocabulary-${id}`}
-                        id={id}
-                        order={orderItemNestedArray(index, indexNested)}
-                        english={english}
-                        vietnamese={vietnamese}
-                        onClick={onClick}
-                      />
-                    ))}
-                    {(isAdding || isLoadingMore) && (
-                      <TableRow>
-                        <TableCell>
-                          <Loader color='dark' size='xs' />
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </div>
-                ))
+                <TableVocabularyBody
+                  topicId={topicId}
+                  isAdding={isAdding}
+                  isLoadingMore={isLoadingMore}
+                  vocabularies={vocabularies}
+                />
               ) : (
-                <TableRow>
-                  <TableCell>
-                    <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-                      Fill All Filed At Above And Press{' '}
-                      <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-                        ENTER
-                      </Typography>{' '}
-                      key or button Add
-                    </Typography>
-                  </TableCell>
-                </TableRow>
+                // This is usually appropriate if there is no vocabulary in the list
+                <TableRowEmpty />
               )}
             </>
           )}
         </Box>
       </Box>
-    );
-  },
+    </>
+  ),
 );
 
 export default TableVocabulary;

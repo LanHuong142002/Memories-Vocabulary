@@ -1,4 +1,5 @@
 export { default as Home } from './Home';
+export { default as AddNew } from './Home/AddNew';
 export { default as Error } from './Error';
 export { default as Vocabulary } from './Vocabulary';
 export { default as Testing } from './Testing';

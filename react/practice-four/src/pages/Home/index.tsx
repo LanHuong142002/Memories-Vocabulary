@@ -1,84 +1,30 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Box, Flex, Loader, MantineTheme, Overlay } from '@mantine/core';
+import { Flex, Loader } from '@mantine/core';
 
 // Constants
-import {
-  BUTTON_SIZE,
-  BUTTON_TYPE,
-  BUTTON_VARIANT,
-  INPUT_VARIANT,
-  ROUTES,
-  TOPIC_VARIANT,
-  TYPOGRAPHY_SIZE,
-  TYPOGRAPHY_VARIANT,
-} from '@constants';
+import { ROUTES, TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Stores
-import { useNotificationStores, useTopicStores } from '@stores';
-
-// Helpers
-import { validation } from '@helpers';
+import { useTopicStores } from '@stores';
 
 // Hooks
 import { useMutationPostTopic, useTopics } from '@hooks';
 
 // Components
+import { AddNew } from '@pages';
 import { Wrapper } from '@layouts';
-import { Button, Input, Topic, Typography } from '@components';
-
-interface FormInput {
-  value: string;
-}
+import { Topic, Typography } from '@components';
 
 const Home = () => {
-  const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
   const navigate = useNavigate();
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormInput>({
-    defaultValues: {
-      value: '',
-    },
-  });
 
   // Queries
   const { data: topics, isLoading } = useTopics();
-  const { mutate, isLoading: isAdding } = useMutationPostTopic();
+  const { isLoading: isAdding } = useMutationPostTopic();
 
   // Stores
   const { topics: topicsStore } = useTopicStores();
-  const { setMessageError } = useNotificationStores();
-
-  /**
-   * @description function show hide overlay add new
-   */
-  const handleOpenOverlay = useCallback(() => {
-    setIsOpenOverlay((prev) => !prev);
-  }, []);
-
-  /**
-   * @description function add new topic
-   */
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    mutate(
-      {
-        name: data.value.trim(),
-        vocabularies: [],
-      },
-      {
-        onError: (error) => {
-          setMessageError(error.message);
-        },
-      },
-    );
-    handleOpenOverlay();
-    reset();
-  };
 
   /**
    * @description function handle open topic with vocabularies
@@ -139,98 +85,10 @@ const Home = () => {
                 </Flex>
               </Topic>
             )}
-            <Topic variant={TOPIC_VARIANT.SELECTED} isAddNew={true} onClick={handleOpenOverlay}>
-              Add Topic
-            </Topic>
+            <AddNew />
           </>
         )}
       </Flex>
-
-      {isOpenOverlay && (
-        <Overlay
-          styles={{
-            root: {
-              height: '100%',
-              position: 'fixed',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              zIndex: 5,
-              backdropFilter: 'blur(10px)',
-              backgroundColor: 'var(--overlay-opacity)',
-              animation: 'opacityAnimation linear 0.2s',
-            },
-          }}
-        >
-          <Button
-            variant={BUTTON_VARIANT.TERTIARY}
-            size={BUTTON_SIZE.XXL}
-            onClick={handleOpenOverlay}
-            sx={(theme: MantineTheme) => ({
-              top: '10px',
-              right: '20px',
-              position: 'absolute',
-              fontSize: theme.fontSizes.xxl,
-            })}
-          >
-            &Chi;
-          </Button>
-          <Box
-            component='form'
-            onSubmit={handleSubmit(onSubmit)}
-            className='overlay-content'
-            sx={{
-              marginTop: '100px',
-              minWidth: '300px',
-              height: 'fit-content',
-              position: 'absolute',
-              top: '10%',
-              left: '50%',
-              borderRadius: '8px',
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            <Typography size={TYPOGRAPHY_SIZE.XXL} sx={{ textAlign: 'center' }}>
-              Add New Topic
-            </Typography>
-            <Controller
-              name='value'
-              rules={{
-                validate: (v) => validation(v, true),
-              }}
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  value={value}
-                  variant={INPUT_VARIANT.PRIMARY}
-                  placeholder='Topic Name'
-                  error={errors.value?.message || ''}
-                  aria-label='enter topic'
-                  sx={(theme: MantineTheme) => ({
-                    margin: '30px 0 10px 0',
-                    input: {
-                      '::placeholder': {
-                        fontSize: theme.fontSizes.l,
-                      },
-                    },
-                  })}
-                  onChange={onChange}
-                />
-              )}
-            />
-            <Button
-              type={BUTTON_TYPE.SUBMIT}
-              size={BUTTON_SIZE.M}
-              sx={{
-                width: '100%',
-              }}
-            >
-              Done
-            </Button>
-          </Box>
-        </Overlay>
-      )}
     </Wrapper>
   );
 };

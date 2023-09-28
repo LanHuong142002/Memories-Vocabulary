@@ -1,15 +1,9 @@
-import { useDisclosure } from '@mantine/hooks';
 import { Box, Flex, MantineTheme } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 
 // Hooks
-import {
-  useInfiniteVocabularies,
-  useMutationDeleteVocabulary,
-  useMutationPostVocabulary,
-  useVocabularies,
-} from '@hooks';
+import { useInfiniteVocabularies, useMutationPostVocabulary, useVocabularies } from '@hooks';
 
 // Stores
 import { useNotificationStores } from '@stores';
@@ -32,7 +26,7 @@ import {
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
+import { Button, Input, TableVocabulary, Typography } from '@components';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormInput {
@@ -41,10 +35,8 @@ interface FormInput {
 }
 
 const Vocabulary = () => {
-  const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [vocabularyId, setVocabularyId] = useState<string>('');
 
   // Hooks
   const {
@@ -75,7 +67,6 @@ const Vocabulary = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteVocabularies(id || '');
-  const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
   const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
 
   // Stores
@@ -94,29 +85,6 @@ const Vocabulary = () => {
       navigate(`${ROUTES.TESTING}/${id}`);
     }
   }, [id, navigate]);
-
-  /**
-   * @description function delete a vocabulary
-   */
-  const handleDeleteVocabulary = useCallback(() => {
-    mutateDelete(vocabularyId, {
-      onError: (error) => {
-        setMessageError(error.message);
-      },
-    });
-    close();
-  }, [close, mutateDelete, setMessageError, vocabularyId]);
-
-  /**
-   * @description function open confirm modal and get vocabulary id
-   */
-  const handleOpenConfirmModalInRow = useCallback(
-    (id: string) => {
-      open();
-      setVocabularyId(id);
-    },
-    [open],
-  );
 
   /**
    * @description function add new vocabulary
@@ -237,12 +205,11 @@ const Vocabulary = () => {
         </Button>
       </Box>
       <TableVocabulary
+        topicId={id || ''}
         isLoading={isLoading}
         isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
-        deletingById={{ [vocabularyId]: isDeleting }}
         vocabularies={vocabularies?.pages || []}
-        onClick={handleOpenConfirmModalInRow}
       />
       <Flex
         className='actions-wrapper'
@@ -274,29 +241,6 @@ const Vocabulary = () => {
           Start Test
         </Button>
       </Flex>
-
-      <Modal
-        onClose={close}
-        opened={opened}
-        description='Are you sure to delete this vocabulary?'
-        title='Confirm Delete'
-      >
-        <Button
-          variant={BUTTON_VARIANT.SECONDARY}
-          size={BUTTON_SIZE.XS}
-          onClick={close}
-          sx={{ height: '35px' }}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant={BUTTON_VARIANT.PRIMARY}
-          size={BUTTON_SIZE.XS}
-          onClick={handleDeleteVocabulary}
-        >
-          Delete
-        </Button>
-      </Modal>
     </Wrapper>
   );
 };
