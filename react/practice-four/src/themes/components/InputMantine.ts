@@ -45,6 +45,9 @@ const TextInput = {
       },
     }),
     secondary: (theme: MantineTheme) => ({
+      wrapper: {
+        marginBottom: '0px',
+      },
       root: {
         width: '100%',
         position: POSITION.RELATIVE,
@@ -80,6 +83,8 @@ const TextInput = {
         zIndex: 99,
       },
       error: {
+        height: '0px',
+        position: POSITION.ABSOLUTE,
         color: getColorScheme(theme.colorScheme, theme.colors.red[1], theme.colors.red[4]),
       },
     }),
