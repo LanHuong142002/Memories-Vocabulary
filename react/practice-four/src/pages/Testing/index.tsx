@@ -28,7 +28,7 @@ import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: vocabularies } = useVocabularies(id || '');
+  const { data: vocabularies } = useVocabularies(id || '', true);
   // TODO: replace with Zustand store
   const { isLoadingQuizzes, quizzes, onSetQuiz } = useContext(VocabularyContext);
   const [errors, setErrors] = useState<string[] | null>(null);
