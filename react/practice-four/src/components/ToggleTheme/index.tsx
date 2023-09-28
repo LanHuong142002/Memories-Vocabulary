@@ -25,7 +25,12 @@ export const ToggleTheme = memo(() => {
         },
       })}
     >
-      <Image width='20px' height='20px' src={isLightTheme(colorScheme) ? moon : sun} />
+      <Image
+        width='20px'
+        height='20px'
+        src={isLightTheme(colorScheme) ? moon : sun}
+        alt='icon toggle'
+      />
     </ActionIcon>
   );
 });
