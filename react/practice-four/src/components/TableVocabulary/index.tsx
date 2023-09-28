@@ -17,15 +17,21 @@ import {
 } from '@components';
 
 export interface TableVocabularyProps {
-  topicId: string;
+  topicId?: string;
   isLoading: boolean;
   isAdding: boolean;
   isLoadingMore: boolean;
-  vocabularies: Vocabulary[][];
+  vocabularies?: Vocabulary[][];
 }
 
 const TableVocabulary = memo(
-  ({ topicId, isLoading, isAdding, isLoadingMore, vocabularies }: TableVocabularyProps) => (
+  ({
+    topicId = '',
+    isLoading,
+    isAdding,
+    isLoadingMore,
+    vocabularies = [],
+  }: TableVocabularyProps) => (
     <>
       <Box
         className='table-vocabulary'

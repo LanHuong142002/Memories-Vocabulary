@@ -1,22 +1,16 @@
-import { Box, Flex, MantineTheme } from '@mantine/core';
+import { Flex, MantineTheme } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useCallback, useMemo } from 'react';
 
 // Hooks
-import { useInfiniteVocabularies, useMutationPostVocabulary, useVocabularies } from '@hooks';
+import { useInfiniteVocabularies, useMutationPostVocabulary } from '@hooks';
 
 // Stores
 import { useNotificationStores } from '@stores';
 
-// Helpers
-import { validation } from '@helpers';
-
 // Constants
 import {
-  MESSAGE_ERRORS,
   BUTTON_SIZE,
-  BUTTON_TYPE,
-  INPUT_VARIANT,
   ROUTES,
   TYPOGRAPHY_SIZE,
   TYPOGRAPHY_TAG_NAME,
@@ -26,40 +20,17 @@ import {
 
 // Components
 import { Wrapper } from '@layouts';
-import { Button, Input, TableVocabulary, Typography } from '@components';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-
-interface FormInput {
-  valueENG: string;
-  valueVIE: string;
-}
+import { FormVocabulary } from '@pages';
+import { Button, TableVocabulary, Typography } from '@components';
 
 const Vocabulary = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Hooks
-  const {
-    control,
-    handleSubmit,
-    reset,
-    setError,
-    formState: { errors },
-    watch,
-  } = useForm<FormInput>({
-    defaultValues: {
-      valueENG: '',
-      valueVIE: '',
-    },
-  });
+  // Stores
+  const { setMessageError } = useNotificationStores();
 
   // Queries
-  const { isFetching: isLoadingCheckExisted, refetch } = useVocabularies(
-    id || '',
-    false,
-    1,
-    `?english=${watch('valueENG')}`,
-  );
   const {
     data: vocabularies,
     fetchNextPage,
@@ -68,9 +39,6 @@ const Vocabulary = () => {
     isFetchingNextPage,
   } = useInfiniteVocabularies(id || '');
   const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
-
-  // Stores
-  const { setMessageError } = useNotificationStores();
 
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
@@ -86,30 +54,21 @@ const Vocabulary = () => {
     }
   }, [id, navigate]);
 
-  /**
-   * @description function add new vocabulary
-   */
-  const onSubmit: SubmitHandler<FormInput> = useCallback(
-    async (data) => {
-      const res = await refetch();
-      if (res.data && res.data.length === 0) {
-        mutatePost(
-          {
-            vietnamese: data.valueVIE.trim(),
-            english: data.valueENG.trim(),
+  const handleAddVocabulary = useCallback(
+    (valueENG: string, valueVIE: string) => {
+      mutatePost(
+        {
+          vietnamese: valueVIE.trim(),
+          english: valueENG.trim(),
+        },
+        {
+          onError: (error) => {
+            setMessageError(error.message);
           },
-          {
-            onError: (error) => {
-              setMessageError(error.message);
-            },
-          },
-        );
-        reset();
-      } else {
-        setError('valueENG', { type: 'validate', message: MESSAGE_ERRORS.EXISTED });
-      }
+        },
+      );
     },
-    [mutatePost, refetch, reset, setError, setMessageError],
+    [mutatePost, setMessageError],
   );
 
   // get vocabularies with the id of topic selected
@@ -136,80 +95,13 @@ const Vocabulary = () => {
         [],
       )}
     >
-      <Box
-        component='form'
-        onSubmit={handleSubmit(onSubmit)}
-        className='form-add-new-vocabulary'
-        sx={(theme: MantineTheme) => ({
-          height: 'max-content',
-          margin: 'auto',
-          padding: '20px 0',
-          display: 'flex',
-          gap: '30px',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          button: {
-            width: '100%',
-          },
-          [`@media (min-width: ${theme.breakpoints.xs})`]: {
-            flexDirection: 'row',
-            button: {
-              height: '100%',
-              width: 'fit-content',
-            },
-          },
-        })}
-      >
-        <Controller
-          name='valueENG'
-          rules={{
-            validate: (v) => validation(v),
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <Input
-              value={value}
-              label='English (Native)'
-              variant={INPUT_VARIANT.SECONDARY}
-              error={errors.valueENG?.message}
-              aria-label='enter english'
-              dataTestId='input-english'
-              sx={{ margin: '20px 0' }}
-              onChange={onChange}
-            />
-          )}
-        />
-
-        <Controller
-          name='valueVIE'
-          rules={{
-            validate: (v) => validation(v),
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <Input
-              value={value}
-              label='In Vietnamese'
-              error={errors.valueVIE?.message}
-              variant={INPUT_VARIANT.SECONDARY}
-              dataTestId='input-vietnamese'
-              aria-label='enter vietnamese'
-              sx={{ margin: '20px 0' }}
-              onChange={onChange}
-            />
-          )}
-        />
-        <Button type={BUTTON_TYPE.SUBMIT} disabled={isLoadingCheckExisted}>
-          Add
-        </Button>
-      </Box>
+      <FormVocabulary id={id} onAddVocabulary={handleAddVocabulary} />
       <TableVocabulary
-        topicId={id || ''}
+        topicId={id}
         isLoading={isLoading}
         isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
-        vocabularies={vocabularies?.pages || []}
+        vocabularies={vocabularies?.pages}
       />
       <Flex
         className='actions-wrapper'

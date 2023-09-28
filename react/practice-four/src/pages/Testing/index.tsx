@@ -59,7 +59,7 @@ const Testing = () => {
           <Spinner />
         </Flex>
       ) : (
-        <FormTesting id={id || ''} vocabulariesAll={vocabulariesAll || []} />
+        <FormTesting id={id} vocabulariesAll={vocabulariesAll} />
       )}
     </Wrapper>
   );

@@ -25,7 +25,13 @@ interface FormInput {
   value: string;
 }
 
-const FormTesting = ({ id, vocabulariesAll }: { id: string; vocabulariesAll: Vocabulary[] }) => {
+const FormTesting = ({
+  id = '',
+  vocabulariesAll = [],
+}: {
+  id?: string;
+  vocabulariesAll?: Vocabulary[];
+}) => {
   const navigate = useNavigate();
   const [step, setStep] = useState<number>(0);
   const {
