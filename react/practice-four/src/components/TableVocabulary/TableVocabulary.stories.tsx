@@ -9,9 +9,6 @@ const meta: Meta<TableVocabularyProps> = {
   title: 'PracticeFour/TableVocabulary',
   component: TableVocabulary,
   tags: ['autodocs'],
-  argTypes: {
-    onClick: { action: 'clicked' },
-  },
 };
 
 const mockData = [
@@ -48,7 +45,6 @@ export const Default: Story = {
     isLoading: false,
     isAdding: false,
     isLoadingMore: false,
-    deletingById: { 5: false },
   },
 };
 

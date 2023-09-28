@@ -1,8 +1,6 @@
 export * from './ToggleTheme';
 export * from './TableVocabulary/TableRowVocabulary';
 export { default as TableVocabularyBody } from './TableVocabulary/TableVocabularyBody';
-export * from './TableVocabulary/TableRowVocabulary';
-export { default as TableVocabularyBody } from './TableVocabulary/TableVocabularyBody';
 export { default as GlobalFonts } from './GlobalFonts';
 export { default as TableCell } from './Table/TableCell';
 export { default as TableRow } from './Table/TableRow';

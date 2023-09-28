@@ -7,7 +7,7 @@ import { MOCK_VOCABULARIES } from '@mocks';
 
 describe('Test table vocabulary component', () => {
   const defaultValue = {
-    onClick: jest.fn(),
+    topicId: '1',
     isLoading: false,
     isAdding: false,
     isLoadingMore: false,
