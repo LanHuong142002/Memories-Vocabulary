@@ -37,7 +37,7 @@ export function TopicProvider({ children }: { children: ReactNode }) {
       type: TOPIC_ACTIONS.ADD_REQUEST,
     });
     try {
-      const response = await postData(topic, URL.TOPIC);
+      const response = await postData({ item: topic, endpoint: URL.TOPIC });
       dispatch({
         type: TOPIC_ACTIONS.ADD_SUCCESS,
         payload: {

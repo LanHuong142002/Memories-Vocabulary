@@ -1,14 +1,14 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { Loader } from '@mantine/core';
+
+// Constants
+import { BUTTON_VARIANT, TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
-// Constants
-import { BUTTON_VARIANT } from '@constants';
-
-// Components
-import { Button, TableCell, TableRow } from '@components';
+//
+import { Button, TableCell, TableRow, Typography } from '@components';
 
 interface TableRowVocabularyProps extends Vocabulary {
   isLoading: boolean;
@@ -16,20 +16,18 @@ interface TableRowVocabularyProps extends Vocabulary {
   onClick: (id: string) => void;
 }
 
-const TableRowVocabulary = memo(
+export const TableRowVocabulary = memo(
   ({ isLoading, order, id, english, vietnamese, onClick }: TableRowVocabularyProps) => {
     const handleOnClick = () => {
       onClick(id!);
     };
 
     return (
-      <TableRow>
+      <>
         {isLoading ? (
-          <TableCell>
-            <Loader color='dark' size='xs' />
-          </TableCell>
+          <TableRowLoading />
         ) : (
-          <>
+          <TableRow>
             <TableCell>{order}</TableCell>
             <TableCell>{english}</TableCell>
             <TableCell>{vietnamese}</TableCell>
@@ -43,11 +41,27 @@ const TableRowVocabulary = memo(
                 X
               </Button>
             </TableCell>
-          </>
+          </TableRow>
         )}
-      </TableRow>
+      </>
     );
   },
 );
 
-export default TableRowVocabulary;
+export const TableRowEmpty = memo(({ children }: { children: ReactNode }) => (
+  <TableRow>
+    <TableCell>
+      <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+        {children}
+      </Typography>
+    </TableCell>
+  </TableRow>
+));
+
+export const TableRowLoading = memo(() => (
+  <TableRow>
+    <TableCell>
+      <Loader color='dark' size='xs' />
+    </TableCell>
+  </TableRow>
+));

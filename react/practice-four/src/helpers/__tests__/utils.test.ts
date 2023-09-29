@@ -1,6 +1,92 @@
 // Helpers
-import { calculateEachStep, calculateStepLevel, removeDuplicateObjects } from '@helpers';
 import { MantineTheme } from '@mantine/core';
+
+// Helpers
+import {
+  calculateEachStep,
+  calculateStepLevel,
+  getColorScheme,
+  isLightTheme,
+  orderItemNestedArray,
+  removeDuplicateObjects,
+} from '@helpers';
+
+describe('Test orderItemNestedArray', () => {
+  it('should return the correct order when index is 0', () => {
+    const index = 0;
+    const indexNested = 2;
+    const result = orderItemNestedArray(index, indexNested);
+
+    expect(result).toBe(indexNested + 1);
+  });
+
+  it('should return the correct order when index is greater than 0', () => {
+    const index = 1;
+    const indexNested = 3;
+    const result = orderItemNestedArray(index, indexNested);
+    // Calculate the expected result manually based on the function's logic
+    const expected = (index + 1) * 10 + indexNested + 1;
+
+    expect(result).toBe(expected);
+  });
+
+  it('should return positive numbers order when index less than 0', () => {
+    const index = -1;
+    const indexNested = 3;
+    const result = orderItemNestedArray(index, indexNested);
+    // Calculate the expected result manually based on the function's logic
+    const expected = (index + 1) * 10 + indexNested + 1;
+
+    expect(result).toBe(expected);
+  });
+
+  it('should return negative order when index and indexNested less than 0', () => {
+    const index = -1;
+    const indexNested = -3;
+    const result = orderItemNestedArray(index, indexNested);
+    // Calculate the expected result manually based on the function's logic
+    const expected = (index + 1) * 10 + indexNested + 1;
+
+    expect(result).toBe(expected);
+  });
+});
+
+describe('Test isLightTheme', () => {
+  it('Should return true when theme in light mode', () => {
+    const inLightMode = isLightTheme('light');
+
+    expect(inLightMode).toBe(true);
+  });
+
+  it('Should return false when theme in dark mode', () => {
+    const inLightMode = isLightTheme('dark');
+
+    expect(inLightMode).toBe(false);
+  });
+
+  it('Should return true when theme in light mode with default value', () => {
+    const inLightMode = isLightTheme();
+
+    expect(inLightMode).toBe(true);
+  });
+});
+
+describe('Test getColorScheme', () => {
+  const colorInDark = 'red';
+  const colorInLight = 'blue';
+
+  it('Should return color red when color scheme is dark theme', () => {
+    const colorWhenColorSchemeDark = getColorScheme('dark', colorInDark, colorInLight);
+
+    expect(colorWhenColorSchemeDark).toBe(colorInDark);
+  });
+
+  it('Should return color blue when color scheme is light theme', () => {
+    const colorWhenColorSchemeDark = getColorScheme('light', colorInDark, colorInLight);
+
+    expect(colorWhenColorSchemeDark).toBe(colorInLight);
+  });
+});
 
 describe('Test calculateEachStep', () => {
   it('Should return next step level when surplus is greater than default surplus', () => {

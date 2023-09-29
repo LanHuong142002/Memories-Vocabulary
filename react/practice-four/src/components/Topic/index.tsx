@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { Flex, MantineTheme, Text } from '@mantine/core';
 
 // Constants
@@ -11,9 +11,9 @@ interface TopicProps {
   id?: string;
   isAddNew?: boolean;
   quantity?: number;
-  name: string;
   variant?: TOPIC_VARIANT;
-  onClick: (id?: string) => void;
+  onClick?: (id?: string) => void;
+  children?: ReactNode;
 }
 
 const Topic = memo(
@@ -21,12 +21,14 @@ const Topic = memo(
     id,
     isAddNew = false,
     quantity = 0,
-    name,
     variant = TOPIC_VARIANT.DEFAULT,
     onClick,
+    children,
   }: TopicProps) => {
     const handleOncLick = () => {
-      onClick(id);
+      if (onClick) {
+        onClick(id);
+      }
     };
 
     return (
@@ -81,7 +83,7 @@ const Topic = memo(
             textOverflow: 'ellipsis',
           }}
         >
-          {name}
+          {children}
         </Text>
         <Text sx={{ marginLeft: '5px' }}>{quantity > 0 ? `(${quantity})` : ''}</Text>
 

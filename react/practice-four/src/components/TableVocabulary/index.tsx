@@ -1,17 +1,24 @@
 import { memo, useMemo } from 'react';
-import { Box, Loader, MantineTheme } from '@mantine/core';
+import { Box, MantineTheme } from '@mantine/core';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
 
-// Constants
-import { TYPOGRAPHY_SIZE, TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
-
-// Components
-import { TableCell, TableRow, TableRowVocabulary, Typography } from '@components';
-
 // Helpers
 import { getColorScheme } from '@helpers';
+
+// Constants
+import { TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
+
+// Components
+import {
+  TableCell,
+  TableRow,
+  TableRowEmpty,
+  TableRowLoading,
+  TableVocabularyBody,
+  Typography,
+} from '@components';
 
 export interface TableVocabularyProps {
   isLoading: boolean;
@@ -20,7 +27,7 @@ export interface TableVocabularyProps {
   deletingById: {
     [id: string]: boolean;
   };
-  vocabularies: Vocabulary[];
+  vocabularies?: Vocabulary[][];
   onClick: (id: string) => void;
 }
 
@@ -30,7 +37,7 @@ const TableVocabulary = memo(
     isAdding,
     isLoadingMore,
     deletingById,
-    vocabularies,
+    vocabularies = [],
     onClick,
   }: TableVocabularyProps) => (
     <Box
@@ -75,7 +82,7 @@ const TableVocabulary = memo(
       <Box
         className='table-body'
         sx={(theme: MantineTheme) => ({
-          '.row:nth-of-type:first-of-type(even):hover, .row:nth-of-type:first-of-type(odd)': {
+          '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
             backgroundColor: getColorScheme(
               theme.colorScheme,
               theme.colors.dark[2],
@@ -84,47 +91,35 @@ const TableVocabulary = memo(
           },
         })}
       >
+        {/* If fetching api to get vocabularies, show loading */}
         {isLoading ? (
-          <TableRow>
-            <TableCell>
-              <Loader color='dark' size='xs' />
-            </TableCell>
-          </TableRow>
+          <TableRowLoading />
         ) : (
+          /* After fetching, render the vocabulary list
+           * Vocabularies[0] here because the data is Vocabulary[][] so need to
+           * check the first array to know whether vocabulary has any item or not
+           */
           <>
-            {vocabularies.length ? (
-              <>
-                {vocabularies.map(({ id, english, vietnamese }, index) => (
-                  <TableRowVocabulary
-                    isLoading={deletingById[id]}
-                    key={`table-vocabulary-${id}`}
-                    id={id}
-                    order={index + 1}
-                    english={english}
-                    vietnamese={vietnamese}
-                    onClick={onClick}
-                  />
-                ))}
-                {(isAdding || isLoadingMore) && (
-                  <TableRow>
-                    <TableCell>
-                      <Loader color='dark' size='xs' />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </>
+            {vocabularies[0].length ? (
+              <TableVocabularyBody
+                deletingById={deletingById}
+                isAdding={isAdding}
+                isLoadingMore={isLoadingMore}
+                onClick={onClick}
+                vocabularies={vocabularies}
+              />
             ) : (
-              <TableRow>
-                <TableCell>
-                  <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-                    Fill All Filed At Above And Press{' '}
-                    <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-                      ENTER
-                    </Typography>{' '}
-                    key or button Add
-                  </Typography>
-                </TableCell>
-              </TableRow>
+              // This is usually appropriate if there is no vocabulary in the list
+              <TableRowEmpty>
+                Fill All Filed At Above And Press{' '}
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.HIGHLIGHT}
+                  tagName={TYPOGRAPHY_TAG_NAME.SPAN}
+                >
+                  enter
+                </Typography>{' '}
+                key or button Add
+              </TableRowEmpty>
             )}
           </>
         )}
