@@ -9,6 +9,9 @@ import { renderWithThemeProvider } from '@helpers';
 // Mocks
 import { MOCK_VOCABULARIES, MOCK_VOCABULARY } from '@mocks';
 
+// Constants
+import { MESSAGE_ERRORS } from '@constants';
+
 // Components
 import { Vocabulary } from '@pages';
 
@@ -34,37 +37,84 @@ describe('Test Vocabulary Page', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('Input should have value after click button add', async () => {
+  it('Should clear input after click button Add', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      refetch: jest.fn().mockResolvedValue({
+        data: jest.fn().mockReturnValue([]),
+      }),
+    }));
 
     const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
     const inputENG = getByTestId('input-english');
     const inputVIE = getByTestId('input-vietnamese');
-    const buttonStartTest = getByText('Add');
-    const eventMock = {
-      preventDefault: jest.fn(),
-      target: [inputENG, inputVIE],
-    };
+    const buttonAdd = getByText('Add');
 
-    act(() => {
+    await act(() => {
       // Enter value for two inputs ENG and VIE
       fireEvent.change(inputENG, { target: { value: 'Text' } });
       fireEvent.change(inputVIE, { target: { value: 'Text' } });
+    });
+    await act(() => {
       // Click button submit
-      fireEvent.submit(buttonStartTest, eventMock);
+      fireEvent.submit(buttonAdd);
     });
 
     await waitFor(() => {
-      expect(inputENG).toHaveValue('Text');
-      expect(inputVIE).toHaveValue('Text');
+      expect(inputENG).toHaveValue('');
+      expect(inputVIE).toHaveValue('');
     });
   });
 
-  it('Should call onRandomQuizzes when handleStartTest is called (click button Start Test)', () => {
+  it('Should show error if response has data', async () => {
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
+      refetch: jest.fn().mockResolvedValue(MOCK_VOCABULARIES),
+    }));
+
+    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
+    const inputENG = getByTestId('input-english');
+    const inputVIE = getByTestId('input-vietnamese');
+    const buttonAdd = getByText('Add');
+
+    await act(() => {
+      // Enter value for two inputs ENG and VIE
+      fireEvent.change(inputENG, { target: { value: 'Text' } });
+      fireEvent.change(inputVIE, { target: { value: 'Text' } });
+    });
+    await act(() => {
+      // Click button submit
+      fireEvent.submit(buttonAdd);
+    });
+
+    await waitFor(() => {
+      expect(getByText(MESSAGE_ERRORS.EXISTED)).toBeInTheDocument();
+    });
+  });
+
+  it('Should navigate to testing when click button Start Test', () => {
+    const vocabularies = [
+      ...Array.from({ length: 20 }, (_, index) => ({
+        ...MOCK_VOCABULARY,
+        id: `id_${index + 1}`,
+      })),
+      MOCK_VOCABULARIES,
+    ];
+    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
+    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
+      fetchNextPage: jest.fn(),
+      hasNextPage: true,
+      isLoading: false,
+      data: {
+        pages: [vocabularies],
+      },
+    }));
     const { getByRole } = renderWithThemeProvider(<Vocabulary />);
     const startTestBtn = getByRole('button', { name: 'Start Test' });
 
-    fireEvent.click(startTestBtn);
+    act(() => {
+      fireEvent.click(startTestBtn);
+    });
   });
 
   it('Should click button load more when vocabularies more than 20 and add more vocabularies when click Load More', async () => {
@@ -108,13 +158,17 @@ describe('Test Vocabulary Page', () => {
     }));
 
     const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
-    // Click button X in row and show confirm modal
-    const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
-    fireEvent.click(buttonShowConfirmModal);
+    act(() => {
+      // Click button X in row and show confirm modal
+      const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
+      fireEvent.click(buttonShowConfirmModal);
+    });
 
-    // Click button delete confirm delete
-    const buttonDelete = getByText('Delete');
-    fireEvent.click(buttonDelete);
+    act(() => {
+      // Click button delete confirm delete
+      const buttonDelete = getByText('Delete');
+      fireEvent.click(buttonDelete);
+    });
   });
 
   it('Should show notification Error when click button Delete but call API failed', async () => {

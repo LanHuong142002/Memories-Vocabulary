@@ -66,7 +66,6 @@ describe('Test Wrapper component', () => {
       messageError: 'Error',
       notification: true,
       setNotification: jest.fn(),
-      setMessageError: jest.fn(),
     }));
     const { getByText } = renderWithThemeProvider(<WrapperComponent />);
 
