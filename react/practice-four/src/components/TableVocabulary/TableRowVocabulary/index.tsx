@@ -1,13 +1,8 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { Loader } from '@mantine/core';
 
 // Constants
-import {
-  BUTTON_VARIANT,
-  TYPOGRAPHY_SIZE,
-  TYPOGRAPHY_TAG_NAME,
-  TYPOGRAPHY_VARIANT,
-} from '@constants';
+import { BUTTON_VARIANT, TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Interfaces
 import { Vocabulary } from '@interfaces';
@@ -53,15 +48,11 @@ export const TableRowVocabulary = memo(
   },
 );
 
-export const TableRowEmpty = memo(() => (
+export const TableRowEmpty = memo(({ children }: { children: ReactNode }) => (
   <TableRow>
     <TableCell>
       <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
-        Fill All Filed At Above And Press{' '}
-        <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>
-          ENTER
-        </Typography>{' '}
-        key or button Add
+        {children}
       </Typography>
     </TableCell>
   </TableRow>
