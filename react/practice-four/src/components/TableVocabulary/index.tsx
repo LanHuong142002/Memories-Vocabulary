@@ -116,7 +116,7 @@ const TableVocabulary = memo(
                   variant={TYPOGRAPHY_VARIANT.HIGHLIGHT}
                   tagName={TYPOGRAPHY_TAG_NAME.SPAN}
                 >
-                  ENTER
+                  enter
                 </Typography>{' '}
                 key or button Add
               </TableRowEmpty>
