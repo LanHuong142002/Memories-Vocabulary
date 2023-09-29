@@ -20,7 +20,7 @@ const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
-  const { notification, setNotification, messageError } = useNotificationStores();
+  const { notification, messageError, setNotification } = useNotificationStores();
 
   useEffect(() => {
     if (messageError) {

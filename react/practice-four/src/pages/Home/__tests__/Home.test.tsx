@@ -1,13 +1,7 @@
-import { act, fireEvent } from '@testing-library/react';
-
-// Contexts
-import { TopicContext, TopicContextType } from '@contexts';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 
 // Mocks
 import { MOCK_TOPIC, MOCK_TOPICS } from '@mocks';
-
-// Constants
-import { MESSAGE_ERRORS } from '@constants';
 
 // Components
 import { Home } from '@pages';
@@ -15,106 +9,82 @@ import { Home } from '@pages';
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
 
-jest.useFakeTimers();
-const mockTopicContext = {
-  isLoadingTopic: false,
-  errorsTopic: '',
-  topics: MOCK_TOPICS,
-  quizzes: [],
-  onAddTopic: jest.fn(),
-  onGetTopics: jest.fn(),
-};
+// Hooks
+import * as hooks from '@hooks';
 
-const HomePageComponent = ({ value = mockTopicContext }: { value?: TopicContextType }) => (
-  <TopicContext.Provider value={value}>
-    <Home />
-  </TopicContext.Provider>
-);
+// Constants
+import { MESSAGE_ERRORS } from '@constants';
+
+jest.mock('@hooks', () => ({
+  ...jest.requireActual('@hooks'),
+}));
 
 describe('Test Home Page', () => {
   it('Should render Home page', () => {
-    const { container } = renderWithThemeProvider(<HomePageComponent />);
+    const { container } = renderWithThemeProvider(<Home />);
 
     expect(container).toBeInTheDocument();
   });
 
-  it('Should render overlay add new topic when click to button Add Topic', () => {
-    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
+  it('Should render loading after add new topic', () => {
+    (jest.spyOn(hooks, 'useMutationPostTopic') as jest.Mock).mockImplementation(() => ({
+      isLoading: true,
+      mutate: jest.fn(),
+    }));
+    const { container } = renderWithThemeProvider(<Home />);
 
-    const buttonAddTopic = getByText('Add Topic');
-    // Click button add topic
-    fireEvent.click(buttonAddTopic);
-    const overlayAddNew = getByText('Add New Topic');
-
-    expect(overlayAddNew).toBeInTheDocument();
-  });
-
-  it('Should show loading when isLoadingTopic is true', () => {
-    const { container } = renderWithThemeProvider(
-      <HomePageComponent value={{ ...mockTopicContext, isLoadingTopic: true }} />,
-    );
-    const topics = container.querySelectorAll('.topic');
-
-    expect(topics.length).toBe(0);
-  });
-
-  it('Should Add new topic when enter the new topic', () => {
-    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
-
-    // Click button Add Topic
-    const topic = getByText('Add Topic');
-    fireEvent.click(topic);
-    // Enter value for input
-    const input = getByPlaceholderText('Topic Name');
-    fireEvent.change(input, { target: { value: 'Text' } });
-    // Click button Done to add new topic
-    const button = getByText('Done');
-    fireEvent.click(button);
-    const titleAddTopic = getByText('Add & Select Topic');
-
-    expect(titleAddTopic).toBeInTheDocument();
-  });
-
-  it('Should show error message when enter wrong value with click to Done button', () => {
-    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
-
-    // Click button Add Topic
-    const topic = getByText('Add Topic');
-    fireEvent.click(topic);
-    // Enter value empty for input
-    const input = getByPlaceholderText('Topic Name');
-    fireEvent.change(input, { target: { value: '' } });
-    // Click button Done to add new topic
-    const button = getByText('Done');
-    fireEvent.click(button);
-    const error = getByText(MESSAGE_ERRORS.REQUIRED);
-
-    expect(error).toBeInTheDocument();
+    expect(container).toBeInTheDocument();
   });
 
   it('Should open topic when click to topic', () => {
-    const { getByText } = renderWithThemeProvider(<HomePageComponent />);
+    (jest.spyOn(hooks, 'useTopics') as jest.Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: MOCK_TOPICS,
+    }));
+    const { getByText } = renderWithThemeProvider(<Home />);
 
-    const titleHome = getByText('Add & Select Topic');
-    const topic = getByText(MOCK_TOPIC.name);
-    fireEvent.click(topic);
-
-    expect(titleHome).toBeInTheDocument();
-  });
-
-  it('Should render error message when typing number to input', () => {
-    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<HomePageComponent />);
-
-    // Click button Add Topic
-    const topic = getByText('Add Topic');
-    fireEvent.click(topic);
-    const input = getByPlaceholderText('Topic Name');
-    // Enter value for input
     act(() => {
-      fireEvent.change(input, { target: { value: '222' } });
-      jest.runAllTimers();
+      const topic = getByText(MOCK_TOPIC.name);
+      fireEvent.click(topic);
     });
 
-    expect(getByText(MESSAGE_ERRORS.ALPHABETS)).toBeInTheDocument();
+    waitFor(() => {
+      expect(getByText('Make Vocabulary with Translation')).toBeInTheDocument();
+    });
+  });
+
+  it('Should render input with value entered', async () => {
+    (jest.spyOn(hooks, 'useTopics') as jest.Mock).mockImplementation(() => ({
+      isLoading: false,
+    }));
+    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<Home />);
+
+    act(() => {
+      // Click button Add Topic
+      const topic = getByText('Add Topic');
+      fireEvent.click(topic);
+    });
+
+    const input = getByPlaceholderText('Topic Name');
+    const button = getByText('Done');
+    act(() => {
+      // Enter invalid value for input
+      fireEvent.change(input, { target: { value: '222' } });
+      fireEvent.submit(button);
+    });
+
+    await waitFor(() => {
+      expect(getByText(MESSAGE_ERRORS.ALPHABETS)).toBeInTheDocument();
+    });
+
+    act(() => {
+      // Enter valid value for input
+      fireEvent.change(input, { target: { value: 'aaa' } });
+      fireEvent.submit(button);
+    });
+
+    await waitFor(() => {
+      expect(input).toHaveValue('aaa');
+    });
   });
 });

@@ -1,14 +1,15 @@
-import { render } from '@testing-library/react';
-
 // Mocks
 import { MOC_RESULT } from '@mocks';
 
 // Components
 import { TableRowResult } from '@components';
 
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
+
 describe('Test table row result component', () => {
   it('Should render table row result', () => {
-    const { container, getAllByText, getByText } = render(
+    const { container, getAllByText, getByText } = renderWithThemeProvider(
       <TableRowResult
         id='1'
         answer={MOC_RESULT.answer}
@@ -25,7 +26,7 @@ describe('Test table row result component', () => {
   });
 
   it('Should render table row result have case failed', () => {
-    const { container, getAllByText } = render(
+    const { container, getAllByText } = renderWithThemeProvider(
       <TableRowResult
         id='1'
         answer={MOC_RESULT.answer}

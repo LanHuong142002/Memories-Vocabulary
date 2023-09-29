@@ -22,7 +22,7 @@ const Result = () => {
     () =>
       vocabularies &&
       vocabularies.map((vocab) => {
-        const { id: vocabID } = vocab || {};
+        const { id: vocabID } = vocab;
 
         return {
           ...vocab,

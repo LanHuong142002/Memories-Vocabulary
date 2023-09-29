@@ -11,8 +11,8 @@ import { Vocabulary } from '@interfaces';
 import { Button, TableCell, TableRow, Typography } from '@components';
 
 interface TableRowVocabularyProps extends Vocabulary {
-  isLoading: boolean;
   order: number;
+  isLoading: boolean;
   onClick: (id: string) => void;
 }
 
@@ -36,7 +36,7 @@ export const TableRowVocabulary = memo(
                 p='5px'
                 variant={BUTTON_VARIANT.SECONDARY}
                 onClick={handleOnClick}
-                dataTestId='button-delete-vocabulary'
+                data-testid='button-delete-vocabulary'
               >
                 X
               </Button>

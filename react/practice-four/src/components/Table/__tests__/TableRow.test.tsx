@@ -1,7 +1,8 @@
-import { render } from '@testing-library/react';
-
 // Components
 import { TableCell, TableRow } from '@components';
+
+// Helpers
+import { renderWithThemeProvider } from '@helpers';
 
 describe('Testing Table row component', () => {
   const children = (
@@ -12,7 +13,7 @@ describe('Testing Table row component', () => {
   );
 
   it('Should renders children correctly', () => {
-    const { getByText } = render(<TableRow>{children}</TableRow>);
+    const { getByText } = renderWithThemeProvider(<TableRow>{children}</TableRow>);
 
     expect(getByText('January')).toBeInTheDocument();
     expect(getByText('$100')).toBeInTheDocument();
