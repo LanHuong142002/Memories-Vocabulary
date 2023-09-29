@@ -241,7 +241,7 @@ const Vocabulary = () => {
         isLoadingMore={isFetchingNextPage}
         isAdding={isAdding}
         deletingById={{ [vocabularyId]: isDeleting }}
-        vocabularies={vocabularies?.pages || []}
+        vocabularies={vocabularies?.pages}
         onClick={handleOpenConfirmModalInRow}
       />
       <Flex

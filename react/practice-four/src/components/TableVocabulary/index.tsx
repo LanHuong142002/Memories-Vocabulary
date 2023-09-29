@@ -7,6 +7,9 @@ import { Vocabulary } from '@interfaces';
 // Helpers
 import { getColorScheme } from '@helpers';
 
+// Constants
+import { TYPOGRAPHY_TAG_NAME, TYPOGRAPHY_VARIANT } from '@constants';
+
 // Components
 import {
   TableCell,
@@ -14,6 +17,7 @@ import {
   TableRowEmpty,
   TableRowLoading,
   TableVocabularyBody,
+  Typography,
 } from '@components';
 
 export interface TableVocabularyProps {
@@ -23,7 +27,7 @@ export interface TableVocabularyProps {
   deletingById: {
     [id: string]: boolean;
   };
-  vocabularies: Vocabulary[][];
+  vocabularies?: Vocabulary[][];
   onClick: (id: string) => void;
 }
 
@@ -33,7 +37,7 @@ const TableVocabulary = memo(
     isAdding,
     isLoadingMore,
     deletingById,
-    vocabularies,
+    vocabularies = [],
     onClick,
   }: TableVocabularyProps) => (
     <Box
@@ -93,7 +97,7 @@ const TableVocabulary = memo(
         ) : (
           // After fetching, render the vocabulary list
           <>
-            {vocabularies.length ? (
+            {vocabularies[0].length ? (
               <TableVocabularyBody
                 deletingById={deletingById}
                 isAdding={isAdding}
@@ -103,7 +107,16 @@ const TableVocabulary = memo(
               />
             ) : (
               // This is usually appropriate if there is no vocabulary in the list
-              <TableRowEmpty />
+              <TableRowEmpty>
+                Fill All Filed At Above And Press{' '}
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.HIGHLIGHT}
+                  tagName={TYPOGRAPHY_TAG_NAME.SPAN}
+                >
+                  ENTER
+                </Typography>{' '}
+                key or button Add
+              </TableRowEmpty>
             )}
           </>
         )}
