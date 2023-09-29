@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Flex, MantineTheme, Text } from '@mantine/core';
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 // Constants
 import {
@@ -16,7 +17,7 @@ import {
 import { useVocabulariesStores } from '@stores';
 
 // Hooks
-import { useDebounce, useVocabularies } from '@hooks';
+import { useVocabularies } from '@hooks';
 
 // Helpers
 import { getColorScheme, validation } from '@helpers';
@@ -25,22 +26,37 @@ import { getColorScheme, validation } from '@helpers';
 import { Wrapper } from '@layouts';
 import { Button, Input, ProcessBar, Spinner, Typography } from '@components';
 
+interface FormInput {
+  value: string;
+}
+
 const Testing = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: vocabularies, isLoading } = useVocabularies(id || '', true);
-  const { quizzes, setQuizzes } = useVocabulariesStores();
-  const [errors, setErrors] = useState<string[] | null>(null);
   const [step, setStep] = useState<number>(0);
-  const [value, setValue] = useState<string>('');
-  const debouncedValue = useDebounce<string | null>(value, 700);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>({
+    defaultValues: {
+      value: '',
+    },
+  });
+
+  // Queries
+  const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
+
+  // Stores
+  const { quizzes, setQuizzes } = useVocabulariesStores();
+
   const quizValue = useMemo(
     () =>
       quizzes.length &&
       `Translate this "${quizzes[step].english}" word in English, into Vietnamese:`,
     [quizzes, step],
   );
-
   const buttonValue = useMemo(
     () =>
       step + 1 === quizzes.length ? (
@@ -61,56 +77,35 @@ const Testing = () => {
       navigate(`${ROUTES.RESULT}/${id}`);
     } else {
       setStep((prev) => prev + 1);
-      setValue('');
+      reset();
     }
-  }, [id, navigate, quizzes.length, step]);
-
-  /**
-   * @description function handle onchange of input
-   * @param event
-   */
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+  }, [id, navigate, quizzes.length, reset, step]);
 
   /**
    * @description function handle submit of form
    *
    * @param {Event} event is event of form element
    */
-  const handleSubmit = useCallback(
-    (event: ChangeEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const listError = validation(value);
-      setErrors(listError);
-
-      if (!listError.length) {
-        const answersArr = [...quizzes];
-        answersArr[step] = {
-          ...quizzes[step],
-          answer: value.trim(),
-        };
-        setQuizzes(answersArr);
-        setErrors(null);
-        handleSetStep();
-      }
-    },
-    [handleSetStep, setQuizzes, quizzes, step, value],
-  );
-
-  // show errors of input vietnamese after delay 0.7s
-  useEffect(() => {
-    if (debouncedValue) {
-      const listError = validation(debouncedValue);
-      setErrors(listError);
-    }
-  }, [debouncedValue]);
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    const answersArr = [...quizzes];
+    answersArr[step] = {
+      ...quizzes[step],
+      answer: data.value.trim(),
+    };
+    setQuizzes(answersArr);
+    handleSetStep();
+    reset();
+  };
 
   useEffect(() => {
-    if (vocabularies && !vocabularies.length) {
-      navigate(`${ROUTES.VOCABULARY}/${id}`);
+    if (vocabulariesAll && !vocabulariesAll.length) navigate(`${ROUTES.VOCABULARY}/${id}`);
+  }, [id, navigate, vocabulariesAll]);
+
+  useEffect(() => {
+    if (isSuccess && vocabulariesAll) {
+      setQuizzes(vocabulariesAll);
     }
-  }, [id, navigate, vocabularies]);
+  }, [isSuccess, setQuizzes, vocabulariesAll]);
 
   return (
     <Wrapper
@@ -141,7 +136,7 @@ const Testing = () => {
           <Spinner />
         </Flex>
       ) : (
-        <form onSubmit={handleSubmit} className='testing-content'>
+        <form onSubmit={handleSubmit(onSubmit)} className='testing-content'>
           <ProcessBar
             step={step + 1}
             totalStep={quizzes.length}
@@ -158,15 +153,24 @@ const Testing = () => {
           >
             {quizValue}
           </Typography>
-          <Input
-            variant={INPUT_VARIANT.TERTIARY}
-            value={value}
-            onChange={handleOnChange}
-            errors={errors}
-            label='Vietnamese'
-            placeholder='Type your answer here'
-            aria-label='Enter your answer'
-            sx={{ margin: '20px 0' }}
+          <Controller
+            name='value'
+            rules={{
+              validate: (v) => validation(v),
+            }}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                value={value}
+                error={errors.value?.message}
+                variant={INPUT_VARIANT.TERTIARY}
+                label='Vietnamese'
+                placeholder='Type your answer here'
+                aria-label='Enter your answer'
+                sx={{ margin: '20px 0' }}
+                onChange={onChange}
+              />
+            )}
           />
           <Box
             className='testing-actions'

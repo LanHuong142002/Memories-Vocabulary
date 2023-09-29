@@ -3,6 +3,7 @@ import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { TableVocabulary } from '@components';
+import { MOCK_VOCABULARIES } from '@mocks';
 
 describe('Test table vocabulary component', () => {
   const defaultValue = {
@@ -14,26 +15,29 @@ describe('Test table vocabulary component', () => {
       5: false,
     },
     vocabularies: [
-      {
-        id: '1',
-        english: 'pen',
-        vietnamese: 'cay but',
-      },
-      {
-        id: '2',
-        english: 'eraser',
-        vietnamese: 'cuc tay',
-      },
-      {
-        id: '3',
-        english: 'book',
-        vietnamese: 'cuon sach',
-      },
-      {
-        id: '4',
-        english: 'notebook',
-        vietnamese: 'cuon vo',
-      },
+      [
+        {
+          id: '1',
+          english: 'pen',
+          vietnamese: 'cay but',
+        },
+        {
+          id: '2',
+          english: 'eraser',
+          vietnamese: 'cuc tay',
+        },
+        {
+          id: '3',
+          english: 'book',
+          vietnamese: 'cuon sach',
+        },
+        {
+          id: '4',
+          english: 'notebook',
+          vietnamese: 'cuon vo',
+        },
+      ],
+      MOCK_VOCABULARIES,
     ],
   };
 
@@ -43,7 +47,7 @@ describe('Test table vocabulary component', () => {
     );
 
     expect(container).toBeInTheDocument();
-    expect(getAllByTestId('table-cell').length).toBe(20);
+    expect(getAllByTestId('table-cell').length).toBe(24);
     expect(getByText('book')).toBeInTheDocument();
   });
 

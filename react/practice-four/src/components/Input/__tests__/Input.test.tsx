@@ -33,7 +33,7 @@ describe('Test input component', () => {
 
   it('Should render input secondary component with error', () => {
     const { getByText } = render(
-      <Input variant={INPUT_VARIANT.SECONDARY} errors={['errors']} {...defaultProps} />,
+      <Input variant={INPUT_VARIANT.SECONDARY} error={'errors'} {...defaultProps} />,
     );
 
     expect(getByText('errors')).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('Test input component', () => {
   it('Should render input tertiary component with error', () => {
     const { getByText } = render(
       <ThemeProvider>
-        <Input variant={INPUT_VARIANT.TERTIARY} errors={['errors']} {...defaultProps} />
+        <Input variant={INPUT_VARIANT.TERTIARY} error={'errors'} {...defaultProps} />
       </ThemeProvider>,
     );
 
@@ -66,7 +66,7 @@ describe('Test input component', () => {
     const { getByPlaceholderText } = render(
       <Input
         variant={INPUT_VARIANT.PRIMARY}
-        errors={[]}
+        error={''}
         {...defaultProps}
         onChange={handleChange}
       />,

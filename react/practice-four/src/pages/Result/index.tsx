@@ -15,7 +15,9 @@ import { Button, Label, TableResult, Typography } from '@components';
 const Result = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  // Stores
   const { quizzes, vocabularies } = useVocabulariesStores();
+
   const result = useMemo(
     () =>
       vocabularies &&

@@ -38,7 +38,7 @@ describe('Should test fetch API', () => {
       data: MOCK_TOPIC,
     });
 
-    const response = await postData<Topic>(MOCK_TOPIC, 'endpoint');
+    const response = await postData<Topic>({ item: MOCK_TOPIC, endpoint: 'endpoint' });
 
     expect(response).toEqual(MOCK_TOPIC);
   });
@@ -48,7 +48,7 @@ describe('Should test fetch API', () => {
     (axios.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
-      await postData<Topic>(MOCK_TOPIC, 'endpoint');
+      await postData<Topic>({ item: MOCK_TOPIC, endpoint: 'endpoint' });
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
     }
@@ -59,7 +59,7 @@ describe('Should test fetch API', () => {
       data: MOCK_TOPIC,
     });
 
-    const response = await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
+    const response = await putData<Topic>({ item: MOCK_TOPIC, endpoint: 'endpoint', id: '1' });
 
     expect(response).toEqual(MOCK_TOPIC);
   });
@@ -69,7 +69,7 @@ describe('Should test fetch API', () => {
     (axios.put as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
-      await putData<Topic>(MOCK_TOPIC, 'endpoint', '1');
+      await putData<Topic>({ item: MOCK_TOPIC, endpoint: 'endpoint', id: '1' });
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
     }
@@ -80,7 +80,7 @@ describe('Should test fetch API', () => {
       data: [],
     });
 
-    const response = await deleteData<string>('endpoint', '1');
+    const response = await deleteData<string>({ endpoint: 'endpoint', id: '1' });
 
     expect(response).toEqual([]);
   });
@@ -90,7 +90,7 @@ describe('Should test fetch API', () => {
     (axios.delete as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     try {
-      await deleteData<string>('endpoint', '1');
+      await deleteData<string>({ endpoint: 'endpoint', id: '1' });
     } catch (error) {
       expect((error as { message: string }).message).toBe(errorMessage);
     }
