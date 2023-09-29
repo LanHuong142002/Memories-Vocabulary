@@ -42,12 +42,12 @@ const FormVocabulary = ({
   });
 
   // Queries
-  const { isFetching: isLoadingCheckExisted, refetch } = useVocabularies(
-    id || '',
-    false,
-    1,
-    `?english=${getValues('valueENG')}`,
-  );
+  const { isFetching: isLoadingCheckExisted, refetch } = useVocabularies({
+    id,
+    enabled: false,
+    page: 1,
+    param: `?english=${getValues('valueENG')}`,
+  });
 
   /**
    * @description function add new vocabulary

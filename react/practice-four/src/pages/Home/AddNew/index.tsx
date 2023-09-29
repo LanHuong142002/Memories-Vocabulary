@@ -59,7 +59,6 @@ const AddNew = () => {
       mutate(
         {
           name: data.value.trim(),
-          vocabularies: [],
         },
         {
           onError: (error) => {
@@ -137,7 +136,7 @@ const AddNew = () => {
                   value={value}
                   variant={INPUT_VARIANT.PRIMARY}
                   placeholder='Topic Name'
-                  error={errors.value?.message || ''}
+                  error={errors.value?.message}
                   aria-label='enter topic'
                   sx={(theme: MantineTheme) => ({
                     margin: '30px 0 10px 0',

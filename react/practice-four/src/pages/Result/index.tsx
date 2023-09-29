@@ -85,7 +85,7 @@ const Result = () => {
           },
         })}
       >
-        <TableResult result={result || []} />
+        <TableResult result={result} />
         <Link to={`${ROUTES.VOCABULARY}/${id}`}>
           <Button
             size={BUTTON_SIZE.S}

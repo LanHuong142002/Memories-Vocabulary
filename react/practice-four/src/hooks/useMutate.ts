@@ -27,7 +27,7 @@ export const useMutationPostTopic = () => {
 /**
  * @description custom hook to post vocabulary
  */
-export const useMutationPostVocabulary = (id: string) => {
+export const useMutationPostVocabulary = (id: string = '') => {
   const queryClient = useQueryClient();
 
   return useMutation<Omit<Vocabulary, 'id'>, AxiosError, Omit<Vocabulary, 'id'>>({
