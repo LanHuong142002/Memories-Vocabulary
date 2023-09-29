@@ -25,25 +25,22 @@ export const isMatchRegex = (regex: RegExp, value: string): boolean => regex.tes
  * @param {string} value - The value to be validated.
  * @param {boolean} isLength to check if the validation check length or not
  *
- * @returns {string[]} errors - An array of error messages.
+ * @returns {string} errors - An error messages.
  */
-export const validation = (value: string, isLength: boolean = false): string[] => {
-  const errors: string[] = [];
-
-  // Check if the value is empty
+export const validation = (value: string, isLength: boolean = false): string | undefined => {
   if (isEmpty(value)) {
-    errors.push(MESSAGE_ERRORS.REQUIRED);
+    return MESSAGE_ERRORS.REQUIRED;
   } else {
     // Check if the value length is less than 3
     if (value.length < 3 && isLength) {
-      errors.push(MESSAGE_ERRORS.MIN_LENGTH);
+      return MESSAGE_ERRORS.MIN_LENGTH;
     }
 
     // Check if the value contains only alphabetic characters
     if (!isMatchRegex(REGEX.ALPHABETS, value)) {
-      errors.push(MESSAGE_ERRORS.ALPHABETS);
+      return MESSAGE_ERRORS.ALPHABETS;
     }
   }
 
-  return errors;
+  return undefined;
 };

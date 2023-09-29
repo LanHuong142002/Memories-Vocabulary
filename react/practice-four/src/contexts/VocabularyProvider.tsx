@@ -174,10 +174,10 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
         type: VOCABULARY_ACTIONS.ADD_REQUEST,
       });
       try {
-        const response = await postData<Vocabulary>(
-          vocabulary,
-          `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
-        );
+        const response = await postData<Vocabulary>({
+          item: vocabulary,
+          endpoint: `${URL.TOPIC}/${id}${URL.VOCABULARY}`,
+        });
 
         dispatch({
           type: VOCABULARY_ACTIONS.ADD_SUCCESS,
@@ -212,7 +212,7 @@ export function VocabularyProvider({ children }: { children: ReactNode }) {
       },
     });
     try {
-      await deleteData<Vocabulary>(`${URL.TOPIC}/${topicId}${URL.VOCABULARY}`, id);
+      await deleteData<Vocabulary>({ endpoint: `${URL.TOPIC}/${topicId}${URL.VOCABULARY}`, id });
 
       dispatch({
         type: VOCABULARY_ACTIONS.DELETE_SUCCESS,

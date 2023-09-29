@@ -1,8 +1,8 @@
-import { Box, Flex, MantineTheme } from '@mantine/core';
-import { ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { Box, Flex, MantineTheme, Overlay } from '@mantine/core';
+import { ReactNode, useEffect } from 'react';
 
 // Contexts
-import { VocabularyContext, TopicContext } from '@contexts';
+import { useNotificationStores } from '@stores';
 
 // Helpers
 import { getColorScheme } from '@helpers';
@@ -20,23 +20,18 @@ const Wrapper = ({
   children: ReactNode;
   childrenTitle: ReactNode;
 }) => {
-  const { errorsVocabulary } = useContext(VocabularyContext);
-  const { errorsTopic } = useContext(TopicContext);
-  const [showNotification, setShowNotification] = useState<boolean>(true);
-  const hasNotification = useMemo(
-    () => showNotification && (errorsTopic || errorsVocabulary),
-    [errorsTopic, errorsVocabulary, showNotification],
-  );
+  const { notification, setNotification, messageError } = useNotificationStores();
 
   useEffect(() => {
-    if (errorsTopic || errorsVocabulary) {
+    if (messageError) {
+      setNotification(true);
       const timeout = setTimeout(() => {
-        setShowNotification(false);
+        setNotification(false);
       }, 3000);
 
       return () => clearTimeout(timeout);
     }
-  }, [errorsTopic, errorsVocabulary]);
+  }, [messageError, setNotification]);
 
   return (
     <Box className={`wrapper-${className}-page`}>
@@ -109,8 +104,28 @@ const Wrapper = ({
           </Box>
         </Flex>
       </Flex>
-      {hasNotification && (
-        <Notification description={errorsTopic || errorsVocabulary} title='Something went wrong!' />
+      {notification && (
+        <Overlay
+          styles={{
+            root: {
+              height: '100%',
+              position: 'fixed',
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <Notification
+            description={messageError}
+            title='Something went wrong!'
+            styles={{
+              root: {
+                position: 'absolute',
+                right: '30px',
+                bottom: '30px',
+              },
+            }}
+          />
+        </Overlay>
       )}
     </Box>
   );

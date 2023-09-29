@@ -1,8 +1,12 @@
-import { Button, ToggleTheme } from '@components';
-import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
-import { Flex } from '@mantine/core';
 import { memo } from 'react';
+import { Flex } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
+
+// Constants
+import { BUTTON_SIZE, BUTTON_VARIANT, ROUTES } from '@constants';
+
+// Components
+import { Button, ToggleTheme } from '@components';
 
 const WrapperHeader = () => {
   const location = useLocation();

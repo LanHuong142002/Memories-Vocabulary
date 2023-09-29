@@ -1,18 +1,18 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Box, Flex, MantineTheme } from '@mantine/core';
-import { useState, ChangeEvent, useEffect, useContext, useCallback, useMemo } from 'react';
-
-// Contexts
-import { VocabularyContext } from '@contexts';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 // Hooks
 import {
-  useDebounce,
   useInfiniteVocabularies,
   useMutationDeleteVocabulary,
   useMutationPostVocabulary,
+  useVocabularies,
 } from '@hooks';
+
+// Stores
+import { useNotificationStores } from '@stores';
 
 // Helpers
 import { validation } from '@helpers';
@@ -33,13 +33,41 @@ import {
 // Components
 import { Wrapper } from '@layouts';
 import { Button, Input, Modal, TableVocabulary, Typography } from '@components';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+interface FormInput {
+  valueENG: string;
+  valueVIE: string;
+}
 
 const Vocabulary = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  // TODO: replace with Zustand store
-  const { onRandomQuizzes, onCheckEnglishIsExisted } = useContext(VocabularyContext);
+  const [vocabularyId, setVocabularyId] = useState<string>('');
+
+  // Hooks
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors },
+    watch,
+  } = useForm<FormInput>({
+    defaultValues: {
+      valueENG: '',
+      valueVIE: '',
+    },
+  });
+
+  // Queries
+  const { isFetching: isLoadingCheckExisted, refetch } = useVocabularies(
+    id || '',
+    false,
+    1,
+    `?english=${watch('valueENG')}`,
+  );
   const {
     data: vocabularies,
     fetchNextPage,
@@ -50,91 +78,34 @@ const Vocabulary = () => {
   const { mutate: mutateDelete, isLoading: isDeleting } = useMutationDeleteVocabulary(id || '');
   const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
 
-  const [valueENG, setValueENG] = useState<string>('');
-  const [errorsENG, setErrorsENG] = useState<string[]>([]);
-  const [valueVIE, setValueVIE] = useState<string>('');
-  const [errorsVIE, setErrorsVIE] = useState<string[]>([]);
-  const debouncedValueENG = useDebounce<string | null>(valueENG, 700);
-  const debouncedValueVIE = useDebounce<string | null>(valueVIE, 700);
-  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const [vocabularyId, setVocabularyId] = useState<string>('');
+  // Stores
+  const { setMessageError } = useNotificationStores();
+
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
     [vocabularies],
   );
 
   /**
-   * @description function onchange to get value from input english
-   *
-   * @param {Event} event of inputs
-   */
-  const handleOnChangeENG = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueENG(event.target.value);
-  }, []);
-
-  /**
-   * @description function onchange to get value from input vietnamese
-   *
-   * @param {Event} event of inputs
-   */
-  const handleOnChangeVIE = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValueVIE(event.target.value);
-  }, []);
-
-  /**
-   * @description function add new vocabulary
-   *
-   * @param {Event} event is event of form
-   */
-  const handleAddNewVocabulary = async (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const valueInputENG = (event.target[0] as HTMLInputElement).value;
-    const valueInputVIE = (event.target[1] as HTMLInputElement).value;
-
-    const listErrorVIE = validation(valueInputVIE);
-    const listErrorENG = validation(valueInputENG);
-    setErrorsVIE(listErrorVIE);
-    setErrorsENG(listErrorENG);
-
-    if (!listErrorVIE.length && !listErrorENG.length && id) {
-      setIsButtonLoading(true);
-      const isExisted = await onCheckEnglishIsExisted(id, valueInputENG.trim());
-
-      if (!isExisted) {
-        mutatePost({
-          vietnamese: valueInputVIE.trim(),
-          english: valueInputENG.trim(),
-        });
-        setValueVIE('');
-        setValueENG('');
-      } else {
-        setErrorsENG([MESSAGE_ERRORS.EXISTED]);
-      }
-      setIsButtonLoading(false);
-    }
-  };
-
-  /**
    * @description function handle start testing with vocabularies of topic
    */
   const handleStartTest = useCallback(() => {
     if (id) {
-      onRandomQuizzes(id);
       navigate(`${ROUTES.TESTING}/${id}`);
     }
-  }, [id, navigate, onRandomQuizzes]);
+  }, [id, navigate]);
 
   /**
    * @description function delete a vocabulary
-   *
-   * @param {string} vocabularyId is id of vocabulary which is selected
    */
   const handleDeleteVocabulary = useCallback(() => {
-    if (id) {
-      mutateDelete(vocabularyId);
-      close();
-    }
-  }, [close, id, mutateDelete, vocabularyId]);
+    mutateDelete(vocabularyId, {
+      onError: (error) => {
+        setMessageError(error.message);
+      },
+    });
+    close();
+  }, [close, mutateDelete, setMessageError, vocabularyId]);
 
   /**
    * @description function open confirm modal and get vocabulary id
@@ -147,21 +118,31 @@ const Vocabulary = () => {
     [open],
   );
 
-  // show errors of input vietnamese after delay 0.7s
-  useEffect(() => {
-    if (debouncedValueVIE) {
-      const listErrorVIE = validation(debouncedValueVIE);
-      setErrorsVIE(listErrorVIE);
-    }
-  }, [debouncedValueVIE]);
-
-  // show errors of input english after delay 0.7s
-  useEffect(() => {
-    if (debouncedValueENG) {
-      const listErrorENG = validation(debouncedValueENG);
-      setErrorsENG(listErrorENG);
-    }
-  }, [debouncedValueENG]);
+  /**
+   * @description function add new vocabulary
+   */
+  const onSubmit: SubmitHandler<FormInput> = useCallback(
+    async (data) => {
+      const res = await refetch();
+      if (res.data && res.data.length === 0) {
+        mutatePost(
+          {
+            vietnamese: data.valueVIE.trim(),
+            english: data.valueENG.trim(),
+          },
+          {
+            onError: (error) => {
+              setMessageError(error.message);
+            },
+          },
+        );
+        reset();
+      } else {
+        setError('valueENG', { type: 'validate', message: MESSAGE_ERRORS.EXISTED });
+      }
+    },
+    [mutatePost, refetch, reset, setError, setMessageError],
+  );
 
   // get vocabularies with the id of topic selected
   useEffect(() => {
@@ -189,7 +170,7 @@ const Vocabulary = () => {
     >
       <Box
         component='form'
-        onSubmit={handleAddNewVocabulary}
+        onSubmit={handleSubmit(onSubmit)}
         className='form-add-new-vocabulary'
         sx={(theme: MantineTheme) => ({
           height: 'max-content',
@@ -212,27 +193,46 @@ const Vocabulary = () => {
           },
         })}
       >
-        <Input
-          title='English (Native)'
-          variant={INPUT_VARIANT.SECONDARY}
-          onChange={handleOnChangeENG}
-          value={valueENG!}
-          errors={errorsENG}
-          name='english'
-          dataTestId='input-english'
-          aria-label='enter english'
+        <Controller
+          name='valueENG'
+          rules={{
+            validate: (v) => validation(v),
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              value={value}
+              label='English (Native)'
+              variant={INPUT_VARIANT.SECONDARY}
+              error={errors.valueENG?.message}
+              aria-label='enter english'
+              dataTestId='input-english'
+              sx={{ margin: '20px 0' }}
+              onChange={onChange}
+            />
+          )}
         />
-        <Input
-          title='In Vietnamese'
-          variant={INPUT_VARIANT.SECONDARY}
-          onChange={handleOnChangeVIE}
-          value={valueVIE!}
-          errors={errorsVIE}
-          name='vietnamese'
-          dataTestId='input-vietnamese'
-          aria-label='enter vietnamese'
+
+        <Controller
+          name='valueVIE'
+          rules={{
+            validate: (v) => validation(v),
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              value={value}
+              label='In Vietnamese'
+              error={errors.valueVIE?.message}
+              variant={INPUT_VARIANT.SECONDARY}
+              dataTestId='input-vietnamese'
+              aria-label='enter vietnamese'
+              sx={{ margin: '20px 0' }}
+              onChange={onChange}
+            />
+          )}
         />
-        <Button type={BUTTON_TYPE.SUBMIT} loading={isButtonLoading} disabled={isButtonLoading}>
+        <Button type={BUTTON_TYPE.SUBMIT} disabled={isLoadingCheckExisted}>
           Add
         </Button>
       </Box>

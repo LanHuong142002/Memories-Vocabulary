@@ -9,7 +9,7 @@ const meta: Meta<typeof Modal> = {
   component: Modal,
   tags: ['autodocs'],
   argTypes: {
-    onCloseModal: { action: 'clicked' },
+    onClose: { action: 'clicked' },
   },
 };
 
