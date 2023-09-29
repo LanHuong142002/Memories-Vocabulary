@@ -64,7 +64,9 @@ describe('Test Vocabulary Page', () => {
     const { getByRole } = renderWithThemeProvider(<Vocabulary />);
     const startTestBtn = getByRole('button', { name: 'Start Test' });
 
-    fireEvent.click(startTestBtn);
+    act(() => {
+      fireEvent.click(startTestBtn);
+    });
   });
 
   it('Should click button load more when vocabularies more than 20 and add more vocabularies when click Load More', async () => {
@@ -108,13 +110,17 @@ describe('Test Vocabulary Page', () => {
     }));
 
     const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
-    // Click button X in row and show confirm modal
-    const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
-    fireEvent.click(buttonShowConfirmModal);
+    act(() => {
+      // Click button X in row and show confirm modal
+      const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
+      fireEvent.click(buttonShowConfirmModal);
+    });
 
-    // Click button delete confirm delete
-    const buttonDelete = getByText('Delete');
-    fireEvent.click(buttonDelete);
+    act(() => {
+      // Click button delete confirm delete
+      const buttonDelete = getByText('Delete');
+      fireEvent.click(buttonDelete);
+    });
   });
 
   it('Should show notification Error when click button Delete but call API failed', async () => {
