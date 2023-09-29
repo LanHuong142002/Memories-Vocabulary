@@ -36,89 +36,90 @@ const TableVocabulary = memo(
     isLoadingMore,
     vocabularies = [],
   }: TableVocabularyProps) => (
-    <>
+    <Box
+      className='table-vocabulary'
+      sx={(theme: MantineTheme) => ({
+        fontSize: theme.fontSizes.xxs,
+        color: getColorScheme(theme.colorScheme, theme.colors.white[4], theme.colors.dark[3]),
+        '.row': {
+          display: 'flex',
+        },
+        '.cell': {
+          width: '100%',
+          padding: '8px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderBottom: `1px solid ${theme.colors.dark[0]}`,
+        },
+        [`@media (min-width: ${theme.breakpoints.md})`]: {
+          fontSize: theme.fontSizes.xs,
+        },
+      })}
+    >
       <Box
-        className='table-vocabulary'
+        className='table-header'
         sx={(theme: MantineTheme) => ({
-          fontSize: theme.fontSizes.xxs,
-          color: getColorScheme(theme.colorScheme, theme.colors.white[4], theme.colors.dark[3]),
-          '.row': {
-            display: 'flex',
-          },
-          '.cell': {
-            width: '100%',
-            padding: '8px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderBottom: `1px solid ${theme.colors.dark[0]}`,
-          },
-          [`@media (min-width: ${theme.breakpoints.md})`]: {
-            fontSize: theme.fontSizes.xs,
+          fontWeight: theme.other.fontWeight.bold,
+        })}
+      >
+        {useMemo(
+          () => (
+            <TableRow>
+              <TableCell>No.</TableCell>
+              <TableCell>English (Native)</TableCell>
+              <TableCell>Vietnamese</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          ),
+          [],
+        )}
+      </Box>
+      <Box
+        className='table-body'
+        sx={(theme: MantineTheme) => ({
+          '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
+            backgroundColor: getColorScheme(
+              theme.colorScheme,
+              theme.colors.dark[2],
+              theme.colors.white[0],
+            ),
           },
         })}
       >
-        <Box
-          className='table-header'
-          sx={(theme: MantineTheme) => ({
-            fontWeight: theme.other.fontWeight.bold,
-          })}
-        >
-          {useMemo(
-            () => (
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell>English (Native)</TableCell>
-                <TableCell>Vietnamese</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            ),
-            [],
-          )}
-        </Box>
-        <Box
-          className='table-body'
-          sx={(theme: MantineTheme) => ({
-            '.row:nth-of-type(even):hover, .row:nth-of-type(odd)': {
-              backgroundColor: getColorScheme(
-                theme.colorScheme,
-                theme.colors.dark[2],
-                theme.colors.white[0],
-              ),
-            },
-          })}
-        >
-          {/* If fetching api to get vocabularies, show loading */}
-          {isLoading ? (
-            <TableRowLoading />
-          ) : (
-            // After fetching, render the vocabulary list
-            <>
-              {vocabularies[0].length ? (
-                <TableVocabularyBody
-                  topicId={topicId}
-                  isAdding={isAdding}
-                  isLoadingMore={isLoadingMore}
-                  vocabularies={vocabularies}
-                />
-              ) : (
-                // This is usually appropriate if there is no vocabulary in the list
-                <TableRowEmpty>
-                  Fill All Filed At Above And Press{' '}
-                  <Typography
-                    variant={TYPOGRAPHY_VARIANT.HIGHLIGHT}
-                    tagName={TYPOGRAPHY_TAG_NAME.SPAN}
-                  >
-                    ENTER
-                  </Typography>{' '}
-                  key or button Add
-                </TableRowEmpty>
-              )}
-            </>
-          )}
-        </Box>
+        {/* If fetching api to get vocabularies, show loading */}
+        {isLoading ? (
+          <TableRowLoading />
+        ) : (
+          /* After fetching, render the vocabulary list
+           * Vocabularies[0] here because the data is Vocabulary[][] so need to
+           * check the first array to know whether vocabulary has any item or not
+           */
+          <>
+            {vocabularies[0].length ? (
+              <TableVocabularyBody
+                topicId={topicId}
+                isAdding={isAdding}
+                isLoadingMore={isLoadingMore}
+                vocabularies={vocabularies}
+              />
+            ) : (
+              // This is usually appropriate if there is no vocabulary in the list
+              <TableRowEmpty>
+                Fill All Filed At Above And Press{' '}
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.HIGHLIGHT}
+                  tagName={TYPOGRAPHY_TAG_NAME.SPAN}
+                >
+                  enter
+                </Typography>{' '}
+                key or button Add
+              </TableRowEmpty>
+            )}
+          </>
+        )}
       </Box>
-    </>
+    </Box>
   ),
 );
 
