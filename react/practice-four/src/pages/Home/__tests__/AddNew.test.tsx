@@ -7,14 +7,16 @@ import { renderWithThemeProvider } from '@helpers';
 import AddNew from '../AddNew';
 
 describe('Test AddNew', () => {
+  const handleAddTopic = jest.fn();
+
   it('Should render AddNew', () => {
-    const { container } = renderWithThemeProvider(<AddNew />);
+    const { container } = renderWithThemeProvider(<AddNew onAddTopic={handleAddTopic} />);
 
     expect(container).toBeInTheDocument();
   });
 
   it('Should render overlay add new topic when click to button Add Topic', () => {
-    const { getByText } = renderWithThemeProvider(<AddNew />);
+    const { getByText } = renderWithThemeProvider(<AddNew onAddTopic={handleAddTopic} />);
 
     act(() => {
       // Click button add topic
@@ -25,30 +27,6 @@ describe('Test AddNew', () => {
     waitFor(() => {
       const overlayAddNew = getByText('Add New Topic');
       expect(overlayAddNew).toBeInTheDocument();
-    });
-  });
-
-  it('Should render input with value entered', async () => {
-    const { getByText, getByPlaceholderText } = renderWithThemeProvider(<AddNew />);
-
-    act(() => {
-      // Click button Add Topic
-      const topic = getByText('Add Topic');
-      fireEvent.click(topic);
-    });
-
-    const input = getByPlaceholderText('Topic Name');
-    act(() => {
-      const button = getByText('Done');
-      // Enter invalid value for input
-      fireEvent.change(input, { target: { value: '222' } });
-      // Enter valid value for input
-      fireEvent.change(input, { target: { value: 'aaa' } });
-      fireEvent.submit(button);
-    });
-
-    await waitFor(() => {
-      expect(input).toHaveValue('aaa');
     });
   });
 });

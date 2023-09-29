@@ -39,6 +39,9 @@ const Home = () => {
     [navigate],
   );
 
+  /**
+   * @description function add topic
+   */
   const handleAddTopic = useCallback((value: string) => {
     mutate(
       {
