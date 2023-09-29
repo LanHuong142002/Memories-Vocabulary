@@ -32,7 +32,7 @@ const FormVocabulary = ({
     handleSubmit,
     reset,
     setError,
-    getValues,
+    watch,
     formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
@@ -46,7 +46,7 @@ const FormVocabulary = ({
     id,
     enabled: false,
     page: 1,
-    param: `?english=${getValues('valueENG')}`,
+    param: `?english=${watch('valueENG')}`,
   });
 
   /**
@@ -55,6 +55,7 @@ const FormVocabulary = ({
   const onSubmit: SubmitHandler<FormInput> = useCallback(
     async (data) => {
       const res = await refetch();
+
       if (res.data && res.data.length === 0) {
         onAddVocabulary(data.valueENG, data.valueVIE);
         reset();
@@ -73,7 +74,7 @@ const FormVocabulary = ({
       sx={(theme: MantineTheme) => ({
         height: 'max-content',
         margin: 'auto',
-        padding: '20px 0',
+        paddingBottom: '20px',
         display: 'flex',
         gap: '30px',
         flexDirection: 'column',

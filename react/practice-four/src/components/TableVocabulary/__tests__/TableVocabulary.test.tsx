@@ -3,6 +3,8 @@ import { renderWithThemeProvider } from '@helpers';
 
 // Components
 import { TableVocabulary } from '@components';
+
+// Mocks
 import { MOCK_VOCABULARIES } from '@mocks';
 
 describe('Test table vocabulary component', () => {

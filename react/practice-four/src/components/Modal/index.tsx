@@ -31,7 +31,7 @@ const Modal = memo(({ opened, title, description, onClose, children, ...props }:
       }}
     >
       <Text sx={{ padding: '20px 0' }}>{description}</Text>
-      <Flex mt='xl' justify='end' gap='15px'>
+      <Flex h='35px' mt='xl' justify='end' gap='15px'>
         {children}
       </Flex>
     </ModalMantine>

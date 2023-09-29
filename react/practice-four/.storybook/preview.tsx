@@ -6,6 +6,7 @@ import { MantineProvider } from '@mantine/core';
 
 // Themes
 import { defaultTheme } from '../src/themes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const ThemeWrapper = (props: { children: React.ReactNode }) => (
   <MantineProvider
@@ -33,12 +34,16 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => {
+      const queryClient = new QueryClient();
+
       return (
-        <ThemeWrapper>
-          <div style={{ margin: '10px' }}>
-            <Story />
-          </div>
-        </ThemeWrapper>
+        <QueryClientProvider client={queryClient}>
+          <ThemeWrapper>
+            <div style={{ margin: '10px' }}>
+              <Story />
+            </div>
+          </ThemeWrapper>
+        </QueryClientProvider>
       );
     },
   ],

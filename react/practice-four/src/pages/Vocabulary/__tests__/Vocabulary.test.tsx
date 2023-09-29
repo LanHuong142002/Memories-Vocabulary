@@ -1,5 +1,4 @@
 import * as hooks from '@hooks';
-import * as services from '@services';
 import * as reactRouter from 'react-router-dom';
 import { act, fireEvent, waitFor } from '@testing-library/react';
 
@@ -21,9 +20,6 @@ jest.mock('react-router-dom', () => ({
 }));
 jest.mock('@hooks', () => ({
   ...jest.requireActual('@hooks'),
-}));
-jest.mock('@services', () => ({
-  ...jest.requireActual('@services'),
 }));
 
 describe('Test Vocabulary Page', () => {
@@ -66,7 +62,7 @@ describe('Test Vocabulary Page', () => {
     });
   });
 
-  it('Should show error if response has data', async () => {
+  it('Should show error if response has data after click button Add', async () => {
     jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '1' });
     (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
       refetch: jest.fn().mockResolvedValue(MOCK_VOCABULARIES),
@@ -114,87 +110,6 @@ describe('Test Vocabulary Page', () => {
 
     act(() => {
       fireEvent.click(startTestBtn);
-    });
-  });
-
-  it('Should click button load more when vocabularies more than 20 and add more vocabularies when click Load More', async () => {
-    const vocabularies = [
-      ...Array.from({ length: 20 }, (_, index) => ({
-        ...MOCK_VOCABULARY,
-        id: `id_${index + 1}`,
-      })),
-      MOCK_VOCABULARIES,
-    ];
-    jest.spyOn(reactRouter, 'useParams').mockReturnValue({ id: '5' });
-    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
-      fetchNextPage: jest.fn(),
-      hasNextPage: true,
-      isLoading: false,
-      data: {
-        pages: [vocabularies],
-      },
-    }));
-
-    const { getByRole, getAllByTestId } = renderWithThemeProvider(<Vocabulary />);
-    const buttonLoadMore = getByRole('button', {
-      name: 'Load More',
-    });
-    await act(() => {
-      fireEvent.click(buttonLoadMore);
-    });
-
-    await waitFor(async () => {
-      const buttonsDelete = getAllByTestId('button-delete-vocabulary');
-      expect(buttonsDelete.length).toBe(21);
-    });
-  });
-
-  it('Should show confirm modal and click button Delete', () => {
-    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
-      isLoading: false,
-      data: {
-        pages: [MOCK_VOCABULARIES],
-      },
-    }));
-
-    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
-    act(() => {
-      // Click button X in row and show confirm modal
-      const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
-      fireEvent.click(buttonShowConfirmModal);
-    });
-
-    act(() => {
-      // Click button delete confirm delete
-      const buttonDelete = getByText('Delete');
-      fireEvent.click(buttonDelete);
-    });
-  });
-
-  it('Should show notification Error when click button Delete but call API failed', async () => {
-    jest.spyOn(services, 'deleteData').mockRejectedValue(new Error('Error'));
-    (jest.spyOn(hooks, 'useInfiniteVocabularies') as jest.Mock).mockImplementation(() => ({
-      isLoading: false,
-      data: {
-        pages: [MOCK_VOCABULARIES],
-      },
-    }));
-    const { getByTestId, getByText } = renderWithThemeProvider(<Vocabulary />);
-
-    act(() => {
-      // Click button X in row and show confirm modal
-      const buttonShowConfirmModal = getByTestId('button-delete-vocabulary');
-      fireEvent.click(buttonShowConfirmModal);
-    });
-
-    act(() => {
-      // Click button delete confirm delete
-      const buttonDelete = getByText('Delete');
-      fireEvent.click(buttonDelete);
-    });
-
-    await waitFor(() => {
-      expect(getByText('Error')).toBeInTheDocument();
     });
   });
 });

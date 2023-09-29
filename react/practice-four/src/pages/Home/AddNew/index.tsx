@@ -15,12 +15,6 @@ import {
 // Helpers
 import { validation } from '@helpers';
 
-// Hooks
-import { useMutationPostTopic } from '@hooks';
-
-// Stores
-import { useNotificationStores } from '@stores';
-
 // Components
 import { Button, Input, Topic, Typography } from '@components';
 
@@ -28,10 +22,8 @@ interface FormInput {
   value: string;
 }
 
-const AddNew = () => {
+const AddNew = ({ onAddTopic }: { onAddTopic: (value: string) => void }) => {
   const [isOpenOverlay, setIsOpenOverlay] = useState<boolean>(false);
-  const { setMessageError } = useNotificationStores();
-  const { mutate } = useMutationPostTopic();
 
   const {
     control,
@@ -56,20 +48,11 @@ const AddNew = () => {
    */
   const onSubmit: SubmitHandler<FormInput> = useCallback(
     (data) => {
-      mutate(
-        {
-          name: data.value.trim(),
-        },
-        {
-          onError: (error) => {
-            setMessageError(error.message);
-          },
-        },
-      );
+      onAddTopic(data.value);
       handleOpenOverlay();
       reset();
     },
-    [handleOpenOverlay, reset, setMessageError],
+    [handleOpenOverlay, onAddTopic, reset],
   );
 
   return (

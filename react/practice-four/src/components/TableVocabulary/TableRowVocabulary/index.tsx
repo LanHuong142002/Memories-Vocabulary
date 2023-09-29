@@ -63,7 +63,7 @@ export const TableRowVocabulary = memo(
 export const TableRowEmpty = memo(({ children }: { children: ReactNode }) => (
   <TableRow>
     <TableCell>
-      <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
+      <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS} m={0}>
         {children}
       </Typography>
     </TableCell>

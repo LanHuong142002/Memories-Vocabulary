@@ -1,5 +1,5 @@
 // Mocks
-import { MOCK_TABLE_RESULT, MOC_RESULT } from '@mocks';
+import { MOCK_TABLE_RESULT, MOCK_RESULT } from '@mocks';
 
 // Components
 import { TableResult } from '@components';
@@ -19,7 +19,7 @@ describe('Test result component', () => {
 
   it('Should render table result component when have answer empty string', () => {
     const { container, getAllByTestId, getAllByText } = renderWithThemeProvider(
-      <TableResult result={[...MOCK_TABLE_RESULT, { ...MOC_RESULT, answer: '' }]} />,
+      <TableResult result={[...MOCK_TABLE_RESULT, { ...MOCK_RESULT, answer: '' }]} />,
     );
 
     expect(container).toBeInTheDocument();

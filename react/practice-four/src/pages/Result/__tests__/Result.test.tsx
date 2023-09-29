@@ -1,5 +1,5 @@
 // Mocks
-import { MOCK_TABLE_RESULT, MOC_RESULT } from '@mocks';
+import { MOCK_TABLE_RESULT, MOCK_RESULT } from '@mocks';
 
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
@@ -39,7 +39,7 @@ describe('Test Result component', () => {
   });
 
   it('Should use empty string when quizzes have one quiz dont have value', () => {
-    const mockResult = [{ ...MOC_RESULT, answer: '' }];
+    const mockResult = [{ ...MOCK_RESULT, answer: '' }];
     jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
       quizzes: mockResult,
       vocabularies: mockResult,

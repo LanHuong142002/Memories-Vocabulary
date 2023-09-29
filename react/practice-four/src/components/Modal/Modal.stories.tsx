@@ -22,7 +22,7 @@ export const Default: Story = {
     opened: true,
     children: (
       <>
-        <Button variant={BUTTON_VARIANT.SECONDARY} size={BUTTON_SIZE.XS}>
+        <Button variant={BUTTON_VARIANT.SECONDARY} size={BUTTON_SIZE.XS} sx={{ height: '100%' }}>
           Cancel
         </Button>
         <Button variant={BUTTON_VARIANT.PRIMARY} size={BUTTON_SIZE.XS}>

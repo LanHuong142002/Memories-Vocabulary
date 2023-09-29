@@ -1,16 +1,10 @@
 import { Suspense } from 'react';
-import { Container } from '@mantine/core';
 import { Route, Routes } from 'react-router-dom';
+import { Container, Flex, Loader } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Routes
 import { Routers } from '@routes';
-
-// Constants
-import { SPINNER_VARIANT } from '@constants';
-
-// Components
-import { Spinner } from '@components';
 
 export const App = () => {
   const queryClient = new QueryClient();
@@ -18,7 +12,13 @@ export const App = () => {
   return (
     <Container sx={{ maxWidth: '100%' }}>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Spinner variant={SPINNER_VARIANT.PRIMARY} />}>
+        <Suspense
+          fallback={
+            <Flex justify='center' align='center' h='100vh'>
+              <Loader color='dark' size='md' />
+            </Flex>
+          }
+        >
           <Routes>
             {Routers.map(({ path, element }) => (
               <Route key={path} path={path} element={element} />
