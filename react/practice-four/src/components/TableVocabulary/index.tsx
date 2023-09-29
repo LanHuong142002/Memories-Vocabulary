@@ -21,24 +21,20 @@ import {
 } from '@components';
 
 export interface TableVocabularyProps {
+  topicId?: string;
   isLoading: boolean;
   isAdding: boolean;
   isLoadingMore: boolean;
-  deletingById: {
-    [id: string]: boolean;
-  };
   vocabularies?: Vocabulary[][];
-  onClick: (id: string) => void;
 }
 
 const TableVocabulary = memo(
   ({
+    topicId = '',
     isLoading,
     isAdding,
     isLoadingMore,
-    deletingById,
     vocabularies = [],
-    onClick,
   }: TableVocabularyProps) => (
     <Box
       className='table-vocabulary'
@@ -102,10 +98,9 @@ const TableVocabulary = memo(
           <>
             {vocabularies[0].length ? (
               <TableVocabularyBody
-                deletingById={deletingById}
+                topicId={topicId}
                 isAdding={isAdding}
                 isLoadingMore={isLoadingMore}
-                onClick={onClick}
                 vocabularies={vocabularies}
               />
             ) : (

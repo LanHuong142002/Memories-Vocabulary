@@ -7,6 +7,7 @@ export { default as TableRow } from './Table/TableRow';
 export { default as TableResult } from './TableResult';
 export { default as TableRowResult } from './TableResult/TableRowResult';
 export { default as TableVocabulary } from './TableVocabulary';
+export { default as ShowModalConfirmDelete } from './TableVocabulary/ShowModalConfirmDelete';
 export { default as Input } from './Input';
 export { default as Topic } from './Topic';
 export { default as Label } from './Label';

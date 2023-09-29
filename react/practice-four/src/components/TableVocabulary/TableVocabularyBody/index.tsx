@@ -10,30 +10,25 @@ import { TableRowLoading, TableRowVocabulary } from '@components';
 const TableVocabularyBody = ({
   isAdding,
   isLoadingMore,
-  deletingById,
+  topicId,
   vocabularies,
-  onClick,
 }: {
   isAdding: boolean;
   isLoadingMore: boolean;
-  deletingById: {
-    [id: string]: boolean;
-  };
+  topicId: string;
   vocabularies: Vocabulary[][];
-  onClick: (id: string) => void;
 }) => (
   <div>
     {vocabularies.map((item, index) => (
       <div key={`table-vocabulary-row${index}`}>
         {item.map(({ id, english, vietnamese }, indexNested) => (
           <TableRowVocabulary
-            isLoading={deletingById[id]}
+            topicId={topicId}
             key={`table-vocabulary-${id}`}
             id={id}
             order={orderItemNestedArray(index, indexNested)}
             english={english}
             vietnamese={vietnamese}
-            onClick={onClick}
           />
         ))}
         {(isAdding || isLoadingMore) && <TableRowLoading />}

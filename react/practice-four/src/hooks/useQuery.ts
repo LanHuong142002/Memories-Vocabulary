@@ -35,13 +35,23 @@ export const useTopics = () => {
  * @param {number} page is the number of pages out of total number of pages
  * @param {string} param is param endpoint
  */
-export const useVocabularies = (id: string, enabled: boolean, page?: number, param?: string) => {
+export const useVocabularies = ({
+  id = '',
+  enabled,
+  page,
+  param = '',
+}: {
+  id?: string;
+  enabled: boolean;
+  page?: number;
+  param?: string;
+}) => {
   const { setMessageError } = useNotificationStores();
   const { setVocabularies } = useVocabulariesStores();
 
   return useQuery<Vocabulary[], AxiosError>({
     queryKey: [QUERY_KEYS.VOCABULARIES, page, id, param, param],
-    queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param || ''}`, page),
+    queryFn: () => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}${param}`, page),
     onSuccess: (data) => setVocabularies(data),
     onError: (error) => setMessageError(error.message),
     enabled,
@@ -53,7 +63,7 @@ export const useVocabularies = (id: string, enabled: boolean, page?: number, par
  *
  * @param {string} id is id of topic
  */
-export const useInfiniteVocabularies = (id: string) =>
+export const useInfiniteVocabularies = (id: string = '') =>
   useInfiniteQuery<Vocabulary[], AxiosError>({
     queryKey: [QUERY_KEYS.VOCABULARIES, id],
     queryFn: ({ pageParam = 1 }) => getData(`${URL.TOPIC}/${id}${URL.VOCABULARY}`, pageParam),

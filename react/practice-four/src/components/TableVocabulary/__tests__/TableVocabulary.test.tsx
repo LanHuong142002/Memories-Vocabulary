@@ -7,7 +7,7 @@ import { MOCK_VOCABULARIES } from '@mocks';
 
 describe('Test table vocabulary component', () => {
   const defaultValue = {
-    onClick: jest.fn(),
+    topicId: '1',
     isLoading: false,
     isAdding: false,
     isLoadingMore: false,
@@ -69,7 +69,7 @@ describe('Test table vocabulary component', () => {
 
   it('Should render row message when table is empty ', () => {
     const { getByText } = renderWithThemeProvider(
-      <TableVocabulary {...defaultValue} vocabularies={[]} />,
+      <TableVocabulary {...defaultValue} vocabularies={[[]]} />,
     );
 
     expect(getByText('ENTER')).toBeInTheDocument();

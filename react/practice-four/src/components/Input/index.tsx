@@ -16,7 +16,7 @@ interface Props extends TextInputProps {
 
 const Input = memo(
   ({
-    error,
+    error = '',
     dataTestId,
     autoComplete = 'off',
     variant = INPUT_VARIANT.PRIMARY,
