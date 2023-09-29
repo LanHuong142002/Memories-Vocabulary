@@ -54,6 +54,9 @@ const Vocabulary = () => {
     }
   }, [id, navigate]);
 
+  /**
+   * @description function add vocabulary
+   */
   const handleAddVocabulary = useCallback(
     (valueENG: string, valueVIE: string) => {
       mutatePost(
@@ -82,7 +85,9 @@ const Vocabulary = () => {
       childrenTitle={useMemo(
         () => (
           <>
-            <Typography size={TYPOGRAPHY_SIZE.XL}>Make Vocabulary with Translation</Typography>
+            <Typography size={TYPOGRAPHY_SIZE.XL} m={0}>
+              Make Vocabulary with Translation
+            </Typography>
             <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
               Add{' '}
               <Typography className='highlight' tagName={TYPOGRAPHY_TAG_NAME.SPAN}>

@@ -6,7 +6,7 @@ import { Flex, Loader } from '@mantine/core';
 import { ROUTES, TYPOGRAPHY_SIZE, TYPOGRAPHY_VARIANT } from '@constants';
 
 // Stores
-import { useTopicStores } from '@stores';
+import { useNotificationStores, useTopicStores } from '@stores';
 
 // Hooks
 import { useMutationPostTopic, useTopics } from '@hooks';
@@ -21,10 +21,11 @@ const Home = () => {
 
   // Queries
   const { data: topics, isLoading } = useTopics();
-  const { isLoading: isAdding } = useMutationPostTopic();
+  const { mutate, isLoading: isAdding } = useMutationPostTopic();
 
   // Stores
   const { topics: topicsStore } = useTopicStores();
+  const { setMessageError } = useNotificationStores();
 
   /**
    * @description function handle open topic with vocabularies
@@ -38,12 +39,27 @@ const Home = () => {
     [navigate],
   );
 
+  const handleAddTopic = useCallback((value: string) => {
+    mutate(
+      {
+        name: value.trim(),
+      },
+      {
+        onError: (error) => {
+          setMessageError(error.message);
+        },
+      },
+    );
+  }, []);
+
   return (
     <Wrapper
       className='home'
       childrenTitle={
         <>
-          <Typography size={TYPOGRAPHY_SIZE.XL}>Add &amp; Select Topic</Typography>
+          <Typography size={TYPOGRAPHY_SIZE.XL} m={0}>
+            Add &amp; Select Topic
+          </Typography>
           <Typography color={TYPOGRAPHY_VARIANT.SECONDARY} size={TYPOGRAPHY_SIZE.XS}>
             Please choose a topic or create a new topic
           </Typography>
@@ -85,7 +101,7 @@ const Home = () => {
                 </Flex>
               </Topic>
             )}
-            <AddNew />
+            <AddNew onAddTopic={handleAddTopic} />
           </>
         )}
       </Flex>

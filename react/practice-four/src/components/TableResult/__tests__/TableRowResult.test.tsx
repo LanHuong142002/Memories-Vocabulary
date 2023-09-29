@@ -1,5 +1,5 @@
 // Mocks
-import { MOC_RESULT } from '@mocks';
+import { MOCK_RESULT } from '@mocks';
 
 // Components
 import { TableRowResult } from '@components';
@@ -12,11 +12,11 @@ describe('Test table row result component', () => {
     const { container, getAllByText, getByText } = renderWithThemeProvider(
       <TableRowResult
         id='1'
-        answer={MOC_RESULT.answer}
+        answer={MOCK_RESULT.answer}
         order={'1'}
-        isSuccess={MOC_RESULT.isSuccess}
-        english={MOC_RESULT.english}
-        vietnamese={MOC_RESULT.vietnamese}
+        isSuccess={MOCK_RESULT.isSuccess}
+        english={MOCK_RESULT.english}
+        vietnamese={MOCK_RESULT.vietnamese}
       />,
     );
 
@@ -29,11 +29,11 @@ describe('Test table row result component', () => {
     const { container, getAllByText } = renderWithThemeProvider(
       <TableRowResult
         id='1'
-        answer={MOC_RESULT.answer}
+        answer={MOCK_RESULT.answer}
         order={'1'}
         isSuccess={false}
-        english={MOC_RESULT.english}
-        vietnamese={MOC_RESULT.vietnamese}
+        english={MOCK_RESULT.english}
+        vietnamese={MOCK_RESULT.vietnamese}
       />,
     );
 

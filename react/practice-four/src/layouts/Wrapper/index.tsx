@@ -89,13 +89,6 @@ const Wrapper = ({
               sx={{
                 lineHeight: '20px',
                 textAlign: 'center',
-                'p:first-of-type': {
-                  paddingBottom: '10px',
-                  lineHeight: '30px',
-                },
-                p: {
-                  paddingBottom: '10px',
-                },
               }}
             >
               {childrenTitle}

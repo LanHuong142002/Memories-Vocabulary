@@ -1,6 +1,8 @@
-import { fireEvent, renderWithThemeProvider } from '@helpers';
 import { act, waitFor } from '@testing-library/react';
 import ShowModalConfirmDelete from '../ShowModalConfirmDelete';
+
+// Helpers
+import { fireEvent, renderWithThemeProvider } from '@helpers';
 
 describe('Test ShowModalConfirmDelete', () => {
   const handleDeleteVocabulary = jest.fn();

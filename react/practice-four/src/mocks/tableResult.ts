@@ -25,7 +25,7 @@ export const MOCK_TABLE_RESULT = [
   },
 ];
 
-export const MOC_RESULT = {
+export const MOCK_RESULT = {
   id: '4',
   isSuccess: true,
   order: 1,

@@ -10,9 +10,6 @@ import { App } from '@App';
 import { GlobalFonts, ErrorBoundary } from '@components';
 import { Error } from '@pages';
 
-// Styles
-import './styles/main.css';
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>

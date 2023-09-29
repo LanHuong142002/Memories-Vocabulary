@@ -11,7 +11,6 @@ export { default as ShowModalConfirmDelete } from './TableVocabulary/ShowModalCo
 export { default as Input } from './Input';
 export { default as Topic } from './Topic';
 export { default as Label } from './Label';
-export { default as Spinner } from './Spinner';
 export { default as Notification } from './Notification';
 export { default as ProcessBar } from './ProcessBar';
 export { default as Typography } from './Typography';

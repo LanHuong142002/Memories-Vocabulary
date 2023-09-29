@@ -58,11 +58,13 @@ const Result = () => {
       childrenTitle={useMemo(
         () => (
           <>
-            <Typography size={TYPOGRAPHY_SIZE.XL}>Quiz Result</Typography>
-            <Flex className='total' justify='center'>
+            <Typography size={TYPOGRAPHY_SIZE.XL} m={0}>
+              Quiz Result
+            </Typography>
+            <Flex className='total' justify='center' pt={'10px'}>
               <Label color={LABEL_COLOR.NORMAL} name={`${percent}% percentage`} />
             </Flex>
-            <Flex className='answers' justify='center' gap='8px' p='10px 0'>
+            <Flex className='answers' justify='center' gap='8px' p='10px 0 20px 0'>
               <Label color={LABEL_COLOR.SUCCESS} name={`${totalCorrectQuizzes} Rights`} />
               <Label
                 color={LABEL_COLOR.FAILED}

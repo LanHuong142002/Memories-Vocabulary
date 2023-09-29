@@ -15,7 +15,7 @@ const TextInput = {
       fontWeight: theme.other.fontWeight.regular,
       '::placeholder': {
         fontSize: theme.fontSizes.xxs,
-        color: getColorScheme(theme.colorScheme, theme.colors.dark[0], theme.colors.dark[3]),
+        color: getColorScheme(theme.colorScheme, theme.colors.dark[1], theme.colors.dark[3]),
         [`@media (min-width: ${theme.breakpoints.md})`]: {
           fontSize: theme.fontSizes.xs,
         },
