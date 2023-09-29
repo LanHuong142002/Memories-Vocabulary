@@ -102,3 +102,7 @@ export enum POSITION {
   ABSOLUTE = 'absolute',
   RELATIVE = 'relative',
 }
+
+export enum TEXT_TRANSFORM {
+  UPPERCASE = 'uppercase',
+}

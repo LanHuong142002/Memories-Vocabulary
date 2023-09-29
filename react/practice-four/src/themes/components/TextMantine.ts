@@ -3,6 +3,9 @@ import { MantineTheme } from '@mantine/core';
 // Helpers
 import { getColorScheme } from '@helpers';
 
+// Constants
+import { TEXT_TRANSFORM } from '@constants';
+
 const Text = {
   variants: {
     primary: (theme: MantineTheme) => ({
@@ -23,6 +26,7 @@ const Text = {
     highlight: (theme: MantineTheme) => ({
       root: {
         color: theme.colors.dark[3],
+        textTransform: TEXT_TRANSFORM.UPPERCASE,
         padding: '3px',
         borderRadius: '3px',
         backgroundColor: theme.colors.yellow[1],
