@@ -2,6 +2,27 @@
 import { MantineTheme } from '@mantine/core';
 
 /**
+ * @description function order item nested array
+ *
+ * @param {number} index is index from first array
+ * @param {number} indexNested is index from nested array
+ *
+ * @returns {number} number
+ */
+export const orderItemNestedArray = (index: number, indexNested: number) => {
+  return index === 0 ? indexNested + 1 : (index + 1) * 10 + indexNested + 1;
+};
+
+/**
+ * @description function check is light theme or note
+ *
+ * @param theme is Mantine theme
+ *
+ * @returns {boolean}
+ */
+export const isLightTheme = (theme: 'dark' | 'light' = 'light') => theme === 'light';
+
+/**
  * @description function return color dark when in dark theme and color light
  * in light theme
  *
@@ -16,8 +37,6 @@ export const getColorScheme = (
   InDarkTheme: string,
   InLightTheme: string,
 ): string => (colorScheme === 'dark' ? InDarkTheme : InLightTheme);
-
-export const isLightTheme = (theme = 'light') => theme === 'light';
 
 /**
  * @description remove duplicates from two arrays and return a combined array.
