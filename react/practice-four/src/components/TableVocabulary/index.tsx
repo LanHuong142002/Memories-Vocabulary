@@ -95,7 +95,10 @@ const TableVocabulary = memo(
         {isLoading ? (
           <TableRowLoading />
         ) : (
-          // After fetching, render the vocabulary list
+          /* After fetching, render the vocabulary list
+           * Vocabularies[0] here because the data is Vocabulary[][] so need to
+           * check the first array to know whether vocabulary has any item or not
+           */
           <>
             {vocabularies[0].length ? (
               <TableVocabularyBody
