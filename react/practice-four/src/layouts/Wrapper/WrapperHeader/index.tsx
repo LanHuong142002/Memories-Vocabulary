@@ -23,6 +23,7 @@ const WrapperHeader = () => {
         padding: '15px 30px',
         boxSizing: 'border-box',
       }}
+      role='main'
     >
       <ToggleTheme />
       {location.pathname !== ROUTES.HOME && (

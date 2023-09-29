@@ -31,9 +31,9 @@ const TableVocabularyBody = ({
             vietnamese={vietnamese}
           />
         ))}
-        {(isAdding || isLoadingMore) && <TableRowLoading />}
       </div>
     ))}
+    {(isAdding || isLoadingMore) && <TableRowLoading />}
   </div>
 );
 
