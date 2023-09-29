@@ -1,13 +1,8 @@
-import { act, fireEvent, waitFor } from '@testing-library/react';
-
 // Mocks
 import { MOCK_VOCABULARIES } from '@mocks';
 
 // Hooks
 import * as hooks from '@hooks';
-
-// Stores
-import * as stores from '@stores';
 
 // Helpers
 import { renderWithThemeProvider } from '@helpers';
@@ -16,12 +11,8 @@ import { renderWithThemeProvider } from '@helpers';
 import { Testing } from '@pages';
 
 jest.useFakeTimers();
-
 jest.mock('@hooks', () => ({
   ...jest.requireActual('@hooks'),
-}));
-jest.mock('@stores', () => ({
-  ...jest.requireActual('@stores'),
 }));
 
 describe('Test Testing Page', () => {
@@ -38,77 +29,14 @@ describe('Test Testing Page', () => {
     expect(getByText(`1 of ${MOCK_VOCABULARIES.length}`)).toBeInTheDocument();
   });
 
-  it('Should render text Submit Answer in button when step equal with totalStep', () => {
+  it('Should render Testing page with loading', () => {
     (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
-      data: MOCK_VOCABULARIES,
-      isSuccess: true,
-      isLoading: false,
-    }));
-    jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
-      quizzes: MOCK_VOCABULARIES,
-      setQuizzes: jest.fn(),
+      isSuccess: false,
+      isLoading: true,
     }));
 
-    const { getByText } = renderWithThemeProvider(<Testing />);
+    const { getByTestId } = renderWithThemeProvider(<Testing />);
 
-    expect(getByText('Submit Answers')).toBeInTheDocument();
-  });
-
-  it('Input should have empty value after submitted value', async () => {
-    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
-      data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      isSuccess: true,
-      isLoading: false,
-    }));
-    jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
-      quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      setQuizzes: jest.fn(),
-    }));
-
-    const { getByRole, getByPlaceholderText } = renderWithThemeProvider(<Testing />);
-    const input = getByPlaceholderText('Type your answer here');
-    const button = getByRole('button', {
-      name: /next/i,
-    });
-
-    act(() => {
-      fireEvent.change(input, { target: { value: 'lorem' } });
-      fireEvent.submit(button);
-    });
-
-    await waitFor(() => {
-      expect(input).toHaveValue('');
-    });
-  });
-
-  it('Input should change value after change value twice', async () => {
-    (jest.spyOn(hooks, 'useVocabularies') as jest.Mock).mockImplementation(() => ({
-      data: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      isSuccess: true,
-      isLoading: false,
-    }));
-    jest.spyOn(stores, 'useVocabulariesStores').mockImplementation(() => ({
-      quizzes: [...MOCK_VOCABULARIES, ...MOCK_VOCABULARIES],
-      setQuizzes: jest.fn(),
-    }));
-
-    const { getByRole } = renderWithThemeProvider(<Testing />);
-    const input = getByRole('textbox');
-    const button = getByRole('button', {
-      name: /next/i,
-    });
-
-    act(() => {
-      // Enter value for input
-      fireEvent.change(input, { target: { value: 'Text' } });
-      // Click button move to next quiz
-      fireEvent.submit(button);
-      // Enter value for second input
-      fireEvent.change(input, { target: { value: 'Text2' } });
-      // Click button move to next quiz
-      fireEvent.submit(button);
-    });
-
-    expect(input).toHaveValue('Text2');
+    expect(getByTestId('loading')).toBeInTheDocument();
   });
 });

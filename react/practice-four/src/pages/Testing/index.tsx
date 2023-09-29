@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Flex, MantineTheme, Text } from '@mantine/core';
+import { Flex, Loader, MantineTheme, Text } from '@mantine/core';
 import { useEffect, useMemo } from 'react';
 
 // Constants
@@ -13,13 +13,13 @@ import { useVocabularies } from '@hooks';
 
 // Components
 import { Wrapper } from '@layouts';
-import { Spinner, Typography } from '@components';
+import { Typography } from '@components';
 import FormTesting from './FormTesting';
 
 const Testing = () => {
   const { id } = useParams();
   // Queries
-  const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies(id || '', true);
+  const { data: vocabulariesAll, isSuccess, isLoading } = useVocabularies({ id, enabled: true });
 
   // Stores
   const { quizzes, setQuizzes } = useVocabulariesStores();
@@ -56,7 +56,7 @@ const Testing = () => {
     >
       {isLoading ? (
         <Flex justify='center' className='testing-spinner-wrapper'>
-          <Spinner />
+          <Loader color='dark' size='md' data-testid='loading' />
         </Flex>
       ) : (
         <FormTesting id={id} vocabulariesAll={vocabulariesAll} />

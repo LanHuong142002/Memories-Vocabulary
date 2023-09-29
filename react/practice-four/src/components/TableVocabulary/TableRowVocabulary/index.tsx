@@ -73,7 +73,7 @@ export const TableRowEmpty = memo(({ children }: { children: ReactNode }) => (
 export const TableRowLoading = memo(() => (
   <TableRow>
     <TableCell>
-      <Loader color='dark' size='xs' />
+      <Loader color='dark' size='xs' data-testid='loading' />
     </TableCell>
   </TableRow>
 ));

@@ -69,7 +69,7 @@ describe('Test table vocabulary component', () => {
 
   it('Should render row message when table is empty ', () => {
     const { getByText } = renderWithThemeProvider(
-      <TableVocabulary {...defaultValue} vocabularies={[]} />,
+      <TableVocabulary {...defaultValue} vocabularies={[[]]} />,
     );
 
     expect(getByText('ENTER')).toBeInTheDocument();

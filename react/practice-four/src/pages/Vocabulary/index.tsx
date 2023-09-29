@@ -37,8 +37,8 @@ const Vocabulary = () => {
     hasNextPage,
     isLoading,
     isFetchingNextPage,
-  } = useInfiniteVocabularies(id || '');
-  const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id || '');
+  } = useInfiniteVocabularies(id);
+  const { mutate: mutatePost, isLoading: isAdding } = useMutationPostVocabulary(id);
 
   const isDisabledButtonStartTest = useMemo(
     () => !(vocabularies && vocabularies?.pages[0].length >= 5),
