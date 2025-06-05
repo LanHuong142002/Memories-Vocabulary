@@ -1,0 +1,43 @@
+.text-input::-webkit-outer-spin-button,
+.text-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.text-input-default {
+  width: 100%;
+  padding-top: 8px;
+  border: none;
+  background-color: transparent;
+}
+
+.text-input-default,
+.text-input-primary {
+  outline: none;
+  font-family: var(--font-regular), var(--font-default);
+}
+
+.text-input-default::placeholder,
+.text-input-primary::placeholder {
+  color: var(--color-info);
+  font-size: var(--font-small);
+}
+
+.text-input-primary {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-muted);
+}
+
+.text-wrapper {
+  color: var(--color-primary);
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: var(--font-bold), var(--font-default);
+}
+
+.text-wrapper label {
+  font-size: var(--font-small);
+}

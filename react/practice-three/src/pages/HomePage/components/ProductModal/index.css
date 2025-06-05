@@ -1,0 +1,54 @@
+.form-wrapper,
+.form-wrapper .form-body,
+.form-group-split .group-image {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form-wrapper .form-body {
+  gap: 16px;
+}
+
+.form-body .form-image .form-image-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group-split {
+  display: flex;
+  gap: 30px;
+}
+
+.form-group-split .form-control {
+  width: 46%;
+}
+
+.form-group-split .group-image {
+  gap: 10px;
+  font-family: var(--font-bold), var(--font-default);
+  font-size: var(--font-small);
+}
+
+.form-group-split .group-image .image-wrapper-content {
+  display: flex;
+  gap: 10px;
+}
+
+.form-group-split .select-box {
+  width: 100%;
+}
+
+.form-wrapper .form-cta {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.form-body .error-message {
+  font-family: var(--font-semiBold), var(--font-default);
+  color: var(--color-warning);
+  font-size: var(--font-normal);
+  margin-top: 5px;
+  display: block;
+}

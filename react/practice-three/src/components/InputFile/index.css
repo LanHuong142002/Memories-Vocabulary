@@ -1,0 +1,45 @@
+.input-file-wrapper {
+  font-family: var(--font-semiBold), var(--font-default);
+  font-size: var(--font-small);
+  cursor: pointer;
+}
+
+.input-file-wrapper input {
+  display: none;
+}
+
+.input-file-wrapper figure {
+  width: 100%;
+}
+
+.input-file-primary {
+  width: 350px;
+  height: 100px;
+  font-size: var(--font-small);
+  color: var(--color-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 12px;
+  border: 1px solid var(--color-light);
+  background-color: transparent;
+}
+
+.input-file-primary:hover,
+.input-file-secondary:hover {
+  opacity: 0.6;
+}
+
+.input-file-secondary {
+  width: fit-content;
+  padding: 10px 15px;
+  font-size: var(--font-small);
+  color: var(--color-primary);
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--color-muted);
+}
